@@ -4,6 +4,7 @@
 ├─application                 应用目录
 │  ├─common                   模块目录
 │  │  ├─controller            控制器目录
+│  │  |  └─Controller.php     控制器总父类
 │  │  ├─db                    query 扩展
 │  │  |  └─Query.php          
 │  │  ├─model                 模型目录
