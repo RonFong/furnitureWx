@@ -1,0 +1,166 @@
+{extend name="common/parent" /}
+{block name="css"}
+
+{/block}
+{block name="page"}
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {$userType = 2 ? '厂家用户信息' : '商家用户信息'}
+            </div>
+            <div class="panel-body">
+                <form id="userForm" role="form" method="post" action="{:url('save')}" enctype="multipart/form-data" >
+                    <input id="id" type="hidden" name="id" value="{$userInfo.id|default=''}">
+                    <input type="hidden" name="__token__" value="{$Request.token}" />
+                    <input type="hidden" name="type" value="{$userType}">
+                    <div class="form-group">
+                        <label class="control-label" for="account">账号</label>
+                        <input type="text" class="form-control" id="account" name="account" value="{$userInfo.account|default=''}" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="user_name">昵称</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name" value="{$userInfo.user_name|default=''}" required="required">
+                    </div>
+                    {if condition="!isset($userInfo.id)" }
+                    <div class="form-group">
+                        <label class="control-label" for="password">默认密码</label>
+                        <input type="text" class="form-control" id="password" name="password" readonly value="123456" required="true">
+                    </div>
+                    {/if}
+                    <div class="form-group">
+                        <label class="control-label" for="account">手机号</label>
+                        <input type="number" class="form-control" id="phone_number" name="phone_number" value="{$userInfo.phone_number|default=''}" oninput="maxLen(this, 11);">
+                    </div>
+                    <div class="form-group">
+                        {if condition="$userType = 2"}
+                            <label class="control-label" for="factory_id">所属厂家</label>
+                            <select class="form-control" name="factory_id" id="factory_id">
+                                <option value=""></option>
+                                {volist name="group" id="vo"}
+                                <option value="{$vo.id}" {:isset($userInfo.factory_id) ? ($userInfo.factory_id == $vo.id ? 'selected':'') : ''}>{$vo.factory_name}</option>
+                                {/volist}
+                            </select>
+                        {else}
+                            <label class="control-label" for="shop_id">所属商家</label>
+                            <select class="form-control" name="shop_id" id="shop_id">
+                                <option value=""></option>
+                                {volist name="group" id="vo"}
+                                <option value="{$vo.id}" {:isset($userInfo.shop_id) ? ($userInfo.shop_id == $vo.id ? 'selected':'') : ''}>{$vo.shop_name}</option>
+                                {/volist}
+                            </select>
+                        {/if}
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="account">微信ID</label>
+                        <input type="text" class="form-control" id="wechat_id" name="wechat_id" value="{$userInfo.wechat_id|default=''}"  readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">性别</label>
+                        <div>
+                            <input type="radio" id="madam" name="sex" value="2" {:isset($userInfo.sex) ? ($userInfo.sex == 2 ? 'checked':'') : ''}>
+                            <label for="madam">女</label>
+                            <input type="radio" id="man" name="sex" value="1" {:isset($userInfo.sex) ? ($userInfo.sex == 1 ? 'checked':'') : ''}>
+                            <label for="man">男</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">状态</label>
+                        <div>
+                            <input type="radio" id="status-on" name="status" value="1" {:isset($userInfo.status) ? ($userInfo.status == 1 ? 'checked':'') : 'checked'}>
+                            <label for="status-on">启用</label>
+                            <input type="radio" id="status-off" name="status" value="0" {:isset($userInfo.status) ? ($userInfo.status == 0 ? 'checked':'') : ''}>
+                            <label for="status-off">禁用</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="image">上传头像</label>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input id="image"  name="image" type="file">
+                                <input id="org_image" name="org_image" value="{$userInfo.image|default=''}" type="hidden">
+                            </div>
+                        </div>
+                        <p>图片尺寸要求：宽高相等，边长不大于{$imgLength}px</p>
+                    </div>
+                    <div class="form-actions center">
+                        <button  class="btn btn-white btn-round btn-success" type="submit">
+                            提交
+                            <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+<script>
+    $('#role,#factory_id,#shop_id').select2({});
+
+    $('#image').ace_file_input({
+        btn_change:'头像图',
+        btn_choose:'头像图',
+        thumbnail: 'large',
+        droppable:true,
+        before_remove:function () {
+            $('#org_image').val('');
+            return true;
+        }
+    });
+
+    $('#userForm').validate({
+        rules: {
+            account: {
+                remote:{
+                    url:"{:url('account_exist')}",
+                    type:'post',
+                    data:{id:function () {
+                        return  $('#id').val();
+                    }
+
+                    }
+                }
+            },
+            user_name: {
+                remote:{
+                    url:"{:url('user_name_exist')}",
+                    type:'post',
+                    data:{
+                        id:function () {
+                            return  $('#id').val();
+                        }
+                    }
+                }
+            },
+            phone_number: {
+                remote:{
+                    url:"{:url('unique_number')}",
+                    type:'post',
+                    data:{
+                        id:function () {
+                            return  $('#id').val();
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    /**
+     * 限制输入内容长度
+     **/
+    function maxLen(element, len) {
+        var value = $(element).val();
+        if(value.length > len) {
+            $(element).val(value.slice(0, len))
+        }
+    }
+
+    {notempty name="userInfo.image"}
+    $('#image').ace_file_input('show_file_list',[{type: 'image',name:'{$userInfo.image}', path:'{$userInfo.image}'}]);
+    {/notempty}
+</script>
+{/block}

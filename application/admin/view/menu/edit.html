@@ -1,0 +1,127 @@
+{extend name="common/parent" /}
+{block name="page"}
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                菜单详情
+            </div>
+            <div class="panel-body">
+                <form id="memuForm" role="form" method="post" action="{:url('save')}">
+                    <input type="hidden" name="__token__" value="{$Request.token}" />
+                    <input id="id" type="hidden" name="id" value="{$MenuInfo.id|default=''}">
+                    <div class="form-group">
+                        <label class="control-label" for="pid">上级节点</label>
+                        <select class="form-control" name="pid" id="pid" required="true">
+                            <option value="0">顶层</option>
+                            {$MenuAll}
+                        </select>
+                        <p class="help-block">
+                            所属上级节点
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="module">模块名称</label>
+                        <select class="form-control" name="module" id="module">
+                            <option value="1" {$MenuInfo ? ($MenuInfo.module==1 ? 'selected':'') : 'selected'}>系统</option>
+                            <option value="2" {$MenuInfo ? ($MenuInfo.module==2 ? 'selected':'') : ''}>平台</option>
+                            <option value="3" {$MenuInfo ? ($MenuInfo.module==3 ? 'selected':'') : ''}>厂家</option>
+                            <option value="4" {$MenuInfo ? ($MenuInfo.module==4 ? 'selected':'') : ''}>商家</option>
+                        </select>
+                        <p class="help-block">
+                            所属模块
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="controller">节点地址</label>
+                        <input id='controller' class="form-control" autocomplete="off" type="text" name="controller" value="{$MenuInfo.controller|default=''}">
+                        <p class="help-block">
+                            可留空;如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/Menu/edit</code>驼峰写法。如果是普通链接，则直接填写url地址!
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="params">节点参数</label>
+                        <input id='params' class="form-control" autocomplete="off" type="text" name="params" value="{$MenuInfo.params|default=''}">
+                        <p class="help-block">
+                            可留空;请填写<code>字符类型</code>，如：<code>参数1=123&参数2=234</code>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="name">节点名称</label>
+                        <input id='menu_name' class="form-control" autocomplete="off" type="text" name="menu_name" required="true" value="{$MenuInfo.menu_name|default=''}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">状态</label>
+                        <div>
+                            <input type="radio" name="visible" value="1" {$MenuInfo ? ($MenuInfo.visible==1 ? 'checked':'') : 'checked'}>
+                            <label>开启</label>
+                            <input type="radio" name="visible" value="0" {$MenuInfo ? ($MenuInfo.visible==0 ? 'checked':'') : ''}>
+                            <label>隐藏</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">打开方式</label>
+                        <div>
+                            <input type="radio" name="url_target" value="_self" {$MenuInfo ? ($MenuInfo.url_target=='_self' ? 'checked':'') : 'checked'}>
+                            <label>当前窗口</label>
+                            <input type="radio" name="url_target" value="_blank" {$MenuInfo ? ($MenuInfo.url_target=='_blank' ? 'checked':'') : ''}>
+                            <label>新窗口</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="sort">排序</label>
+                        <div>
+                            <input id='sort' class="form-control" type="text" name="sort" value="{$MenuInfo.sort|default=''}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="icon">图标</label>
+                        <input id='icon' class="form-control" type="text" name="icon" value="{$MenuInfo.icon|default=''}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">系统级窗口</label>
+                        <div>
+                            <div>
+                                <input type="radio" name="is_system" value="1" {$MenuInfo ? ($MenuInfo.is_system==1 ? 'checked':'') : ''}>
+                                <label>是</label>
+                                <input type="radio" name="is_system" value="0" {$MenuInfo ? ($MenuInfo.is_system==0 ? 'checked':'') : 'checked'}>
+                                <label>否</label>
+                            </div>
+                        </div>
+                        <p class="help-block">
+                            系统级窗口只超级管理员能查看,其他用户只显示非系统级界面
+                        </p>
+                    </div>
+                    <div class="form-actions center">
+                        <button class="btn btn-white btn-round btn-success" type="submit">
+                            提交
+                            <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $('#pid,#module').select2({allowClear:false});
+    $('#sort').ace_spinner({value:0,min:0,max:99999999,step:1});
+    $('#memuForm').validate({
+        rules: {
+            visible:{
+                remote:{
+                    url:"{:url('enable_unvisible')}",
+                    type:'post',
+                    data:{
+                        id:function () {
+                            return  $('#id').val();
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{/block}

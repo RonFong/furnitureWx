@@ -1,0 +1,216 @@
+{extend name="common/parent" /}
+{block name="page"}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
+            <strong>提示：</strong>
+            按住表头可拖动节点，调整后点击【保存】。
+            <br>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="btn-group">
+            <a class="btn btn-white btn-primary btn-round" href="{:url('edit')}">新增</a>
+            <button type="button" class="btn btn-white btn-success btn-round" onclick="saveSort();">保存</button>
+            <button type="button" class="btn btn-white btn-yellow btn-round" onclick="expand();">展开所有节点</button>
+            <button type="button" class="btn btn-white btn-pink btn-round" onclick="collapse();">收起所有节点</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="panel">
+        <div class="panel-body">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#tab1">
+                        系统
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#tab2">
+                        平台
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#tab3">
+                        厂家
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#tab4">
+                        商家
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                {php}
+                $color =
+                ['dark','red','red2','light-red','blue','light-blue','green','light-green','orange','orange2','light-orange','purple','pink','pink2','brown','grey','light-grey'];
+                function nestable($treeMenu = [],$color)
+                {
+                foreach($treeMenu as $menu)
+                {
+                echo '
+                <li class="dd-item dd2-item" data-id="'.$menu['id'].'">';
+                    if($menu['visible'])
+                    {
+                    echo '
+                    <div class="dd-handle dd2-handle">';
+                        echo '<i
+                                class="normal-icon ace-icon '.($menu['icon'] ? $menu['icon'] : 'fa fa-file-o').' '.$color[array_rand($color,1)].' bigger-130"></i>';
+                        echo '<i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>';
+                        echo '
+                    </div>
+                    ';
+                    }
+                    echo '
+                    <div class="dd2-content">'.$menu['menu_name'];
+                        echo '
+                        <div class="pull-right action-buttons">';
+                            if($menu['visible'])
+                            {
+                            echo '<a class="green tooltip-success" href="'.url('edit',['pid'=>$menu['id']]).'"
+                                     data-rel="tooltip" data-original-title="新增子节点">';
+                                echo '<i class="ace-icon fa fa-plus bigger-130"></i>';
+                                echo '</a>';
+                            }
+                            echo '<a class="blue tooltip-info" href="'.url('edit',['id'=>$menu['id']]).'"
+                                     data-rel="tooltip" data-original-title="编辑节点">';
+                                echo '<i class="ace-icon fa fa-pencil bigger-130"></i>';
+                                echo '</a>';
+                            echo '<a class="red tooltip-error" href="javascript:void(0)" onclick="deleterow(this)"
+                                     data-ids="'.$menu['id'].'" ajax-url="'.url('delete').'" data-rel="tooltip"
+                                     data-original-title="删除">';
+                                echo '<i class="ace-icon fa fa-trash-o bigger-130"></i>';
+                                echo '</a>';
+                            echo '
+                        </div>
+                        ';
+                        echo '
+                    </div>
+                    ';
+
+                    if(isset($menu['child']))
+                    {
+                    echo '
+                    <ol class="dd-list">';
+                        nestable($menu['child'],$color);
+                        echo '
+                    </ol>
+                    ';
+                    }
+                    echo '
+                </li>
+                ';
+                }
+                }
+                {/php}
+                <div id="tab1" class="tab-pane in active">
+                    <div class="dd dd-draghandle" style="max-width: none;">
+                        <ol class="dd-list">
+                            {foreach $allMenu as $k=>$menu}
+                            {php}
+                            if($menu['module'] != 1) continue;
+                            nestable([$menu],$color);
+                            unset($allMenu[$k]);
+                            {/php}
+                            {/foreach}
+                        </ol>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-pane">
+                    <div class="dd dd-draghandle" style="max-width: none;">
+                        <ol class="dd-list">
+                            {foreach $allMenu as $k=>$menu}
+                            {php}
+                            if($menu['module'] != 2) continue;
+                            nestable([$menu],$color);
+                            unset($allMenu[$k]);
+                            {/php}
+                            {/foreach}
+                        </ol>
+                    </div>
+                </div>
+                <div id="tab3" class="tab-pane">
+                    <div class="dd dd-draghandle" style="max-width: none;">
+                        <ol class="dd-list">
+                            {foreach $allMenu as $k=>$menu}
+                            {php}
+                            if($menu['module'] != 3) continue;
+                            nestable([$menu],$color);
+                            unset($allMenu[$k]);
+                            {/php}
+                            {/foreach}
+                        </ol>
+                    </div>
+                </div>
+                <div id="tab4" class="tab-pane">
+                    <div class="dd dd-draghandle" style="max-width: none;">
+                        <ol class="dd-list">
+                            {foreach $allMenu as $k=>$menu}
+                            {php}
+                            if($menu['module'] != 4) continue;
+                            nestable([$menu],$color);
+                            unset($allMenu[$k]);
+                            {/php}
+                            {/foreach}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/plugin/nestable/jquery.nestable.min.js"></script>
+<script>
+
+    $('.dd').nestable({
+        autoscroll: true
+    });
+
+    $('[data-rel=tooltip]').tooltip();
+    function expand() {
+        $('.dd').nestable('expandAll');
+    }
+    function collapse() {
+        $('.dd').nestable('collapseAll');
+    }
+    // 保存节点
+    function saveSort() {
+        var menus = [];
+        $('.dd').each(function () {
+            menus = menus.concat($(this).nestable('serialize'));
+        })
+        $.post("{:url('saveSort')}", {menus: menus}, function (result) {
+            if (result.code) {
+                $.alert('提示', result.msg, 'success');
+            } else {
+                $.alert('保存失败', result.msg, 'error');
+            }
+        });
+    }
+    function deleterow(element) {
+        var ajax_url = $(element).attr('ajax-url');
+        var param = {id: $(element).data('ids')};
+        $.confirm('提示', '确认删除此菜单及所属子菜单？', 'info', function (isConfirm) {
+            if (isConfirm) {
+                $.post(ajax_url, param, function (result) {
+                    if (result.code) {
+                        location.reload();
+                    }
+                    else {
+                        $.alert('错误', result.msg);
+                    }
+                });
+            }
+        });
+    }
+</script>
+{/block}
