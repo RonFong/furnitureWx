@@ -1,7 +1,6 @@
-### furniture
+### furniture 目录部署
 
 ~~~
-部署目录
 ├─application                 应用目录
 │  ├─common                   模块目录
 │  │  ├─controller            控制器目录
