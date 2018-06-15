@@ -16,6 +16,19 @@
 │  |  ├─tags.php              行为定义文件
 │  │  └─behavior              行为钩子类
 │  │
+│  ├─admin                    后台
+│  │  ├─controller            控制器目录
+│  │  |  └─BaseController.php 控制器父类
+│  |  ├─model                 数据库操作模型
+│  │  |  ├─BaseModel.php      模型父类
+│  │  |  └─User.php           User 表模型
+│  │  ├─service               业务逻辑处理层
+│  │  |  └─User.php           User业务处理
+│  │  ├─view                  视图
+│  │  ├─validate              验证类
+│  |  ├─tags.php              行为定义文件
+│  │  └─behavior              行为钩子类
+│  │
 │  ├─api                      API接口模块
 │  │  ├─controller            控制器目录
 │  │  |  ├─v1                 api 版本
@@ -29,6 +42,8 @@
 │  │  ├─validate              验证类│  
 │  |  ├─tags.php              行为定义文件
 │  │  └─behavior              行为钩子类
+│  │
+│  ├─service                  服务类
 │  │
 │  ├─extra                    自定义配置参数 
 │  |  ├─property.php          商品属性参数配置
