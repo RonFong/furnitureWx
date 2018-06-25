@@ -97,20 +97,85 @@
         $('body').css('padding-top', 0);
     }
 </script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
 
 <div id="contentEditor">
 </div>
 
 <script>
+    wx.config({
+
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+
+        appId: 'wxa6d691299093f1a4', // 必填，公众号的唯一标识
+
+        timestamp: Date.parse(new Date()), // 必填，生成签名的时间戳
+
+        nonceStr: '', // 必填，生成签名的随机串
+
+        signature: '',// 必填，签名，见附录1
+
+        jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+
+    })
     var contentEditor = new Eleditor({
         el      : '#contentEditor',
-        upload  : {
-            server       : '/Eleditor/upload.php',
-            // headers: {
-            // 	'token': '123123'
-            // },
-            compress     : false,
-            fileSizeLimit: 2
+        // upload  : {
+        //     server       : '/Eleditor/upload.php',
+        //     // headers: {
+        //     // 	'token': '123123'
+        //     // },
+        //     compress     : false,
+        //     fileSizeLimit: 2
+        // },
+        uploader: function(){
+
+            /*必须返回一个Promise对象，成功返回url，失败返回错误信息*/
+            return new Promise(function(_resolve, _reject){
+
+                /*调用微信接口选取图片*/
+                wx.chooseImage({
+                    count: 1,
+                    sizeType: ['compressed'],
+                    success: function (_selected) {
+                        console.log(_selected);
+                        if( _selected.localIds.length == 0 ){
+                            return;
+                        }
+
+                        /*中转到【微信服务器】*/
+                        wx.uploadImage({
+                            localId: _selected.localIds[0],
+                            success: function (_resp) {
+
+                                /*取得图片serverId后传给后端保存处理并返回url*/
+                                $.ajax({
+                                    url: '/Eleditor/upload.php',
+                                    type: 'POST',
+                                    data: {
+                                        /*把serverId传给服务器，服务器取微信换取图片并保存返回url*/
+                                        media_id: _resp.serverId
+                                    },
+                                    cache: false,
+                                    success: function(_resu){
+
+                                        if( _resu.status == 0 ){
+                                            return _reject(_resu.msg);
+                                        }
+                                        /*执行resolve并传递url*/
+                                        _resolve(_resu.url);
+                                    },
+                                    error: function(){
+                                        _reject('上传失败!');
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+
+            });
         },
         /*初始化完成钩子*/
         mounted : function () {
@@ -153,7 +218,20 @@
         toolbars: [
             'insertText',
             'editText',
-            'insertImage',
+            // 'insertImage',
+            {
+                id    : 'insertImage',
+                // tag: 'p,img', //指定P标签操作，可不填
+                name  : '插入图片',
+                handle: function (select, controll) {//回调返回选择的dom对象和控制按钮对象
+                    console.log(22222222222222);
+                    contentEditor.uploader()
+                    /*因为上传要提前绑定按钮到webuploader，所以这里不做上传逻辑，写在mounted*/
+
+                    /*!!!!!!返回false编辑面板不会关掉*/
+                    return false;
+                }
+            },
             'insertLink',
             'insertHr',
             'delete',
@@ -163,7 +241,8 @@
                 // tag: 'p,img', //指定P标签操作，可不填
                 name  : '插入视频',
                 handle: function (select, controll) {//回调返回选择的dom对象和控制按钮对象
-
+                    console.log(11111111111111);
+                    this.uploader()
                     /*因为上传要提前绑定按钮到webuploader，所以这里不做上传逻辑，写在mounted*/
 
                     /*!!!!!!返回false编辑面板不会关掉*/
