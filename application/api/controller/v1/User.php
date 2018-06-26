@@ -21,28 +21,28 @@ class User extends BaseController {
     function __construct(Request $request = null) {
 
         parent::__construct($request);
+        //当前model
         $this->currentModel    = new userModel();
+        //当前validate
         $this->currentValidate = validate('user');
     }
 
     /**
      * 用户注册
+     * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
+     * @throws \think\Exception
      * @throws \think\exception\DbException
      */
-    public function create() {
-
-        // $this->currentValidate->goCheck('create');
-        $userInfo = $this->currentModel->checkExistsUser();
+    public function create()
+    {
+        $this->currentValidate->goCheck('create');
+        $userInfo = $this->currentModel->saveData($this->data);
         if (!$userInfo) {
-            $userInfo = $this->currentModel->saveData($this->data);
-            if (!$userInfo) {
-                return $this->jsonReturn(0, '请求失败');
-            }
             $this->response->error(Response::USER_CREATE_ERROR);
         }
-
-        return $this->jsonReturn(1, '请求成功', $userInfo->toArray());
+        $this->result['userInfo'] = $this->currentModel->toArray();
+        return json($this->result, 201);
     }
 
     /**
@@ -50,7 +50,8 @@ class User extends BaseController {
      * @throws \app\lib\exception\BaseException
      * @throws \think\exception\DbException
      */
-    public function update() {
+    public function update()
+    {
 
         $this->currentValidate->goCheck('update');
         if ($this->currentModel->saveData($this->data)) {
@@ -64,7 +65,8 @@ class User extends BaseController {
      * @throws \app\lib\exception\BaseException
      * @throws \think\exception\DbException
      */
-    public function select() {
+    public function select()
+    {
 
         //$this->currentValidate->goCheck('select');
         $map = [];
