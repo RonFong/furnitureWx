@@ -1,0 +1,119 @@
+{extend name="common/parent" /}
+{block name="css"}
+
+{/block}
+{block name="page"}
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                管理员信息
+            </div>
+            <div class="panel-body">
+                <form id="userForm" role="form" method="post" action="{:url('save')}" enctype="multipart/form-data" >
+                    <input id="id" type="hidden" name="id" value="{$userInfo.id|default=''}">
+                    <input type="hidden" name="__token__" value="{$Request.token}" />
+                    <input type="hidden" name="type" value="1">
+                    <div class="form-group">
+                        <label class="control-label" for="account">账号</label>
+                        <input type="text" class="form-control" id="account" name="account" value="{$userInfo.account|default=''}" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="user_name">昵称</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name" value="{$userInfo.user_name|default=''}" required="true">
+                    </div>
+                    {if condition="!isset($userInfo.id)" }
+                    <div class="form-group">
+                        <label class="control-label" for="password">默认密码</label>
+                        <input type="text" class="form-control" id="password" name="password" readonly value="123456" required="true">
+                    </div>
+                    {/if}
+                    <div class="form-group">
+                        <label class="control-label" for="user_name">角色</label>
+                        <select name="role_id" id="role" required="true" class="form-control">
+                            <option value=""></option>
+                            {volist name="roles" id="vo"}
+                            <option value="{$vo.id|default=''}" {:isset($userInfo) ? ($userInfo.role_id == $vo.id ? 'selected' : '') : ''}>{$vo.role_name|default=''}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">状态</label>
+                        <div>
+                            <input type="radio" id="status-on" name="status" value="1" {:isset($userInfo.status) ? ($userInfo.status == 1 ? 'checked':'') : 'checked'}>
+                            <label for="status-on">启用</label>
+                            &emsp;
+                            <input type="radio" id="status-off" name="status" value="0" {:isset($userInfo.status) ? ($userInfo.status == 0 ? 'checked':'') : ''}>
+                            <label for="status-off">禁用</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="image">上传头像</label>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input id="image"  name="image" type="file">
+                                <input id="org_image" name="org_image" value="{$userInfo.image|default=''}" type="hidden">
+                            </div>
+                        </div>
+                        <p>图片尺寸要求：宽高相等，边长不大于{$imgLength}px</p>
+                    </div>
+                    <div class="form-actions center">
+                        <button  class="btn btn-white btn-round btn-success" type="submit">
+                            提交
+                            <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+<script>
+    $('#role').select2({});
+
+    $('#image').ace_file_input({
+        btn_change:'头像图',
+        btn_choose:'头像图',
+        thumbnail: 'large',
+        droppable:true,
+        before_remove:function () {
+            $('#org_image').val('');
+            return true;
+        }
+    });
+
+    $('#userForm').validate({
+        rules: {
+            account: {
+                remote:{
+                    url:"{:url('account_exist')}",
+                    type:'post',
+                    data:{
+                        id:function () {
+                            return  $('#id').val();
+                        }
+                    }
+                }
+            },
+            user_name: {
+                remote:{
+                    url:"{:url('user_name_exist')}",
+                    type:'post',
+                    data:{
+                        id:function () {
+                            return  $('#id').val();
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    {notempty name="userInfo.image"}
+    $('#image').ace_file_input('show_file_list',[{type: 'image',name:'{$userInfo.image}', path:'{$userInfo.image}'}]);
+    {/notempty}
+</script>
+{/block}
