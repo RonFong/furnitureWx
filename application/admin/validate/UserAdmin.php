@@ -12,13 +12,12 @@ namespace app\admin\validate;
 use \app\admin\model\User;
 use think\Image;
 
-class AdminUser
+class UserAdmin
 {
     protected $rule = [
         'account'          => 'require|length:4,20',
         'password'         => 'require|checkUser|length:6,25',
         'upload_image'     => 'checkSize',
-        'phone_number'     => 'number|length:11|uniqueNumber',
     ];
 
     protected $message = [
@@ -37,7 +36,6 @@ class AdminUser
             'account'       => 'require|token',
             'user_name'     => 'require',
             'upload_image',
-            'phone_number'
         ],
     ];
 
@@ -100,19 +98,6 @@ class AdminUser
 
             if ($imgInfo->width() > $data['imageMaxLength'])
                 return '图片边长超过限制';
-        }
-        return true;
-    }
-
-    protected function uniqueNumber($value, $rule, $data)
-    {
-        if (!isset($data['id'])) {
-            $row = User::get(['phone_number' => $value]);
-        } else {
-            $row = User::get(['id' => ['neq', $data['id']], 'phone_number' => $value]);
-        }
-        if ($row) {
-            return '此手机号已存在';
         }
         return true;
     }
