@@ -6,14 +6,13 @@
 // +----------------------------------------------------------------------
 // | CreateTime: 2018/6/13 
 // +----------------------------------------------------------------------
-
 namespace app\api\controller;
 
 use \app\common\controller\Controller;
 use think\Request;
 
-abstract class BaseController extends Controller
-{
+abstract class BaseController extends Controller {
+
     /**
      * 调用数据
      * @var array
@@ -34,22 +33,44 @@ abstract class BaseController extends Controller
      */
     protected $result = [
         'state' => 1,
-        'msg'  => 'success',
-        'data' => []
+        'msg'   => 'success',
+        'data'  => [],
     ];
 
     protected $page;
 
     protected $row;
 
-    public function __construct(Request $request = null)
-    {
+    public function __construct(Request $request = null) {
+
         parent::__construct($request);
         $params = $request->param();
         unset($params['version']);
         $this->data = $params;
         $this->page = isset($this->data['page']) ? $this->data['page'] : 1;
-        $this->row = isset($this->data['row']) ? $this->data['row'] : 10;
+        $this->row  = isset($this->data['row']) ? $this->data['row'] : 10;
     }
 
+    /**
+     * 返回json结果
+     * @param int $state
+     * @param string $msg
+     * @param string $data
+     */
+    protected function jsonReturn($state = 1, $msg = '', $data = '') {
+
+        if (!$data) {
+            $data = (object)[];
+        }
+        if (is_string($data)) {
+            $data = [
+                'data' => $data,
+            ];
+        }
+        exit(json_encode([
+            "state" => $state,
+            "msg"   => $msg,
+            "data"  => $data,
+        ], JSON_UNESCAPED_UNICODE));
+    }
 }
