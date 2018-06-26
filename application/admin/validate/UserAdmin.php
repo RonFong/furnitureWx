@@ -9,10 +9,11 @@
 
 namespace app\admin\validate;
 
-use \app\admin\model\User;
+use \app\admin\model\UserAdmin as UserAdminModel;
+use app\common\validate\UserAdmin as CoreUserAdmin;
 use think\Image;
 
-class UserAdmin
+class UserAdmin extends CoreUserAdmin
 {
     protected $rule = [
         'account'          => 'require|length:4,20',
@@ -41,7 +42,7 @@ class UserAdmin
 
     protected function checkUser($value, $rule, $data)
     {
-        $userInfo = User::get(['account' => $data['account']]);
+        $userInfo = UserAdminModel::get(['account' => $data['account']]);
         if(empty($userInfo)) {
             return '此用户不存在';
         }
@@ -60,7 +61,7 @@ class UserAdmin
 
     protected function checkPassword($value, $rule, $data)
     {
-        $userInfo = User::get(function ($query) {
+        $userInfo = UserAdminModel::get(function ($query) {
             $query->where('account', session('user_info.account'))->field('password, salt_value');
         });
         $orgPassword = md5(md5($data['org_password']).$userInfo->salt_value);
