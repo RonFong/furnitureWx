@@ -12,7 +12,7 @@ namespace app\admin\controller;
 use app\admin\model\User;
 use think\Request;
 
-class AdminUser extends BaseController
+class UserAdmin extends BaseController
 {
     public function __construct(Request $request = null)
     {
