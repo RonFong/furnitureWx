@@ -9,7 +9,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\User;
+use app\admin\model\UserAdmin as userAdminModel;
 use think\Request;
 
 class UserAdmin extends BaseController
@@ -17,7 +17,7 @@ class UserAdmin extends BaseController
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new User;
+        $this->currentModel = new userAdminModel;
     }
 
     public function data()
@@ -35,7 +35,7 @@ class UserAdmin extends BaseController
             if ($userInfo)
                 $this->assign('userInfo', $userInfo);
         }
-        $this->assign('imgLength', User::IMAGE_MAX_LENGTH);
+        $this->assign('imgLength', userAdminModel::IMAGE_MAX_LENGTH);
 
         //角色
         $roles = model('role')->field('id, role_name')->select();
@@ -50,9 +50,9 @@ class UserAdmin extends BaseController
         }
 
         $this->params['upload_image'] = $this->request->file('image');
-        $this->params['imageMaxLength'] = User::IMAGE_MAX_LENGTH;
+        $this->params['imageMaxLength'] = userAdminModel::IMAGE_MAX_LENGTH;
 
-        $validateResult = $this->validate($this->params, 'AdminUser.edit');
+        $validateResult = $this->validate($this->params, 'UserAdmin.edit');
         if ($validateResult !== true) {
             $this->error($validateResult);
         }
@@ -80,7 +80,7 @@ class UserAdmin extends BaseController
     public function updatePassword()
     {
         $params = $this->request->param();
-        $checkResult = $this->validate($params, 'AdminUser.updatePassword');
+        $checkResult = $this->validate($params, 'UserAdmin.updatePassword');
         if(true !== $checkResult){
             $this->error($checkResult);
         }
