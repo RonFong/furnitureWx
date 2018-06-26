@@ -54,6 +54,7 @@ class ExceptionHandler extends Handle
         $result = [
             'state' => 0,
             'msg' => $this->msg,
+            'data' => [],
             'error_code' => $this->errorCode,
             'method' => $request->method(),
             'request_url' => $request->url(),
