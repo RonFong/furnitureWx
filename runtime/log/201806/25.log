@@ -1,0 +1,3369 @@
+---------------------------------------------------------------
+[ 2018-06-25T00:15:13+08:00 ] 203.208.60.136 GET /
+[ info ] wenping.7qiaoban.cn/ [运行时间：0.027388s][吞吐率：36.51req/s] [内存消耗：1,587.81kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'wenping.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:24:44+08:00 ] 217.21.154.184 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024519s][吞吐率：40.78req/s] [内存消耗：1,586.17kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:25:22+08:00 ] 203.208.60.134 GET /
+[ info ] wenping.7qiaoban.cn/ [运行时间：0.026123s][吞吐率：38.28req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'wenping.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:39:16+08:00 ] 189.124.90.246 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.026335s][吞吐率：37.97req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:45:28+08:00 ] 203.208.60.181 GET /
+[ info ] blog.7qiaoban.cn/ [运行时间：0.024786s][吞吐率：40.35req/s] [内存消耗：1,587.82kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'blog.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:46:57+08:00 ] 212.143.222.224 HEAD /
+[ info ] 47.98.223.33/ [运行时间：0.024673s][吞吐率：40.53req/s] [内存消耗：1,584.51kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:50:32+08:00 ] 203.208.60.216 GET /
+[ info ] bbs.7qiaoban.cn/ [运行时间：0.026710s][吞吐率：37.44req/s] [内存消耗：1,587.15kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'bbs.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T00:55:29+08:00 ] 203.208.60.181 GET /
+[ info ] blog.7qiaoban.cn/ [运行时间：0.025680s][吞吐率：38.94req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'blog.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:05:31+08:00 ] 203.208.60.215 GET /
+[ info ] bbs.7qiaoban.cn/ [运行时间：0.025792s][吞吐率：38.77req/s] [内存消耗：1,587.80kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'bbs.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:17:15+08:00 ] 203.208.60.137 GET /
+[ info ] news.7qiaoban.cn/ [运行时间：0.025734s][吞吐率：38.86req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'news.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:17:16+08:00 ] 203.208.60.137 GET /
+[ info ] news.7qiaoban.cn/ [运行时间：0.029266s][吞吐率：34.17req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'news.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:17:18+08:00 ] 203.208.60.137 GET /
+[ info ] news.7qiaoban.cn/ [运行时间：0.026253s][吞吐率：38.09req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'news.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:28:03+08:00 ] 220.181.108.172 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.025816s][吞吐率：38.74req/s] [内存消耗：1,586.63kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:28:03+08:00 ] 220.181.108.75 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.022633s][吞吐率：44.18req/s] [内存消耗：1,377.15kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:28:03+08:00 ] 220.181.108.111 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.034196s][吞吐率：29.24req/s] [内存消耗：1,740.39kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=gusp7bo8isb9fpn1n22ldrckhs;',
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001016s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T01:58:38+08:00 ] 94.123.85.108 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.025335s][吞吐率：39.47req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T02:02:31+08:00 ] 180.234.71.138 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024923s][吞吐率：40.12req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T02:26:39+08:00 ] 203.208.60.137 GET /
+[ info ] news.7qiaoban.cn/ [运行时间：0.026155s][吞吐率：38.23req/s] [内存消耗：1,587.82kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'news.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T02:28:36+08:00 ] 189.47.24.115 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024701s][吞吐率：40.48req/s] [内存消耗：1,586.17kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T03:17:14+08:00 ] 140.205.205.23 HEAD /
+[ info ] www.7qiaoban.top:443/ [运行时间：0.024998s][吞吐率：40.00req/s] [内存消耗：1,585.39kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'user-agent' => 'Go-http-client/1.1',
+  'host' => 'www.7qiaoban.top:443',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T03:17:57+08:00 ] 140.205.205.25 HEAD /
+[ info ] www.7qiaoban.cn:443/ [运行时间：0.024415s][吞吐率：40.96req/s] [内存消耗：1,585.39kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'user-agent' => 'Go-http-client/1.1',
+  'host' => 'www.7qiaoban.cn:443',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T03:22:36+08:00 ] 203.208.60.137 GET /
+[ info ] wenping.7qiaoban.cn/ [运行时间：0.025518s][吞吐率：39.19req/s] [内存消耗：1,587.82kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'wenping.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T03:32:48+08:00 ] 203.208.60.136 GET /
+[ info ] wenping.7qiaoban.cn/ [运行时间：0.027893s][吞吐率：35.85req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'wenping.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:21:03+08:00 ] 203.208.60.182 GET /
+[ info ] blog.7qiaoban.cn/ [运行时间：0.026625s][吞吐率：37.56req/s] [内存消耗：1,587.82kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'blog.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:28:53+08:00 ] 203.208.60.215 GET /
+[ info ] bbs.7qiaoban.cn/ [运行时间：0.027213s][吞吐率：36.75req/s] [内存消耗：1,587.15kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'bbs.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:29:27+08:00 ] 140.205.205.23 GET /
+[ info ] www.7qiaoban.top/ [运行时间：0.025479s][吞吐率：39.25req/s] [内存消耗：1,586.66kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'host' => 'www.7qiaoban.top',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:29:27+08:00 ] 140.205.205.23 GET /admin/index/index.html
+[ info ] www.7qiaoban.top/admin/index/index.html [运行时间：0.021822s][吞吐率：45.83req/s] [内存消耗：1,377.18kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'host' => 'www.7qiaoban.top',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:29:27+08:00 ] 140.205.205.25 GET /Admin/login/index.html
+[ info ] www.7qiaoban.top/Admin/login/index.html [运行时间：0.041824s][吞吐率：23.91req/s] [内存消耗：1,738.15kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'host' => 'www.7qiaoban.top',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001383s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:29:27+08:00 ] 140.205.205.23 GET /Admin/login/index.html
+[ info ] www.7qiaoban.top/Admin/login/index.html [运行时间：0.033860s][吞吐率：29.53req/s] [内存消耗：1,739.73kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'referer' => 'https://www.7qiaoban.top/Admin/login/index.html',
+  'host' => 'www.7qiaoban.top',
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.000960s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:29:28+08:00 ] 140.205.205.23 GET /Admin/login/7qiaoban.cn
+[ info ] www.7qiaoban.top/Admin/login/7qiaoban.cn [运行时间：0.043953s][吞吐率：22.75req/s] [内存消耗：1,742.83kb] [文件加载：55]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => '7qiaoban.cn',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'referer' => 'https://www.7qiaoban.top/Admin/login/index.html',
+  'host' => 'www.7qiaoban.top',
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001006s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:29:28+08:00 ] 140.205.205.23 GET /Admin/login/7qiaoban.cn
+[ info ] www.7qiaoban.top/Admin/login/7qiaoban.cn [运行时间：0.026617s][吞吐率：37.57req/s] [内存消耗：1,423.16kb] [文件加载：45]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '404',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'referer' => 'https://www.7qiaoban.top/Admin/login/index.html',
+  'host' => 'www.7qiaoban.top',
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:34:17+08:00 ] 140.205.205.23 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.025147s][吞吐率：39.77req/s] [内存消耗：1,586.65kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:34:17+08:00 ] 140.205.205.23 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.021526s][吞吐率：46.46req/s] [内存消耗：1,377.16kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:34:17+08:00 ] 140.205.205.23 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.032630s][吞吐率：30.65req/s] [内存消耗：1,738.13kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.000953s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:34:18+08:00 ] 140.205.205.23 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.032737s][吞吐率：30.55req/s] [内存消耗：1,739.71kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'referer' => 'https://www.7qiaoban.cn/Admin/login/index.html',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001005s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:34:18+08:00 ] 140.205.205.23 GET /Admin/login/7qiaoban.cn
+[ info ] www.7qiaoban.cn/Admin/login/7qiaoban.cn [运行时间：0.043379s][吞吐率：23.05req/s] [内存消耗：1,742.80kb] [文件加载：55]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => '7qiaoban.cn',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'referer' => 'https://www.7qiaoban.cn/Admin/login/index.html',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.000961s ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:34:18+08:00 ] 140.205.205.23 GET /Admin/login/7qiaoban.cn
+[ info ] www.7qiaoban.cn/Admin/login/7qiaoban.cn [运行时间：0.026577s][吞吐率：37.63req/s] [内存消耗：1,423.13kb] [文件加载：45]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '404',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'referer' => 'https://www.7qiaoban.cn/Admin/login/index.html',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Scrapy/1.5.0 (+https://scrapy.org)',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'en',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:36:06+08:00 ] 180.150.71.114 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024832s][吞吐率：40.27req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T04:44:01+08:00 ] 203.208.60.183 GET /
+[ info ] blog.7qiaoban.cn/ [运行时间：0.024782s][吞吐率：40.35req/s] [内存消耗：1,587.16kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'blog.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T05:04:38+08:00 ] 203.208.60.217 GET /
+[ info ] bbs.7qiaoban.cn/ [运行时间：0.024988s][吞吐率：40.02req/s] [内存消耗：1,587.80kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'bbs.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T05:06:10+08:00 ] 192.40.240.149 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024916s][吞吐率：40.13req/s] [内存消耗：1,586.17kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T05:29:58+08:00 ] 203.208.60.136 GET /
+[ info ] news.7qiaoban.cn/ [运行时间：0.025812s][吞吐率：38.74req/s] [内存消耗：1,587.82kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'news.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T06:20:47+08:00 ] 203.208.60.138 GET /
+[ info ] wenping.7qiaoban.cn/ [运行时间：0.024404s][吞吐率：40.98req/s] [内存消耗：1,587.82kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip,deflate,br',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'from' => 'googlebot(at)googlebot.com',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'connection' => 'keep-alive',
+  'host' => 'wenping.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T07:14:38+08:00 ] 112.43.228.86 HEAD /
+[ info ] www.7qiaoban.top/ [运行时间：0.030568s][吞吐率：32.71req/s] [内存消耗：1,585.67kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.7qiaoban.top',
+  'accept' => '*/*',
+  'user-agent' => 'Chrome/57',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T08:19:32+08:00 ] 123.126.113.149 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.024732s][吞吐率：40.43req/s] [内存消耗：1,588.02kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'user-agent' => 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'zh-cn',
+  'accept' => '*/*',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T08:20:36+08:00 ] 123.126.113.149 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.021402s][吞吐率：46.72req/s] [内存消耗：1,378.53kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'user-agent' => 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'zh-cn',
+  'accept' => '*/*',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T08:21:40+08:00 ] 123.126.113.149 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.035064s][吞吐率：28.52req/s] [内存消耗：1,740.90kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'user-agent' => 'Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)',
+  'accept-encoding' => 'gzip,deflate',
+  'accept-language' => 'zh-cn',
+  'accept' => '*/*',
+  'cookie' => 'PHPSESSID=4f56ehk3d8gnbr34vm6u0e64dj;',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001004s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:10:20+08:00 ] 52.53.201.78 GET /
+[ info ] www.7qiaoban.top/ [运行时间：0.025218s][吞吐率：39.65req/s] [内存消耗：1,586.39kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'host' => 'www.7qiaoban.top',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:25:41+08:00 ] 123.125.71.60 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.024589s][吞吐率：40.67req/s] [内存消耗：1,586.63kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:25:42+08:00 ] 220.181.108.168 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.021585s][吞吐率：46.33req/s] [内存消耗：1,377.15kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:25:42+08:00 ] 123.125.71.101 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.033671s][吞吐率：29.70req/s] [内存消耗：1,740.39kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=043m01blk53e1oit3slleejjvp;',
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.000950s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:32:24+08:00 ] 59.110.6.177 GET /
+[ info ] 47.92.17.146:80/ [运行时间：0.024998s][吞吐率：40.00req/s] [内存消耗：1,585.53kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'identity',
+  'connection' => 'Close',
+  'host' => '47.92.17.146:80',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:36:24+08:00 ] 187.56.81.96 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.025948s][吞吐率：38.54req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T09:50:55+08:00 ] 185.35.63.207 GET /
+[ info ] 47.98.223.33/ [运行时间：0.024851s][吞吐率：40.24req/s] [内存消耗：1,585.79kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'language' => 'en',
+  'accept' => '*/*',
+  'user-agent' => 'ro',
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T10:55:51+08:00 ] 43.229.94.41 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.025550s][吞吐率：39.14req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T11:41:35+08:00 ] 139.162.113.204 GET /
+[ info ] 47.98.223.33/ [运行时间：0.024677s][吞吐率：40.52req/s] [内存消耗：1,585.65kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'close',
+  'user-agent' => 'Go-http-client/1.1',
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T11:55:32+08:00 ] 153.99.59.185 HEAD /
+[ info ] www.7qiaoban.top/ [运行时间：0.024716s][吞吐率：40.46req/s] [内存消耗：1,585.67kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.7qiaoban.top',
+  'accept' => '*/*',
+  'user-agent' => 'Chrome/57',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T12:15:48+08:00 ] 101.132.156.172 GET /
+[ info ] news.7qiaoban.cn/ [运行时间：0.024972s][吞吐率：40.04req/s] [内存消耗：1,586.39kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => 'news.7qiaoban.cn',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T12:17:12+08:00 ] 103.23.237.28 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024647s][吞吐率：40.57req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T12:39:43+08:00 ] 39.107.127.149 GET /
+[ info ] sdds-gov-cn.blog.7qiaoban.cn/ [运行时间：0.024773s][吞吐率：40.37req/s] [内存消耗：1,586.41kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => 'sdds-gov-cn.blog.7qiaoban.cn',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T12:42:18+08:00 ] 47.98.60.52 GET /
+[ info ] sdds-gov-cn.www.7qiaoban.cn/ [运行时间：0.026338s][吞吐率：37.97req/s] [内存消耗：1,586.41kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => 'sdds-gov-cn.www.7qiaoban.cn',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T12:43:21+08:00 ] 188.65.32.120 HEAD /
+[ info ] 47.98.223.33/ [运行时间：0.024637s][吞吐率：40.59req/s] [内存消耗：1,584.51kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T12:55:47+08:00 ] 124.41.193.176 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.025690s][吞吐率：38.93req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T13:29:25+08:00 ] 106.14.168.238 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.025968s][吞吐率：38.51req/s] [内存消耗：1,586.50kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T13:29:25+08:00 ] 106.14.168.238 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.022671s][吞吐率：44.11req/s] [内存消耗：1,377.02kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T13:57:51+08:00 ] 60.191.38.78 GET /
+[ info ] 47.98.223.33:443/ [运行时间：0.025690s][吞吐率：38.93req/s] [内存消耗：1,586.55kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0',
+  'host' => '47.98.223.33:443',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T14:51:40+08:00 ] 182.240.125.106 HEAD /
+[ info ] www.7qiaoban.top/ [运行时间：0.026379s][吞吐率：37.91req/s] [内存消耗：1,585.67kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.7qiaoban.top',
+  'accept' => '*/*',
+  'user-agent' => 'Chrome/57',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T15:19:06+08:00 ] 177.105.228.203 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.028595s][吞吐率：34.97req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T15:43:41+08:00 ] 196.250.219.185 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.025178s][吞吐率：39.72req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T15:48:35+08:00 ] 82.103.97.106 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.025385s][吞吐率：39.39req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:23:39+08:00 ] 220.181.51.103 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.026204s][吞吐率：38.16req/s] [内存消耗：1,586.73kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:23:42+08:00 ] 220.181.51.79 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.024603s][吞吐率：40.65req/s] [内存消耗：1,586.73kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:05+08:00 ] 220.181.108.177 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.025005s][吞吐率：39.99req/s] [内存消耗：1,586.63kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:05+08:00 ] 220.181.108.152 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.021275s][吞吐率：47.00req/s] [内存消耗：1,377.15kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:05+08:00 ] 220.181.108.147 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.032159s][吞吐率：31.10req/s] [内存消耗：1,740.39kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=9ed8bi5hsan22k1utolb09h31r;',
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.000918s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:27+08:00 ] 220.181.51.110 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.021278s][吞吐率：47.00req/s] [内存消耗：1,377.24kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:31+08:00 ] 220.181.51.109 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.022952s][吞吐率：43.57req/s] [内存消耗：1,377.24kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:48+08:00 ] 220.181.51.110 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.033243s][吞吐率：30.08req/s] [内存消耗：1,740.55kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=ita3dhg91e973e3ogk2phrtoj9;',
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.000965s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:24:54+08:00 ] 220.181.51.110 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.033447s][吞吐率：29.90req/s] [内存消耗：1,740.55kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=va4mdnqllkkf4r5dg4t9v63hvr;',
+  'accept' => '*/*',
+  'if-none-match' => '"@NULL@"',
+  'accept-language' => 'zh-cn,zh-tw',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001030s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T17:54:24+08:00 ] 183.250.233.25 HEAD /
+[ info ] www.7qiaoban.top/ [运行时间：0.024836s][吞吐率：40.26req/s] [内存消耗：1,585.67kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.7qiaoban.top',
+  'accept' => '*/*',
+  'user-agent' => 'Chrome/57',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T18:01:32+08:00 ] 139.199.63.33 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.024418s][吞吐率：40.95req/s] [内存消耗：1,586.48kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => '*/*',
+  'connection' => 'close',
+  'user-agent' => 'Mozilla/4.0 (compatible; MSIE 6.1; Windows NT)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T18:01:32+08:00 ] 139.199.63.33 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.021466s][吞吐率：46.59req/s] [内存消耗：1,376.99kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => '*/*',
+  'connection' => 'close',
+  'user-agent' => 'Mozilla/4.0 (compatible; MSIE 6.1; Windows NT)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T18:01:32+08:00 ] 139.199.63.33 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.033512s][吞吐率：29.84req/s] [内存消耗：1,737.46kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => '*/*',
+  'connection' => 'close',
+  'user-agent' => 'Mozilla/4.0 (compatible; MSIE 6.1; Windows NT)',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001024s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T18:51:44+08:00 ] 107.170.254.21 GET /
+[ info ] 47.98.223.33/ [运行时间：0.024640s][吞吐率：40.58req/s] [内存消耗：1,585.74kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 zgrab/0.x',
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T19:08:34+08:00 ] 106.15.186.63 GET /
+[ info ] 47.98.223.33/ [运行时间：0.025735s][吞吐率：38.86req/s] [内存消耗：1,586.37kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => '47.98.223.33',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T19:20:36+08:00 ] 101.132.106.40 GET /
+[ info ] 47.98.223.33/ [运行时间：0.027360s][吞吐率：36.55req/s] [内存消耗：1,586.37kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'accept' => 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2',
+  'host' => '47.98.223.33',
+  'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T20:48:20+08:00 ] 202.166.207.233 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.026863s][吞吐率：37.23req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:07:22+08:00 ] 177.73.26.191 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.027737s][吞吐率：36.05req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:13:21+08:00 ] 113.90.38.209 GET /Eleditor/demoi
+[ info ] www.7qiaoban.cn/Eleditor/demoi [运行时间：0.036796s][吞吐率：27.18req/s] [内存消耗：1,423.44kb] [文件加载：45]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Eleditor',
+    1 => 'demoi',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:13:21+08:00 ] 113.90.38.209 GET /Eleditor/demoi
+[ info ] www.7qiaoban.cn/Eleditor/demoi [运行时间：0.026789s][吞吐率：37.33req/s] [内存消耗：1,423.37kb] [文件加载：45]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '404',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:17:33+08:00 ] 184.105.247.194 GET /
+[ info ] 47.98.223.33/ [运行时间：0.025077s][吞吐率：39.88req/s] [内存消耗：1,584.95kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:21:53+08:00 ] 52.53.201.78 GET /
+[ info ] www.7qiaoban.cn/ [运行时间：0.025574s][吞吐率：39.10req/s] [内存消耗：1,586.70kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'referer' => 'http://www.7qiaoban.cn/',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:21:53+08:00 ] 52.53.201.78 GET /admin/index/index.html
+[ info ] www.7qiaoban.cn/admin/index/index.html [运行时间：0.022862s][吞吐率：43.74req/s] [内存消耗：1,377.48kb] [文件加载：44]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'referer' => 'https://www.7qiaoban.cn/',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T21:21:54+08:00 ] 52.53.201.78 GET /Admin/login/index.html
+[ info ] www.7qiaoban.cn/Admin/login/index.html [运行时间：0.033563s][吞吐率：29.79req/s] [内存消耗：1,738.31kb] [文件加载：53]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'Admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'referer' => 'https://www.7qiaoban.cn/admin/index/index.html',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\CheckLogin @module_init [ RunTime:0.001068s ]
+[ info ] [ RUN ] app\admin\controller\Login->index[ /www/wwwroot/furniture/application/admin/controller/Login.php ]
+[ info ] [ VIEW ] /www/wwwroot/furniture/public/../application/admin/view/login/index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T22:21:46+08:00 ] 209.126.136.7 GET /
+[ info ] 47.98.223.33/ [运行时间：0.025865s][吞吐率：38.66req/s] [内存消耗：1,586.43kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'accept' => '*/*',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+  'host' => '47.98.223.33',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T22:41:29+08:00 ] 202.79.63.116 GET /
+[ info ] 47.98.223.33:80/ [运行时间：0.024740s][吞吐率：40.42req/s] [内存消耗：1,585.92kb] [文件加载：49]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+  'host' => '47.98.223.33:80',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /www/wwwroot/furniture/application/index/controller/Index.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T23:32:14+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.060496s][吞吐率：16.53req/s] [内存消耗：2,674.04kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002592s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002335s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.001942s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001717s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001663s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001659s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001640s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001641s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001666s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:33:09+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.019054s][吞吐率：52.48req/s] [内存消耗：1,219.77kb] [文件加载：40]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T23:33:26+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.066393s][吞吐率：15.06req/s] [内存消耗：2,674.69kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003745s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.003052s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.002637s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002474s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002387s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002386s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002391s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002415s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002394s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:34:09+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.068189s][吞吐率：14.67req/s] [内存消耗：2,674.69kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004453s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.003555s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.003120s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.003021s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002995s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002962s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002961s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002923s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002916s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:34:17+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.059230s][吞吐率：16.88req/s] [内存消耗：2,674.69kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002925s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002445s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.002094s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001889s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001875s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001855s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001855s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001789s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.001810s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:34:23+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.062969s][吞吐率：15.88req/s] [内存消耗：2,674.28kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003651s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002893s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.002512s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002337s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002290s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002274s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002289s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002284s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002465s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:34:24+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.060158s][吞吐率：16.62req/s] [内存消耗：2,674.28kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003341s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002723s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.002545s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002176s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002106s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002286s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002213s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002150s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002189s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:34:32+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.040426s][吞吐率：24.74req/s] [内存消耗：2,613.10kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002481s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002137s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:36:40+08:00 ] 113.90.38.209 GET /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.042875s][吞吐率：23.32req/s] [内存消耗：2,613.05kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002836s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002376s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:36:44+08:00 ] 113.90.38.209 GET /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.039848s][吞吐率：25.10req/s] [内存消耗：2,613.70kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002807s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002249s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:37:05+08:00 ] 113.90.38.209 GET /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.038157s][吞吐率：26.21req/s] [内存消耗：1,427.58kb] [文件加载：47]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1',
+    2 => 'user',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T23:37:05+08:00 ] 113.90.38.209 GET /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.026796s][吞吐率：37.32req/s] [内存消耗：1,424.38kb] [文件加载：45]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '404',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-06-25T23:37:10+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.044421s][吞吐率：22.51req/s] [内存消耗：2,613.27kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004742s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.003804s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:37:22+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.053808s][吞吐率：18.58req/s] [内存消耗：2,780.64kb] [文件加载：68]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002759s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002394s ]
+[ error ] [0]method not exist:think\db\Query->first[/www/wwwroot/furniture/thinkphp/library/think/db/Query.php:94]
+---------------------------------------------------------------
+[ 2018-06-25T23:39:07+08:00 ] 113.90.38.209 GET /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.075588s][吞吐率：13.23req/s] [内存消耗：2,675.63kb] [文件加载：63]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'select',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'host' => 'www.7qiaoban.cn',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->select[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003704s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.003289s ]
+[ sql ] [ SQL ] SELECT * FROM `user` LIMIT 0,10 [ RunTime:0.002616s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002442s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002415s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002408s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002378s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002393s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002437s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:39:11+08:00 ] 39.106.72.110 POST /api/v1/user/create
+[ info ] www.7qiaoban.cn/api/v1/user/create [运行时间：0.054240s][吞吐率：18.44req/s] [内存消耗：2,779.38kb] [文件加载：68]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Java/1.8.0_77',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'connection' => 'close',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002784s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002334s ]
+[ error ] [0]method not exist:think\db\Query->first[/www/wwwroot/furniture/thinkphp/library/think/db/Query.php:94]
+---------------------------------------------------------------
+[ 2018-06-25T23:39:20+08:00 ] 39.106.72.110 POST /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.064819s][吞吐率：15.43req/s] [内存消耗：2,779.30kb] [文件加载：68]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Java/1.8.0_77',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'connection' => 'close',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002773s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002530s ]
+[ error ] [0]method not exist:think\db\Query->first[/www/wwwroot/furniture/thinkphp/library/think/db/Query.php:94]
+---------------------------------------------------------------
+[ 2018-06-25T23:39:45+08:00 ] 39.106.72.110 POST /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.040951s][吞吐率：24.42req/s] [内存消耗：2,612.93kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Java/1.8.0_77',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'connection' => 'close',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002720s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002303s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:41:46+08:00 ] 39.106.72.110 POST /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.045606s][吞吐率：21.93req/s] [内存消耗：2,618.25kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Java/1.8.0_77',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'connection' => 'close',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003327s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002764s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `wx_openid` = 'wx236546754' LIMIT 1 [ RunTime:0.002387s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:46:13+08:00 ] 39.106.72.110 POST /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.042988s][吞吐率：23.26req/s] [内存消耗：2,621.45kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Java/1.8.0_77',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'connection' => 'close',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003682s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002911s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `wx_openid` = 'wx236546754' LIMIT 1 [ RunTime:0.002610s ]
+---------------------------------------------------------------
+[ 2018-06-25T23:47:09+08:00 ] 39.106.72.110 POST /api/v1/user
+[ info ] www.7qiaoban.cn/api/v1/user [运行时间：0.051582s][吞吐率：19.39req/s] [内存消耗：2,614.69kb] [文件加载：59]
+[ info ] [ LANG ] /www/wwwroot/furniture/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'v1.User',
+    2 => 'create',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'host' => 'www.7qiaoban.cn',
+  'user-agent' => 'Java/1.8.0_77',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'connection' => 'close',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'version' => 'v1',
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\api\controller\v1\User->create[ /www/wwwroot/furniture/application/api/controller/v1/User.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003645s ] mysql:host=47.98.223.33;dbname=furniture;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002802s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `wx_openid` = 'wx236546754' LIMIT 1 [ RunTime:0.002496s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002232s ]
+[ sql ] [ SQL ] SELECT `user_name` FROM `user` WHERE  `id` = 0 LIMIT 1 [ RunTime:0.002230s ]

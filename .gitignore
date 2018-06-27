@@ -1,4 +1,7 @@
 .idea
-composer.lock
+vendor/
 *.log
-thinkphp
+thinkphp/
+/runtime/
+LICENSE.txt
+/log/

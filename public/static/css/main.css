@@ -1,0 +1,76 @@
+.dataTable > thead > tr > th[class*="sort"]{position: relative;}
+.dataTable > thead > tr > th[class*="sort"]::after{position: absolute; right:10px;top:9px;}
+.dataTable > tbody > tr > td[class="dataTables_empty"]
+{
+    text-align: center;
+}
+.select2-selection__rendered
+{
+    font-size: 13px;
+}
+
+.select2-selection--multiple .select2-selection__rendered .select2-selection__clear
+{
+    margin: 6px 0 0 0  !important;
+}
+
+.select2-container .select2-selection--single
+{
+    height: 34px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered
+{
+    color: #444;
+    line-height: 32px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow
+{
+    height: 32px;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 20px;
+}
+
+.select2-container--default .select2-selection .select2-selection__clear
+{
+    font-size: 16px;
+    position: absolute;
+    right: 20px;
+}
+
+.dropdown-menu
+{
+    z-index: 1026;
+}
+
+.table-ellipsis
+{
+    table-layout:fixed;min-width:1671px;
+}
+
+.table-ellipsis td
+{
+    white-space:nowrap;overflow:hidden; text-overflow:ellipsis;
+}
+
+.table-operate
+{
+    min-width:150px;
+}
+
+.table-checkbox
+{
+    min-width:60px;
+}
+
+.profile-info-value > span + span::before
+{
+    border-bottom: 1px solid #fff;
+    color: #666;
+    content:'';
+    display: inline;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+

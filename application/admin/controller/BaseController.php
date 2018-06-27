@@ -15,7 +15,7 @@ use think\Cookie;
 abstract class BaseController extends Controller
 {
     //当前模型
-    protected $currentModel;
+    public $currentModel;
 
     protected function _initialize()
     {

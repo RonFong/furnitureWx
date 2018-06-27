@@ -9,7 +9,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\User;
+use app\admin\model\UserAdmin;
 use think\Controller;
 use think\Session;
 
@@ -26,15 +26,12 @@ class Login extends Controller
 
     public function login()
     {
-        $validate = validate('AdminUser');
+        $validate = validate('UserAdmin');
         if(!$validate->check($this->request->param())){
             $this->error($validate->getError());
         }
-        if(isset($user_info) && !empty($user_info)) {
-            session('user_info',$user_info);
-        }
         $backUrl = redirect()->restore()->getData();
-        (new User())->setUserSession($this->request->param('account'));
+        (new UserAdmin())->setUserSession($this->request->param('account'));
         $this->success('success', $backUrl ? $backUrl : 'Index/index');
     }
 

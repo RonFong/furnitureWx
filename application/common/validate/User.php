@@ -20,7 +20,7 @@ class User extends BaseValidate
         'group_type'        => 'require|in:1,2',            //所属主体类型
         'phone'             => 'require|isPhoneNo|unique:user',         //手机号
         'type'              => 'require|in:1,2,3',          //用户类型
-        'wx_account'        => 'require|unique:user',    //微信账号
+        'wx_account'        => 'unique:user',    //微信账号
         'wx_openid'         => 'require|unique:user',     //微信唯一ID
     ];
 

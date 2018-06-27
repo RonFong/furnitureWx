@@ -23,13 +23,17 @@ class User extends BaseController
     function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new userModel();
+        //当前model
+        $this->currentModel    = new userModel();
+        //当前validate
         $this->currentValidate = validate('user');
     }
 
     /**
      * 用户注册
+     * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
+     * @throws \think\Exception
      * @throws \think\exception\DbException
      */
     public function create()
@@ -49,6 +53,7 @@ class User extends BaseController
      */
     public function update()
     {
+
         $this->currentValidate->goCheck('update');
         if ($this->currentModel->saveData($this->data)) {
             return json($this->result, 202);
