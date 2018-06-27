@@ -25,4 +25,5 @@ Route::put('api/:version/user', 'api/:version.User/update');
 //删除用户数据
 Route::delete('api/:version/user/:id', 'api/:version.User/delete');
 
+//获取openid
 Route::get('api/:version/getOpenid', 'api/:version.User/getOpenid');

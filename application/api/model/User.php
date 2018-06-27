@@ -21,8 +21,12 @@ class User extends BaseModel
      */
     public function saveData($data)
     {
-        $result = $this->save($data);
-        return $result;
+        //$result = $this->save($data);
+        $user = model('User');
+        // 模型对象赋值
+        $user->data($data);
+        $user->save();
+        return $user->id;
     }
 
     /**
@@ -49,18 +53,6 @@ class User extends BaseModel
     public function selectUser($map, $page, $row)
     {
         return $this->where($map)->page($page, $row)->select();
-    }
-
-    /**
-     * 检查用户是否存在
-     * @param $openid
-     * @return bool
-     */
-    public function checkExistsUser($openid)
-    {
-        $user = $this->where('wx_openid',$openid)->find();
-
-        return empty($user) ? false : $user;
     }
 
 }

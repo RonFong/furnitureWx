@@ -47,8 +47,8 @@ class User extends BaseValidate
         //新用户授权小程序获取账号信息 （用户注册）
         'create'   => [
             'user_name',
-            'type'          => 'require|in:3',      //规则覆盖
-            'wx_account'    => 'unique:user',
+            //'type'          => 'require|in:3',      //规则覆盖
+            //'wx_account'    => 'unique:user',
             'wx_openid'     => 'unique:user',
         ],
 

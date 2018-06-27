@@ -8,6 +8,8 @@
 // +----------------------------------------------------------------------
 namespace app\api\service;
 
+use think\Cache;
+
 class Wechat {
 
     public $appid;
@@ -23,15 +25,19 @@ class Wechat {
     }
 
     /**
-     * 根据code获取openid和seesion_key
-     * @return bool|string
+     * 根据code获取openid和session_key
+     * @param $data
+     * @return mixed
      */
     public function getOpenid($data) {
-        $jsCode = $data['jsCode'];
-        $url         = $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
-        $res = json_decode($this->httpGet($url));
 
-        return $res->openid;
+        $jsCode = $data['code'];
+        $url         = $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
+        $info = json_decode(curl_get($url));
+
+        //Cache::set('session_key:'.$info->openid,$info->session_key);
+
+        return $info->openid;
     }
 
     /**
@@ -41,26 +47,9 @@ class Wechat {
     public function getWxAccessToken() {
 
         $url         = $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appid&secret=$this->appSecret";
-        $res = $this->httpGet($url);
+        $res = json_decode(curl_get($url));
 
         return $res->access_token;
-    }
-
-    private function httpGet($url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-        // 为保证第三方服务器与微信服务器之间数据传输的安全性，所有微信接口采用https方式调用，必须使用下面2行代码打开ssl安全校验。
-        // 如果在部署过程中代码在此处验证失败，请到 http://curl.haxx.se/ca/cacert.pem 下载新的证书判别文件。
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_URL, $url);
-
-        $res = curl_exec($curl);
-
-        curl_close($curl);
-
-        return $res;
     }
 
 }
