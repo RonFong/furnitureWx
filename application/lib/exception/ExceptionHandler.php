@@ -23,9 +23,6 @@ class ExceptionHandler extends Handle
     private $code;
     private $msg;
     private $errorCode;
-    private $data;
-    private $state;
-
 
     /**
      * 重写框架Handle父类方法
@@ -57,6 +54,7 @@ class ExceptionHandler extends Handle
         $result = [
             'state' => 0,
             'msg' => $this->msg,
+            'data' => [],
             'error_code' => $this->errorCode,
             'method' => $request->method(),
             'request_url' => $request->url(),

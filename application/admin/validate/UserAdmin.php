@@ -9,16 +9,16 @@
 
 namespace app\admin\validate;
 
-use \app\admin\model\User;
+use \app\admin\model\UserAdmin as UserAdminModel;
+use app\common\validate\UserAdmin as CoreUserAdmin;
 use think\Image;
 
-class AdminUser
+class UserAdmin extends CoreUserAdmin
 {
     protected $rule = [
         'account'          => 'require|length:4,20',
         'password'         => 'require|checkUser|length:6,25',
         'upload_image'     => 'checkSize',
-        'phone_number'     => 'number|length:11|uniqueNumber',
     ];
 
     protected $message = [
@@ -37,13 +37,12 @@ class AdminUser
             'account'       => 'require|token',
             'user_name'     => 'require',
             'upload_image',
-            'phone_number'
         ],
     ];
 
     protected function checkUser($value, $rule, $data)
     {
-        $userInfo = User::get(['account' => $data['account']]);
+        $userInfo = UserAdminModel::get(['account' => $data['account']]);
         if(empty($userInfo)) {
             return '此用户不存在';
         }
@@ -62,7 +61,7 @@ class AdminUser
 
     protected function checkPassword($value, $rule, $data)
     {
-        $userInfo = User::get(function ($query) {
+        $userInfo = UserAdminModel::get(function ($query) {
             $query->where('account', session('user_info.account'))->field('password, salt_value');
         });
         $orgPassword = md5(md5($data['org_password']).$userInfo->salt_value);
@@ -100,19 +99,6 @@ class AdminUser
 
             if ($imgInfo->width() > $data['imageMaxLength'])
                 return '图片边长超过限制';
-        }
-        return true;
-    }
-
-    protected function uniqueNumber($value, $rule, $data)
-    {
-        if (!isset($data['id'])) {
-            $row = User::get(['phone_number' => $value]);
-        } else {
-            $row = User::get(['id' => ['neq', $data['id']], 'phone_number' => $value]);
-        }
-        if ($row) {
-            return '此手机号已存在';
         }
         return true;
     }

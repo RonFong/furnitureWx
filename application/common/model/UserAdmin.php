@@ -4,15 +4,14 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2017/12/30 16:25
+// | CreateTime: 2018/6/26 
 // +----------------------------------------------------------------------
 
-namespace app\admin\model;
 
-use app\common\model\User as CoreUser;
-use traits\model\SoftDelete;
+namespace app\common\model;
 
-class User extends CoreUser
+
+class UserAdmin extends Model
 {
 
 }
