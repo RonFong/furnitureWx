@@ -11,7 +11,11 @@
 
 namespace app\common\model;
 
-
+/**
+ * 圈子 文章分类
+ * Class ArticleClassify
+ * @package app\common\model
+ */
 class ArticleClassify extends Model
 {
 
