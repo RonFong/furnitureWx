@@ -9,11 +9,10 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\api\model;
+namespace app\common\model;
 
-use app\common\model\Model;
 
-class BaseModel extends Model
+class ArticleClassify extends Model
 {
 
 }
