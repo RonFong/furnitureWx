@@ -10,8 +10,10 @@
 
 namespace app\api\model;
 
+use app\common\model\User as CoreUser;
 
-class User extends BaseModel
+
+class User extends CoreUser
 {
     /**
      * 注册 |  更新
