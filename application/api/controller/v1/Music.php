@@ -35,7 +35,7 @@ class Music extends BaseController
      */
     public function getRecommendList()
     {
-        $this->result['data'] = $this->service->getRecommendList($this->data['page'], $this->data['row']);
+        $this->result['data'] = $this->service->getRecommendList($this->data['page'] ?? 0, $this->data['row'] ?? 10);
         return json($this->result, 200);
     }
 
@@ -52,13 +52,13 @@ class Music extends BaseController
 
 
     /**
-     * 通过songId获取音乐文件地址
+     * 通过id获取音乐文件地址
      * @param songId string  音乐id  通过 searchMusic接口获取
      * @return \think\response\Json
      */
     public function getMusic()
     {
-        $this->result['data'] = $this->service->getMusicBySongId($this->data['songId']);
+        $this->result['data'] = $this->service->getMusicBySongId($this->data['id']);
         return json($this->result, 200);
     }
 }
