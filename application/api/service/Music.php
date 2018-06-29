@@ -60,7 +60,7 @@ class Music
         $songInfo['name']      = $resource['songinfo']['title'];
         $songInfo['author']    = $resource['songinfo']['author'];
         $songInfo['link']      = $resource['bitrate']['file_link'];
-        $songInfo['picture'] = $resource['songinfo']['pic_small'];
+        $songInfo['picture']   = $resource['songinfo']['pic_small'];
         return $songInfo;
     }
 
@@ -84,7 +84,7 @@ class Music
                 'id'        => $v['song_id'],
                 'name'      => $v['title'],
                 'author'    => $v['author'],
-                'picture' => $v['pic_small']
+                'picture'   => $v['pic_small']
             ];
         }
         return $list;
