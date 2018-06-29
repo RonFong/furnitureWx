@@ -13,6 +13,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\Music as MusicService;
+use app\lib\enum\Response;
 use think\Request;
 
 /**
@@ -46,6 +47,9 @@ class Music extends BaseController
      */
     public function searchMusic()
     {
+        if (!array_key_exists('query', $this->data) || empty($this->data)) {
+            $this->response->error(Response::QUERY_CANT_EMPTY);
+        }
         $this->result['data'] = $this->service->searchMusic($this->data['query']);
         return json($this->result, 200);
     }
