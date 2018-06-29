@@ -27,3 +27,10 @@ Route::delete('api/:version/user/:id', 'api/:version.User/delete');
 
 //获取openid
 Route::get('api/:version/getOpenid', 'api/:version.User/getOpenid');
+
+//获取推荐音乐
+Route::get('api/:version/music/recommend/:page/:row', 'api/:version.Music/getRecommendList');
+//查找音乐
+Route::get('api/:version/music/search/:query', 'api/:version.Music/searchMusic');
+//获取指定音乐地址
+Route::get('api/:version/music/:songId', 'api/:version.Music/getMusic');
