@@ -51,4 +51,8 @@ class Response
     const USER_UPDATE_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => '用户数据修改失败'];
     const USER_DELETE_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => '用户数据删除失败'];
     const USERS_EMPTY = ['code' => 404, 'errorCode' => 1001, 'msg' => '未查询到用户数据'];
+
+    //音乐
+    const QUERY_CANT_EMPTY = ['code' => 400, 'errorCode' => 1001, 'msg' => '搜索条件不能为空'];
+
 }
