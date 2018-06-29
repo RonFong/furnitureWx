@@ -60,8 +60,7 @@ class Music
         $songInfo['name']      = $resource['songinfo']['title'];
         $songInfo['author']    = $resource['songinfo']['author'];
         $songInfo['link']      = $resource['bitrate']['file_link'];
-        $songInfo['pic_big']   = $resource['songinfo']['pic_big'];
-        $songInfo['pic_small'] = $resource['songinfo']['pic_small'];
+        $songInfo['picture'] = $resource['songinfo']['pic_small'];
         return $songInfo;
     }
 
@@ -71,7 +70,7 @@ class Music
      * @param int $row
      * @return array
      */
-    public function getRecommendList($page = 1, $row = 10)
+    public function getRecommendList($page = 0, $row = 10)
     {
         //推荐类型： 21-纯音乐
         $type = 21;
@@ -85,8 +84,7 @@ class Music
                 'id'        => $v['song_id'],
                 'name'      => $v['title'],
                 'author'    => $v['author'],
-                'pic_big'   => $v['pic_big'],
-                'pic_small' => $v['pic_small']
+                'picture' => $v['pic_small']
             ];
         }
         return $list;
