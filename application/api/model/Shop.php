@@ -2,8 +2,9 @@
 
 namespace app\api\model;
 
+use app\common\model\Shop as CoreShop;
 
-class Shop extends BaseModel
+class Shop extends CoreShop
 {
     public function saveData($data = [])
     {
