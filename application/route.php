@@ -16,7 +16,7 @@ use \think\Route;
  * @param :version string 版本号    v1 | v2
  */
 
-//用户授权，自动注册
+//用户授权，注册 | 更新
 Route::post('api/:version/user', 'api/:version.User/saveUser');
 //查找用户数据
 Route::get('api/:version/user', 'api/:version.User/select');
