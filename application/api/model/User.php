@@ -23,12 +23,9 @@ class User extends CoreUser
      */
     public function saveData($data)
     {
-        //$result = $this->save($data);
-        $user = model('User');
-        // 模型对象赋值
-        $user->data($data);
-        $user->save();
-        return $user->id;
+        $result = $this->save($data);
+
+        return $result;
     }
 
     /**
