@@ -23,9 +23,9 @@ class User extends CoreUser
      */
     public function saveData($data)
     {
-        $result = $this->save($data);
-
-        return $result;
+        $this->data($data);
+        $this->save();
+        return $this;
     }
 
     /**
