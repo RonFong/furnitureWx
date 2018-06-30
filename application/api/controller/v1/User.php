@@ -30,7 +30,7 @@ class User extends BaseController
     }
 
     /**
-     * 用户注册
+     * 用户注册 | 更新
      * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
      * @throws \think\Exception
