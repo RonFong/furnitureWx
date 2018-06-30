@@ -36,7 +36,7 @@ class User extends BaseController
      * @throws \think\Exception
      * @throws \think\exception\DbException
      */
-    public function create()
+    public function saveUser()
     {
         $this->currentValidate->goCheck('create');
         $id = $this->currentModel->where('wx_openid', $this->data['wx_openid'])->value('id');
