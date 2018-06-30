@@ -43,7 +43,9 @@ class User extends BaseController
         if ($id) {
             $this->data['id'] = $id;
         }
-        if ($this->currentModel->saveData($this->data)) {
+        $user = $this->currentModel->saveData($this->data);
+        if ($user) {
+            $this->result['data'] = $user->toArray();
             return json($this->result, 201);
         }
         $this->response->error(Response::USER_CREATE_ERROR);
