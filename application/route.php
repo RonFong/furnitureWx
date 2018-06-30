@@ -17,7 +17,7 @@ use \think\Route;
  */
 
 //用户授权，自动注册
-Route::post('api/:version/user', 'api/:version.User/create');
+Route::post('api/:version/user', 'api/:version.User/saveUser');
 //查找用户数据
 Route::get('api/:version/user', 'api/:version.User/select');
 //修改用户数据
