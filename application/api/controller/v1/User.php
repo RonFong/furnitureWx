@@ -38,8 +38,11 @@ class User extends BaseController
      */
     public function create()
     {
-
         $this->currentValidate->goCheck('create');
+        $id = $this->currentModel->where('wx_openid', $this->data['wx_openid'])->value('id');
+        if ($id) {
+            $this->data['id'] = $id;
+        }
         if ($this->currentModel->saveData($this->data)) {
             return json($this->result, 201);
         }
