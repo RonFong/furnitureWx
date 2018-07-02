@@ -30,17 +30,22 @@ class User extends BaseController
     }
 
     /**
-     * 用户注册
+     * 用户注册 | 更新
      * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
      * @throws \think\Exception
      * @throws \think\exception\DbException
      */
-    public function create()
+    public function saveUser()
     {
-
         $this->currentValidate->goCheck('create');
-        if ($this->currentModel->saveData($this->data)) {
+        $id = $this->currentModel->where('wx_openid', $this->data['wx_openid'])->value('id');
+        if ($id) {
+            $this->data['id'] = $id;
+        }
+        $user = $this->currentModel->saveData($this->data);
+        if ($user) {
+            $this->result['data'] = $user->toArray();
             return json($this->result, 201);
         }
         $this->response->error(Response::USER_CREATE_ERROR);

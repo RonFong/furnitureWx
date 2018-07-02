@@ -21,7 +21,7 @@ class User extends BaseValidate
         'phone'             => 'require|isPhoneNo|unique:user',         //手机号
         'type'              => 'require|in:1,2,3',          //用户类型
         'wx_account'        => 'unique:user',    //微信账号
-        'wx_openid'         => 'require|unique:user',     //微信唯一ID
+        'wx_openid'         => 'require',     //微信唯一ID
     ];
 
     protected $message = [
@@ -49,7 +49,7 @@ class User extends BaseValidate
             'user_name',
             //'type'          => 'require|in:3',      //规则覆盖
             //'wx_account'    => 'unique:user',
-            'wx_openid'     => 'unique:user',
+            'wx_openid',
         ],
 
         //更新用户信息
