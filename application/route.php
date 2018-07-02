@@ -16,7 +16,7 @@ use \think\Route;
  * @param :version string 版本号    v1 | v2
  */
 
-Route::group('api/:version/',function() {
+Route::group('api/:version',function() {
     //用户授权，注册 | 更新
     Route::post('user', 'api/:version.User/saveUser');
     //查找用户数据
@@ -38,4 +38,7 @@ Route::group('api/:version/',function() {
         //获取指定音乐地址
         Route::get(':songId', 'api/:version.Music/getMusic');
     });
+
+    // 获取地理位置
+    Route::get('location','api/:version.Site/getLocation');
 });
