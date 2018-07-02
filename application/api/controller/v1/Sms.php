@@ -29,11 +29,28 @@ class Sms extends BaseController
     }
 
     /**
-     * 发送短信验证码
-     * @param phoneNumber string 手机号
-     * @param cacheTime int 验证码有效时间
-     * @param  code string  自定义验证码
-     * @return array
+     * @api {get} /v1/sms/getAuthCode/:phoneNumber 发送短信验证码
+     * @apiGroup SMS
+     * @apiParam {string} phoneNumber 手机号
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 见接口地址
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+     * {
+     *      "state":1,
+     *      "msg":"短信发送成功",
+     *      "data":{
+     *          "auth_code":"308299"    //验证码，接收后可前端验证用户输入，也可通过请求验证接口校验
+     *      }
+     * }
+     *
+     * @apiErrorExample {json} 错误返回值：
+     * {
+     *      "state":0,
+     *      "msg":"错误信息",
+     *      "data":[]
+     * }
      */
     public function getAuthCode()
     {
@@ -50,10 +67,27 @@ class Sms extends BaseController
 
 
     /**
-     * 校验短信验证码
-     * @param phoneNumber string 手机号
-     * @param authCode string 验证码
-     * @return array
+     * @api {get} /v1/sms/checkAuthCode/:phoneNumber/:authCode 校验短信验证码
+     * @apiGroup SMS
+     * @apiParam {string} phoneNumber 手机号
+     * @apiParam {string} authCode 验证码
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 见接口地址
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+     * {
+     *      "state":1,
+     *      "msg":"验证通过",
+     *      "data":[]
+     * }
+     *
+     * @apiErrorExample {json} 错误返回值：
+     * {
+     *      "state":0,
+     *      "msg":"错误信息",
+     *      "data":[]
+     * }
      */
     public function checkAuthCode()
     {
@@ -64,7 +98,7 @@ class Sms extends BaseController
                exception('此手机号当前没有可使用的验证码');
             }
             if ($authCode !== $this->data['authCode']) {
-               exception('验证码输入错误');
+               exception('验证码错误');
             }
             Cache::rm('auth_'.$this->data['phoneNumber']);
             $this->result['msg'] = '验证通过';
