@@ -16,21 +16,26 @@ use \think\Route;
  * @param :version string 版本号    v1 | v2
  */
 
-//用户授权，注册 | 更新
-Route::post('api/:version/user', 'api/:version.User/saveUser');
-//查找用户数据
-Route::get('api/:version/user', 'api/:version.User/select');
-//修改用户数据
-Route::put('api/:version/user', 'api/:version.User/update');
-//删除用户数据
-Route::delete('api/:version/user/:id', 'api/:version.User/delete');
+Route::group('api/:version/',function() {
+    //用户授权，注册 | 更新
+    Route::post('user', 'api/:version.User/saveUser');
+    //查找用户数据
+    Route::get('user', 'api/:version.User/select');
+    //修改用户数据
+    Route::put('user', 'api/:version.User/update');
+    //删除用户数据
+    Route::delete('user/:id', 'api/:version.User/delete');
 
-//获取openid
-Route::get('api/:version/getOpenid', 'api/:version.User/getOpenid');
+    //获取openid
+    Route::get('getOpenid', 'api/:version.User/getOpenid');
 
-//获取推荐音乐
-Route::get('api/:version/music/recommend/:page/:row', 'api/:version.Music/getRecommendList');
-//查找音乐
-Route::get('api/:version/music/search/:query', 'api/:version.Music/searchMusic');
-//获取指定音乐地址
-Route::get('api/:version/music/:songId', 'api/:version.Music/getMusic');
+    // 音乐
+    Route::group('music',function () {
+        //获取推荐音乐
+        Route::get('recommend/:page/:row', 'api/:version.Music/getRecommendList');
+        //查找音乐
+        Route::get('search/:query', 'api/:version.Music/searchMusic');
+        //获取指定音乐地址
+        Route::get(':songId', 'api/:version.Music/getMusic');
+    });
+});
