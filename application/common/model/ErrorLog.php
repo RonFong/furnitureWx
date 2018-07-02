@@ -16,7 +16,7 @@ use think\Db;
 use think\Request;
 
 /**
- * 手动记录错误日志
+ * 手动记录非系统级错误日志
  * Class ErrorLog
  * @package app\common\model
  */
