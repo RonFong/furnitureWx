@@ -39,6 +39,14 @@ Route::group('api/:version',function() {
         Route::get(':songId', 'api/:version.Music/getMusic');
     });
 
+    //短信
+    Route::group('sms', function () {
+        //发送短信验证码
+        Route::get('getAuthCode/:phoneNumber', 'api/:version.Sms/getAuthCode');
+        //校验短信验证码
+        Route::get('checkAuthCode/:phoneNumber/:authCode', 'api/:version.Sms/checkAuthCode');
+    });
+
     // 获取地理位置
     Route::get('location','api/:version.Site/getLocation');
 });
