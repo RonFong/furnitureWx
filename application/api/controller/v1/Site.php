@@ -20,16 +20,16 @@ class Site extends BaseController
         parent::__construct($request);
     }
 
-    public function getLocation()
+    public function getAddress()
     {
         //先不验证
         // 纬度
         $lat = $this->data['lat'];
         // 经度
         $lng = $this->data['lng'];
-
         $location = $lat.','.$lng;
         $map = new MapSite();
-        $result = $map->getGeocoder($location);
+        $this->result['data']['address'] = $map->getGeocoder($location);
+        return json($this->result, 200);
     }
 }
