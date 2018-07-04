@@ -45,7 +45,7 @@ class User extends BaseController
         }
         $user = $this->currentModel->saveData($this->data);
         if ($user) {
-            $this->result['data'] = $user->toArray();
+            $this->result['data'] = $this->currentModel->where('id',$user->id)->find()->toArray();
             return json($this->result, 201);
         }
         $this->response->error(Response::USER_CREATE_ERROR);

@@ -36,7 +36,15 @@ Route::group('api/:version',function() {
         //查找音乐
         Route::get('search/:query', 'api/:version.Music/searchMusic');
         //获取指定音乐地址
-        Route::get(':songId', 'api/:version.Music/getMusic');
+        Route::get('getLink/:id', 'api/:version.Music/getLink');
+    });
+
+    //短信
+    Route::group('sms', function () {
+        //发送短信验证码
+        Route::get('getAuthCode/:phoneNumber', 'api/:version.Sms/getAuthCode');
+        //校验短信验证码
+        Route::get('checkAuthCode/:phoneNumber/:authCode', 'api/:version.Sms/checkAuthCode');
     });
 
     // 获取地理位置
