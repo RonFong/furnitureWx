@@ -56,7 +56,7 @@ class ContentCensor
      * 每次审核的最大字符长度
      * @var array
      */
-    protected $textMaxLength = 5;
+    protected $textMaxLength = 20000;
 
     /**
      * 百度AI实例
