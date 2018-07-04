@@ -22,8 +22,8 @@ class Site
     {
         $uri = "?location={$location}&key={$this->tencent_map['key']}&get_poi={$get_poi}&poi_options={$poi_options}&output={$output}&callback={$callback}";
         $result = curl_get($this->url.$uri);
-//        echo "<pre>";
-//        print_r($result);
+        echo "<pre>";
+        print_r($result);
         // TODO 格式化结果
     }
 }

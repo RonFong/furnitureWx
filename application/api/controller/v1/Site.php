@@ -20,7 +20,7 @@ class Site extends BaseController
         parent::__construct($request);
     }
 
-    public function getLocation()
+    public function getAddress()
     {
         //先不验证
         // 纬度
