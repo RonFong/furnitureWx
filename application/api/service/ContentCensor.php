@@ -56,7 +56,7 @@ class ContentCensor
      * 每次审核的最大字符长度
      * @var array
      */
-    protected $textMaxLength = 20000;
+    protected $textMaxLength = 5;
 
     /**
      * 百度AI实例
@@ -90,35 +90,31 @@ class ContentCensor
                     break;
                 case 1:
                     //违禁
-                    if ($response['result']['reject']) {
-                        $labels = $response['result']['reject'][0]['label'];
-                        $result['spam'] = 1;
-                        $result['labels'] = $labels;
-                        $result['msg'] = $this->textLabels[$labels];
-                    }
+                    $labels = $response['result']['reject'][0]['label'];
+                    $result['spam'] = 1;
+                    $result['labels'] = $labels;
+                    $result['msg'] = $this->textLabels[$labels];
                     break;
                 case 2:
                     //人工审核
-                    if ($response['result']['review']) {
-                        $labels = $response['result']['review'][0]['label'];
-                        $result['spam'] = 2;
-                        $result['labels'] = $labels;
-                        $result['msg'] = $this->textLabels[$labels];
-                    }
+                    $labels = $response['result']['review'][0]['label'];
+                    $result['spam'] = 2;
+                    $result['labels'] = $labels;
+                    $result['msg'] = $this->textLabels[$labels];
                     break;
                 default:
+                    $result = false;
                     break;
             }
             return $result;
         };
         $result = [];
         //字符长度是否超过API限制
-        $node = ceil(strlen($text) / $this->textMaxLength);
-
+        $node = ceil(mb_strlen($text) / $this->textMaxLength);
         if ($node > 1) {
             $collection = [];
             for ($i = 1; $i <= $node; $i ++) {
-                $collection[$i-1] = substr($text, ($i - 1) * $this->textMaxLength, $i * $this->textMaxLength);
+                $collection[$i-1] = mb_substr($text, ($i - 1) * $this->textMaxLength, $this->textMaxLength, 'utf8');
             }
             foreach ($collection as $v) {
                 $result = $check($v);
