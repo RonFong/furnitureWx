@@ -8,7 +8,8 @@ return [
     //公众号 AppID
     'gzh_app_id'            => 'wxa6d691299093f1a4',
     //公众号 AppSecret
-    'gzh_app_secret'        => '7a91a512262ec4a9dea5a507612e48a0',
+    'gzh_app_secret'        => 'e595b441429a15c3d5526e4accf7cf7f',
+//    'gzh_app_secret'        => '7a91a512262ec4a9dea5a507612e48a0',
 
     //小程序 AppID
     'xcx_app_id'            => 'wx195a5e8ed1a55ead',
