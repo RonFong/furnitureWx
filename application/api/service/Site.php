@@ -21,9 +21,20 @@ class Site
     public function getGeocoder($location,$get_poi = 0,$poi_options = 'address_format=short', $output = 'json' , $callback = '')
     {
         $uri = "?location={$location}&key={$this->tencent_map['key']}&get_poi={$get_poi}&poi_options={$poi_options}&output={$output}&callback={$callback}";
-        $result = curl_get($this->url.$uri);
-        echo "<pre>";
-        print_r($result);
-        // TODO 格式化结果
+        $data = json_decode(curl_get($this->url.$uri),true);
+        $record = [
+            'nation' => '',
+            'province' => '',
+            'city' => '',
+            'district' => '',
+            'street' => '',
+            'street_number' => ''
+        ];
+        if($data['status'] == 0){
+            if(!empty($data['result']['address_component'])){
+                $record = $data['result']['address_component'];
+            }
+        }
+        return $record;
     }
 }

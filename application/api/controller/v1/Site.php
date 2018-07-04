@@ -27,9 +27,9 @@ class Site extends BaseController
         $lat = $this->data['lat'];
         // 经度
         $lng = $this->data['lng'];
-
         $location = $lat.','.$lng;
         $map = new MapSite();
-        $result = $map->getGeocoder($location);
+        $this->result['data']['address'] = $map->getGeocoder($location);
+        return json($this->result, 200);
     }
 }

@@ -48,5 +48,5 @@ Route::group('api/:version',function() {
     });
 
     // 获取地理位置
-    Route::get('address','api/:version.Site/getAddress');
+    Route::get('address/:lat/:lng','api/:version.Site/getAddress');
 });
