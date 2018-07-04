@@ -22,17 +22,22 @@ class Site
     {
         $uri = "?location={$location}&key={$this->tencent_map['key']}&get_poi={$get_poi}&poi_options={$poi_options}&output={$output}&callback={$callback}";
         $data = json_decode(curl_get($this->url.$uri),true);
+
         $record = [
             'nation' => '',
             'province' => '',
             'city' => '',
             'district' => '',
             'street' => '',
-            'street_number' => ''
+            'street_number' => '',
+            'address' => ''
         ];
         if($data['status'] == 0){
             if(!empty($data['result']['address_component'])){
                 $record = $data['result']['address_component'];
+            }
+            if(!empty($data['result']['address'])){
+                $record['address'] = $data['result']['address'];
             }
         }
         return $record;
