@@ -9,18 +9,25 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-return [
-    //公众号 AppID
-    'gzh_app_id'            => 'wxa6d691299093f1a4',
-    //公众号 AppSecret
-    'gzh_app_secret'        => '7a91a512262ec4a9dea5a507612e48a0',
+namespace app\api\controller\v1;
 
-    //小程序 AppID
-    'xcx_app_id'            => 'wx195a5e8ed1a55ead',
-    //小程序 AppSecret
-    'xcx_app_secret'        => 'd0a065f66e34734712f8b4310691b5c3',
 
-    //SMS
-    'sms_app_id'            => '1400108281',
-    'sms_app_key'           => 'fe504050bd4bcaed5651ed2f1a093611',
-];
+use app\api\controller\BaseController;
+use app\api\service\ContentCensor;
+use think\Request;
+use app\api\model\Article as ArticleModel;
+
+class Article extends BaseController
+{
+    function __construct(Request $request = null)
+    {
+        parent::__construct($request);
+        $this->currentModel = new ArticleModel();
+        $this->currentValidate = validate('Article');
+    }
+
+    public function create(ContentCensor $contentCensor)
+    {
+         dump($contentCensor->text($this->data['content']));
+    }
+}
