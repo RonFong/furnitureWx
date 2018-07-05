@@ -34,12 +34,15 @@ class ContentCensor
      * 文本违禁类型
      * @var array
      */
-    protected $textLabels = [
-        1	=> '暴恐违禁',
-        2	=> '文本色情',
-        3	=> '政治敏感',
-        4	=> '恶意推广',
-        5	=> '低俗辱骂'
+    protected $labels = [
+        'text'  => [
+            1	=> '暴恐违禁',
+            2	=> '文本色情',
+            3	=> '政治敏感',
+            4	=> '恶意推广',
+            5	=> '低俗辱骂'
+        ],
+
     ];
 
     /**
@@ -59,6 +62,19 @@ class ContentCensor
     protected $textMaxLength = 20000;
 
     /**
+     * 图像审核 模型服务
+     * @var array
+     */
+    protected $imgScenes = [
+        'politician',       //政治敏感识别
+        'antiporn',         //色情识别
+        'terror',           //暴恐识别
+        'disgust',          //恶心图像识别
+        'watermark',        //广告检测
+        'quality'           //图像质量检测
+    ];
+
+    /**
      * 百度AI实例
      * @var \app\api\service\ContentCensor
      */
@@ -71,8 +87,8 @@ class ContentCensor
 
     /**
      * 文本审核
-     * @param $text  string  文本内容
-     * @return mixed
+     * @param $text   string  文本内容
+     * @return mixed  true - 审核通过， false - 审核失败， 1 - 违禁， 2 - 人工审核
      */
     public function text($text)
     {
@@ -93,14 +109,14 @@ class ContentCensor
                     $labels = $response['result']['reject'][0]['label'];
                     $result['spam'] = 1;
                     $result['labels'] = $labels;
-                    $result['msg'] = $this->textLabels[$labels];
+                    $result['msg'] = $this->labels['text'][$labels];
                     break;
                 case 2:
                     //人工审核
                     $labels = $response['result']['review'][0]['label'];
                     $result['spam'] = 2;
                     $result['labels'] = $labels;
-                    $result['msg'] = $this->textLabels[$labels];
+                    $result['msg'] = $this->labels['text'][$labels];
                     break;
                 default:
                     $result = false;
@@ -126,5 +142,11 @@ class ContentCensor
             $result = $check($text);
         }
        return $result;
+    }
+
+    public function img($content)
+    {
+        $result = $this->contentCensor->image($content, $this->imgScenes);
+        return $result;
     }
 }
