@@ -17,35 +17,29 @@
 
 namespace app\lib\baiduAI;
 
-use app\lib\baiduAI\AipNlp;
-
 /**
  * 内容审核
  */
 class ContentCensor
 {
-    protected $aipOcr;
-
-    protected $aipNlp;
-
-    protected $aipImageCensor;
-
-    function __construct()
+    /**
+     * 文本审核
+     * @param $content  string 待审核的文本
+     * @return array
+     */
+    public function spam($content)
     {
-
+        return (new AipImageCensor())->antiSpam($content);
     }
 
     /**
-     * 文本审核
-     * @param $content
+     * 图像审核
+     * @param $content  string   待审核的图像 （base64编码 或  urlencode 的 图像Url）
+     * @param $scenes string | array 模型服务
      * @return array
      */
-    public function spam($content = '')
+    public function image($content, $scenes)
     {
-        return (new AipNlp())->spam($content);
+        return (new AipImageCensor())->imageCensorComb($content, $scenes);
     }
 }
-//
-//$a = new AipContentCensor(new AipNlp());
-//$return = $a->spam($_POST['content']);
-//print_r($return);

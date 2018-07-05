@@ -38,19 +38,19 @@ class AipBase {
      * appId
      * @var string
      */
-    protected $appId;
+    protected $appId = '11471899';
 
     /**
      * apiKey
      * @var string
      */
-    protected $apiKey;
+    protected $apiKey = 'kyUfUb38Wgr2Fic8BVjf41cp';
     
     /**
      * secretKey
      * @var string
      */
-    protected $secretKey;
+    protected $secretKey = 'damBetFzgbXKVDG9czvEtqgHj5TWEOSO';
 
     protected $client;
 
@@ -124,6 +124,7 @@ class AipBase {
 
         try{
             $result = $this->validate($url, $data);
+
             if($result !== true){
                 return $result;
             }

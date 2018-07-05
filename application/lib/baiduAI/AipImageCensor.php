@@ -156,8 +156,8 @@ class AipImageCensor extends AipBase{
      * @param  string $image 图像读取
      * @return array
      */
-    public function imageCensorComb($image, $scenes='antiporn', $options=array()){
-
+    public function imageCensorComb($image, $scenes='antiporn', $options=array())
+    {
         $scenes = !is_array($scenes) ? explode(',', $scenes) : $scenes;
         
         $data = array(
@@ -170,7 +170,6 @@ class AipImageCensor extends AipBase{
         }else{
             $data['imgUrl'] = $image;
         }
-
         $data = array_merge($data, $options);
 
         return $this->request($this->imageCensorCombUrl, json_encode($data), array(
@@ -197,6 +196,7 @@ class AipImageCensor extends AipBase{
     }
 
     /**
+     * 文本审核
      * @param  string $content
      * @return array
      */
