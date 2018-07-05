@@ -128,12 +128,9 @@ class ContentCensor
         //字符长度是否超过API限制
         $node = ceil(mb_strlen($text) / $this->textMaxLength);
         if ($node > 1) {
-            $collection = [];
             for ($i = 1; $i <= $node; $i ++) {
-                $collection[$i-1] = mb_substr($text, ($i - 1) * $this->textMaxLength, $this->textMaxLength, 'utf8');
-            }
-            foreach ($collection as $v) {
-                $result = $check($v);
+               $fragment  = mb_substr($text, ($i - 1) * $this->textMaxLength, $this->textMaxLength, 'utf8');
+                $result = $check($fragment);
                 if ($result['spam'] == 1) {
                     break;
                 }
