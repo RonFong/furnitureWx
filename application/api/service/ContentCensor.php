@@ -93,30 +93,33 @@ class ContentCensor
     public function text($text)
     {
         $check = function ($text) {
-            $result = [];
             $response = $this->contentCensor->spam($text);
             if (array_key_exists('error_code', $response)) {
                 //AI调用失败
                 return false;
             }
+            $result = true;
             switch ($response['result']['spam']) {
                 case 0:
                     //审核通过
-                    $result = true;
                     break;
                 case 1:
                     //违禁
                     $labels = $response['result']['reject'][0]['label'];
-                    $result['spam'] = 1;
-                    $result['labels'] = $labels;
-                    $result['msg'] = $this->labels['text'][$labels];
+                    $result = [
+                        'spam'      => 1,
+                        'labels'    => $labels,
+                        'msg'       => $this->labels['text'][$labels]
+                    ];
                     break;
                 case 2:
                     //人工审核
                     $labels = $response['result']['review'][0]['label'];
-                    $result['spam'] = 2;
-                    $result['labels'] = $labels;
-                    $result['msg'] = $this->labels['text'][$labels];
+                    $result = [
+                        'spam'      => 2,
+                        'labels'    => $labels,
+                        'msg'       => $this->labels['text'][$labels]
+                    ];
                     break;
                 default:
                     $result = false;
@@ -124,13 +127,17 @@ class ContentCensor
             }
             return $result;
         };
-        $result = [];
+        $result = true;
         //字符长度是否超过API限制
         $node = ceil(mb_strlen($text) / $this->textMaxLength);
         if ($node > 1) {
             for ($i = 1; $i <= $node; $i ++) {
-               $fragment  = mb_substr($text, ($i - 1) * $this->textMaxLength, $this->textMaxLength, 'utf8');
-                $result = $check($fragment);
+                $fragment  = mb_substr($text, ($i - 1) * $this->textMaxLength, $this->textMaxLength, 'utf8');
+                $state = $check($fragment);
+                if ($state === true) {
+                    continue;
+                }
+                $result = $state;
                 if ($result['spam'] == 1) {
                     break;
                 }
