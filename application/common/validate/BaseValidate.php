@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\validate;
 
+use app\lib\baiduAI\ContentCensor;
 use app\lib\exception\BaseException;
 use think\Request;
 use think\Validate;
@@ -79,6 +80,66 @@ class BaseValidate extends Validate {
             return 'group_type 不能为空';
         }
 
+        return true;
+    }
+
+    /**
+     * 百度AI文本审核
+     * 批量审核当前 提交的文本内容
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|string
+     * @throws \Exception
+     */
+    protected function textCensor($value, $rule, $data)
+    {
+        $contents = [];
+        array_walk_recursive($data, function($value) use (&$contents) {
+            if (is_string($value) && strlen($value) > 1 && $value !== 'v1' && $value !== 'v2')
+                array_push($contents, $value);
+        });
+        $result = ContentCensor::text($contents);
+        if ($result['state'] == 1) {
+            return '文本中有违禁内容，请修改后再提交';
+        }
+        return true;
+    }
+
+    /**
+     * 百度AI文本审核
+     * 审核单个文本
+     * @param $value
+     * @return bool|string
+     * @throws \Exception
+     */
+    protected function aTextCensor($value)
+    {
+        $result = ContentCensor::text($value);
+        if ($result['state'] == 1) {
+            return '文本中有违禁内容，请修改后再提交';
+        }
+        return true;
+    }
+
+    /**
+     * 百度AI图片审核
+     * 审核当前提交的所有图片
+     * @return bool|string
+     */
+    protected function imgCensor()
+    {
+        $files = Request::instance()->file();
+        $images = [];
+        array_walk_recursive($files, function($value) use (&$images) {
+            if ($value->getType() == 'file' && strpos($value->getInfo()['type'], 'image') !== false)
+                array_push($images, $value);
+        });
+        foreach ($images as $img) {
+            $result = ContentCensor::img($img->getPathname());
+            if ($result['state'] == 1)
+                return '有违禁图片，请更改后再提交';
+        }
         return true;
     }
 
