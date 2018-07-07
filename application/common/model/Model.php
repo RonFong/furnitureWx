@@ -158,7 +158,7 @@ abstract class Model extends CoreModel
      * @param string $type 文件类型,image|file
      * @return bool|string
      */
-    public function uploadImg($file,$path='',$ext='jpg,png,bmp,gif',$type='image')
+    public function uploadImg($file,$path='',$ext='jpg,jpeg,png,bmp,gif',$type='image')
     {
         $fileClass = Request::instance()->file($file);
         if($fileClass) {
