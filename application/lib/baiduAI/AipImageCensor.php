@@ -191,8 +191,7 @@ class AipImageCensor extends AipBase{
         }else{
             $data['imgUrl'] = $image;
         }
-
-        return $this->request($this->imageCensorUserDefinedUrl, $data);     
+        return $this->request($this->imageCensorUserDefinedUrl, $data);
     }
 
     /**
