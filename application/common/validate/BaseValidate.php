@@ -132,7 +132,7 @@ class BaseValidate extends Validate {
         $files = Request::instance()->file();
         $images = [];
         array_walk_recursive($files, function($value) use (&$images) {
-            if ($value->getType() == 'file' && strpos($value->getInfo()['type'], 'image') !== false)
+            if (strpos($value->getInfo()['type'], 'image') !== false)
                 array_push($images, $value);
         });
         foreach ($images as $img) {
