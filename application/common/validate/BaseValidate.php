@@ -94,14 +94,18 @@ class BaseValidate extends Validate {
      */
     protected function textCensor($value, $rule, $data)
     {
-        $contents = [];
-        array_walk_recursive($data, function($value) use (&$contents) {
-            if (is_string($value) && strlen($value) > 1 && $value !== 'v1' && $value !== 'v2')
-                array_push($contents, $value);
-        });
-        $result = ContentCensor::text($contents);
-        if ($result['state'] == 1) {
-            return '文本中有违禁内容，请修改后再提交';
+        if (!empty($data)) {
+            $contents = [];
+            array_walk_recursive($data, function($value) use (&$contents) {
+                if (is_string($value) && strlen($value) > 1 && $value !== 'v1' && $value !== 'v2')
+                    array_push($contents, $value);
+            });
+            if (!empty($contents)) {
+                $result = ContentCensor::text($contents);
+                if ($result['state'] == 1) {
+                    return '文本中有违禁内容，请修改后再提交';
+                }
+            }
         }
         return true;
     }
@@ -115,9 +119,11 @@ class BaseValidate extends Validate {
      */
     protected function aTextCensor($value)
     {
-        $result = ContentCensor::text($value);
-        if ($result['state'] == 1) {
-            return '文本中有违禁内容，请修改后再提交';
+        if (!empty($value)) {
+            $result = ContentCensor::text($value);
+            if ($result['state'] == 1) {
+                return '文本中有违禁内容，请修改后再提交';
+            }
         }
         return true;
     }
@@ -130,15 +136,19 @@ class BaseValidate extends Validate {
     protected function imgCensor()
     {
         $files = Request::instance()->file();
-        $images = [];
-        array_walk_recursive($files, function($value) use (&$images) {
-            if (strpos($value->getInfo()['type'], 'image') !== false)
-                array_push($images, $value);
-        });
-        foreach ($images as $img) {
-            $result = ContentCensor::img($img->getPathname());
-            if ($result['state'] == 1)
-                return '有违禁图片，请更改后再提交';
+        if (!empty($files)) {
+            $images = [];
+            array_walk_recursive($files, function($value) use (&$images) {
+                if (strpos($value->getInfo()['type'], 'image') !== false)
+                    array_push($images, $value);
+            });
+            if (!empty($images)) {
+                foreach ($images as $img) {
+                    $result = ContentCensor::img($img->getPathname());
+                    if ($result['state'] == 1)
+                        return '有违禁图片，请更改后再提交';
+                }
+            }
         }
         return true;
     }
