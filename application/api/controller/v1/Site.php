@@ -26,7 +26,7 @@ class Site extends BaseController
         $this->currentModel = new siteDistrict();
         $parent_id = $this->data['parent_id'] ?? 0;
         $level = $this->data['level'] ?? 1;
-        $this->result = $this->currentModel->getRegionData($parent_id,$level);
+        $this->result['data']['region'] = $this->currentModel->getRegionData($parent_id,$level);
         return json($this->result, 200);
     }
 
