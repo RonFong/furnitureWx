@@ -18,5 +18,22 @@ namespace app\common\model;
  */
 class ArticleClassify extends Model
 {
+    /**
+     * 隐藏输出字段
+     * @var array
+     */
+    protected $hidden = [
+        'parent_id',
+        'state'
+    ];
 
+    /**
+     * 获取文章分类
+     * @param int $parentId  父分类ID
+     * @return false|static[]
+     */
+    static public function getClassify($parentId = 0)
+    {
+        return self::all(['parent_id' => $parentId, 'state' => 1]);
+    }
 }
