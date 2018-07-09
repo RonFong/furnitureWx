@@ -42,5 +42,4 @@ class Site extends BaseController
         $this->result['data']['address'] = $map->getGeocoder($location);
         return json($this->result, 200);
     }
-
 }
