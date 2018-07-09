@@ -24,7 +24,10 @@ class Site extends BaseController
     public function getRegion()
     {
         $this->currentModel = new siteDistrict();
-        $region = $this->currentModel->getAllRegion();
+        $parent_id = $this->data['parent_id'] ?? 0;
+        $level = $this->data['level'] ?? 1;
+        $this->result = $this->currentModel->getRegionData($parent_id,$level);
+        return json($this->result, 200);
     }
 
     public function getAddress()

@@ -50,7 +50,7 @@ Route::group('api/:version',function() {
     // 地址信息
     Route::group('site',function() {
         // 获取省市区
-        Route::get('region','api/:version.Site/getRegion');
+        Route::get('region/:parent_id/:level','api/:version.Site/getRegion');
         // 获取地理位置
         Route::get('address/:lat/:lng','api/:version.Site/getAddress');
     });
