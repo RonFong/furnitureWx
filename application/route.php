@@ -57,6 +57,9 @@ Route::group('api/:version',function() {
 
     //圈子 文章
     Route::group('article', function () {
+        //获取文章分类
+        Route::get('classify', 'api/:version.Article/getClassify');
+        //创建文章
         Route::post('create', 'api/:version.Article/create');
     });
 
