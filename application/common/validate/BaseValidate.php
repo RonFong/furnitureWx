@@ -135,16 +135,30 @@ class BaseValidate extends Validate {
      */
     protected function imgCensor()
     {
-        $files = Request::instance()->file();
+        try {
+            $files = Request::instance()->file();
+        } catch (\Exception $e) {
+            $files = $_FILES;
+        }
         if (!empty($files)) {
             $images = [];
-            array_walk_recursive($files, function($value) use (&$images) {
-                if (strpos($value->getInfo()['type'], 'image') !== false)
-                    array_push($images, $value);
-            });
+            if (is_object(current($files))) {
+                array_walk_recursive($files, function($value) use (&$images) {
+                    if (strpos($value->getInfo()['type'], 'image') !== false)
+                        array_push($images, $value);
+                });
+            } else {
+                foreach ($files as $k => $v) {
+                    foreach ($v['tmp_name'] as $kk => $vv) {
+                        if (array_key_exists('img', $vv))
+                            array_push($images, $vv['img']);
+                    }
+                }
+            }
             if (!empty($images)) {
                 foreach ($images as $img) {
-                    $result = ContentCensor::img($img->getPathname());
+                    $tmpPath = is_object($img) ? $img->getPathname() : $img;
+                    $result = ContentCensor::img($tmpPath);
                     if ($result['state'] == 1)
                         return '有违禁图片，请更改后再提交';
                 }
