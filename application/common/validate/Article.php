@@ -14,5 +14,11 @@ namespace app\common\validate;
 
 class Article extends BaseValidate
 {
+    protected $rule = [
+//        'title'     => 'require|imgCensor',
+        'title'             => 'require',
+        'classify_id'       => 'require|number',
+        'content'           => 'require',
 
+    ];
 }
