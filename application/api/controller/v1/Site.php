@@ -32,7 +32,6 @@ class Site extends BaseController
 
     public function getAddress()
     {
-        // TODO 验证
         // 纬度
         $lat = $this->data['lat'] ?? '' ;
         // 经度

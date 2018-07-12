@@ -55,4 +55,7 @@ class Response
     //音乐
     const QUERY_CANT_EMPTY = ['code' => 400, 'errorCode' => 1001, 'msg' => '搜索条件不能为空'];
 
+    // 商店
+    const SHOP_REGISTER_ERROR = ['code' => 400, 'errorCode' => 1001, 'msg' => '创建门店失败'];
+
 }
