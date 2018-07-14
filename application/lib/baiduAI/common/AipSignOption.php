@@ -9,31 +9,20 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\common\model;
+namespace app\lib\baiduAI\common;
 
-/**
- * 圈子 文章分类
- * Class ArticleClassify
- * @package app\common\model
- */
-class ArticleClassify extends Model
+
+class AipSignOption
 {
-    /**
-     * 隐藏输出字段
-     * @var array
-     */
-    protected $hidden = [
-        'parent_id',
-        'state'
-    ];
+    const EXPIRATION_IN_SECONDS = 'expirationInSeconds';
 
-    /**
-     * 获取文章分类
-     * @param int $parentId  父分类ID
-     * @return false|static[]
-     */
-    static public function getClassify($parentId = 0)
-    {
-        return self::all(['parent_id' => $parentId, 'state' => 1]);
-    }
+    const HEADERS_TO_SIGN = 'headersToSign';
+
+    const TIMESTAMP = 'timestamp';
+
+    const DEFAULT_EXPIRATION_IN_SECONDS = 1800;
+
+    const MIN_EXPIRATION_IN_SECONDS = 300;
+
+    const MAX_EXPIRATION_IN_SECONDS = 129600;
 }

@@ -5,29 +5,37 @@ namespace app\common\validate;
 class Shop extends BaseValidate
 {
     protected $rule = [
-        'id'                => 'require',            //用户ID
-        'user_name'         => 'require',                   //昵称
-        'group_id'          => 'require|number|groupTypeExits',            //所属厂/商主体
-        'group_type'        => 'require|in:1,2',            //所属主体类型
-        'phone'             => 'require|isPhoneNo|unique:user',         //手机号
-        'type'              => 'require|in:1,2,3',          //用户类型
-        'wx_account'        => 'unique:user',    //微信账号
-        'wx_openid'         => 'require|unique:user',     //微信唯一ID
+        'id'                => 'require',               // 用户ID
+        'admin_user'        => 'require|number',        // 管理员id
+        'contact'           => 'require',               // 门店联系人
+        'store_phone'       => 'require|isPhoneNo',     // 门店电话
+        'store_wx'          => 'require',               // 门店微信
+        'province'          => 'require|number',        // 省
+        'city'              => 'require|number',        // 市
+        'district'          => 'require|number',        // 区
+        'town'              => 'require',               // 乡镇街道
+        'address'           => 'require|chsDash',       // 详细地址
+        'shop_img'          => 'require',               // 门头照片
+        'category'          => 'number',                // 经营类别
     ];
 
     protected $message = [
         'id.require'            => '用户ID不能为空',
-        'id.number'             => '用户ID错误',
-        'user_name.require'     => '用户名不能为空',
-        'group_id.require'      => '用户所属厂/商ID不能为空',
-        'phone.require'         => '手机号不能为空',
-        'phone.unique'          => '手机号已被绑定账号',
-        'type.require'          => '用户类型不能为空',
-        'type.in'               => '用户类型参数错误',
-        'wx_account.require'    => '用户微信号不能为空',
-        'wx_openid.require'     => '用户微信Openid不能为空',
-        'wx_account.unique'     => '此微信号已注册',
-        'wx_openid.unique'      => '此opendid已注册',
+        'admin_user.require'    => '管理员不能为空',
+        'admin_user.number'     => '管理员id错误',
+        'contact.require'       => '门店联系人不能为空',
+        'store_phone.require'   => '门店电话不能为空',
+        'store_wx.require'      => '门店微信不能为空',
+        'province.require'      => '地区不能为空',
+        'province.number'       => '地区id错误',
+        'city.require'          => '市不能为空',
+        'city.number'           => '市id错误',
+        'district.require'      => '区不能为空',
+        'district.number'       => '区id错误',
+        'town.require'          => '乡镇街道不能为空',
+        'address.require'       => '请填写详细地址',
+        'address.chsDash'       => '地址格式错误',
+        'shop_img.require'      => '门头照片不能为空',
     ];
 
     /**
@@ -37,30 +45,17 @@ class Shop extends BaseValidate
     protected $scene = [
         //新用户授权小程序获取账号信息 （用户注册）
         'register'   => [
-            'user_name',
-            //'type'          => 'require|in:3',      //规则覆盖
-            //'wx_account'    => 'unique:user',
-            'wx_openid'     => 'unique:user',
-        ],
-
-        //更新用户信息
-        'update'    => [
-            'id',
-            'phone' =>  'isPhoneNo|unique:user',
-            'type'  => 'in:1,2,3',
-            'state' => 'in:0,1',
-        ],
-
-        'delete'    => [
-            'id',
-        ],
-
-        'select'    => [
-            'id'            => 'number',
-            'type'          => 'in:1,2,3',
-            'phone'         => 'isPhoneNo',
-            'group_id'      => 'number|groupTypeExits',
-            'group_type'    => 'in:1,2'
+            'admin_user',
+            'contact',
+            'store_phone',
+            'store_wx',
+            'province',
+            'city',
+            'district',
+            'town',
+            'address',
+            'shop_img',
+            'category',
         ],
     ];
 }

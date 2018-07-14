@@ -47,6 +47,24 @@ Route::group('api/:version',function() {
         Route::get('checkAuthCode/:phoneNumber/:authCode', 'api/:version.Sms/checkAuthCode');
     });
 
-    // 获取地理位置
-    Route::get('address/:lat/:lng','api/:version.Site/getAddress');
+    // 地址信息
+    Route::group('site',function() {
+        // 获取省市区
+        Route::get('region/:parent_id/:level','api/:version.Site/getRegion');
+        // 获取地理位置
+        Route::get('address/:lat/:lng','api/:version.Site/getAddress');
+    });
+
+    //圈子 文章
+    Route::group('article', function () {
+        //获取文章分类
+        Route::get('classify', 'api/:version.Article/getClassify');
+        //创建文章
+        Route::post('create', 'api/:version.Article/create');
+    });
+
+    // 门店
+    Route::group('shop', function () {
+        Route::post('register','api/:version.Shop/register');
+    });
 });

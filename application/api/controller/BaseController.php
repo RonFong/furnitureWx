@@ -37,6 +37,12 @@ abstract class BaseController extends Controller {
         'data'  => [],
     ];
 
+    /**
+     * 文件
+     * @var
+     */
+    protected $files;
+
     protected $page;
 
     protected $row;
@@ -47,30 +53,8 @@ abstract class BaseController extends Controller {
         $params = $request->param();
         unset($params['version']);
         $this->data = $params;
+        $this->files = $request->file();
         $this->page = isset($this->data['page']) ? $this->data['page'] : 1;
         $this->row  = isset($this->data['row']) ? $this->data['row'] : 10;
-    }
-
-    /**
-     * 返回json结果
-     * @param int $state
-     * @param string $msg
-     * @param string $data
-     */
-    protected function jsonReturn($state = 1, $msg = '', $data = '') {
-
-        if (!$data) {
-            $data = (object)[];
-        }
-        if (is_string($data)) {
-            $data = [
-                'data' => $data,
-            ];
-        }
-        exit(json_encode([
-            "state" => $state,
-            "msg"   => $msg,
-            "data"  => $data,
-        ], JSON_UNESCAPED_UNICODE));
     }
 }

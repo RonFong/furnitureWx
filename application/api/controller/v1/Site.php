@@ -3,6 +3,7 @@
 namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
+use app\api\model\District as siteDistrict;
 use think\Request;
 use app\api\service\Site as MapSite;
 
@@ -20,13 +21,21 @@ class Site extends BaseController
         parent::__construct($request);
     }
 
+    public function getRegion()
+    {
+        $this->currentModel = new siteDistrict();
+        $parent_id = $this->data['parent_id'] ?? 0;
+        $level = $this->data['level'] ?? 1;
+        $this->result['data']['region'] = $this->currentModel->getRegionData($parent_id,$level);
+        return json($this->result, 200);
+    }
+
     public function getAddress()
     {
-        //先不验证
         // 纬度
-        $lat = $this->data['lat'];
+        $lat = $this->data['lat'] ?? '' ;
         // 经度
-        $lng = $this->data['lng'];
+        $lng = $this->data['lng'] ?? '';
         $location = $lat.','.$lng;
         $map = new MapSite();
         $this->result['data']['address'] = $map->getGeocoder($location);
