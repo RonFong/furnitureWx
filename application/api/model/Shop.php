@@ -8,7 +8,13 @@ class Shop extends CoreShop
 {
     public function saveData($data = [])
     {
-        $result = $this->save($data);
-        return $result;
+        $this->data($data);
+        $this->save();
+        return $this;
+    }
+
+    public function selectShop()
+    {
+
     }
 }

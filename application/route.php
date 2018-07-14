@@ -63,4 +63,8 @@ Route::group('api/:version',function() {
         Route::post('create', 'api/:version.Article/create');
     });
 
+    // 门店
+    Route::group('shop', function () {
+        Route::post('register','api/:version.Shop/register');
+    });
 });
