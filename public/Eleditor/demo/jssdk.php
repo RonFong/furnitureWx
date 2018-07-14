@@ -130,5 +130,17 @@ class JSSDK {
         fwrite($fp, "<?php exit();?>" . $content);
         fclose($fp);
     }
+
+    private function getMedia()
+    {
+
+        $mediaId = $_GET('media_id');
+        $url     = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=" . $mediaId;
+        $res     = json_decode($this->httpGet($url));
+
+        return $res;
+    }
 }
+
+
 
