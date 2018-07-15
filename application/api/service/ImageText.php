@@ -32,15 +32,25 @@ class ImageText
      */
     protected static $contentModel;
 
+
+    /**
+     * 图片保存目标文件夹名
+     * @var string
+     */
+    protected static $folder ;
+
+
     /**
      * ImageText constructor.
-     * @param $mainModel   string   图文模型名
-     * @param $contentModel  string   图文内容模型
+     * @param $mainModel   string       图文模型名
+     * @param $contentModel  string     图文内容模型
+     * @param $folder  string           图片保存目标文件夹名  (static/img 文件夹下的文件夹名)
      */
-    public function __construct($mainModel, $contentModel)
+    public function __construct($mainModel, $contentModel, $folder)
     {
         self::$mainModel = $mainModel;
         self::$contentModel = $contentModel;
+        self::$folder = $folder;
     }
 
     /**
@@ -90,6 +100,16 @@ class ImageText
             $contentID = [];
             foreach ($data['content'] as $v) {
                 $v['article_id'] = $articleID;
+
+                if (array_key_exists('img', $v) && !empty($v['img'])) {
+                    //转存临时图片到当前模块指定文件夹
+                    $newImgPath = move_tmp_img($v['img'], self::$folder);
+                    if ($newImgPath == false){
+                        exception('图片转储失败');
+                    }
+                    $v['img'] = $newImgPath;
+                }
+
                 $model = self::initContentModel();
                 $model->save($v);
 
@@ -99,9 +119,13 @@ class ImageText
 
             //若此次为更新操作，则已存在且不包含在更新数据中的数据，应删除
             if (array_key_exists('id', $articleData)) {
-                $popID = self::$contentModel->where('id', 'not in', $contentID)->column('id');
-                if ($popID)
-                    self::$contentModel::destroy($popID);
+                $popData = self::$contentModel->where('id', 'not in', $contentID)->column('img', 'id');
+                if ($popData)
+                    self::$contentModel::destroy(array_keys($popData));
+                    //删除图片
+                    if ($popImg = array_filter($popData)) {
+                        unlink_img($popImg);
+                    }
             }
             //提交事务
             Db::commit();
