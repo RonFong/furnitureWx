@@ -237,6 +237,11 @@ if (!function_exists('move_tmp_img'))
 
 if (!function_exists('unlink_img'))
 {
+    /**
+     * 删除图片及其缩略图
+     * @param $img  string||array  一张或一组图片的路径
+     * @return bool
+     */
     function unlink_img($img)
     {
         $unlinkImg = function ($path) {
