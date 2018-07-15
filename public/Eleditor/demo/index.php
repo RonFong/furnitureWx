@@ -9,15 +9,11 @@ $signPackage = $jssdk->GetSignPackage();
     <meta charset="utf-8">
     <title>Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
     <!-- 引入jQuery -->
     <script src="../jquery.min.js"></script>
-
-<!--    <script src="../webuploader.min.js"></script>-->
+    <!--    <script src="../webuploader.min.js"></script>-->
     <!-- 插件核心 -->
     <script src="../Eleditor.min.js"></script>
-
-
     <style>
         * {
             margin: 0;
@@ -91,22 +87,18 @@ $signPackage = $jssdk->GetSignPackage();
     </style>
 </head>
 <body>
-
-<font class="viewTit">（此编辑器仅适用移动端，chrome请按F12模拟手机设备进行浏览）</font>
 <script>
     var ua = navigator.userAgent.toLowerCase();
     ;
-
     if (ua.indexOf('android') >= 0 || ua.indexOf('iphone') >= 0 || ua.indexOf('ipad') >= 0 || $(window).width() <= 500) {
         $('.viewTit').hide();
         $('body').css('padding-top', 0);
     }
 </script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
-
 <div id="contentEditor">
 </div>
-
+<button id="saveBtn">发布</button>
 <script>
     wx.config({
         debug    : true,
@@ -126,52 +118,20 @@ $signPackage = $jssdk->GetSignPackage();
         // 在这里调用 API
         wx.checkJsApi({
             jsApiList: [
-                'checkJsApi',
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage',
-                'onMenuShareQQ',
-                'onMenuShareWeibo',
-                'onMenuShareQZone',
-                'hideMenuItems',
-                'showMenuItems',
-                'hideAllNonBaseMenuItem',
-                'showAllNonBaseMenuItem',
-                'translateVoice',
-                'startRecord',
-                'stopRecord',
-                'onVoiceRecordEnd',
-                'playVoice',
-                'onVoicePlayEnd',
-                'pauseVoice',
-                'stopVoice',
-                'uploadVoice',
-                'downloadVoice',
                 'chooseImage',
                 'previewImage',
                 'uploadImage',
                 'downloadImage',
-                'getNetworkType',
-                'openLocation',
-                'getLocation',
-                'hideOptionMenu',
-                'showOptionMenu',
-                'closeWindow',
-                'scanQRCode',
-                'chooseWXPay',
-                'openProductSpecificView',
-                'addCard',
-                'chooseCard',
-                'openCard'
             ],
-            success: function (res) {
+            success  : function (res) {
                 if (res.checkResult.getLocation == false) {
                     alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
                     return;
-                }else{
+                } else {
                     wx.chooseImage({
-                        count: 1,
+                        count   : 1,
                         sizeType: ['compressed'],
-                        success: function (_selected) {
+                        success : function (_selected) {
 
                         }
                     });
@@ -179,7 +139,7 @@ $signPackage = $jssdk->GetSignPackage();
             }
         });
     });
-    wx.error(function(res){
+    wx.error(function (res) {
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
         alert("验证失败，请重试！");
         //wx.closeWindow();
@@ -194,17 +154,17 @@ $signPackage = $jssdk->GetSignPackage();
         //     compress     : false,
         //     fileSizeLimit: 2
         // },
-        uploader: function(){
+        uploader: function () {
 
             /*必须返回一个Promise对象，成功返回url，失败返回错误信息*/
-            return new Promise(function(_resolve, _reject){
+            return new Promise(function (_resolve, _reject) {
 
                 /*调用微信接口选取图片*/
                 wx.chooseImage({
-                    count: 1,
+                    count   : 1,
                     sizeType: ['compressed'],
-                    success: function (_selected) {
-                        if( _selected.localIds.length == 0 ){
+                    success : function (_selected) {
+                        if (_selected.localIds.length == 0) {
                             return;
                         }
 
@@ -215,21 +175,21 @@ $signPackage = $jssdk->GetSignPackage();
 
                                 /*取得图片serverId后传给后端保存处理并返回url*/
                                 $.ajax({
-                                    url: '/Eleditor/upload.php',
-                                    type: 'POST',
-                                    data: {
+                                    url    : '/Eleditor/upload.php',
+                                    type   : 'POST',
+                                    data   : {
                                         /*把serverId传给服务器，服务器取微信换取图片并保存返回url*/
                                         media_id: _resp.serverId
                                     },
-                                    cache: false,
-                                    success: function(_resu){
-                                        if( _resu.status == 0 ){
+                                    cache  : false,
+                                    success: function (_resu) {
+                                        if (_resu.status == 0) {
                                             return _reject(_resu.msg);
                                         }
                                         /*执行resolve并传递url*/
                                         _resolve(_resu.url);
                                     },
-                                    error: function(){
+                                    error  : function () {
                                         _reject('上传失败!');
                                     }
                                 });
@@ -268,10 +228,10 @@ $signPackage = $jssdk->GetSignPackage();
         //         /*保存状态，以便撤销*/
         //         contentEditor.saveState();
         //         contentEditor.getEditNode().after(`
-			// 						<div class='Eleditor-video-area'>
-			// 							<video src="${_call.url}" controls="controls"></video>
-			// 						</div>
-			// 					`);
+        // 						<div class='Eleditor-video-area'>
+        // 							<video src="${_call.url}" controls="controls"></video>
+        // 						</div>
+        // 					`);
         //         contentEditor.hideEditorControllerLayer();
         //     });
         // },
@@ -304,7 +264,12 @@ $signPackage = $jssdk->GetSignPackage();
         ]
         //placeHolder: 'placeHolder设置占位符'
     });
-</script>
 
+    $('#saveBtn').click(function(){
+
+        var _content = contentEditor.getContentText();
+        console.log(_content);
+    })
+</script>
 </body>
 </html>

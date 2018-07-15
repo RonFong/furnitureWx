@@ -2,6 +2,7 @@
 vendor/
 *.log
 thinkphp/
+doc/
 /runtime/
 LICENSE.txt
 /log/
