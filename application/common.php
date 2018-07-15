@@ -193,3 +193,70 @@ if (!function_exists('set_map'))
         return $map;
     }
 }
+
+if (!function_exists('move_tmp_img'))
+{
+    /**
+     * 将临时保存的图片转存到指定地址
+     * @param string $tmpImg            临时图片地址
+     * @param $folder   string          目标文件夹
+     * @return mixed
+     */
+    function move_tmp_img($tmpImg, $folder)
+    {
+        //此图片非临时文件夹中的图片
+        if (strpos($tmpImg, $folder) !== false)
+            return ['img' => $tmpImg];
+
+        //临时图片绝对地址
+        $tmpPath = str_replace(VIEW_IMAGE_PATH, IMAGE_PATH, $tmpImg);
+        //获取图片名
+        $imgName = substr($tmpImg, strlen(VIEW_IMAGE_PATH . '/tmp/'));
+        //目标转存地址
+        $path = IMAGE_PATH . $folder . $imgName;
+
+        $result = rename($tmpPath, $path);
+        if (!$result)
+            return false;
+
+        //转存缩略图
+        $getThumbPath = function ($tmpPath) {
+            //获取缩略图绝对地址
+            $array = explode('.', $tmpPath);
+            $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
+            return implode('', $array);
+        };
+        $thumbImg = $getThumbPath($tmpPath);
+        if (file_exists($thumbImg)) {
+            if (!rename($thumbImg, $getThumbPath($path)))
+                return false;
+        }
+        return VIEW_IMAGE_PATH . $folder . $imgName;
+    }
+}
+
+if (!function_exists('unlink_img'))
+{
+    function unlink_img($img)
+    {
+        $unlinkImg = function ($path) {
+            if (file_exists(PUBLIC_PATH . $path)) {
+                unlink(PUBLIC_PATH . $path);
+                //获取缩略图绝对地址
+                $array = explode('.', $path);
+                $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
+                $thumbImg = implode('', $array);
+                if (file_exists(PUBLIC_PATH . $thumbImg))
+                    unlink(PUBLIC_PATH . $thumbImg);
+            }
+        };
+        if (is_array($img)) {
+            foreach ($img as $v) {
+                $unlinkImg($v);
+            }
+        } else {
+            $unlinkImg($img);
+        }
+        return true;
+    }
+}
