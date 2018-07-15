@@ -11,9 +11,7 @@
 
 namespace app\api\service;
 
-use think\Image;
-use app\common\model\Article;
-use app\common\model\ArticleContent;
+use think\Db;
 
 /**
  * 图文
@@ -26,20 +24,13 @@ class ImageText
      * 当前图文模型
      * @var string
      */
-    protected $mainModel;
+    protected static $mainModel;
 
     /**
      * 当前图文内容模型
      * @var string
      */
-    protected $contentModel;
-
-    /**
-     * 已保存的图片地址
-     * @var array
-     */
-    protected $imgPath = [];
-
+    protected static $contentModel;
 
     /**
      * ImageText constructor.
@@ -48,36 +39,88 @@ class ImageText
      */
     public function __construct($mainModel, $contentModel)
     {
-        $this->mainModel = new $mainModel();
-        $this->contentModel = new $contentModel();
+        self::$mainModel = $mainModel;
+        self::$contentModel = $contentModel;
     }
 
-    static public function create($data, $files)
+    /**
+     * 图文信息保存及更新
+     * @param $data   array   图文数据
+     * [
+     * 'title' => '',
+     * 'classify_id' => '',
+     * 'music' => '',
+     * 'content' => [
+     *      [
+     *          'sort'  => 1,
+     *          'img'   => '',
+     *          'text'  => ''
+     *      ],
+     *      [
+     *          'sort'  => 2,
+     *          'img'   => '',
+     *          'text'  => ''
+     *      ]
+     * ]
+     * @return array
+     */
+    public static function write($data)
     {
+        //开启事务
+        Db::startTrans();
         try {
+            //文章主信息
             $articleData = [
-                'user_id'       => user_info('id') ?? 0,
+                'user_id'       => user_info('id') ?? 0,      //user_id  必须， 暂缺失
+                'title'         => $data['title'],
                 'classify_id'   => $data['classify_id'],
-                'music'         => $data['music'] ?? ''
+                'music'         => $data['music'] ?? ''     //音乐，非必填
             ];
-            foreach ($data['content'] as $k => $v) {
-                if (array_key_exists('content', $files) && array_key_exists($k, $files['content'])) {
-                    $image = Image::open($files['content'][$k]);
-                    print_r($image->height());
-                    die;
-                } elseif (!array_key_exists('text', $v) || empty($v['text'])) {
-                    exception('文字和图片不能都为空');
-                }
+            //有传id则为更新操作
+            if (array_key_exists('id', $data) && is_numeric($data['id']))
+                $articleData['id'] = $data['id'];
+
+            //保存文章信息
+            self::$mainModel->save($articleData);
+
+            //获取文章ID
+            $articleID = self::$mainModel->id;
+
+            //保存文章内容块
+            $contentID = [];
+            foreach ($data['content'] as $v) {
+                $v['article_id'] = $articleID;
+                $model = self::initContentModel();
+                $model->save($v);
+
+                //记录所保存的内容块id
+                array_push($contentID, $model->id);
             }
+
+            //若此次为更新操作，则已存在且不包含在更新数据中的数据，应删除
+            if (array_key_exists('id', $articleData)) {
+                $popID = self::$contentModel->where('id', 'not in', $contentID)->column('id');
+                if ($popID)
+                    self::$contentModel::destroy($popID);
+            }
+            //提交事务
+            Db::commit();
+
         } catch (\Exception $e) {
-
+            //事务回滚
+            Db::rollback();
+            return ['state' => false, 'msg' => $e->getMessage()];
         }
-        return 1;
+        return ['state' => true, 'id' => $articleID];
     }
 
-
-    static public function saveImg()
+    /**
+     * 初始化文章内容模型，避免在循环写入中混淆数据
+     * @return string
+     */
+    private static function initContentModel()
     {
-
+        return clone self::$contentModel;
     }
+
 }
