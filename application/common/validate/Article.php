@@ -29,6 +29,7 @@ class Article extends BaseValidate
 
     protected $scene = [
         'create'        => [
+            'id'        => 'idCantExist',
             'title',
             'classify_id',
             'content',
@@ -43,5 +44,18 @@ class Article extends BaseValidate
             'id'
         ],
     ];
+
+    protected function idCantExist($value, $rule, $data)
+    {
+        if (array_key_exists('id', $data))
+            return '新增操作，不能带有主键参数';
+        if (array_key_exists('content', $data) && is_array($data['content'])) {
+            foreach ($data['content'] as $v) {
+                if (array_key_exists('id', $v))
+                    return '新增操作，不能带有主键参数';
+            }
+        }
+        return true;
+    }
 
 }
