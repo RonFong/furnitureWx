@@ -79,13 +79,13 @@ class ImageText
         //开启事务
         Db::startTrans();
         try {
+            $contentData = $data['content'];
+            unset($data['content']);
+
             //文章主信息
-            $articleData = [
-                'user_id'       => user_info('id') ?? 0,      //user_id  必须， 暂缺失
-                'title'         => $data['title'],
-                'classify_id'   => $data['classify_id'],
-                'music'         => $data['music'] ?? ''     //音乐，非必填
-            ];
+            $articleData = $data;
+            $articleData['id'] = user_info('id') ?? 0;      //user_id  必须， 暂缺失
+
             //有传id则为更新操作
             if (array_key_exists('id', $data) && is_numeric($data['id']))
                 $articleData['id'] = $data['id'];
@@ -98,7 +98,7 @@ class ImageText
 
             //保存文章内容块
             $contentID = [];
-            foreach ($data['content'] as $v) {
+            foreach ($contentData as $v) {
                 $v['article_id'] = $articleID;
 
                 if (array_key_exists('img', $v) && !empty($v['img'])) {
