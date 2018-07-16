@@ -165,7 +165,7 @@ class Relate extends BaseController
      * @api {post} /v1/relate/goodsCollect  用户收藏商城商品
      * @apiGroup Relate
      * @apiParam {number} user_id 用户ID
-     * @apiParam {number} goods_id 评论ID
+     * @apiParam {number} goods_id 商品ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
      * @apiParamExample  {string} 请求参数格式：
