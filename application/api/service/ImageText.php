@@ -50,7 +50,7 @@ class ImageText
     {
         self::$mainModel = $mainModel;
         self::$contentModel = $contentModel;
-        self::$folder = $folder;
+        self::$folder = '/' . $folder . '/';
     }
 
     /**
