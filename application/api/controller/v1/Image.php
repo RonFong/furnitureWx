@@ -73,33 +73,42 @@ class Image extends BaseController
      */
     public function saveTmpImg()
     {
-
         try {
-            if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $this->data['img'], $result)){
-                //生成图片名
-                $imgName = md5(uniqid(microtime(true)));
-                //写入到目标文件
-                $imgFile = $this->imgPath . $imgName . '.' .$result[2];
-                if (file_put_contents($imgFile, base64_decode(str_replace($result[1], '', $this->data['img'])))){
-                    //生成后缀为 $this->thumbImgSuffix 的缩略图
-                    $image = ThinkImage::open($imgFile);
-                    if ($image->width() < $this->thumbImgSize['width'] || $image->height() < $this->thumbImgSize['height']) {
-                        //原图尺寸小于预定缩略图，则固定尺寸缩放裁剪
-                        $thumbType = ThinkImage::THUMB_FIXED;
-                    } else {
-                        //居中缩放裁剪
-                        $thumbType = ThinkImage::THUMB_CENTER;
-                    }
-                    //保存缩略图
-                    $image->thumb($this->thumbImgSize['width'], $this->thumbImgSize['height'], $thumbType)
-                        ->save($this->imgPath . $imgName . $this->thumbImgSuffix . '.' . $result[2]);
-
-                    $this->result['data'] = [
-                        'img'       => $this->viewImgPath . $imgName . '.' .$result[2],
-                        'img_thumb' => $this->viewImgPath . $imgName . $this->thumbImgSuffix . '.' .$result[2]
-                    ];
+            //生成图片名
+            //base64格式上传
+            if (array_key_exists('img', $this->data) && $this->data['img']) {
+                if (!preg_match('/^(data:\s*image\/(\w+);base64,)/', $this->data['img'], $result)){
+                    exception('参数错误');
                 }
+                //写入到目标文件
+                $imgFile = md5(uniqid(microtime(true))) . '.' . $result[2];
+                file_put_contents($this->imgPath . $imgFile, base64_decode(str_replace($result[1], '', $this->data['img'])));
+            } elseif ($this->files['img']) {
+                //file格式上传
+                $info = $this->files['img']->move($this->imgPath);
+                $imgFile = $info->getSaveName();
             }
+
+            //生成后缀为 $this->thumbImgSuffix 的缩略图
+            $image = ThinkImage::open($this->imgPath . $imgFile);
+            if ($image->width() < $this->thumbImgSize['width'] || $image->height() < $this->thumbImgSize['height']) {
+                //原图尺寸小于预定缩略图，则固定尺寸缩放裁剪
+                $thumbType = ThinkImage::THUMB_FIXED;
+            } else {
+                //居中缩放裁剪
+                $thumbType = ThinkImage::THUMB_CENTER;
+            }
+            //保存缩略图
+            $array = explode('.', $imgFile);
+            $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
+            $thumbImg = implode('', $array);
+            $image->thumb($this->thumbImgSize['width'], $this->thumbImgSize['height'], $thumbType)
+                ->save($this->imgPath . $thumbImg);
+
+            $this->result['data'] = [
+                'img'       => $this->viewImgPath . $imgFile,
+                'img_thumb' => $this->viewImgPath . $thumbImg
+            ];
         } catch (\Exception $e) {
             $code = 400;
             $this->result['state'] = 0;
