@@ -84,6 +84,26 @@ class BaseValidate extends Validate {
     }
 
     /**
+     * 图文内容
+     * @param $value  array   ['img' => '', 'sort' => 1, 'text' => '']
+     * @return mixed
+     */
+    protected function checkImageText($value)
+    {
+        if (!is_array($value))
+            return '图文内容格式错误';
+        foreach ($value as $item) {
+            if (!array_key_exists('sort', $item) || !is_numeric($item['sort']))
+                return 'sort 排序字段值不能为空或非数字';
+            if ((!array_key_exists('img', $item) || empty($item['img'])) &&
+                (!array_key_exists('text', $item) || empty($item['text'])))
+                return '文本内容块中图片和文字不能都为空';
+        }
+        return true;
+    }
+
+
+    /**
      * 百度AI文本审核
      * 批量审核当前 提交的文本内容
      * @param $value
@@ -110,6 +130,7 @@ class BaseValidate extends Validate {
         return true;
     }
 
+
     /**
      * 百度AI文本审核
      * 审核单个文本
@@ -129,11 +150,24 @@ class BaseValidate extends Validate {
     }
 
     /**
-     * 百度AI图片审核
+     * 百度AI图片审核   （base64  格式）
+     * 审核当前限定规则的图片
+     * @param $value string 图片的base4 编码
+     * @return bool|string
+     */
+    protected function imgBase64Censor($value)
+    {
+        $result = ContentCensor::img($value);
+        if ($result['state'] == 1)
+            return '有违禁图片，请更改后再提交';
+    }
+
+    /**
+     * 百度AI图片审核   （file  格式）
      * 审核当前提交的所有图片
      * @return bool|string
      */
-    protected function imgCensor()
+    protected function imgFileCensor()
     {
         try {
             $files = Request::instance()->file();

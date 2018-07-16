@@ -55,12 +55,19 @@ Route::group('api/:version',function() {
         Route::get('address/:lat/:lng','api/:version.Site/getAddress');
     });
 
+    //保存临时图片
+    Route::post('image/temporary', 'api/:version.Image/saveTmpImg');
+
     //圈子 文章
     Route::group('article', function () {
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
         //创建文章
         Route::post('create', 'api/:version.Article/create');
+        //更新文章
+        Route::put('update', 'api/:version.Article/update');
+        //删除文章
+        Route::delete('delete', 'api/:version.Article/delete');
     });
 
     // 门店
