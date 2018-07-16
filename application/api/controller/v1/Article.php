@@ -37,7 +37,7 @@ class Article extends BaseController
         parent::__construct($request);
         $this->currentModel = new ArticleModel();
         $this->currentValidate = new ArticleValidate();
-        $this->folder = "/article/";
+        $this->folder = "article";
     }
 
     /**
