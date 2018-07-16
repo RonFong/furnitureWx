@@ -74,4 +74,20 @@ Route::group('api/:version',function() {
     Route::group('shop', function () {
         Route::post('register','api/:version.Shop/register');
     });
+
+    //关注、收藏、点赞
+    Route::group('relate', function() {
+        //用户收藏文章
+        Route::post('articleCollect', 'api/:version.Relate/articleCollect');
+        //用户点赞文章
+        Route::post('articleGreat', 'api/:version.Relate/articleGreat');
+        //评论点赞
+        Route::post('commentGreat', 'api/:version.Relate/commentGreat');
+        //商家关注厂家
+        Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
+        //用户收藏商城商品
+        Route::post('goodsCollect', 'api/:version.Relate/goodsCollect');
+        //用户收藏商家
+        Route::post('shopCollect', 'api/:version.Relate/shopCollect');
+    });
 });
