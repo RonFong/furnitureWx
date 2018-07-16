@@ -57,8 +57,8 @@ class Shop extends BaseController
     public function info()
     {
         $this->currentValidate->goCheck('info');
-        $this->data['admin_user'] ??
-        $userList = $this->currentModel->selectShop(, $this->page, $this->row);
+        $admin_id = $this->data['admin_user'] ?? '';
+        $userList = $this->currentModel->selectShop($admin_id, $this->page, $this->row);
         if ($userList) {
             return json($userList, 202);
         }
