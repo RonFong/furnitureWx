@@ -77,16 +77,21 @@ class Image extends BaseController
             //生成图片名
             //base64格式上传
             if (array_key_exists('img', $this->data) && $this->data['img']) {
+
                 if (!preg_match('/^(data:\s*image\/(\w+);base64,)/', $this->data['img'], $result))
                     exception('参数错误');
+
                 //写入到目标文件
                 $imgFile = md5(uniqid(microtime(true))) . '.' . $result[2];
                 file_put_contents($this->imgPath . $imgFile, base64_decode(str_replace($result[1], '', $this->data['img'])));
-            } elseif ($this->files['img']) {
+
+            } elseif (array_key_exists('img', $this->files) && $this->files['img']) {
+
                 //file格式上传
                 $info = $this->files['img']->move($this->imgPath);
                 if (!$info)
                     exception($info->getError());
+
                 $imgFile = $info->getSaveName();
             }
 
