@@ -61,10 +61,10 @@ class Sms extends BaseController
                 exception('短信发送频率过高，请稍后再试');
             }
             $authCode = $this->smsService->getAuthCode($this->data['phoneNumber']);
-            Cache::set("send_".$this->data['phoneNumber'], $authCode, 60);
             if (!$authCode) {
                 exception('短信发送失败');
             }
+            Cache::set("send_".$this->data['phoneNumber'], $authCode, 60);
             $this->result['data']['auth_code'] = $authCode;
             $this->result['msg'] = '短信发送成功';
         } catch (\Exception $e) {
