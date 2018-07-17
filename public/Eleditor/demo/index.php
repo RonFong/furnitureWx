@@ -1,6 +1,6 @@
 <?php
 require_once "jssdk.php";
-$jssdk       = new JSSDK("wx195a5e8ed1a55ead", "7a91a512262ec4a9dea5a507612e48a0");
+$jssdk       = new JSSDK("wxa6d691299093f1a4", "e595b441429a15c3d5526e4accf7cf7f");
 $signPackage = $jssdk->GetSignPackage();
 ?>
 <!DOCTYPE html>
@@ -115,29 +115,6 @@ $signPackage = $jssdk->GetSignPackage();
         ]
     });
     wx.ready(function () {
-        // 在这里调用 API
-        wx.checkJsApi({
-            jsApiList: [
-                'chooseImage',
-                'previewImage',
-                'uploadImage',
-                'downloadImage',
-            ],
-            success  : function (res) {
-                if (res.checkResult.getLocation == false) {
-                    alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
-                    return;
-                } else {
-                    wx.chooseImage({
-                        count   : 1,
-                        sizeType: ['compressed'],
-                        success : function (_selected) {
-
-                        }
-                    });
-                }
-            }
-        });
     });
     wx.error(function (res) {
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
@@ -266,7 +243,7 @@ $signPackage = $jssdk->GetSignPackage();
     });
 
     $('#saveBtn').click(function(){
-
+        console.log(111111);
         var _content = contentEditor.getContentText();
         console.log(_content);
     })
