@@ -5,18 +5,19 @@ namespace app\common\validate;
 class Shop extends BaseValidate
 {
     protected $rule = [
-        'id'                => 'require',               // 用户ID
-        'admin_user'        => 'require|number',        // 管理员id
-        'contact'           => 'require',               // 门店联系人
-        'store_phone'       => 'require|isPhoneNo',     // 门店电话
-        'store_wx'          => 'require',               // 门店微信
-        'province'          => 'require|number',        // 省
-        'city'              => 'require|number',        // 市
-        'district'          => 'require|number',        // 区
-        'town'              => 'require',               // 乡镇街道
-        'address'           => 'require|chsDash',       // 详细地址
-        'shop_img'          => 'require',               // 门头照片
-        'category'          => 'number',                // 经营类别
+        'id'                => 'require',                   // 用户ID
+        'admin_user'        => 'require|number',            // 管理员id
+        'contact'           => 'require',                   // 门店联系人
+        'store_phone'       => 'require|isPhoneNo',         // 门店电话
+        'store_wx'          => 'require',                   // 门店微信
+        'province'          => 'require|number',            // 省
+        'city'              => 'require|number',            // 市
+        'district'          => 'require|number',            // 区
+        'town'              => 'require',                   // 乡镇街道
+        'address'           => 'require|chsDash',           // 详细地址
+        'shop_img'          => 'require',                   // 门头照片
+        'category'          => 'number',                    // 经营类别
+        'code'              => 'require|number|length:6'    // 手机验证码
     ];
 
     protected $message = [
@@ -36,6 +37,9 @@ class Shop extends BaseValidate
         'address.require'       => '请填写详细地址',
         'address.chsDash'       => '地址格式错误',
         'shop_img.require'      => '门头照片不能为空',
+        'code.require'          => '手机验证码不能为空',
+        'code.number'           => '手机验证码格式错误',
+        'code.length'           => '手机验证码格式错误',
     ];
 
     /**
