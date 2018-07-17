@@ -51,7 +51,7 @@ class SmsApp
      * @param $cacheTime int 有效时间 (分钟)
      * @return bool|string
      */
-    public function getAuthCode($phoneNumber, $cacheTime = 30, $code = '')
+    public function getAuthCode($phoneNumber, $cacheTime = 10, $code = '')
     {
         $code = $code == '' ? substr(str_shuffle('12345678901234567890123456789'), 0, 6) : $code;
         $msg = "您的验证码是：".$code."，请于".$cacheTime."分钟内填写。如非本人操作，请忽略本短信。";

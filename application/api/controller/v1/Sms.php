@@ -55,14 +55,24 @@ class Sms extends BaseController
     public function getAuthCode()
     {
         $this->currentValidate->goCheck('getAuthCode');
-        $authCode = $this->smsService->getAuthCode($this->data['phoneNumber']);
-        if (!$authCode) {
+        try {
+            $cacheCode = Cache::get('send_'.$this->data['phoneNumber']);
+            if ($cacheCode) {
+                exception('短信发送频率过高，请稍后再试');
+            }
+            $authCode = $this->smsService->getAuthCode($this->data['phoneNumber']);
+            if (!$authCode) {
+                exception('短信发送失败');
+            }
+            Cache::set("send_".$this->data['phoneNumber'], $authCode, 60);
+            $this->result['data']['auth_code'] = $authCode;
+            $this->result['msg'] = '短信发送成功';
+        } catch (\Exception $e) {
+            $code = 403;
             $this->result['state'] = 0;
-            $this->result['msg'] = '短信发送失败';
+            $this->result['msg'] = $e->getMessage();
         }
-        $this->result['data']['auth_code'] = $authCode;
-        $this->result['msg'] = '短信发送成功';
-        return json($this->result, 200);
+        return json($this->result, $code ?? 200);
     }
 
 
