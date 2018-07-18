@@ -121,7 +121,7 @@ class ImageText
             if (array_key_exists('id', $articleData)) {
                 $popData = self::$contentModel->where('id', 'not in', $contentID)->column('img', 'id');
                 if ($popData)
-                    self::$contentModel::destroy(array_keys($popData));
+                    self::$contentModel->delete(array_keys($popData));
                     //删除图片
                     if ($popImg = array_filter($popData)) {
                         unlink_img($popImg);
