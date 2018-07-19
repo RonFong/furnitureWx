@@ -17,12 +17,12 @@ class Category extends CoreCategory
         //    return isset($items[0]['son']) ? $items[0]['son'] : array();
         $tree = array();
         foreach ($all as $key => $item){
-            if (isset($items[$item['parent_id']]))
-                $items[$item['parent_id']]['son'][] = &$items[$item['id']];
+            if (isset($all[$item['parent_id']]))
+                $all[$item['parent_id']]['son'][] = &$all[$item['id']];
             else
-                $tree[] = &$items[$item['id']];
+                $tree[] = &$all[$item['id']];
             return $tree;
         }
-        dump($tree);
+        dump($tree);die;
     }
 }
