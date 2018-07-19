@@ -19,7 +19,8 @@ class Wechat {
     public function __construct() {
 
         $this->appid     = 'wx195a5e8ed1a55ead';
-        $this->appSecret = '7a91a512262ec4a9dea5a507612e48a0';
+        $this->appSecret = 'd0a065f66e34734712f8b4310691b5c3';
+
         $this->token     = '';
 
     }
@@ -36,7 +37,6 @@ class Wechat {
         $info = json_decode(curl_get($url));
 
         //Cache::set('session_key:'.$info->openid,$info->session_key);
-
         return $info->openid;
     }
 
