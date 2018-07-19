@@ -11,32 +11,38 @@ class Category extends CoreCategory
 
     public function getAllCategory()
     {
-        $all = $this->select();
+        $fields = ['id','parent_id','name'];
+        $all = $this->field($fields)->select();
         $all = collection($all)->toArray();
-        //$items[$item['pid']]['son'][$item['id']] = &$items[$item['id']];
-        //    return isset($items[0]['son']) ? $items[0]['son'] : array();
-//        $tree = array();
-//        foreach ($all as $key => $item){
-//            if (isset($all[$item['parent_id']]))
-//                $all[$item['parent_id']]['son'][] = &$all[$item['id']];
-//            else
-//                $tree[] = &$all[$item['id']];
-//        }
-        $tree = $this->getTree($all,0);
-        dump($tree);die;
+        return $this->formatTree($all,0);
     }
 
-    public function getTree($data, $pId)
-    {
-        $tree = '';
-        foreach($data as $k => $v)
-        {
-            if($v['parent_id'] == $pId)
-            {        //父亲找到儿子
-                $v['parent_id'] = $this->getTree($data, $v['parent_id']);
-                $tree[] = $v;
+    public function formatTree($arr,$pid=0){
+        foreach($arr as $k => $v){
+            if($v['parent_id']==$pid){
+                $data[$v['id']]=$v;
+                $data[$v['id']]['son']=$this->formatTree($arr,$v['id']);
             }
         }
-        return $tree;
+        return isset($data)?$data:array();
     }
+
+    /**
+     * 排序
+     * @param $arr
+     * @param $cols
+     * @return mixed
+     */
+//    public function sort($arr,$cols){
+//        //子分类排序
+//        foreach ($arr as $k => &$v) {
+//            if(!empty($v['sub'])){
+//                $v['sub']=$this->sort($v['sub'],$cols);
+//            }
+//            $sort[$k]=$v[$cols];
+//        }
+//        if(isset($sort))
+//            array_multisort($sort,SORT_DESC,$arr);
+//        return $arr;
+//    }
 }
