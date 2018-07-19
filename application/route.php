@@ -75,6 +75,10 @@ Route::group('api/:version',function() {
         Route::post('register','api/:version.Shop/register');
     });
 
+    Route::group('category',function (){
+        Route::get('list','api/:version.Category/getCategoryList');
+    });
+
     //关注、收藏、点赞
     Route::group('relate', function() {
         //用户收藏文章
