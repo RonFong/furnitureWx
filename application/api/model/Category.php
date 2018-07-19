@@ -11,7 +11,18 @@ class Category extends CoreCategory
 
     public function getAllCategory()
     {
-        $first = $this->where('parent_id',0)->select();
-        dump(collection($first)->toArray());
+        $all = $this->select();
+        $all = collection($all)->toArray();
+        //$items[$item['pid']]['son'][$item['id']] = &$items[$item['id']];
+        //    return isset($items[0]['son']) ? $items[0]['son'] : array();
+        $tree = array();
+        foreach ($all as $key => $item){
+            if (isset($items[$item['parent_id']]))
+                $items[$item['parent_id']]['son'][] = &$items[$item['id']];
+            else
+                $tree[] = &$items[$item['id']];
+            return $tree;
+        }
+        dump($tree);
     }
 }
