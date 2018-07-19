@@ -12,7 +12,11 @@
 namespace app\common\model;
 
 
+use traits\model\SoftDelete;
+
 class User extends Model
 {
+    use SoftDelete;
 
+    protected $readonly = ['wx_openid', 'wx_unionid'];
 }
