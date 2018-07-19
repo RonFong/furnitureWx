@@ -21,7 +21,6 @@ class Category extends BaseController
 
         parent::__construct($request);
         $this->currentModel    = new categoryModel();
-        $this->currentValidate = validate('category');
     }
 
     public function getCategoryList()
