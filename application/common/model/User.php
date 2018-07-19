@@ -18,7 +18,27 @@ class User extends Model
 {
     use SoftDelete;
 
-    protected $readonly = ['wx_openid', 'wx_unionid'];
+    /**
+     * 只读字段
+     * @var array
+     */
+    protected $readonly = [
+        'wx_openid',
+        'wx_unionid'
+    ];
+
+    /**
+     * 隐藏字段
+     * @var array
+     */
+    protected $hidden = [
+        'wx_openid',
+        'wx_unionid',
+        'create_by',
+        'update_time',
+        'update_by',
+        'delete_time'
+    ];
 
 
     /**
