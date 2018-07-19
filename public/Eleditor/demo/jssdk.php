@@ -63,8 +63,6 @@ class JSSDK {
             if ($ticket) {
                 $data->expire_time  = time() + 7000;
                 $data->jsapi_ticket = $ticket;
-                var_dump('jsapi_ticket:');
-                var_dump($data);
                 $this->set_php_file("jsapi_ticket.php", json_encode($data));
             }
         } else {
@@ -84,13 +82,10 @@ class JSSDK {
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
             $res = json_decode($this->httpGet($url));
-            var_dump($res);
             $access_token = $res->access_token;
             if ($access_token) {
                 $data->expire_time  = time() + 7000;
                 $data->access_token = $access_token;
-                var_dump('accessToken:');
-                var_dump($data);
                 $this->set_php_file("access_token.php", json_encode($data));
             }
         } else {
