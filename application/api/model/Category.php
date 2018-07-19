@@ -14,7 +14,7 @@ class Category extends CoreCategory
         $fields = ['id','parent_id','name'];
         $all = $this->field($fields)->select();
         $all = collection($all)->toArray();
-        return $this->formatTree($all,0);
+        return array_values($this->formatTree($all,0));
     }
 
     public function formatTree($arr,$pid=0){
