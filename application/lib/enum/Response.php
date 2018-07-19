@@ -61,4 +61,7 @@ class Response
     // 点赞、关注、收藏操作失败
     const RELATE_ERROR = ['code' => 500, 'errorCode' => 999, 'msg' => '操作失败'];
 
+    // openid获取失败
+    const GET_OPENID_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => 'openid获取失败'];
+
 }
