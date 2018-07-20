@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-
 namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
@@ -22,9 +21,10 @@ class User extends BaseController
 
     function __construct(Request $request = null)
     {
+
         parent::__construct($request);
         //当前model
-        $this->currentModel    = new userModel();
+        $this->currentModel = new userModel();
         //当前validate
         $this->currentValidate = validate('user');
     }
@@ -38,6 +38,7 @@ class User extends BaseController
      */
     public function saveUser()
     {
+
         $this->currentValidate->goCheck('create');
         $id = $this->currentModel->where('wx_openid', $this->data['wx_openid'])->value('id');
         if ($id) {
@@ -45,7 +46,7 @@ class User extends BaseController
         }
         $user = $this->currentModel->saveData($this->data);
         if ($user) {
-            $this->result['data'] = $this->currentModel->where('id',$user->id)->find()->toArray();
+            $this->result['data']          = $this->currentModel->where('id', $user->id)->find()->toArray();
             return json($this->result, 201);
         }
         $this->response->error(Response::USER_CREATE_ERROR);
@@ -73,8 +74,8 @@ class User extends BaseController
      */
     public function select()
     {
-        $this->currentValidate->goCheck('select');
 
+        $this->currentValidate->goCheck('select');
         $map = [];
         if ($this->data) {
             //组装查询条件
@@ -87,7 +88,6 @@ class User extends BaseController
         $this->response->error(Response::USERS_EMPTY);
     }
 
-
     /**
      * 用户删除
      * @return \think\response\Json
@@ -95,6 +95,7 @@ class User extends BaseController
      */
     public function delete()
     {
+
         $this->currentValidate->goCheck('delete');
         if ($this->currentModel->deleteUser($this->data)) {
             return json($this->result, 200);
@@ -108,9 +109,11 @@ class User extends BaseController
      */
     public function getOpenid()
     {
-        $weChat = new Wechat();
-        $openid = $weChat->getOpenid(['code' => $_GET['code']]);
+
+        $weChat               = new Wechat();
+        $openid               = $weChat->getOpenid(['code' => $_GET['code']]);
         $this->result['data'] = ['openid' => $openid];
+
         return json($this->result, 200);
     }
 

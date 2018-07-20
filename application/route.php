@@ -97,4 +97,14 @@ Route::group('api/:version',function() {
         //用户收藏商家
         Route::post('shopCollect', 'api/:version.Relate/shopCollect');
     });
+
+    //工厂
+    Route::group('factory', function () {
+        //获取所有工厂
+        Route::get('factoryList', 'api/:version.Factory/getFactoryList');
+        //获取工厂产品
+        Route::get('factoryProduct/:factory_id', 'api/:version.Factory/getFactoryProduct');
+        //获取工厂产品详情
+        Route::get('factoryProductDetail/:product_id', 'api/:version.Factory/factoryProductDetail');
+    });
 });
