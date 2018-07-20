@@ -3,7 +3,7 @@ namespace app\api\model;
 
 use app\common\model\Factory as CoreFactory;
 
-class Factory extends CoreFactory
+class FactoryProduct extends CoreFactory
 {
 
     public function getFactoryList($data)
