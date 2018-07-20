@@ -64,6 +64,8 @@ class Factory extends BaseController
             'page' => $this->page,
             'row'  => $this->row,
         ];
-        $this->currentModel->getFactoryList($getFactoryListData);
+        $result = $this->currentModel->getFactoryList($getFactoryListData);
+
+        return json($result);
     }
 }
