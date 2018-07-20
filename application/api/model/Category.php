@@ -7,12 +7,13 @@ use app\common\model\Category as CoreCategory;
 
 class Category extends CoreCategory
 {
-    protected $table='shop_category';
+    protected $table='business_category';
 
     public function getAllCategory()
     {
         $fields = ['id','parent_id','name'];
         $all = $this->field($fields)->select();
+
         $all = collection($all)->toArray();
         return array_values($this->formatTree($all,0));
     }

@@ -76,7 +76,7 @@ Route::group('api/:version',function() {
     });
 
     Route::group('category',function (){
-        Route::get('list','api/:version.Category/getCategoryList');
+        Route::get('business_list','api/:version.Category/getBusinessCategoryList');
     });
 
     //关注、收藏、点赞
