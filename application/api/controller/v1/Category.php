@@ -23,9 +23,9 @@ class Category extends BaseController
         $this->currentModel    = new categoryModel();
     }
 
-    public function getCategoryList()
+    public function getBusinessCategoryList()
     {
-        $this->result['data']['category'] = $this->currentModel->getAllCategory();
+        $this->result['data']['category'] = $this->currentModel->getAllBusinessCategory();
         return json($this->result,200);
     }
 }
