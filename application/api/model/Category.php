@@ -9,7 +9,7 @@ class Category extends CoreCategory
 {
     protected $table='business_category';
 
-    public function getAllCategory()
+    public function getAllBusinessCategory()
     {
         $fields = ['id','parent_id','name'];
         $all = $this->field($fields)->select();
