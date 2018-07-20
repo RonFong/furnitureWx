@@ -29,6 +29,9 @@ Route::group('api/:version',function() {
     //获取openid
     Route::get('getOpenid', 'api/:version.User/getOpenid');
 
+    //获取token
+    Route::get('getToken', 'api/:version.Token/getToken');
+
     // 音乐
     Route::group('music',function () {
         //获取推荐音乐
