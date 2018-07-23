@@ -50,7 +50,8 @@ class Factory extends CoreFactory
         $where = [
             'state' => 1
         ];
-        $result = $this->field($field)->where($where)->page($data['page'], $data['row'])->select();
+        $model = new FactoryProduct();
+        $result = $model->field($field)->where($where)->page($data['page'], $data['row'])->select();
 
         return $result;
     }
