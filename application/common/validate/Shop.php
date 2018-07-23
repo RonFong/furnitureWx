@@ -7,39 +7,35 @@ class Shop extends BaseValidate
     protected $rule = [
         'id'                => 'require',                   // 用户ID
         'admin_user'        => 'require|number',            // 管理员id
-        'contact'           => 'require',                   // 门店联系人
-        'store_phone'       => 'require|isPhoneNo',         // 门店电话
-        'store_wx'          => 'require',                   // 门店微信
+        'shop_name'         => 'require',                   // 门店名称
+        'shop_contact'      => 'require',                   // 门店联系人
+        'shop_phone'        => 'require|isPhoneNo',         // 门店电话
+        'shop_wx'           => 'checkShopWx',               // 门店微信
         'province'          => 'require|number',            // 省
         'city'              => 'require|number',            // 市
         'district'          => 'require|number',            // 区
         'town'              => 'require',                   // 乡镇街道
         'address'           => 'require|chsDash',           // 详细地址
         'shop_img'          => 'require',                   // 门头照片
-        'category'          => 'number',                    // 经营类别
-        'code'              => 'require|number|length:6'    // 手机验证码
+        'category_id'       => 'require|number',                    // 经营类别(大类)
+        'category_child_id' => 'require',                   // 经营类别(子类)
     ];
 
     protected $message = [
-        'id.require'            => '用户ID不能为空',
-        'admin_user.require'    => '管理员不能为空',
-        'admin_user.number'     => '管理员id错误',
-        'contact.require'       => '门店联系人不能为空',
-        'store_phone.require'   => '门店电话不能为空',
-        'store_wx.require'      => '门店微信不能为空',
-        'province.require'      => '地区不能为空',
-        'province.number'       => '地区id错误',
-        'city.require'          => '市不能为空',
-        'city.number'           => '市id错误',
-        'district.require'      => '区不能为空',
-        'district.number'       => '区id错误',
-        'town.require'          => '乡镇街道不能为空',
-        'address.require'       => '请填写详细地址',
-        'address.chsDash'       => '地址格式错误',
+        'id.require'            => '请先授权',
+        'admin_user.require'    => '请先授权',
+        'admin_user.number'     => '请先授权',
+        'shop_name.require'     => '请填写门店名称',
+        'shop_contact.require'  => '请填写联系人',
+        'shop_phone.require'    => '请填写电话',
+        'province'              => '请填写门店地区',
+        'city'                  => '市不能为空',
+        'district'              => '区/县不能为空',
+        'town'                  => '乡/镇不能为空',
+        'address'               => '请填写详细地址',
         'shop_img.require'      => '门头照片不能为空',
-        'code.require'          => '手机验证码不能为空',
-        'code.number'           => '手机验证码格式错误',
-        'code.length'           => '手机验证码格式错误',
+        'category_id'           => '请选择经营类型',
+        'category_child_id.require'      => '请选择经营类型',
     ];
 
     /**
@@ -50,16 +46,27 @@ class Shop extends BaseValidate
         //新用户授权小程序获取账号信息 （用户注册）
         'register'   => [
             'admin_user',
-            'contact',
-            'store_phone',
-            'store_wx',
+            'shop_name',
+            'shop_contact',
+            'shop_phone',
+            'shop_wx',
             'province',
             'city',
             'district',
             'town',
             'address',
             'shop_img',
-            'category',
+            'category_id',
+            'category_child_id'
         ],
     ];
+
+
+    protected function checkType($value,$rule,$data)
+    {
+        if(empty($data['shop_wx']) && empty($data['wx_code'])){
+            return '请填写门店微信';
+        }
+        return true;
+    }
 }

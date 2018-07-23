@@ -33,20 +33,7 @@ class Shop extends BaseController
 
     public function register()
     {
-
         $this->currentValidate->goCheck('register');
-        if(isset($this->data['contact'])){
-            $this->data['shop_contact'] = $this->data['contact'];
-            unset($this->data['contact']);
-        }
-        if(isset($this->data['store_phone'])){
-            $this->data['shop_phone'] = $this->data['store_phone'];
-            unset($this->data['store_phone']);
-        }
-        if(isset($this->data['store_wx'])){
-            $this->data['shop_wx'] = $this->data['store_wx'];
-            unset($this->data['store_wx']);
-        }
         $shop = $this->currentModel->saveData($this->data);
         if ($shop) {
             $this->result['data'] = $this->currentModel->where('id',$shop->id)->find()->toArray();
