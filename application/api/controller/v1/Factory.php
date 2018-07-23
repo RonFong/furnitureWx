@@ -110,13 +110,13 @@ class Factory extends BaseController
      *      "data":[]
      * }
      */
-    public function getFactoryProduct($factoryId)
+    public function getFactoryProduct()
     {
 
         $getFactoryProductData = [
             'page'      => $this->page,
             'row'       => $this->row,
-            'factoryId' => $factoryId,
+            'factoryId' => $this->data['factoryId'],
         ];
         $result                = $this->currentModel->getFactoryProduct($getFactoryProductData);
 
