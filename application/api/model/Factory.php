@@ -41,7 +41,6 @@ class Factory extends CoreFactory
     {
         $field  = [
             'id',
-            'factory_id',
             'classify_id',
             'sort',
             'city',
