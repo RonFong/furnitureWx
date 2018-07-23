@@ -58,7 +58,7 @@ class Sms extends BaseController
         try {
             $cacheCode = Cache::get('send_'.$this->data['phoneNumber']);
             if ($cacheCode) {
-                exception('短信发送频率过高，请稍后再试');
+                exception('发送频率过高');
             }
             $authCode = $this->smsService->getAuthCode($this->data['phoneNumber']);
             if (!$authCode) {
@@ -105,7 +105,7 @@ class Sms extends BaseController
         $authCode = Cache::get('auth_'.$this->data['phoneNumber']);
         try {
             if (!$authCode) {
-               exception('此手机号当前没有可使用的验证码');
+               exception('验证码不存在');
             }
             if ($authCode !== $this->data['authCode']) {
                exception('验证码错误');
