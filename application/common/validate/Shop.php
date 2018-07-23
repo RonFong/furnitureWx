@@ -62,7 +62,7 @@ class Shop extends BaseValidate
     ];
 
 
-    protected function checkType($value,$rule,$data)
+    protected function checkShopWx($value,$rule,$data)
     {
         if(empty($data['shop_wx']) && empty($data['wx_code'])){
             return '请填写门店微信';
