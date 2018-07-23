@@ -43,7 +43,6 @@ class Factory extends CoreFactory
             'id',
             'classify_id',
             'sort',
-            'city',
             'music',
             'record',
         ];
@@ -51,7 +50,10 @@ class Factory extends CoreFactory
             'state' => 1
         ];
         $model = new FactoryProduct();
-        $result = $model->field($field)->where($where)->page($data['page'], $data['row'])->select();
+        $result = $model->field($field)
+                        ->where($where)
+                        ->page($data['page'], $data['row'])
+                        ->select();
 
         return $result;
     }
