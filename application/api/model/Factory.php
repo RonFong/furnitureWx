@@ -43,7 +43,6 @@ class Factory extends CoreFactory
             'id',
             'factory_id',
             'classify_id',
-            'factory_wx',
             'sort',
             'city',
             'music',
