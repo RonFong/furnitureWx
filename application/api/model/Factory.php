@@ -29,7 +29,10 @@ class Factory extends CoreFactory
             'license_code',
             'factory_img',
         ];
-        $result = $this->field($field)->page($data['page'], $data['row'])->select();
+        $where = [
+            'state' => 1
+        ];
+        $result = $this->field($field)->where($where)->page($data['page'], $data['row'])->select();
 
         return $result;
     }
@@ -38,22 +41,18 @@ class Factory extends CoreFactory
     {
         $field  = [
             'id',
-            'factory_contact',
-            'factory_phone',
+            'factory_id',
+            'classify_id',
             'factory_wx',
-            'province',
+            'sort',
             'city',
-            'district',
-            'town',
-            'address',
-            'factory_name',
-            'factory_address',
-            'user_name',
-            'phone',
-            'license_code',
-            'factory_img',
+            'music',
+            'record',
         ];
-        $result = $this->field($field)->where('')->page($data['page'], $data['row'])->select();
+        $where = [
+            'state' => 1
+        ];
+        $result = $this->field($field)->where($where)->page($data['page'], $data['row'])->select();
 
         return $result;
     }
