@@ -10,8 +10,6 @@ class Shop extends BaseValidate
         'shop_name'         => 'require',                   // 门店名称
         'shop_contact'      => 'require',                   // 门店联系人
         'shop_phone'        => 'require|isPhoneNo',         // 门店电话
-        'shop_wx'           => 'checkShopWx',               // 门店微信
-        'wx_code'           => 'checkShopWx',               // 门店微信
         'province'          => 'require|number',            // 省
         'city'              => 'require|number',            // 市
         'district'          => 'require|number',            // 区
