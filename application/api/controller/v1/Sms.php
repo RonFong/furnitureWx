@@ -107,7 +107,7 @@ class Sms extends BaseController
             if (!$authCode) {
                exception('验证码不存在');
             }
-            if ($authCode !== $this->data['authCode']) {
+            if ($authCode != $this->data['authCode']) {
                exception('验证码错误');
             }
             Cache::rm('auth_'.$this->data['phoneNumber']);
