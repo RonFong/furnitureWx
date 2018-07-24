@@ -27,6 +27,19 @@ class User extends Model
         'wx_unionid'
     ];
 
+    /**
+     * 隐藏字段
+     * @var array
+     */
+    protected $hidden = [
+        'wx_openid',
+        'wx_unionid',
+        'create_by',
+        'update_time',
+        'update_by',
+        'delete_time'
+    ];
+
 
     /**
      * 按  state 范围查询
