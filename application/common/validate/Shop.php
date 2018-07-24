@@ -7,11 +7,9 @@ class Shop extends BaseValidate
     protected $rule = [
         'id'                => 'require',                   // 用户ID
         'admin_user'        => 'require|number',            // 管理员id
-        'shop_name'         => 'require',                   // 门店名称
+        'shop_name'         => 'require|checkShopWx',                   // 门店名称
         'shop_contact'      => 'require',                   // 门店联系人
         'shop_phone'        => 'require|isPhoneNo',         // 门店电话
-        'shop_wx'           => 'checkShopWx',               // 门店微信
-        'wx_code'           => 'checkShopWx',               // 门店微信
         'province'          => 'require|number',            // 省
         'city'              => 'require|number',            // 市
         'district'          => 'require|number',            // 区
@@ -50,8 +48,6 @@ class Shop extends BaseValidate
             'shop_name',
             'shop_contact',
             'shop_phone',
-            'shop_wx',
-            'wx_code',
             'province',
             'city',
             'district',
