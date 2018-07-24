@@ -68,19 +68,19 @@ class Token
                 exception('获取用户openid失败');
             }
             $data = TokenServer::getToken($openid);
+            $token = $data->token;
+            unset($data->token);
+            $result = [
+                'state'     => 1,
+                'msg'       => 'success',
+                'data'      => [
+                    'token'     => $token,
+                    'user_info' => $data
+                ]
+            ];
         } catch (\Exception $e) {
             return json(['state' => 0, 'msg' => $e->getMessage()], 400);
         }
-        $token = $data->token;
-        unset($data->token);
-        $result = [
-            'state'     => 1,
-            'msg'       => 'success',
-            'data'      => [
-                'token'     => $token,
-                'user_info' => $data
-            ]
-        ];
         return json($result, 200);
     }
 }
