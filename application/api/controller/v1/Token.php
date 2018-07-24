@@ -19,8 +19,42 @@ use think\Request;
 class Token
 {
     /**
-     * 用户信息  （新用户，则注册）
-     * @return mixed
+     * @api {get} /v1/getToken 获取userToken
+     * @apiGroup Token
+     * @apiParam {string} code 微信用户的code
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {
+     *      "code":"*********"
+     * }
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+        {
+            "state": 1,
+            "msg": "success",
+            "data": {
+            "token": "421ba5cb275fa6ee871d8288cffdbd17",
+            "user_info": {
+                    "id": 16,
+                    "user_name": "test",
+                    "group_id": 0,
+                    "avatar": "",
+                    "gender": 0,
+                    "phone": "1817074852",
+                    "wx_account": "eeeFtyrty",
+                    "type": 3,
+                    "state": 0,
+                    "create_time": "2018-06-15 04:15:23"
+                }
+            }
+        }
+     *
+     * @apiErrorExample {json} 错误返回值：
+     * {
+     *      "state":0,
+     *      "msg":"错误信息",
+     *      "data":[]
+     * }
      */
     public function getToken()
     {
@@ -33,10 +67,20 @@ class Token
             if (!$openid) {
                 exception('获取用户openid失败');
             }
-            $userInfo = TokenServer::getToken($openid);
+            $data = TokenServer::getToken($openid);
         } catch (\Exception $e) {
             return json(['state' => 0, 'msg' => $e->getMessage()], 400);
         }
-        return json($userInfo, 200);
+        $token = $data->token;
+        unset($data->token);
+        $result = [
+            'state'     => 1,
+            'msg'       => 'success',
+            'data'      => [
+                'token'     => $token,
+                'user_info' => $data
+            ]
+        ];
+        return json($result, 200);
     }
 }
