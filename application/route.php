@@ -30,7 +30,7 @@ Route::group('api/:version',function() {
     Route::get('getOpenid', 'api/:version.User/getOpenid');
 
     //获取token
-    Route::get('getToken/:code', 'api/:version.Token/getToken');
+    Route::get('getToken', 'api/:version.Token/getToken');
 
     // 音乐
     Route::group('music',function () {
