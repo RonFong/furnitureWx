@@ -51,6 +51,7 @@ class Factory extends CoreFactory
         ];
         $model = new FactoryProduct();
         $result = $model->field($field)
+                        ->with(['groupClassify'])
                         ->where($where)
                         ->page($data['page'], $data['row'])
                         ->select();
