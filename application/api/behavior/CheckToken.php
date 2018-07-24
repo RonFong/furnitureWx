@@ -29,7 +29,7 @@ class CheckToken
                     die(json_encode(['state' => 0, 'errorCode' => 10000, 'msg' => '无效的userToken']));
                 if (!$userInfo = User::get($userId))
                     exception('用户数据异常');
-                if ($userInfo->state == 0)
+                if ($userInfo->state === 0)
                     exception('账号被冻结');
                 Session::set('user_info', $userInfo->toArray());
             } else {
