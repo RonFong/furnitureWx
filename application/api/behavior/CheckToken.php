@@ -33,7 +33,7 @@ class CheckToken
                     exception('账号被冻结');
                 Session::set('user_info', $userInfo->toArray());
             } else {
-                exception('头文件中userToken参数不能为空');
+                exception('userToken不能为空');
             }
         } catch (\Exception $e) {
             die(json_encode(['state' => 0, 'errorCode' => 1003, 'msg' => $e->getMessage()]));
