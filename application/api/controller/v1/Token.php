@@ -29,25 +29,25 @@ class Token
      * }
      *
      * @apiSuccessExample {json} 成功时的返回：
-        {
-            "state": 1,
-            "msg": "success",
-            "data": {
-            "token": "421ba5cb275fa6ee871d8288cffdbd17",
-            "user_info": {
-                    "id": 16,
-                    "user_name": "test",
-                    "group_id": 0,
-                    "avatar": "",
-                    "gender": 0,
-                    "phone": "1817074852",
-                    "wx_account": "eeeFtyrty",
-                    "type": 3,
-                    "state": 0,
-                    "create_time": "2018-06-15 04:15:23"
-                }
-            }
-        }
+     *  {
+     *      "state": 1,
+     *      "msg": "success",
+     *      "data": {
+     *      "token": "421ba5cb275fa6ee871d8288cffdbd17",
+     *      "user_info": {
+     *              "id": 16,
+     *              "user_name": "test",
+     *              "group_id": 0,
+     *              "avatar": "",
+     *              "gender": 0,
+     *              "phone": "1817074852",
+     *              "wx_account": "eeeFtyrty",
+     *              "type": 3,
+     *              "state": 0,
+     *              "create_time": "2018-06-15 04:15:23"
+     *          }
+     *      }
+     *  }
      *
      * @apiErrorExample {json} 错误返回值：
      * {
