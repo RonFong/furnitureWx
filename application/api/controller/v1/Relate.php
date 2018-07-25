@@ -52,13 +52,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/articleCollect  用户收藏文章
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} article_id 文章ID
      * @apiParam {string} type inc(收藏) 或 dec(取消收藏)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "article_id":1,
      *      "type":"inc"
      * }
@@ -80,13 +78,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/articleGreat  用户点赞文章
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} article_id 文章ID
      * @apiParam {string} type inc(点赞) 或 dec(取消点赞)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "article_id":1,
      *      "type":"inc"
      * }
@@ -108,13 +104,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/commentGreat  用户点赞评论
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} comment_id 评论ID
      * @apiParam {string} type inc(点赞) 或 dec(取消点赞)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "comment_id":1,
      *      "type":"inc"
      * }
@@ -164,13 +158,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/goodsCollect  用户收藏商城商品
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} goods_id 商品ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "goods_id":1,
      *      "type":"inc"
      * }
@@ -191,13 +183,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/shopCollect  用户收藏商家
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} shop_id 评论ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "shop_id":1,
      *      "type":"inc"
      * }
