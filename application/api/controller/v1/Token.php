@@ -12,6 +12,7 @@
 namespace app\api\controller\v1;
 
 
+use app\api\model\User;
 use app\api\service\Wechat;
 use app\api\service\Token as TokenServer;
 use think\Request;
@@ -75,6 +76,30 @@ class Token
                 'msg'       => 'success',
                 'data'      => [
                     'token'     => $token,
+                    'user_info' => $data
+                ]
+            ];
+        } catch (\Exception $e) {
+            return json(['state' => 0, 'msg' => $e->getMessage()], 400);
+        }
+        return json($result, 200);
+    }
+
+    /**
+     * （测试用）通过用户ID直接获取 token
+     */
+    public function getTestToken()
+    {
+        try {
+            $user = User::get(input('id'));
+            $data = TokenServer::getToken($user->wx_openid);
+            $token = $data->token;
+            unset($data->token);
+            $result = [
+                'state' => 1,
+                'msg' => 'success',
+                'data' => [
+                    'token' => $token,
                     'user_info' => $data
                 ]
             ];
