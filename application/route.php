@@ -31,6 +31,8 @@ Route::group('api/:version',function() {
 
     //获取token
     Route::get('getToken', 'api/:version.Token/getToken');
+    //（测试用）通过用户ID直接获取 token
+    Route::get('getTestToken', 'api/:version.Token/getTestToken');
 
     // 音乐
     Route::group('music',function () {
@@ -71,6 +73,13 @@ Route::group('api/:version',function() {
         Route::put('update', 'api/:version.Article/update');
         //删除文章
         Route::delete('delete', 'api/:version.Article/delete');
+    });
+
+    Route::group('articleComment', function () {
+        //评论文章
+        Route::post('comment', 'api/:version.ArticleComment/comment');
+        //回复评论
+        Route::post('replyComment', 'api/:version.ArticleComment/replyComment');
     });
 
     // 门店
