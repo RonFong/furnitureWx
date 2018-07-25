@@ -36,17 +36,16 @@ class BaseValidate extends Validate {
 
     /**
      * 自定义异常
-     * @param array $response 异常信息  [ 'http状态码’, '错误提示', '错误码' ]
+     * @param mixed $response 自定义异常信息  [ 'http状态码’, '错误提示', '错误码' ]
      * @throws BaseException
      */
-    public function error($response = [])
+    public function error($response)
     {
-
         throw new BaseException([
-            'state'      => 0,
-            'code'       => $response['code'],
-            'msg'        => $response['msg'],
-            'error_code' => $response['errorCode'],
+            'state'         => 0,
+            'code'          => is_array($response) ? $response['code'] : 500,
+            'msg'           => is_array($response) ? $response['msg'] : $response->getMessage(),
+            'error_code'    => is_array($response) ? $response['errorCode'] : 999
         ]);
     }
 
