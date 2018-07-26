@@ -9,6 +9,7 @@
 namespace app\api\controller;
 
 use \app\common\controller\Controller;
+use think\Hook;
 use think\Request;
 
 abstract class BaseController extends Controller {
@@ -47,7 +48,10 @@ abstract class BaseController extends Controller {
 
     protected $row;
 
-    public function __construct(Request $request = null) {
+    public function __construct(Request $request = null)
+    {
+        Hook::listen('app_init');
+        Hook::listen('action_init');
 
         parent::__construct($request);
         $params = $request->param();
@@ -57,4 +61,6 @@ abstract class BaseController extends Controller {
         $this->page = isset($this->data['page']) ? $this->data['page'] : 1;
         $this->row  = isset($this->data['row']) ? $this->data['row'] : 10;
     }
+
+
 }

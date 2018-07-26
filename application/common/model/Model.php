@@ -45,12 +45,12 @@ abstract class Model extends CoreModel
 
     public function setCreateByAttr()
     {
-        return user_info('id') ?? 0;
+        return user_info('id');
     }
 
     public function setUpdateByAttr()
     {
-        return user_info('id') ?? 0;
+        return user_info('id');
     }
 
     public function getCreateTimeAttr($value)

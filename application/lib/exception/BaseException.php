@@ -35,8 +35,8 @@ class BaseException extends Exception
             $this->msg = $params['msg'];
         }
 
-        if (array_key_exists('errorCode', $params)) {
-            $this->errorCode = $params['errorCode'];
+        if (array_key_exists('error_code', $params)) {
+            $this->errorCode = $params['error_code'];
         }
     }
 

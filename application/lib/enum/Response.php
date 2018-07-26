@@ -64,4 +64,7 @@ class Response
     // openid获取失败
     const GET_OPENID_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => 'openid获取失败'];
 
+    //errorCode 值为  10000 时， 前端将重新请求 getToken 接口，此错误码不可更改和重用
+    const TOKEN_NO_BRACE = ['code' => 403, 'errorCode' => 10000, 'msg' => '无效的userToken'];
+
 }
