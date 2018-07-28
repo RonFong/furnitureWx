@@ -25,9 +25,8 @@ class Relate extends BaseController
         'articleCollect'    => 'RelationArticleCollect',   //文章收藏
         'articleGreat'      => 'RelationArticleGreat',     //文章点赞
         'commentGreat'      => 'RelationCommentGreat',     //评论点赞
-        'factoryCollect'    => 'RelationFactoryCollect',   //商家关注厂家
         'goodsCollect'      => 'RelationGoodsCollect',     //用户收藏商城商品
-        'shopCollect'       => 'RelationShopCollect'       //用户收藏商家
+        'userCollect'       => 'RelationUserCollect'       //用户关注用户
     ];
 
     public function __construct(Request $request = null)
@@ -188,7 +187,7 @@ class Relate extends BaseController
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "shop_id":1,
+     *      "other_user_id":1,
      *      "type":"inc"
      * }
      *
@@ -199,9 +198,9 @@ class Relate extends BaseController
      *  "data": []
      *}
      */
-    public function shopCollect()
+    public function userCollect()
     {
-        $this->currentValidate->goCheck('shopCollect');
-        return $this->return((new RelateServer($this->behaviorModel['shopCollect']))->save($this->data));
+        $this->currentValidate->goCheck('userCollect');
+        return $this->return((new RelateServer($this->behaviorModel['userCollect']))->save($this->data));
     }
 }
