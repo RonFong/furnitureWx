@@ -85,6 +85,12 @@ abstract class Model extends CoreModel
         return date('Y-m-d H:i:s', $value);
     }
 
+
+    public function scopeState($query)
+    {
+        return $query->where('state', 1);
+    }
+
     /**
      * 判断是否带有主键数据
      * @param $data
