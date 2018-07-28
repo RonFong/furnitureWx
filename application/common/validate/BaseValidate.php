@@ -200,4 +200,28 @@ class BaseValidate extends Validate {
         return true;
     }
 
+    /**
+     * 页码和每页条目数的统一校验
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|string
+     */
+    protected function checkPageAndRow($value, $rule, $data)
+    {
+        if (array_key_exists('page', $data)) {
+            if (!is_numeric($data['page']))
+                return '页码只能是数字';
+            if ($data['page'] < 0)
+                return '页码不能小于0';
+        }
+        if (array_key_exists('row', $data)) {
+            if (!is_numeric($data['row']))
+                return '条目数只能是数字';
+            if ($data['row'] < 0)
+                return '条目数不能小于0';
+        }
+        return true;
+    }
+
 }
