@@ -23,15 +23,6 @@ class ArticleComment extends Model
     use SoftDelete;
 
     /**
-     * 未被折叠的评论
-     * @param $query
-     */
-    protected function scopeState($query)
-    {
-        $query->where('state', 1);
-    }
-
-    /**
      * 根据 user_id 获取关联用户信息
      * @return \think\model\relation\HasOne
      */
@@ -39,4 +30,5 @@ class ArticleComment extends Model
     {
         return $this->hasOne('User', 'id', 'user_id')->bind('user_name');
     }
+
 }
