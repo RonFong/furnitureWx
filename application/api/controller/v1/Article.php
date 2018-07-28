@@ -17,6 +17,7 @@ use app\api\validate\Article as ArticleValidate;
 use app\api\service\ImageText;
 use app\common\model\ArticleClassify;
 use app\common\model\ArticleContent;
+use app\api\model\ArticleComment;
 use think\Request;
 
 /**
@@ -169,6 +170,267 @@ class Article extends BaseController
 
 
     /**
+     * @api {get} /v1/article/details  根据id 获取文章详情
+     * @apiGroup Article
+     *
+     * @apiParam {number} id 文章id
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 略
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *{
+     *  "state": 1,
+     *  "msg": "success",
+     *  "data": {
+     *  "id": 1,                                //文章id
+     *  "user_id": 1,                           //作者id
+     *  "user_name": "Trump",                   //作者昵称
+     *  "avatar": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",   //头像
+     *  "create_time": "2018-07-15 03:29:15",    //发布时间
+     *  "music": "http://zhangmenshiting.qianqian.com/data2/music/dcd350d9c095d40d276914eece786513/594668014/594668014.mp3?xcode=40e5a4864e417ada180b9e6dd2675aac",
+     *  "classify_name": "秀家",                 //分类名
+     *  "pageview": 5,                          //阅读数
+     *  "great_total": 5,                       //点赞数
+     *  "comment_total": 5,                     //评论数
+     *  "is_self": false,                       //是否为当前用户自己发布的文章！
+     *  "content":                              //文章图文内容
+     *      [
+     *          {
+     *              "img": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *              "text": "我就是我",
+     *              "sort": 1
+     *          },
+     *          {
+     *              "img": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *              "text": "wewewewe",
+     *              "sort": 1
+     *          }
+     *      ],
+     *  "comments": [                           //文章的评论
+     *          {
+     *              "id": 22,                   //评论id
+     *              "user_id": 16,              //评论人id
+     *              "user_name": "test2",       //评论人昵称
+     *              "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *              "content": "挣了5毛钱22",
+     *              "great_total": 1,
+     *              "create_time": 1532515666,
+     *          "child": [                      //评论的回复
+     *              {
+     *                  "id": 23,
+     *                  "user_id": 17,
+     *                  "user_name": "user2",
+     *                  "respondent_user_name": "",     //所回复的评论的发布人昵称   （首条回复，值为空）
+     *                  "reply_content": "评论的回复"    //回复内容
+     *              },
+     *              {
+     *                  "id": 24,
+     *                  "user_id": 16,
+     *                  "user_name": "test2",
+     *                  "respondent_user_name": "Jack",   //所回复的评论的发布人昵称
+     *                  "reply_content": "回复的回复"      //回复内容
+     *              }
+     *          ]
+     *      },
+     *      {
+     *          "user_id": 16,
+     *          "user_name": "test2",
+     *          "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *          "content": "挣了5毛钱",
+     *          "great_total": 0,
+     *          "create_time": 1532515780,
+     *          "id": 25,
+     *          "child": []                               //此评论无回复
+     *          }
+     *      ]
+     *  }
+     *}
+     */
+    public function details()
+    {
+        $this->currentValidate->goCheck('details');
+        try {
+            $this->result['data'] = $this->currentModel->details($this->data['id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * @api {get} /v1/article/moreComment  获取文章更多评论
+     * @apiGroup Article
+     *
+     * @apiParam {number} article_id 文章id
+     * @apiParam {number} page 页码
+     * @apiParam {number} row 每页条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {
+     *      "article_id":1
+     *      "page":2,      //文章详情已输出10条评论， page 参数值可从 2 开始
+     *      "row":10
+     * }
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *{
+     *  "state": 1,
+     *  "msg": "success",
+     *  "data": [                           //文章的评论
+     *          {
+     *              "id": 22,                   //评论id
+     *              "user_id": 16,              //评论人id
+     *              "user_name": "test2",       //评论人昵称
+     *              "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *              "content": "挣了5毛钱22",
+     *              "great_total": 1,
+     *              "create_time": 1532515666,
+     *          "child": [                      //评论的回复
+     *              {
+     *                  "id": 23,
+     *                  "user_id": 17,
+     *                  "user_name": "user2",
+     *                  "respondent_user_name": "",     //所回复的评论的发布人昵称   （首条回复，值为空）
+     *                  "reply_content": "评论的回复"    //回复内容
+     *              },
+     *              {
+     *                  "id": 24,
+     *                  "user_id": 16,
+     *                  "user_name": "test2",
+     *                  "respondent_user_name": "Jack",   //所回复的评论的发布人昵称
+     *                  "reply_content": "回复的回复"      //回复内容
+     *              }
+     *          ]
+     *      },
+     *      {
+     *          "user_id": 16,
+     *          "user_name": "test2",
+     *          "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *          "content": "挣了5毛钱",
+     *          "great_total": 0,
+     *          "create_time": 1532515780,
+     *          "id": 25,
+     *          "child": []                               //此评论无回复
+     *          }
+     *      ]
+     *  }
+     *}
+     */
+    public function getMoreComment()
+    {
+        $this->currentValidate->goCheck('moreComment');
+        try {
+            $this->result['data'] = (new ArticleComment())->getComments($this->data['article_id'], $this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * @api {get} /v1/article/ownList  获取自己的文章列表
+     * @apiGroup Article
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 无
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *  {
+     *      "state": 1,
+     *      "msg": "success",
+     *      "data": [
+     *          {
+     *              "id": 1,
+     *              "user_name": "test2",
+     *              "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *              "create_time": "2018-07-15 03:29:15",
+     *              "classify_name": "秀家",
+     *              "pageview": 5,
+     *              "great_total": 5,
+     *              "comment_total": 5,
+     *              "content": {
+     *              "text": "我就是我",
+     *              "img": [
+     *                  "fc38c299804217dfaf0ab4d04fbf0093.gif",
+     *                  "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *                  "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png"
+     *              ]
+     *          }
+     *      ]
+     *   }
+     */
+    public function getOwnArticleList()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->getListByUserId(user_info('id'), $this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * @api {get} /v1/article/ownList  根据用户id获取文章列表
+     * @apiGroup Article
+     *
+     * @apiParam {number}  user_id   用户id
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     *  {"user_id":16}
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *  {
+     *      "state": 1,
+     *      "msg": "success",
+     *      "data": [
+     *          {
+     *              "id": 1,
+     *              "user_name": "test2",
+     *              "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *              "create_time": "2018-07-15 03:29:15",
+     *              "classify_name": "秀家",
+     *              "pageview": 5,
+     *              "great_total": 5,
+     *              "comment_total": 5,
+     *              "content": {
+     *              "text": "我就是我",
+     *              "img": [
+     *                  "fc38c299804217dfaf0ab4d04fbf0093.gif",
+     *                  "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *                  "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png"
+     *              ]
+     *          }
+     *      ]
+     *   }
+     */
+    public function getArticleListByUserId()
+    {
+        $this->currentValidate->goCheck('getByUserId');
+        try {
+            $this->result['data'] = $this->currentModel->getListByUserId($this->data['user_id'], $this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
+     * 根据用户id获取文章
+     * @param $userId
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    protected function getListByUserId($userId)
+    {
+        return $this->currentModel->getListByUserId($userId, $this->page, $this->row);;
+    }
+
+
+    /**
      * @api {put} /v1/article/update  更新文章
      * @apiGroup Article
      * @apiParam {number} id 文章id
@@ -242,6 +504,33 @@ class Article extends BaseController
             $code = 400;
         }
         return json($this->result, $code ?? 200);
+    }
+
+
+    /**
+     * @api {put} /v1/article/share  文章分享数 + 1
+     * @apiGroup Article
+     * @apiParam {number} id 文章id
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {"id":1}
+     *
+     * @apiSuccessExample {json} 成功时的数据：
+     * {
+     *      "state":1,
+     *      "msg":"success",
+     *      "data":""
+     * }
+     */
+    public function share()
+    {
+        $this->currentValidate->goCheck('share');
+        try {
+            $this->currentModel->share($this->data['id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
     }
 
 }
