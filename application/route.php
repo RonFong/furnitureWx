@@ -67,14 +67,24 @@ Route::group('api/:version',function() {
     Route::group('article', function () {
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
-        //同城圈首页动态列表
-        Route::get('localList', 'api/:version.Article/localArticleList');
         //创建文章
         Route::post('create', 'api/:version.Article/create');
         //更新文章
         Route::put('update', 'api/:version.Article/update');
         //删除文章
         Route::delete('delete', 'api/:version.Article/delete');
+        //同城圈首页文章列表
+        Route::get('localList', 'api/:version.Article/localArticleList');
+        //增加文章的一个分享数
+        Route::put('share', 'api/:version.Article/share');
+        //获取文章详情
+        Route::get('details', 'api/:version.Article/details');
+        //获取用户本人的文章列表
+        Route::get('ownList', 'api/:version.Article/getOwnArticleList');
+        //获取用户本人的文章列表
+        Route::get('listByUserId', 'api/:version.Article/getArticleListByUserId');
+        //获取文章更多评论
+        Route::get('moreComment', 'api/:version.Article/getMoreComment');
     });
 
     Route::group('articleComment', function () {
