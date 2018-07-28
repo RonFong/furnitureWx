@@ -14,52 +14,41 @@ namespace app\common\validate;
 use app\common\model\RelationArticleCollect;
 use app\common\model\RelationArticleGreat;
 use app\common\model\RelationCommentGreat;
-use app\common\model\RelationFactoryCollect;
 use app\common\model\RelationGoodsCollect;
-use app\common\model\RelationShopCollect;
+use app\common\model\RelationUserCollect;
 
 class Relate extends BaseValidate
 {
     protected $rule = [
         'article_id'    => 'require|number',
-        'type'          => 'require|in:inc,dec',
-        'user_id'       => 'require|number',
         'comment_id'    => 'require|number',
         'factory_id'    => 'require|number',
         'shop_id'       => 'require|number',
         'goods_id'      => 'require|number',
+        'other_user_id' => 'require|number',
+        'type'          => 'require|in:inc,dec',
     ];
 
     protected $scene = [
         'articleCollect' => [
             'article_id',
-            'type',
-            'user_id'       => 'require|number|articleCollect',
+            'type'       => 'require|in:inc,dec|articleCollect',
         ],
         'articleGreat' => [
             'article_id',
-            'type',
-            'user_id'       => 'require|number|articleGreat',
+            'type'       => 'require|in:inc,dec|articleGreat',
         ],
         'commentGreat' => [
             'comment_id',
-            'type',
-            'user_id'       => 'require|number|commentGreat',
+            'type'       => 'require|in:inc,dec|commentGreat',
         ],
-        'shopCollect' => [
-            'shop_id',
-            'type',
-            'user_id'       => 'require|number|shopCollect',
-        ],
-        'factoryCollect' => [
-            'factory_id',
-            'type',
-            'shop_id'       => 'require|number|factoryCollect',
+        'userCollect' => [
+            'other_user_id',
+            'type'       => 'require|in:inc,dec|userCollect',
         ],
         'goodsCollect' => [
             'goods_id',
-            'type',
-            'user_id'       => 'require|number|goodsCollect',
+            'type'       => 'require|in:inc,dec|goodsCollect',
 
         ]
     ];
@@ -74,7 +63,7 @@ class Relate extends BaseValidate
     {
         try {
             $isExist =  RelationArticleCollect::get([
-                'user_id' => $data['user_id'],
+                'user_id' => user_info('id'),
                 'article_id' => $data['article_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
@@ -98,7 +87,7 @@ class Relate extends BaseValidate
     {
         try {
             $isExist =  RelationArticleGreat::get([
-                'user_id' => $data['user_id'],
+                'user_id' => user_info('id'),
                 'article_id' => $data['article_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
@@ -122,7 +111,7 @@ class Relate extends BaseValidate
     {
         try {
             $isExist =  RelationCommentGreat::get([
-                'user_id' => $data['user_id'],
+                'user_id' => user_info('id'),
                 'comment_id' => $data['comment_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
@@ -136,29 +125,6 @@ class Relate extends BaseValidate
         return true;
     }
 
-    /**
-     * @param $value
-     * @param $rule
-     * @param $data
-     * @return bool|string
-     */
-    protected function factoryCollect($value, $rule, $data)
-    {
-        try {
-            $isExist =  RelationFactoryCollect::get([
-                'shop_id' => $data['shop_id'],
-                'factory_id' => $data['factory_id']
-            ]);
-            if ($data['type'] == 'inc' && $isExist) {
-                return '请勿重复收藏';
-            } elseif ($data['type'] == 'dec' && !$isExist) {
-                return '此厂家未被收藏';
-            }
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-        return true;
-    }
 
     /**
      * @param $value
@@ -170,7 +136,7 @@ class Relate extends BaseValidate
     {
         try {
             $isExist =  RelationGoodsCollect::get([
-                'user_id' => $data['user_id'],
+                'user_id' => user_info('id'),
                 'goods_id' => $data['goods_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
@@ -190,17 +156,20 @@ class Relate extends BaseValidate
      * @param $data
      * @return bool|string
      */
-    protected function shopCollect($value, $rule, $data)
+    protected function userCollect($value, $rule, $data)
     {
         try {
-            $isExist = RelationShopCollect::get([
-                'user_id' => $data['user_id'],
-                'shop_id' => $data['shop_id']
+            if (user_info('id') == $data['other_user_id']) {
+                exception('不能关注自己');
+            }
+            $isExist = RelationUserCollect::get([
+                'user_id' => user_info('id'),
+                'other_user_id' => $data['other_user_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
-                return '请勿重复收藏';
+                return '请勿重复关注';
             } elseif ($data['type'] == 'dec' && !$isExist) {
-                return '此商家未被收藏';
+                return '此用户未被关注';
             }
         } catch (\Exception $e) {
             return $e->getMessage();
