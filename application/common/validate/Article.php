@@ -19,6 +19,8 @@ class Article extends BaseValidate
         'classify_id'       => 'require|number',
         'content'           => 'require|checkImageText',
         'page'              => 'checkPageAndRow',
+        'user_id'           => 'require|number|egt:1',
+        'article_id'        => 'require|number|egt:1',
     ];
 
     protected $message = [
@@ -40,6 +42,19 @@ class Article extends BaseValidate
             'id'
         ],
         'localArticleList' => [
+            'page'
+        ],
+        'details'       => [
+            'id'
+        ],
+        'share'       => [
+            'id'
+        ],
+        'getByUserId'   => [
+            'user_id'
+        ],
+        'moreComment'   => [
+            'article_id',
             'page'
         ],
     ];
