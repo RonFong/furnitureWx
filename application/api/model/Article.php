@@ -30,12 +30,16 @@ class Article extends CoreArticle
     private $imgNum = 3;
 
     /**
+     * 默认显示评论数
+     * @var int
+     */
+    private $commentRow = 10;
+
+    /**
      * 圈子  同城的 和已关注的用户的动态
      * @param int $page
      * @param int $row
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
     public function localArticleList($page = 1, $row = 10)
@@ -46,24 +50,23 @@ class Article extends CoreArticle
         //已关注用户
         $users = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
         $ids = array_merge($ids, $users);
+        return $this->getListByUser($ids, $page, $row);
+    }
 
-        $map = [
-            'a.state'           => 1,
-            'a.delete_time'     => null,
-            'b.id'              => ['in', $ids],
-            'b.state'           => 1,
-            'b.delete_time'     => null,
-            'c.delete_time'     => null,
-            'd.state'           => 1,
-            'd.delete_time'     => null,
-        ];
-        $data = Db::table('article')
-            ->alias('a')
-            ->join('user b', 'a.user_id = b.id')
-            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')          //评论
-            ->join('article_classify d', 'a.classify_id = d.id')                //分类
-            ->join('relation_article_great e', 'a.id = e.article_id', 'LEFT')   //点赞
-            ->where($map)
+
+    /**
+     * 根据用户id获取圈子文章
+     * @param $id
+     * @param $page
+     * @param $row
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public function getListByUserId($id, $page, $row)
+    {
+        $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
+        $data = $this->recombination()
+            ->where($where)
             ->field("a.id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('a.id')
             ->page($page, $row)
@@ -76,6 +79,30 @@ class Article extends CoreArticle
             array_push($list, $v);
         }
         return $list;
+    }
+
+    /**
+     * 组装模型
+     * @return object
+     */
+    private function recombination()
+    {
+        $map = [
+            'a.state'           => 1,
+            'a.delete_time'     => null,
+            'b.state'           => 1,
+            'b.delete_time'     => null,
+            'c.delete_time'     => null,
+            'd.state'           => 1,
+            'd.delete_time'     => null,
+        ];
+        $model = $this->alias('a')
+            ->join('user b', 'a.user_id = b.id')
+            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')          //评论
+            ->join('article_classify d', 'a.classify_id = d.id')                //分类
+            ->join('relation_article_great e', 'a.id = e.article_id', 'LEFT')   //点赞
+            ->where($map);
+        return $model;
     }
 
     /**
@@ -105,4 +132,38 @@ class Article extends CoreArticle
         }
         return $result;
     }
+
+    /**
+     * 分享数 + 1
+     * @param $id
+     * @return int|true
+     * @throws \think\Exception
+     */
+    public function share($id)
+    {
+        return $this->where('id', $id)->setInc('share');
+    }
+
+    /**
+     * 根据id 获取详情
+     * @param $id
+     * @throws \think\exception\DbException
+     * @return array
+     */
+    public function details($id)
+    {
+        $data = $this->recombination()
+            ->where('a.id', $id)
+            ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->find();
+        $data['is_self'] = user_info('id') == $data['user_id'];
+        //文章内容
+        $data['content'] = ArticleContent::all(function ($query) use ($id){
+            $query->where('article_id', $id)->field('img, text, sort')->order('sort');
+        });
+        //文章评论
+        $data['comments'] = (new ArticleComment())->getComments($id, 1, $this->commentRow);
+        return $data;
+    }
+
 }
