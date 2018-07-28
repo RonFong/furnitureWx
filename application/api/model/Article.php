@@ -93,12 +93,14 @@ class Article extends CoreArticle
         ];
         foreach ($contents as $k => $v) {
             if (empty($result['text']) && !empty($v->text)) {
+                //文字内容过长则只截取部分
                 $result['text'] = mb_strlen($v->text) > $this->textLength ? mb_substr($v->text, 0, $this->textLength, 'utf-8') : $v->text;
             }
-            if (count($result['img']) == $this->imgNum) {
+            if (count($result['img']) < $this->imgNum) {
+                array_push($result['img'], get_thumb_img($v->img));
+            }
+            if (!empty($result['text']) && count($result['img']) == $this->imgNum) {
                 break;
-            } else {
-                array_push($result['img'], $v->img);
             }
         }
         return $result;
