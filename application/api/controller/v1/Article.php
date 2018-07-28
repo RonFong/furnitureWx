@@ -76,14 +76,12 @@ class Article extends BaseController
     /**
      * @api {post} /v1/article/create  创建文章
      * @apiGroup Article
-     * @apiParam {string} title 标题
      * @apiParam {string} [music] 背景音乐
      * @apiParam {string} classify_id 分类id
      * @apiParam {array} content 内容集
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     * "title":"如何在炸药包上贴双面胶",
      * "classify_id":1,
      * "music:"url****",    //通过音乐接口获得
      * "content":[
@@ -121,10 +119,59 @@ class Article extends BaseController
 
 
     /**
+     * @api {get} /v1/article/localArticleList  附近和已关注用户的动态
+     * @apiGroup Article
+     *
+     * @apiParam {number} [page] 页码
+     * @apiParam {number} [row] 每页条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {
+     *      "page":1,
+     *      "row":10
+     * }
+     * @apiSuccessExample {json} 成功时的数据：
+     *{
+     *  "state": 1,
+     *  "msg": "success",
+     *  "data": [
+     *  {
+     *      "id": 2,
+     *      "user_name": "test2",
+     *      "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *      "create_time": 1531596561,
+     *      "classify_name": "秀家",
+     *      "pageview": 6,          //查看数
+     *      "great_total": 0,       //点赞数
+     *      "comment_total": 0,     //评论数
+     *      "content": {
+     *          "text": "队长，别点火！我甩不脱！ssdsddd",      //第一个文字内容块中的文字
+     *          "img": [           //最多显示三张，没有则为空
+     *                  "/static/img/article/cb2c82738fbe9165e94cadc6aada77ae.jpeg",
+     *                  "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *                  "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png"
+     *              ]
+     *          }
+     *      }
+     * }
+     *}
+     */
+    public function localArticleList()
+    {
+        $this->currentValidate->goCheck('localArticleList');
+        try {
+            $this->result['data'] = $this->currentModel->localArticleList($this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
      * @api {put} /v1/article/update  更新文章
      * @apiGroup Article
      * @apiParam {number} id 文章id
-     * @apiParam {string} title 标题
      * @apiParam {string} [music] 背景音乐
      * @apiParam {string} classify_id 分类id
      * @apiParam {array} content 内容集
@@ -132,7 +179,6 @@ class Article extends BaseController
      * @apiParamExample  {string} 请求参数格式：
      * {
      * "id":1,
-     * "title":"如何在炸药包上贴双面胶",
      * "classify_id":1,
      * "music":"url****",    //通过音乐接口获得
      * "content":[
