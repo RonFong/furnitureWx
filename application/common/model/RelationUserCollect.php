@@ -16,7 +16,7 @@ use traits\model\SoftDelete;
  * Class RelationShopCollect
  * @package app\common\model
  */
-class RelationShopCollect extends Model
+class RelationUserCollect extends Model
 {
     use SoftDelete;
 }
