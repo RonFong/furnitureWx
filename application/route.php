@@ -67,6 +67,8 @@ Route::group('api/:version',function() {
     Route::group('article', function () {
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
+        //同城圈首页动态列表
+        Route::get('localList', 'api/:version.Article/localArticleList');
         //创建文章
         Route::post('create', 'api/:version.Article/create');
         //更新文章
@@ -99,12 +101,10 @@ Route::group('api/:version',function() {
         Route::post('articleGreat', 'api/:version.Relate/articleGreat');
         //评论点赞
         Route::post('commentGreat', 'api/:version.Relate/commentGreat');
-        //商家关注厂家
-        Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
         //用户收藏商城商品
         Route::post('goodsCollect', 'api/:version.Relate/goodsCollect');
-        //用户收藏商家
-        Route::post('shopCollect', 'api/:version.Relate/shopCollect');
+        //用户关注用户
+        Route::post('userCollect', 'api/:version.Relate/userCollect');
     });
 
     //工厂
