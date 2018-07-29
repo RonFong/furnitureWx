@@ -35,6 +35,10 @@ class Article extends CoreArticle
      */
     private $commentRow = 10;
 
+    private $page = 1;
+
+    private $row = 10;
+
     /**
      * 圈子  同城的 和已关注的用户的动态
      * @param int $page
@@ -44,13 +48,16 @@ class Article extends CoreArticle
      */
     public function localArticleList($page = 1, $row = 10)
     {
+        $this->page = $page;
+        $this->row = $row;
+
         //TODO 获取附近用户 ids 控制用户数   (方法待完善)
         $ids = [15,16,17];
 
         //已关注用户
         $users = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
         $ids = array_merge($ids, $users);
-        return $this->getListByUser($ids, $page, $row);
+        return $this->executeSelect($ids);
     }
 
 
@@ -65,20 +72,26 @@ class Article extends CoreArticle
     public function getListByUserId($id, $page, $row)
     {
         $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
-        $data = $this->recombination()
-            ->where($where)
-            ->field("a.id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
-            ->group('a.id')
-            ->page($page, $row)
-            ->order('a.create_time')
-            ->select();
+        $this->page = $page;
+        $this->row = $row;
 
-        $list = [];
-        foreach ($data as $v) {
-            $v['content'] = $this->getFirstTextAndImages($v['id']);
-            array_push($list, $v);
-        }
-        return $list;
+        return $this->executeSelect($where);
+    }
+
+    /**
+     * 根据分类获取文章列表
+     * @param $classifyId
+     * @param $page
+     * @param $row
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public function getListByClassify($classifyId, $page, $row)
+    {
+        $this->page = $page;
+        $this->row = $row;
+        $where = ['a.classify_id' => $classifyId];
+        return $this->executeSelect($where);
     }
 
     /**
@@ -95,14 +108,38 @@ class Article extends CoreArticle
             'c.delete_time'     => null,
             'd.state'           => 1,
             'd.delete_time'     => null,
+            'e.delete_time'     => null
         ];
         $model = $this->alias('a')
             ->join('user b', 'a.user_id = b.id')
-            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')          //评论
             ->join('article_classify d', 'a.classify_id = d.id')                //分类
+            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')          //评论
             ->join('relation_article_great e', 'a.id = e.article_id', 'LEFT')   //点赞
             ->where($map);
         return $model;
+    }
+
+    /**
+     * 执行查询
+     * @param $where
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    private function executeSelect($where)
+    {
+        $data = $this->recombination()
+            ->where($where)
+            ->field("a.id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->group('a.id, c.article_id, e.article_id')
+            ->page($this->page, $this->row)
+            ->order('a.create_time')
+            ->select();
+        $list = [];
+        foreach ($data as $v) {
+            $v['content'] = $this->getFirstTextAndImages($v['id']);
+            array_push($list, $v);
+        }
+        return $list;
     }
 
     /**
@@ -155,6 +192,7 @@ class Article extends CoreArticle
         $data = $this->recombination()
             ->where('a.id', $id)
             ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->group('e.id, c.id')
             ->find();
         $data['is_self'] = user_info('id') == $data['user_id'];
         //文章内容
