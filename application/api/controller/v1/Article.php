@@ -373,6 +373,17 @@ class Article extends BaseController
     }
 
 
+    public function getListByClassify()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
     /**
      * @api {get} /v1/article/ownList  根据用户id获取文章列表
      * @apiGroup Article
