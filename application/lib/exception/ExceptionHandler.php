@@ -23,6 +23,7 @@ class ExceptionHandler extends Handle
     private $code;
     private $msg;
     private $errorCode;
+    private $location = '';
     private $systemMsg = '请稍后再试~';
 
     /**
@@ -38,6 +39,9 @@ class ExceptionHandler extends Handle
             $this->code = $errInfo->code;
             $this->msg = $errInfo->msg;
             $this->errorCode = $errInfo->errorCode;
+            if ($e->msg !== '') {
+                $this->location = 'line:' . $e->getTrace()[0]['line'] . ' ' . $e->getTrace()[0]['file'];
+            }
         } else {
             //违背捕获的异常 根据调试模式判断是否抛出错误
             if (config('app_debug')) {
@@ -57,9 +61,10 @@ class ExceptionHandler extends Handle
             'msg'           => $this->msg,
             'data'          => [],
             'error_code'    => $this->errorCode,
+            'error_location'=> $this->location,
             'method'        => $request->method(),
             'request_url'   => $request->url(),
-            'params'        => $params,
+            'params'        => $params
         ];
         if ($this->code == 500) {
             $this->recordErrorLog($result);
@@ -83,6 +88,7 @@ class ExceptionHandler extends Handle
             'params'    => json_encode($data['params']),
             'user_id'   => user_info('id'),
             'msg'       => $data['msg'],
+            'error_location' => $this->location
         ];
         Db::table('error_log')->insert($logData);
     }
