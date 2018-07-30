@@ -591,7 +591,7 @@ class Article extends BaseController
     }
 
     /**
-     * @api {get} /v1/article/collectUser  我关注的用户
+     * @api {get} /v1/article/myCollect  我关注的用户
      * @apiGroup Article
      *
      * @apiParam {number} page 页码
