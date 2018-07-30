@@ -33,12 +33,13 @@ class ExceptionHandler extends Handle
     public function render(\Exception $e)
     {
         if ($e instanceof BaseException) {
-            //如果是自定义的异常
-            $this->code = $e->code;
-            $this->msg = $e->msg;
-            $this->errorCode = $e->errorCode;
+            //被捕获的异常, msg == '' 时， 为嵌套的 try catch 所捕获的异常
+            $errInfo = $e->msg == '' ? $e->getTrace()[0]['args'][0] : $e;
+            $this->code = $errInfo->code;
+            $this->msg = $errInfo->msg;
+            $this->errorCode = $errInfo->errorCode;
         } else {
-            //根据调试模式判断是否抛出错误
+            //违背捕获的异常 根据调试模式判断是否抛出错误
             if (config('app_debug')) {
                 return parent::render($e);
             } else {
