@@ -34,7 +34,7 @@ class ArticleComment extends BaseController
 
     /**
      * @api {delete} /v1/articleComment/comment  评论文章
-     * @apiGroup ArticleComment
+     * @apiGroup Article
      * @apiParam {number} article_id 被评论的文章ID
      * @apiParam {string} content 评论内容
      *
@@ -71,7 +71,7 @@ class ArticleComment extends BaseController
 
     /**
      * @api {delete} /v1/articleComment/replyComment  回复评论
-     * @apiGroup ArticleComment
+     * @apiGroup Article
      * @apiParam {number} parent_id 被回复的评论ID
      * @apiParam {string} content 回复内容
      *
