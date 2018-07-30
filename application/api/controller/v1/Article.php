@@ -334,6 +334,9 @@ class Article extends BaseController
      * @api {get} /v1/article/ownList  获取自己的文章列表
      * @apiGroup Article
      *
+     * @apiParam {number} page 页码
+     * @apiParam {number} row 每页条目数
+     *
      * @apiParamExample  {string} 请求参数格式：
      * 无
      *
@@ -373,10 +376,53 @@ class Article extends BaseController
     }
 
 
+    /**
+     * @api {get} /v1/article/listByClassify  根据分类获取文章
+     * @apiGroup Article
+     *
+     * @apiParam {number} classify_id 分类id
+     * @apiParam {number} page 页码
+     * @apiParam {number} row 每页条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {"classify_id":1,"page":1,"row":10}
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *  {
+     *      // 同  ownList 接口
+     *  }
+     */
     public function getListByClassify()
     {
+        $this->currentValidate->goCheck('listByClassify');
         try {
             $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * @api {get} /v1/article/myCollect  我收藏的文章
+     * @apiGroup Article
+     *
+     * @apiParam {number} page 页码
+     * @apiParam {number} row 每页条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {"page":1,"row":10}
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *  {
+     *      // 同  ownList 接口
+     *  }
+     */
+    public function myCollect()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->myCollect($this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
