@@ -37,7 +37,7 @@ class Article extends BaseController
     function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new ArticleModel();
+        $this->currentModel = new ArticleModel(['page' => $this->page, 'row' => $this->row]);
         $this->currentValidate = new ArticleValidate();
         $this->folder = "article";
     }
@@ -162,7 +162,7 @@ class Article extends BaseController
     {
         $this->currentValidate->goCheck('localArticleList');
         try {
-            $this->result['data'] = $this->currentModel->localArticleList($this->page, $this->row);
+            $this->result['data'] = $this->currentModel->localArticleList();
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -369,7 +369,7 @@ class Article extends BaseController
     public function getOwnArticleList()
     {
         try {
-            $this->result['data'] = $this->currentModel->getListByUserId(user_info('id'), $this->page, $this->row);
+            $this->result['data'] = $this->currentModel->getListByUserId(user_info('id'));
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -397,7 +397,7 @@ class Article extends BaseController
     {
         $this->currentValidate->goCheck('listByClassify');
         try {
-            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->page, $this->row);
+            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id']);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -423,7 +423,7 @@ class Article extends BaseController
     public function myCollectArticle()
     {
         try {
-            $this->result['data'] = $this->currentModel->myCollectArticle($this->page, $this->row);
+            $this->result['data'] = $this->currentModel->myCollectArticle();
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -469,7 +469,7 @@ class Article extends BaseController
     {
         $this->currentValidate->goCheck('getByUserId');
         try {
-            $this->result['data'] = $this->currentModel->getListByUserId($this->data['user_id'], $this->page, $this->row);
+            $this->result['data'] = $this->currentModel->getListByUserId($this->data['user_id']);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -484,7 +484,7 @@ class Article extends BaseController
      */
     protected function getListByUserId($userId)
     {
-        return $this->currentModel->getListByUserId($userId, $this->page, $this->row);;
+        return $this->currentModel->getListByUserId($userId);
     }
 
 
@@ -627,7 +627,7 @@ class Article extends BaseController
     public function myCollect()
     {
         try {
-            $this->result['data'] = $this->currentModel->myCollect($this->page, $this->row);
+            $this->result['data'] = $this->currentModel->myCollect();
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -670,7 +670,7 @@ class Article extends BaseController
     public function collectMe()
     {
         try {
-            $this->result['data'] = $this->currentModel->collectMe($this->page, $this->row);
+            $this->result['data'] = $this->currentModel->collectMe();
         } catch (\Exception $e) {
             $this->response->error($e);
         }
