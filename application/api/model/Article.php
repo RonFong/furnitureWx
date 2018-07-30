@@ -14,6 +14,7 @@ namespace app\api\model;
 use app\common\model\Article as CoreArticle;
 use app\common\model\RelationArticleCollect;
 use app\common\model\RelationUserCollect;
+use app\common\validate\BaseValidate;
 use think\Db;
 
 class Article extends CoreArticle
@@ -34,31 +35,34 @@ class Article extends CoreArticle
      * 默认显示评论数
      * @var int
      */
-    private $commentRow = 10;
+    protected $commentRow = 10;
 
-    private $page = 1;
+    protected $page = 1;
 
-    private $row = 10;
+    protected $row = 10;
 
-    private $order = [
+    protected $order = [
         '1'     => 'pageview',                //人气
         '2'     => 'a.create_time desc',      //最新
         '3'     => ''
     ];
 
+    public function __construct($data = [])
+    {
+        parent::__construct($data);
+        $this->page = 1;
+        $this->row = 10;
+    }
+
+
     /**
      * 圈子  同城的 和已关注的用户的动态
-     * @param int $page
-     * @param int $row
      * @param string $classifyId
      * @param string $order
      * @return array
      */
-    public function localArticleList($page, $row, $classifyId = '', $order = '')
+    public function localArticleList($classifyId = '', $order = '')
     {
-        $this->page = $page;
-        $this->row = $row;
-
         //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
         $ids = [15,16,17];
 
@@ -69,6 +73,7 @@ class Article extends CoreArticle
         if ($classifyId) {
             $where['d.id'] = $classifyId;
         }
+
         return $this->executeSelect($where, $order);
     }
 
@@ -76,48 +81,53 @@ class Article extends CoreArticle
     /**
      * 根据用户id获取圈子文章
      * @param $id
-     * @param $page
-     * @param $row
      * @return array
-     * @throws \think\exception\DbException
      */
-    public function getListByUserId($id, $page, $row)
+    public function getListByUserId($id)
     {
         $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
-        $this->page = $page;
-        $this->row = $row;
 
         return $this->executeSelect($where);
     }
 
     /**
      * 我收藏的文章
-     * @param $page
-     * @param $row
      * @return array
      */
-    public function myCollect($page, $row)
+    public function myCollectArticle()
     {
-        $this->page = $page;
-        $this->row = $row;
-        $ids = RelationArticleCollect::where('user_id', user_info('id'))->page($page, $row)->column('article_id');
+        $ids = RelationArticleCollect::where('user_id', user_info('id'))->page($this->page, $this->row)->column('article_id');
         $where = ['a.id' => ['in', $ids]];
 
         return $this->executeSelect($where);
     }
 
     /**
+     * 我关注的用户
+     * @return mixed
+     */
+    public function myCollect()
+    {
+        return (new RelationUserCollect())->myCollect($this->page, $this->row);
+    }
+
+    /**
+     * 关注我的
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    public function collectMe()
+    {
+        return (new RelationUserCollect())->collectMe($this->page, $this->row);
+    }
+
+    /**
      * 根据分类获取文章列表
      * @param $classifyId
-     * @param $page
-     * @param $row
      * @param string $order
      * @return array
      */
-    public function getListByClassify($classifyId, $page, $row, $order = '')
+    public function getListByClassify($classifyId,$order = '')
     {
-        $this->page = $page;
-        $this->row = $row;
         $where = ['a.classify_id' => $classifyId];
         return $this->executeSelect($where, $order);
     }
@@ -165,6 +175,8 @@ class Article extends CoreArticle
             ->page($this->page, $this->row)
             ->order($order)
             ->select();
+        echo $data;
+        die;
         $list = [];
         foreach ($data as $v) {
             $v['content'] = $this->getFirstTextAndImages($v['id']);
