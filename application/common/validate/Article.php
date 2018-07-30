@@ -57,6 +57,9 @@ class Article extends BaseValidate
             'article_id',
             'page'
         ],
+        'listByClassify'    => [
+            'classify_id',
+        ],
     ];
 
     protected function idCantExist($value, $rule, $data)
