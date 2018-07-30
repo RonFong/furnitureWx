@@ -18,6 +18,7 @@ use app\api\service\ImageText;
 use app\common\model\ArticleClassify;
 use app\common\model\ArticleContent;
 use app\api\model\ArticleComment;
+use app\lib\enum\Response;
 use think\Request;
 
 /**
@@ -419,10 +420,10 @@ class Article extends BaseController
      *      // 同  ownList 接口
      *  }
      */
-    public function myCollect()
+    public function myCollectArticle()
     {
         try {
-            $this->result['data'] = $this->currentModel->myCollect($this->page, $this->row);
+            $this->result['data'] = $this->currentModel->myCollectArticle($this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -573,7 +574,6 @@ class Article extends BaseController
      * {"id":1}
      *
      * @apiSuccessExample {json} 成功时的数据：
-     * {
      *      "state":1,
      *      "msg":"success",
      *      "data":""
@@ -584,6 +584,93 @@ class Article extends BaseController
         $this->currentValidate->goCheck('share');
         try {
             $this->currentModel->share($this->data['id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
+     * @api {get} /v1/article/collectUser  我关注的用户
+     * @apiGroup Article
+     *
+     * @apiParam {number} page 页码
+     * @apiParam {number} row 条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 略
+     *
+     * @apiSuccessExample {json} 成功时的数据：
+     *{
+     *   "state": 1,
+     *   "msg": "success",
+     *   "data": {
+     *   "total": "2",                   //总关注数
+     *   "list":
+     *       [
+     *           {
+     *               "id": 1,
+     *               "user_name": "MT",
+     *               "avatar": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *               "is_together": true    //是否互相关注
+     *           },
+     *           {
+     *               "id": 17,
+     *               "user_name": "jinkela",
+     *               "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *              "is_together": false
+     *           }
+     *       ]
+     *   }
+     *}
+     */
+    public function myCollect()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->myCollect($this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * @api {get} /v1/article/collectMe  我的粉丝
+     * @apiGroup Article
+     *
+     * @apiParam {number} page 页码
+     * @apiParam {number} row 条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 略
+     *
+     * @apiSuccessExample {json} 成功时的数据：
+     *{
+     *   "state": 1,
+     *   "msg": "success",
+     *   "data": {
+     *   "total": "2",                   //总粉丝数
+     *   "list":
+     *       [
+     *           {
+     *               "id": 1,
+     *               "user_name": "MT",
+     *               "avatar": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png"
+     *           },
+     *           {
+     *               "id": 17,
+     *               "user_name": "jinkela",
+     *               "avatar": "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *           }
+     *       ]
+     *   }
+     *}
+     */
+    public function collectMe()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->collectMe($this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
