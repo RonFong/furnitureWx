@@ -12,6 +12,7 @@
 namespace app\api\model;
 
 use app\common\model\Article as CoreArticle;
+use app\common\model\RelationArticleCollect;
 use app\common\model\RelationUserCollect;
 use think\Db;
 
@@ -39,25 +40,36 @@ class Article extends CoreArticle
 
     private $row = 10;
 
+    private $order = [
+        '1'     => 'pageview',                //人气
+        '2'     => 'a.create_time desc',      //最新
+        '3'     => ''
+    ];
+
     /**
      * 圈子  同城的 和已关注的用户的动态
      * @param int $page
      * @param int $row
+     * @param string $classifyId
+     * @param string $order
      * @return array
-     * @throws \think\exception\DbException
      */
-    public function localArticleList($page = 1, $row = 10)
+    public function localArticleList($page, $row, $classifyId = '', $order = '')
     {
         $this->page = $page;
         $this->row = $row;
 
-        //TODO 获取附近用户 ids 控制用户数   (方法待完善)
+        //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
         $ids = [15,16,17];
 
         //已关注用户
         $users = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
         $ids = array_merge($ids, $users);
-        return $this->executeSelect($ids);
+        $where['a.id'] = ['in', $ids];
+        if ($classifyId) {
+            $where['d.id'] = $classifyId;
+        }
+        return $this->executeSelect($where, $order);
     }
 
 
@@ -79,19 +91,35 @@ class Article extends CoreArticle
     }
 
     /**
+     * 我收藏的文章
+     * @param $page
+     * @param $row
+     * @return array
+     */
+    public function myCollect($page, $row)
+    {
+        $this->page = $page;
+        $this->row = $row;
+        $ids = RelationArticleCollect::where('user_id', user_info('id'))->page($page, $row)->column('article_id');
+        $where = ['a.id' => ['in', $ids]];
+
+        return $this->executeSelect($where);
+    }
+
+    /**
      * 根据分类获取文章列表
      * @param $classifyId
      * @param $page
      * @param $row
+     * @param string $order
      * @return array
-     * @throws \think\exception\DbException
      */
-    public function getListByClassify($classifyId, $page, $row)
+    public function getListByClassify($classifyId, $page, $row, $order = '')
     {
         $this->page = $page;
         $this->row = $row;
         $where = ['a.classify_id' => $classifyId];
-        return $this->executeSelect($where);
+        return $this->executeSelect($where, $order);
     }
 
     /**
@@ -122,17 +150,20 @@ class Article extends CoreArticle
     /**
      * 执行查询
      * @param $where
+     * @param string $order
      * @return array
-     * @throws \think\exception\DbException
      */
-    private function executeSelect($where)
+    private function executeSelect($where, $order = '')
     {
+        if ($order == '') {
+            $order = 'a.create_time desc';
+        }
         $data = $this->recombination()
             ->where($where)
             ->field("a.id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('a.id, c.article_id, e.article_id')
             ->page($this->page, $this->row)
-            ->order('a.create_time')
+            ->order($order)
             ->select();
         $list = [];
         foreach ($data as $v) {
