@@ -50,7 +50,7 @@ class Relate extends BaseController
 
     /**
      * @api {post} /v1/relate/articleCollect  用户收藏文章
-     * @apiGroup 关注、收藏、点赞
+     * @apiGroup Relate
      * @apiParam {number} article_id 文章ID
      * @apiParam {string} type inc(收藏) 或 dec(取消收藏)
      *
@@ -76,7 +76,7 @@ class Relate extends BaseController
 
     /**
      * @api {post} /v1/relate/articleGreat  用户点赞文章
-     * @apiGroup 关注、收藏、点赞
+     * @apiGroup Relate
      * @apiParam {number} article_id 文章ID
      * @apiParam {string} type inc(点赞) 或 dec(取消点赞)
      *
@@ -102,7 +102,7 @@ class Relate extends BaseController
 
     /**
      * @api {post} /v1/relate/commentGreat  用户点赞评论
-     * @apiGroup 关注、收藏、点赞
+     * @apiGroup Relate
      * @apiParam {number} comment_id 评论ID
      * @apiParam {string} type inc(点赞) 或 dec(取消点赞)
      *
@@ -128,7 +128,7 @@ class Relate extends BaseController
 
     /**
      * @api {post} /v1/relate/goodsCollect  用户收藏商城商品
-     * @apiGroup 关注、收藏、点赞
+     * @apiGroup Relate
      * @apiParam {number} goods_id 商品ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
@@ -153,7 +153,7 @@ class Relate extends BaseController
 
     /**
      * @api {post} /v1/relate/shopCollect  用户关注用户
-     * @apiGroup 关注、收藏、点赞
+     * @apiGroup Relate
      * @apiParam {number} shop_id 评论ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
