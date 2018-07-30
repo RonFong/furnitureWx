@@ -81,8 +81,12 @@ Route::group('api/:version',function() {
         Route::get('details', 'api/:version.Article/details');
         //获取用户本人的文章列表
         Route::get('ownList', 'api/:version.Article/getOwnArticleList');
-        //获取用户本人的文章列表
+        //根据用户ID获取文章列表
         Route::get('listByUserId', 'api/:version.Article/getArticleListByUserId');
+        //按分类获取文章列表
+        Route::get('listByClassify', 'api/:version.Article/getListByClassify');
+        //我的收藏
+        Route::get('myCollect', 'api/:version.Article/myCollect');
         //获取文章更多评论
         Route::get('moreComment', 'api/:version.Article/getMoreComment');
     });
