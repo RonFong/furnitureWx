@@ -86,7 +86,11 @@ Route::group('api/:version',function() {
         //按分类获取文章列表
         Route::get('listByClassify', 'api/:version.Article/getListByClassify');
         //我的收藏
+        Route::get('myCollectArticle', 'api/:version.Article/myCollectArticle');
+        //我关注的用户
         Route::get('myCollect', 'api/:version.Article/myCollect');
+        //我的粉丝
+        Route::get('collectMe', 'api/:version.Article/collectMe');
         //获取文章更多评论
         Route::get('moreComment', 'api/:version.Article/getMoreComment');
     });
