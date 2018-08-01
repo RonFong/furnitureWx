@@ -87,6 +87,7 @@ abstract class BaseController extends Controller
     {
         return $this->fetch();
     }
+
     /**
      *展示数据
      */
