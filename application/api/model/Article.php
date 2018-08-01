@@ -42,33 +42,54 @@ class Article extends CoreArticle
     protected $row = 10;
 
     protected $order = [
-        '1'     => 'pageview',                //人气
-        '2'     => 'a.create_time desc',      //最新
-        '3'     => ''
+        0     => 'a.create_time desc',      //最新
+        1     => 'pageview desc',           //人气
+        2     => '',                        //最近
+        3     => 'comment_total desc',      //回复
     ];
 
-    public function __construct($data = [])
+    /**
+     * 附近的用户
+     * @var array
+     */
+    protected $ids = [];
+
+    /**
+     * 设置页码和每页条目数
+     * @param $page
+     * @param $row
+     */
+    public function setPage($page, $row)
     {
-        parent::__construct($data);
-        $this->page = 1;
-        $this->row = 10;
+        $this->page = $page;
+        $this->row = $row;
+    }
+
+
+    /**
+     * 获取附近的用户
+     * @return array
+     */
+    protected function getNearbyUsers()
+    {
+        //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
+        $this->ids = [15,16,17];
     }
 
 
     /**
      * 圈子  同城的 和已关注的用户的动态
      * @param string $classifyId
-     * @param string $order
+     * @param int $order
      * @return array
      */
-    public function localArticleList($classifyId = '', $order = '')
+    public function localArticleList($classifyId = '', $order = 0)
     {
-        //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
-        $ids = [15,16,17];
+        $this->getNearbyUsers();
 
         //已关注用户
         $users = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
-        $ids = array_merge($ids, $users);
+        $ids = array_merge($this->ids, $users);
         $where['a.id'] = ['in', $ids];
         if ($classifyId) {
             $where['d.id'] = $classifyId;
@@ -123,11 +144,14 @@ class Article extends CoreArticle
     /**
      * 根据分类获取文章列表
      * @param $classifyId
-     * @param string $order
+     * @param int $order
      * @return array
      */
-    public function getListByClassify($classifyId,$order = '')
+    public function getListByClassify($classifyId, $order = 0)
     {
+        if ($order == 2) {
+            $this->getNearbyUsers();
+        }
         $where = ['a.classify_id' => $classifyId];
         return $this->executeSelect($where, $order);
     }
@@ -160,25 +184,34 @@ class Article extends CoreArticle
     /**
      * 执行查询
      * @param $where
-     * @param string $order
+     * @param int $order
      * @return array
      */
-    private function executeSelect($where, $order = '')
+    private function executeSelect($where, $order = 0)
     {
-        if ($order == '') {
-            $order = 'a.create_time desc';
-        }
+        $orderWord = $order == 2 ? 0 : $order;
+        $orderBy = $this->order[$orderWord];
         $data = $this->recombination()
             ->where($where)
-            ->field("a.id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->field("a.id, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('a.id, c.article_id, e.article_id')
             ->page($this->page, $this->row)
-            ->order($order)
+            ->order($orderBy)
             ->select();
-        echo $data;
-        die;
+        if ($order == 2) {
+            //按用户距离最近排序
+            $sort = [];
+            foreach ($data as $k => $v) {
+                $data[$k]['sort'] = array_search($v['user_id'], $this->ids);
+                $sort[$k] = $data[$k]['sort'];
+            }
+            array_multisort($sort, SORT_ASC, $data);
+        }
         $list = [];
         foreach ($data as $v) {
+            if (array_key_exists('sort', $v)) {
+                unset($v['sort']);
+            }
             $v['content'] = $this->getFirstTextAndImages($v['id']);
             array_push($list, $v);
         }

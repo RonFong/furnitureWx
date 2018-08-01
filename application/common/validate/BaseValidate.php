@@ -35,8 +35,8 @@ class BaseValidate extends Validate {
     }
 
     /**
-     * 自定义异常
-     * @param mixed $response 自定义异常信息  [ 'http状态码’, '错误提示', '错误码' ]
+     * 异常和错误处理
+     * @param mixed $response 参数为数组时：自定义异常  参数为对象时：系统错误
      * @throws BaseException
      */
     public function error($response)
