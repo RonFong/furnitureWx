@@ -69,6 +69,7 @@ class ExceptionHandler extends Handle
         if ($this->code == 500) {
             $this->recordErrorLog($result);
             if (!config('app_debug')) {
+                //生产环境
                 $result['msg'] = $this->systemMsg;
             }
         }
