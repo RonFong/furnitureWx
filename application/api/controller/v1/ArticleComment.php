@@ -98,8 +98,6 @@ class ArticleComment extends BaseController
         $this->currentValidate->goCheck('replyComment');
         try {
             $result = $this->currentModel->saveData($this->data);
-            if (!$result)
-                exception('回复评论失败');
         } catch (\Exception $e) {
             $this->response->error($e);
         }
