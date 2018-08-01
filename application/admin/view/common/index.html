@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit"><!--默认使用浏览器急速内核-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>99家 后台</title>
+    <link rel="stylesheet" href="__STATIC__/plugin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_578787_q4uqu10rf8k.css">
+    <link rel="stylesheet" href="__STATIC__/css/main.css">
+    {block name="css"}{/block}
+
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">{:session('config.web_name')} 后台</div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item nav-display">
+                <a href="javascript:;" class="tpl-icon-rotate"><i title="隐藏/显示侧边栏" class="layui-icon layui-icon-shrink-right"> </i></a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs"><a href="{:url('index/index/index')}" target="_blank">官网</a></li>
+            <li class="layui-nav-item layui-hide-xs"><a href="{:url('login/clearCache')}" class="clearCached">清除缓存</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="{:session('userInfo.avatar')}" class="layui-nav-img">
+                    {:session('userInfo.nick_name')}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd class="layui-hide-sm layui-show-xs"><a href="{:url('login/clearCache')}" class="clearCached">清除缓存</a></dd>
+                    <dd><a href="javascript:;" onclick="changePwd({:session('userInfo.user_id')}, '修改密码', '{:url("user/changePassword")}');">修改密码</a></dd>
+                    <dd><a href="{:url('User/edit')}?user_id={:session('userInfo.user_id')}">修改资料</a></dd>
+                    <dd><a href="{:url('login/loginOut')}">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree">
+                {volist name="menu" id="vo"}
+                    {notempty name="vo.child"}
+                        <li class="layui-nav-item {eq name='vo.is_extend' value='1'} layui-nav-itemed {/eq}
+                        {eq name='vo.id' value='$menuCurrent.pid_display'}layui-nav-itemed{/eq}">
+                            <a href="javascript:;"><i class="iconfont icon-liebiao1"> </i>{$vo.menu_name}</a>
+                            <dl class="layui-nav-child">
+                            {volist name="vo.child" id="ch"}
+                                <dd {eq name='ch.id' value='$menuCurrent.id_display'}class="layui-this"{/eq}>
+                                    <a href="{$ch.url_text}" {eq name="$ch.open_type" value="2"} target="_blank"{/eq}>
+                                        <i class="layui-icon layui-icon-file"></i>{$ch.menu_name}
+                                    </a>
+                                </dd>
+                            {/volist}
+                            </dl>
+                        </li>
+                    {else/}
+                        <li class="layui-nav-item {eq name='vo.id' value='$menuCurrent.id_display'}layui-this{/eq}">
+                            <a href="{$vo.url_text}" {eq name="$vo.open_type" value="2"} target="_blank"{/eq}>
+                                <i class="layui-icon layui-icon-file"> </i>{$vo.menu_name}
+                            </a>
+                        </li>
+                    {/notempty}
+                {/volist}
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div class="layui-breadcrumb tpl-breadcrumb"  lay-separator=">">
+            <a >当前位置</a>
+            {$breadcrumb}
+        </div>
+        <!-- 内容主体区域 -->
+        <div class="layui-main">
+            {block name="content"}{/block}
+        </div>
+    </div>
+</div>
+
+<span id="password_strong_common" style="display: none;">{:session('userInfo.password_strong')}</span>
+
+<script src="__STATIC__/js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/plugin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATIC__/js/main.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    //定义全局变量
+    var tableIns;//实例化后的table容器
+    var table_limit = {$table_limit|default='30'};//当前每页显示数量
+    var table_limits = [10,15,30,50,100,200];//每页显示数量“下拉框”
+
+    $(function(){
+        //实例化layui 的 tab元素
+        layui.use('element');
+
+    });
+
+</script>
+{block name="script"}{/block}
+</body>
+</html>
