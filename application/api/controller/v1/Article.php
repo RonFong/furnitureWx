@@ -37,8 +37,9 @@ class Article extends BaseController
     function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new ArticleModel(['page' => $this->page, 'row' => $this->row]);
+        $this->currentModel = new ArticleModel();
         $this->currentValidate = new ArticleValidate();
+        $this->currentModel->setPage($this->page, $this->row);
         $this->folder = "article";
     }
 
@@ -121,11 +122,12 @@ class Article extends BaseController
 
 
     /**
-     * @api {get} /v1/article/localArticleList  附近和已关注用户的动态
+     * @api {get} /v1/article/localList  附近和已关注用户的动态
      * @apiGroup Article
      *
      * @apiParam {number} [page] 页码
      * @apiParam {number} [row] 每页条目数
+     * @apiParam {number} [order] 排序 默认0 ; 0 最新， 1 人气， 2 最近， 3 回复
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
@@ -162,7 +164,7 @@ class Article extends BaseController
     {
         $this->currentValidate->goCheck('localArticleList');
         try {
-            $this->result['data'] = $this->currentModel->localArticleList();
+            $this->result['data'] = $this->currentModel->localArticleList('', $this->data['order']);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -382,6 +384,7 @@ class Article extends BaseController
      * @apiGroup Article
      *
      * @apiParam {number} classify_id 分类id
+     * @apiParam {number} [order] 排序 默认0 ; 0 最新， 1 人气， 2 最近， 3 回复
      * @apiParam {number} page 页码
      * @apiParam {number} row 每页条目数
      *
@@ -397,7 +400,7 @@ class Article extends BaseController
     {
         $this->currentValidate->goCheck('listByClassify');
         try {
-            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id']);
+            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->data['order']);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
