@@ -36,6 +36,7 @@ class Relate
 
     public function save($data)
     {
+        $data['user_id'] = user_info('id');
         $method = $data['type'];
         return $this->$method($data);
     }

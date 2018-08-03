@@ -16,32 +16,49 @@ class Article extends BaseValidate
 {
     protected $rule = [
         'id'                => 'require|number|egt:1',
-        'title'             => 'require',
         'classify_id'       => 'require|number',
         'content'           => 'require|checkImageText',
+        'page'              => 'checkPageAndRow',
+        'user_id'           => 'require|number|egt:1',
+        'article_id'        => 'require|number|egt:1',
     ];
 
     protected $message = [
-        'title.require'         => '标题不能为空',
-        'classify_id.require'   => '分类不能为空',
         'content.require'       => '图文内容不能为空',
     ];
 
     protected $scene = [
         'create'        => [
             'id'        => 'idCantExist',
-            'title',
             'classify_id',
             'content',
         ],
         'update'        => [
             'id',
-            'title',
             'classify_id',
             'content',
         ],
         'delete'        => [
             'id'
+        ],
+        'localArticleList' => [
+            'page'
+        ],
+        'details'       => [
+            'id'
+        ],
+        'share'       => [
+            'id'
+        ],
+        'getByUserId'   => [
+            'user_id'
+        ],
+        'moreComment'   => [
+            'article_id',
+            'page'
+        ],
+        'listByClassify'    => [
+            'classify_id',
         ],
     ];
 

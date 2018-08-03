@@ -59,9 +59,18 @@ class Response
     const SHOP_REGISTER_ERROR = ['code' => 400, 'errorCode' => 1001, 'msg' => '创建门店失败'];
 
     // 点赞、关注、收藏操作失败
-    const RELATE_ERROR = ['code' => 500, 'errorCode' => 999, 'msg' => '操作失败'];
+    const RELATE_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => '操作失败'];
 
     // openid获取失败
     const GET_OPENID_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => 'openid获取失败'];
+
+    //errorCode 值为  10000 时， 前端将重新请求 getToken 接口，此错误码不可更改和重用
+    const TOKEN_NO_BRACE = ['code' => 403, 'errorCode' => 10000, 'msg' => '无效的userToken'];
+
+    //order  排序参数错误
+    const ORDER_ERROR = ['code' => 400, 'errorCode' => 999, 'msg' => 'order 参数错误'];
+
+    //order  排序参数错误
+    const COMMENT_FAIL = ['code' => 400, 'errorCode' => 1000, 'msg' => '评论失败'];
 
 }

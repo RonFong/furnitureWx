@@ -9,8 +9,8 @@
 
 namespace app\lib\exception;
 
+use think\Db;
 use think\exception\Handle;
-use think\Log;
 use think\Request;
 
 /**
@@ -23,6 +23,8 @@ class ExceptionHandler extends Handle
     private $code;
     private $msg;
     private $errorCode;
+    private $location = '';
+    private $systemMsg = '请稍后再试~';
 
     /**
      * 重写框架Handle父类方法
@@ -32,19 +34,22 @@ class ExceptionHandler extends Handle
     public function render(\Exception $e)
     {
         if ($e instanceof BaseException) {
-            //如果是自定义的异常
-            $this->code = $e->code;
-            $this->msg = $e->msg;
-            $this->errorCode = $e->errorCode;
+            //被捕获的异常, msg == '' 时， 为嵌套的 try catch 所捕获的异常
+            $errInfo = $e->msg == '' ? $e->getTrace()[0]['args'][0] : $e;
+            $this->code = $errInfo->code;
+            $this->msg = $errInfo->msg;
+            $this->errorCode = $errInfo->errorCode;
+            if ($e->msg !== '') {
+                $this->location = 'line:' . $e->getTrace()[0]['line'] . ' ' . $e->getTrace()[0]['file'];
+            }
         } else {
-            //根据调试模式判断是否抛出错误
+            //违背捕获的异常 根据调试模式判断是否抛出错误
             if (config('app_debug')) {
                 return parent::render($e);
             } else {
                 $this->code = 500;
-                $this->msg = '内部错误';
+                $this->msg = $this->systemMsg;
                 $this->errorCode = 999;
-                $this->recordErrorLog($e);
             }
         }
         $request = Request::instance();
@@ -52,25 +57,39 @@ class ExceptionHandler extends Handle
         if (!empty($params))
             unset($params['version']);
         $result = [
-            'state' => 0,
-            'msg' => $this->msg,
-            'data' => [],
-            'error_code' => $this->errorCode,
-            'method' => $request->method(),
-            'request_url' => $request->url(),
-            'params' => $params
+            'state'         => 0,
+            'msg'           => $this->msg,
+            'data'          => [],
+            'error_code'    => $this->errorCode,
+            'error_location'=> $this->location,
+            'method'        => $request->method(),
+            'request_url'   => $request->url(),
+            'params'        => $params
         ];
+        if ($this->code == 500) {
+            $this->recordErrorLog($result);
+            if (!config('app_debug')) {
+                $result['msg'] = $this->systemMsg;
+            }
+        }
         return json($result, $this->code);
     }
 
-    private function recordErrorLog(\Exception $e)
+    /**
+     * 写入错误日志表
+     * @param $data
+     */
+    private function recordErrorLog($data)
     {
-        Log::init(
-            [
-                'type' => 'File',
-                'path' => ERROR_LOG_PATH,
-                'level' => ['error']
-            ]);
-        Log::record($e->getMessage(), 'error');
+        $logData = [
+            'url'       => $data['request_url'],
+            'time'      => date('Y-m-d H:i:s', time()),
+            'ip'        => Request::instance()->ip(1),
+            'params'    => json_encode($data['params']),
+            'user_id'   => user_info('id'),
+            'msg'       => $data['msg'],
+            'error_location' => $this->location
+        ];
+        Db::table('error_log')->insert($logData);
     }
 }

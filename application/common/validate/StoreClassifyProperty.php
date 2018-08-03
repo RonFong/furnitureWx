@@ -1,22 +1,18 @@
 <?php
 // +----------------------------------------------------------------------
+// | 深圳市保联科技有限公司
+// +----------------------------------------------------------------------
+// | Copyright (c) 2013-2017 http://www.luckyins.com All rights reserved.
+// +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/7/16 
-// +----------------------------------------------------------------------
+
+namespace app\common\validate;
 
 
-namespace app\common\model;
-use traits\model\SoftDelete;
-
-/**
- * 用户关注商家
- * Class RelationShopCollect
- * @package app\common\model
- */
-class RelationShopCollect extends Model
+class StoreClassifyProperty extends BaseValidate
 {
-    use SoftDelete;
+
 }

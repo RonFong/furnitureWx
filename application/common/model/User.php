@@ -40,13 +40,4 @@ class User extends Model
         'delete_time'
     ];
 
-
-    /**
-     * 按  state 范围查询
-     * @param $query
-     */
-    protected function scopeState($query)
-    {
-        $query->where('state', 1);
-    }
 }

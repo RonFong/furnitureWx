@@ -24,6 +24,12 @@ class Article extends Model
         return $this->hasMany('ArticleContent', 'article_id', 'id');
     }
 
+    public function articleComment()
+    {
+        return $this->hasMany('ArticleComment', 'article_id', 'id');
+    }
+
+
     /**
      * 删除文章
      * @param $id

@@ -9,23 +9,11 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\admin\validate;
+namespace app\api\model;
 
+use app\common\model\StoreClassify as CoreStoreClassify;
 
-class Factory
+class StoreClassify extends CoreStoreClassify
 {
-    protected $rule = [
-        'factory_name' => 'require|token',
-        'user_id'      => 'require',
-    ];
 
-    protected $message = [
-        'factory_name.token'    => '请勿重复提交',
-        'factory_name.require'  => '厂家名不能为空',
-        'user_id'               => '请分配初始用户'
-    ];
-
-    protected $scene = [
-        'edit' => ['factory_id', 'user_id'],
-    ];
 }

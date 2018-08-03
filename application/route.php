@@ -31,6 +31,8 @@ Route::group('api/:version',function() {
 
     //获取token
     Route::get('getToken', 'api/:version.Token/getToken');
+    //（测试用）通过用户ID直接获取 token
+    Route::get('getTestToken', 'api/:version.Token/getTestToken');
 
     // 音乐
     Route::group('music',function () {
@@ -71,6 +73,33 @@ Route::group('api/:version',function() {
         Route::put('update', 'api/:version.Article/update');
         //删除文章
         Route::delete('delete', 'api/:version.Article/delete');
+        //同城圈首页文章列表
+        Route::get('localList', 'api/:version.Article/localArticleList');
+        //增加文章的一个分享数
+        Route::put('share', 'api/:version.Article/share');
+        //获取文章详情
+        Route::get('details', 'api/:version.Article/details');
+        //获取用户本人的文章列表
+        Route::get('ownList', 'api/:version.Article/getOwnArticleList');
+        //根据用户ID获取文章列表
+        Route::get('listByUserId', 'api/:version.Article/getArticleListByUserId');
+        //按分类获取文章列表
+        Route::get('listByClassify', 'api/:version.Article/getListByClassify');
+        //我的收藏
+        Route::get('myCollectArticle', 'api/:version.Article/myCollectArticle');
+        //我关注的用户
+        Route::get('myCollect', 'api/:version.Article/myCollect');
+        //我的粉丝
+        Route::get('collectMe', 'api/:version.Article/collectMe');
+        //获取文章更多评论
+        Route::get('moreComment', 'api/:version.Article/getMoreComment');
+    });
+
+    Route::group('articleComment', function () {
+        //评论文章
+        Route::post('comment', 'api/:version.ArticleComment/comment');
+        //回复评论
+        Route::post('replyComment', 'api/:version.ArticleComment/replyComment');
     });
 
     // 门店
@@ -90,12 +119,10 @@ Route::group('api/:version',function() {
         Route::post('articleGreat', 'api/:version.Relate/articleGreat');
         //评论点赞
         Route::post('commentGreat', 'api/:version.Relate/commentGreat');
-        //商家关注厂家
-        Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
         //用户收藏商城商品
         Route::post('goodsCollect', 'api/:version.Relate/goodsCollect');
-        //用户收藏商家
-        Route::post('shopCollect', 'api/:version.Relate/shopCollect');
+        //用户关注用户
+        Route::post('userCollect', 'api/:version.Relate/userCollect');
     });
 
     //工厂

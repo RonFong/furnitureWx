@@ -35,18 +35,17 @@ class BaseValidate extends Validate {
     }
 
     /**
-     * 自定义异常
-     * @param array $response 异常信息  [ 'http状态码’, '错误提示', '错误码' ]
+     * 异常和错误处理
+     * @param mixed $response 参数为数组时：自定义异常  参数为对象时：系统错误
      * @throws BaseException
      */
-    public function error($response = [])
+    public function error($response)
     {
-
         throw new BaseException([
-            'state'      => 0,
-            'code'       => $response['code'],
-            'msg'        => $response['msg'],
-            'error_code' => $response['errorCode'],
+            'state'         => 0,
+            'code'          => is_array($response) ? $response['code'] : 500,
+            'msg'           => is_array($response) ? $response['msg'] : $response->getMessage(),
+            'error_code'    => is_array($response) ? $response['errorCode'] : 999
         ]);
     }
 
@@ -197,6 +196,30 @@ class BaseValidate extends Validate {
                         return '有违禁图片，请更改后再提交';
                 }
             }
+        }
+        return true;
+    }
+
+    /**
+     * 页码和每页条目数的统一校验
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|string
+     */
+    protected function checkPageAndRow($value, $rule, $data)
+    {
+        if (array_key_exists('page', $data)) {
+            if (!is_numeric($data['page']))
+                return '页码只能是数字';
+            if ($data['page'] < 0)
+                return '页码不能小于0';
+        }
+        if (array_key_exists('row', $data)) {
+            if (!is_numeric($data['row']))
+                return '条目数只能是数字';
+            if ($data['row'] < 0)
+                return '条目数不能小于0';
         }
         return true;
     }

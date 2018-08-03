@@ -9,21 +9,10 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\admin\controller;
+namespace app\common\validate;
 
 
-use think\Request;
-
-class District extends BaseController
+class StoreClassify extends BaseValidate
 {
-    function __construct(Request $request = null)
-    {
-        parent::__construct($request);
-        $this->currentModel = model('district');
-    }
 
-    public function getArea($id = 0)
-    {
-        return $this->currentModel->getArea($id);
-    }
 }

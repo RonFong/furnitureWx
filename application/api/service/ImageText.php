@@ -84,7 +84,7 @@ class ImageText
 
             //文章主信息
             $articleData = $data;
-            $articleData['id'] = user_info('id') ?? 0;      //user_id  必须， 暂缺失
+            $articleData['id'] = user_info('id');
 
             //有传id则为更新操作
             if (array_key_exists('id', $data) && is_numeric($data['id']))

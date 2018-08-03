@@ -211,7 +211,7 @@ if (!function_exists('move_tmp_img'))
         //临时图片绝对地址
         $tmpPath = str_replace(VIEW_IMAGE_PATH, IMAGE_PATH, $tmpImg);
         //获取图片名
-        $imgName = substr($tmpImg, strlen(VIEW_IMAGE_PATH . '/tmp/'));
+        $imgName = substr($tmpImg, strlen(VIEW_IMAGE_PATH) + 14);
         //目标转存地址
         $path = IMAGE_PATH . $folder . $imgName;
 
@@ -265,3 +265,24 @@ if (!function_exists('unlink_img'))
         return true;
     }
 }
+
+
+if (!function_exists('get_thumb_img'))
+{
+    /**
+     * 如果存在缩略图，则返回缩略图地址，否则返回原地址
+     * @param $img  string||array  一张或一组图片的路径
+     * @return bool
+     */
+    function get_thumb_img($img)
+    {
+        if (file_exists(PUBLIC_PATH . $img)) {
+            $array = explode('.', $img);
+            $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
+            return implode('', $array);
+        } else {
+            return $img;
+        }
+    }
+}
+

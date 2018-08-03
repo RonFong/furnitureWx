@@ -9,10 +9,17 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\admin\model;
+namespace app\api\controller\v1;
 
 
-class Role extends BaseModel
+use app\api\controller\BaseController;
+
+/**
+ * 商城分类属性
+ * Class StoreClassifyProperty
+ * @package app\api\controller\v1
+ */
+class StoreClassifyProperty extends BaseController
 {
 
 }

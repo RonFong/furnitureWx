@@ -9,20 +9,10 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\admin\behavior;
-use think\response\Redirect;
-use think\exception\HttpResponseException;
-use think\Request;
-class CheckLogin
+namespace app\common\model;
+
+
+class StoreClassifyProperty extends Model
 {
-    public function run()
-    {
-        $request = Request::instance();
-        $uid = user_info('id');
-        if ($request->controller() !== 'Login' && empty($uid)) {
-            $response = new Redirect('Admin/Login/index');
-            $response->code(500)->remember();
-            throw new HttpResponseException($response);
-        }
-    }
+
 }

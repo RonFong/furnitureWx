@@ -31,9 +31,12 @@ class ArticleClassify extends Model
      * 获取文章分类
      * @param int $parentId  父分类ID
      * @return false|static[]
+     * @throws \think\exception\DbException
      */
     static public function getClassify($parentId = 0)
     {
-        return self::all(['parent_id' => $parentId, 'state' => 1]);
+        return self::all(function($query) use ($parentId){
+            $query->where(['state' => 1, 'parent_id' => $parentId])->field('id,classify_name')->order('sort');
+        });
     }
 }

@@ -25,21 +25,20 @@ class CheckToken
         try {
             if ($token = Request::instance()->header('userToken')) {
                 if (!$userId = Cache::get($token))
-                    exception('无效的userToken');
+                    //errorCode 值为  10000 时， 前端将重新请求 getToken 接口，此错误码不可更改和重用
+                    die(json_encode(['state' => 0, 'errorCode' => 10000, 'msg' => '无效的userToken']));
                 if (!$userInfo = User::get($userId))
-                    exception('用户数据获取失败');
-                if ($userInfo->state == 0)
+                    exception('用户数据异常');
+                if ($userInfo->state === 0)
                     exception('账号被冻结');
-
-                Session::set('user.id', $userInfo['id']);
-                Session::set('user.group_id', $userInfo['id']);
-                Session::set('user.type', $userInfo['id']);
-
+                Session::set('user_info', $userInfo->toArray());
+                //刷新token缓存时间
+                Cache::set($token, $userInfo->id, config('api.token_valid_time'));
             } else {
-                exception('头文件中userToken参数不能为空');
+                exception('userToken不能为空');
             }
         } catch (\Exception $e) {
-            die(['state' => 0, 'errorCode' => 1003, 'msg' => $e->getMessage()]);
+            die(json_encode(['state' => 0, 'errorCode' => 1003, 'msg' => $e->getMessage()]));
         }
     }
 }

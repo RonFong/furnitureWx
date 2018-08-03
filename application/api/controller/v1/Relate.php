@@ -25,9 +25,8 @@ class Relate extends BaseController
         'articleCollect'    => 'RelationArticleCollect',   //文章收藏
         'articleGreat'      => 'RelationArticleGreat',     //文章点赞
         'commentGreat'      => 'RelationCommentGreat',     //评论点赞
-        'factoryCollect'    => 'RelationFactoryCollect',   //商家关注厂家
         'goodsCollect'      => 'RelationGoodsCollect',     //用户收藏商城商品
-        'shopCollect'       => 'RelationShopCollect'       //用户收藏商家
+        'userCollect'       => 'RelationUserCollect'       //用户关注用户
     ];
 
     public function __construct(Request $request = null)
@@ -52,13 +51,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/articleCollect  用户收藏文章
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} article_id 文章ID
      * @apiParam {string} type inc(收藏) 或 dec(取消收藏)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "article_id":1,
      *      "type":"inc"
      * }
@@ -80,13 +77,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/articleGreat  用户点赞文章
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} article_id 文章ID
      * @apiParam {string} type inc(点赞) 或 dec(取消点赞)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "article_id":1,
      *      "type":"inc"
      * }
@@ -108,13 +103,11 @@ class Relate extends BaseController
     /**
      * @api {post} /v1/relate/commentGreat  用户点赞评论
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} comment_id 评论ID
      * @apiParam {string} type inc(点赞) 或 dec(取消点赞)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "comment_id":1,
      *      "type":"inc"
      * }
@@ -134,43 +127,13 @@ class Relate extends BaseController
 
 
     /**
-     * @api {post} /v1/relate/factoryCollect  商家关注厂家
-     * @apiGroup Relate
-     * @apiParam {number} shop_id 商家ID
-     * @apiParam {number} factory_id 厂家ID
-     * @apiParam {string} type inc(关注) 或 dec(取消关注)
-     *
-     * @apiParamExample  {string} 请求参数格式：
-     * {
-     *      "shop_id":1,
-     *      "factory_id":1,
-     *      "type":"inc"
-     * }
-     *
-     * @apiSuccessExample {json} 成功时的数据：
-     *{
-     *  "state": 1,
-     *  "msg": "success",
-     *  "data": []
-     *}
-     */
-    public function factoryCollect()
-    {
-        $this->currentValidate->goCheck('factoryCollect');
-        return $this->return((new RelateServer($this->behaviorModel['factoryCollect']))->save($this->data));
-    }
-
-
-    /**
      * @api {post} /v1/relate/goodsCollect  用户收藏商城商品
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} goods_id 商品ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
      *      "goods_id":1,
      *      "type":"inc"
      * }
@@ -189,16 +152,14 @@ class Relate extends BaseController
     }
 
     /**
-     * @api {post} /v1/relate/shopCollect  用户收藏商家
+     * @api {post} /v1/relate/shopCollect  用户关注用户
      * @apiGroup Relate
-     * @apiParam {number} user_id 用户ID
      * @apiParam {number} shop_id 评论ID
      * @apiParam {string} type inc(关注) 或 dec(取消关注)
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "user_id":1,
-     *      "shop_id":1,
+     *      "other_user_id":1,
      *      "type":"inc"
      * }
      *
@@ -209,9 +170,9 @@ class Relate extends BaseController
      *  "data": []
      *}
      */
-    public function shopCollect()
+    public function userCollect()
     {
-        $this->currentValidate->goCheck('shopCollect');
-        return $this->return((new RelateServer($this->behaviorModel['shopCollect']))->save($this->data));
+        $this->currentValidate->goCheck('userCollect');
+        return $this->return((new RelateServer($this->behaviorModel['userCollect']))->save($this->data));
     }
 }

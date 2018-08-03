@@ -1,17 +1,18 @@
 <?php
 // +----------------------------------------------------------------------
+// | 深圳市保联科技有限公司
+// +----------------------------------------------------------------------
+// | Copyright (c) 2013-2017 http://www.luckyins.com All rights reserved.
+// +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2017/12/31 14:49
-// +----------------------------------------------------------------------
 
-namespace app\admin\validate;
+namespace app\common\model;
 
-use app\common\validate\CoreValidate;
 
-class BaseValidate extends CoreValidate
+class StoreClassify extends Model
 {
-    //公共校验规则
+
 }

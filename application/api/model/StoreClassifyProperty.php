@@ -9,11 +9,11 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\admin\model;
+namespace app\api\model;
 
-use app\common\model\Shop as CoreShop;
+use app\common\model\StoreClassifyProperty as CoreStoreClassifyProperty;
 
-class Shop extends CoreShop
+class StoreClassifyProperty extends CoreStoreClassifyProperty
 {
 
 }
