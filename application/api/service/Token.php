@@ -51,10 +51,21 @@ class Token
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
         if (!$userInfo) {
-            $userInfo = User::create(['wx_openid' => self::$openid]);
+            $saveData = [
+                'wx_openid' => self::$openid,
+                'avatar'    => config('api.default_avatar'),
+                'user_name' => 'wx_' . substr(str_shuffle(self::$openid), 0, 6),
+                'group_id'      => 0,
+                'gender'        => 0,
+                'phone'         => '',
+                'wx_account'    => '',
+                'type'          => 3,
+                'state'         => 1
+            ];
+            $userInfo = User::create($saveData);
         }
         if (!$userInfo) {
-            exception('用户查询或注册失败');
+            exception('读取信息失败');
         }
         return $userInfo;
     }
@@ -67,10 +78,11 @@ class Token
     private static function createToken($userId)
     {
         $token = md5(str_shuffle(self::$openid));
-        $result = Cache::set($token, $userId, 7200);
+        $result = Cache::set($token, $userId, config('api.token_valid_time'));
         if (!$result) {
             exception('token缓存失败');
         }
         return $token;
     }
+
 }

@@ -13,14 +13,13 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-//    'hostname'        => '127.0.0.1',
-    'hostname'        => '47.98.223.33',
+    'hostname'        => '127.0.0.1',
     // 数据库名
     'database'        => 'furniture',
     // 用户名
-    'username'        => 'user',
+    'username'        => '',
     // 密码
-    'password'        => 'lucky2018',
+    'password'        => '',
     // 端口
     'hostport'        => '',
     // 连接dsn
@@ -52,5 +51,5 @@ return [
     // 是否需要进行SQL性能分析
     'sql_explain'     => false,
     //扩展Query类
-    'query'           => 'app\common\db\Query'
+//    'query'           => ''
 ];
