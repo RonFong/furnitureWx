@@ -33,7 +33,7 @@ class Wechat {
     public function getOpenid($data) {
 
         $jsCode = $data['code'];
-        $url         = $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
+        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
         $info = json_decode(curl_get($url));
         if (!isset($info->openid)) {
             exception('openid获取失败:' . $info->errmsg);
