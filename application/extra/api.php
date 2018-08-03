@@ -37,6 +37,7 @@ return [
     'img_app_key'           => 'kyUfUb38Wgr2Fic8BVjf41cp',
     'img_app_secret'        => 'damBetFzgbXKVDG9czvEtqgHj5TWEOSO',
 
-    'token_valid_time '     => 7200,
+    //user token 缓存时间
+    'token_valid_time'      => 7200,
 
 ];
