@@ -67,7 +67,7 @@ class Token
     private static function createToken($userId)
     {
         $token = md5(str_shuffle(self::$openid));
-        $result = Cache::set($token, $userId, 7200);
+        $result = Cache::set($token, $userId, config('api.token_valid_time'));
         if (!$result) {
             exception('token缓存失败');
         }
