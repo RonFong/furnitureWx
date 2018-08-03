@@ -40,4 +40,7 @@ return [
     //user token 缓存时间
     'token_valid_time'      => 7200,
 
+    //用户默认头像
+    'default_avatar'        => '/static/img/user_icon/default.jpg',
+
 ];
