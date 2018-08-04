@@ -32,6 +32,8 @@ class CheckToken
                 if ($userInfo->state === 0)
                     exception('账号被冻结');
                 Session::set('user_info', $userInfo->toArray());
+                //刷新token缓存时间
+                Cache::set($token, $userInfo->id, config('api.token_valid_time'));
             } else {
                 exception('userToken不能为空');
             }
