@@ -15,5 +15,24 @@ use app\common\model\StoreClassify as CoreStoreClassify;
 
 class StoreClassify extends CoreStoreClassify
 {
+    public function storeClassifyList()
+    {
+        $fields = ['id','parent_id','name'];
+        $all = $this
+            ->field($fields)
+            ->where('state',1)
+            ->select();
 
+        return array_values($this->formatTree($all,0));
+    }
+
+    public function formatTree($arr,$pid=0){
+        foreach($arr as $k => $v){
+            if($v['parent_id']==$pid){
+                $data[$v['id']]=$v;
+                $data[$v['id']]['son']=$this->formatTree($arr,$v['id']);
+            }
+        }
+        return isset($data)?$data:array();
+    }
 }

@@ -108,7 +108,7 @@ Route::group('api/:version',function() {
     });
 
     Route::group('category',function (){
-        Route::get('business_list','api/:version.Category/getBusinessCategoryList');
+        Route::get('storeList','api/:version.Category/getStoreClassifyList');
     });
 
     //关注、收藏、点赞
