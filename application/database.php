@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => 'furniture',
     // 用户名
-    'username'        => '',
+    'username'        => 'user',
     // 密码
-    'password'        => '',
+    'password'        => 'lucky2018',
     // 端口
     'hostport'        => '',
     // 连接dsn
