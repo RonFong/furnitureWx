@@ -17,7 +17,7 @@ return [
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => true,
+    'app_trace'              => false,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -113,7 +113,7 @@ return [
     // +----------------------------------------------------------------------
     // | 模板设置
     // +----------------------------------------------------------------------
-    'template'              => [
+    'template'               => [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
         // 模板路径
@@ -132,26 +132,26 @@ return [
         'taglib_end'   => '}',
     ],
     // 视图输出字符串内容替换
-    'view_replace_str'      => [],
+    'view_replace_str'       => [],
     // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl' => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-    'dispatch_error_tmpl'   => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     // +----------------------------------------------------------------------
     // | 异常及错误设置
     // +----------------------------------------------------------------------
     // 异常页面的模板文件
-    'exception_tmpl'        => THINK_PATH . 'tpl' . DS . 'think_exception.tpl',
+    'exception_tmpl'         => THINK_PATH . 'tpl' . DS . 'think_exception.tpl',
     // 错误显示信息,非调试模式有效
-    'error_message'         => '页面错误！请稍后再试～',
+    'error_message'          => '页面错误！请稍后再试～',
     // 显示错误信息
-    'show_error_msg'        => false,
+    'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     //    'exception_handle'       => '',
-    'exception_handle'      => 'app\lib\exception\ExceptionHandler',
+    'exception_handle'       => 'app\lib\exception\ExceptionHandler',
     // +----------------------------------------------------------------------
     // | 日志设置
     // +----------------------------------------------------------------------
-    'log'   => [
+    'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
         'type'  => 'File',
         // 日志保存目录
@@ -162,26 +162,27 @@ return [
     // +----------------------------------------------------------------------
     // | Trace设置 开启 app_trace 后 有效
     // +----------------------------------------------------------------------
-    'trace' => [
+    'trace'                  => [
         // 内置Html Console 支持扩展
         'type' => 'Html',
     ],
     // +----------------------------------------------------------------------
     // | 缓存设置
     // +----------------------------------------------------------------------
-    'cache' => [
+    'cache'                  => [
         //        // 驱动方式
         //        'type'   => 'File',
         //        // 缓存保存目录
         //        'path'   => CACHE_PATH,
-        'type'     => 'redis',
+        'type'     => 'Redis',
         'host'     => '47.98.223.33',
+        'port'     => '6379',
         'password' => 'abc123',
     ],
     // +----------------------------------------------------------------------
     // | 会话设置
     // +----------------------------------------------------------------------
-    'session'  => [
+    'session'                => [
         'id'             => '',
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
@@ -195,7 +196,7 @@ return [
     // +----------------------------------------------------------------------
     // | Cookie设置
     // +----------------------------------------------------------------------
-    'cookie'   => [
+    'cookie'                 => [
         // cookie 名称前缀
         'prefix'    => '',
         // cookie 保存时间
@@ -213,7 +214,7 @@ return [
         'URL_MODEL' => 2,
     ],
     //分页配置
-    'paginate' => [
+    'paginate'               => [
         'type'      => 'bootstrap',
         'var_page'  => 'page',
         'list_rows' => 15,
