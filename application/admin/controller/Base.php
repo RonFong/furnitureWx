@@ -11,7 +11,7 @@ namespace app\admin\controller;
 
 use app\common\controller\Controller;
 use app\admin\model\Menu;
-use app\admin\model\User;
+use app\admin\model\UserAdmin;
 use think\Session;
 use think\Cookie;
 use think\Db;
@@ -25,7 +25,7 @@ abstract class Base extends Controller
         $param = $this->request->param();//获取参数
         /*游客体验，直接进入后台*/
         if (isset($param['id']) && isset($param['visitor']) && $param['id'] == '2' && $param['visitor'] =='1') {
-            Session::set('user_info', (new User())->getUserInfo(['id'=>$param['id']]));
+            Session::set('user_info', (new UserAdmin())->getUserInfo(['id'=>$param['id']]));
         }
 
         /*判断是否已登录*/
@@ -126,10 +126,7 @@ abstract class Base extends Controller
             if (has_field($table_name, 'pid')) {
                 $data_child = Db::name($table_name)->whereIn('pid', $id)->select();
                 if (!empty($data_child)) {
-                    foreach ($data_child as $k => $v) {
-                        $this->currentModel->dataChangelog($v, 3);//记录删除日志
-                    }
-                    $this->currentModel->whereIn('pid', $id)->delete();
+                    $this->currentModel->whereIn('pid', $id)->update(['delete_time'=>null]);
                 }
             }
 
@@ -139,10 +136,7 @@ abstract class Base extends Controller
             if (empty($data)) {
                 throw new \Exception('信息不存在');
             }
-            foreach ($data as $k => $v) {
-                $this->currentModel->dataChangelog($v, 3);//记录删除日志
-            }
-            $this->currentModel->whereIn($pk, $id)->delete();//删除当前资料
+            $this->currentModel->whereIn($pk, $id)->update(['delete_time'=>null]);//删除当前资料
         } catch (\Exception $e) {
             Db::rollback();
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
