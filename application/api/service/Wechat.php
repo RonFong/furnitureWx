@@ -16,12 +16,12 @@ class Wechat {
     public $token;
     public $appSecret;
 
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->appid     = 'wx195a5e8ed1a55ead';
         $this->appSecret = 'd0a065f66e34734712f8b4310691b5c3';
-
-        $this->token     = '';
+        $this->token = '';
 
     }
 
@@ -30,14 +30,16 @@ class Wechat {
      * @param $data
      * @return mixed
      */
-    public function getOpenid($data) {
+    public function getOpenid($data)
+    {
 
         $jsCode = $data['code'];
-        $url         = $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
-        $info = json_decode(curl_get($url));
+        $url    = $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
+        $info   = json_decode(curl_get($url));
         if (!isset($info->openid)) {
             exception('openid获取失败:' . $info->errmsg);
         }
+
         //Cache::set('session_key:'.$info->openid,$info->session_key);
         return $info->openid;
     }
@@ -46,9 +48,10 @@ class Wechat {
      * 获取接口调用凭证accessToken
      * @return bool|string
      */
-    public function getWxAccessToken() {
+    public function getWxAccessToken()
+    {
 
-        $url         = $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appid&secret=$this->appSecret";
+        $url = $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appid&secret=$this->appSecret";
         $res = json_decode(curl_get($url));
 
         return $res->access_token;

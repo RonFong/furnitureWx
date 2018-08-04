@@ -49,7 +49,9 @@ class Token
      */
     private static function getUserInfo()
     {
+
         $userInfo = User::get(['wx_openid' => self::$openid]);
+
         if (!$userInfo) {
             $userInfo = User::create(['wx_openid' => self::$openid]);
         }
@@ -67,6 +69,7 @@ class Token
     private static function createToken($userId)
     {
         $token = md5(str_shuffle(self::$openid));
+
         $result = Cache::set($token, $userId, 7200);
         if (!$result) {
             exception('token缓存失败');
