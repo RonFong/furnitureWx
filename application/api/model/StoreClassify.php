@@ -22,7 +22,7 @@ class StoreClassify extends CoreStoreClassify
             ->field($fields)
             ->where('state',1)
             ->select();
-
+//        dump($all);die;
         return array_values($this->formatTree($all,0));
     }
 

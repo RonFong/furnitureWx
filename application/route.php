@@ -108,7 +108,7 @@ Route::group('api/:version',function() {
     });
 
     Route::group('category',function (){
-        Route::get('storeList','api/:version.Category/getStoreClassifyList');
+        Route::get('storeList','api/:version.StoreClassify/getStoreClassifyList');
     });
 
     //关注、收藏、点赞
