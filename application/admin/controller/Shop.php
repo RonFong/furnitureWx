@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Shop as CoreShop;
+use think\Db;
 use think\Request;
 
 class Shop extends Base
@@ -73,7 +74,19 @@ class Shop extends Base
             }
             $data = $data->toArray();
             $this->assign('data', $data);
+
+            /*获取下拉列表：市*/
+            $city = $this->getRegion($data['province']);
+            $this->assign('cityList', $city);
+
+            /*获取下拉列表：区/镇*/
+            $district = $this->getRegion($data['city']);
+            $this->assign('districtList', $district);
         }
+
+        /*获取下拉列表：省份*/
+        $provinceList = $this->getRegion(0);
+        $this->assign('provinceList', $provinceList);
 
         return $this->fetch();
     }
@@ -103,5 +116,16 @@ class Shop extends Base
     }
 
 
+    /**
+     * 根据pid 获取下拉列表，省市区三级联动
+     * @param $pid
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\exception\DbException
+     */
+    public function getRegion($pid)
+    {
+        $pid = !empty($pid) ? $pid : 0;
+        return Db::name('district')->where('parent_id', $pid)->field('id,name,code')->select();
+    }
 }
 
