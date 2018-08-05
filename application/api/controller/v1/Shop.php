@@ -13,6 +13,7 @@ namespace app\api\controller\v1;
 use app\api\controller\BaseController;
 use app\api\model\Shop as shopModel;
 use app\lib\enum\Response;
+use think\Cache;
 use think\Request;
 
 class Shop extends BaseController
@@ -33,13 +34,31 @@ class Shop extends BaseController
 
     public function register()
     {
+        // 参数检查暂时跳过
         $this->currentValidate->goCheck('register');
-        $shop = $this->currentModel->saveData($this->data);
-        if ($shop) {
-            $this->result['data'] = $this->currentModel->where('id',$shop->id)->find()->toArray();
-            return json($this->result, 201);
+        // 检查手机验证码
+        $authCode = Cache::get('auth_'.$this->data['shop_phone']);
+        try {
+            if (!$authCode) {
+                exception('验证码不存在');
+            }
+            if ($authCode != $this->data['code']) {
+                exception('验证码错误');
+            }
+            Cache::rm('auth_'.$this->data['shop_phone']);
+        } catch (\Exception $e) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
         }
-        $this->response->error(Response::SHOP_REGISTER_ERROR);
+
+        try {
+            $result = $this->currentModel->saveData($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        $this->result['data'] = $result;
+        return json($this->result, 201);
     }
 
     public function info()

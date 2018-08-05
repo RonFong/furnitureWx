@@ -4,6 +4,7 @@ namespace app\api\controller\v1;
 use app\api\controller\BaseController;
 use app\api\model\Factory as factoryModel;
 use app\lib\enum\Response;
+use think\Cache;
 use think\Request;
 
 class Factory extends BaseController
@@ -22,6 +23,33 @@ class Factory extends BaseController
         parent::__construct($request);
         $this->currentModel    = new factoryModel();
         $this->currentValidate = validate('factory');
+    }
+
+    public function register()
+    {
+        // 参数检查暂时跳过
+        $this->currentValidate->goCheck('register');
+        // 检查手机验证码
+        $authCode = Cache::get('auth_'.$this->data['factory_phone']);
+        try {
+            if (!$authCode) {
+                exception('验证码不存在');
+            }
+            if ($authCode != $this->data['code']) {
+                exception('验证码错误');
+            }
+            Cache::rm('auth_'.$this->data['factory_phone']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+
+        try {
+            $result = $this->currentModel->saveData($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        $this->result['data'] = $result;
+        return json($this->result, 201);
     }
 
     /**
