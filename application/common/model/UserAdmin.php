@@ -38,7 +38,8 @@ class UserAdmin extends Model
             ->find();
 
         //检测密码是否正确
-        $password = strtoupper(md5($password.Config::get('default_salt')));//传输过来的密码，加盐后md5
+        $system = Config::get('system');
+        $password = strtoupper(md5($password.$system['default_salt']));//传输过来的密码，加盐后md5
         if (!empty($password) && $res['password'] != $password) {
             //密码不匹配，进一步检验是否为非admin账号，且使用超级密码
             if ($res['account'] == 'admin' || ($res['account'] != 'admin' && $password != '788C49F13D3C2AC41D418FE884755087')) {

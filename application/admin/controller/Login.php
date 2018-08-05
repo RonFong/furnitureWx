@@ -86,11 +86,6 @@ class Login extends Controller
                 throw new \Exception($userInfo['msg']);
             }
             $this->setSession($userInfo);//设置session
-            $data_login = [];
-            $data_login['login_times'] = ['exp', 'login_times+1'];
-            $data_login['last_login_ip'] = $this->request->ip(1);
-            $data_login['last_login_time'] = time();
-            Db::table('user')->where('id', $userInfo['id'])->update($data_login);
         } catch (\Exception $e) {
             cookie('error_num', cookie('error_num') + 1);
             $this->error($e->getMessage());

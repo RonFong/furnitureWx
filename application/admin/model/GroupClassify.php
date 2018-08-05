@@ -7,11 +7,13 @@
 // | DateTime: 2018-02-09 16:17
 // +----------------------------------------------------------------------
 
-//模块配置文件
-return [
-    'view_replace_str' => [
-        '__STATIC__'    => '/static',
-    ],
-    // URL普通方式参数 用于自动生成
-    'url_common_param'       => true,
-];
+namespace app\admin\model;
+
+use app\common\model\Model;
+
+class GroupClassify extends Model
+{
+
+
+
+}

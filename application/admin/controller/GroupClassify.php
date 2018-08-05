@@ -7,11 +7,20 @@
 // | DateTime: 2018-02-09 16:17
 // +----------------------------------------------------------------------
 
-//模块配置文件
-return [
-    'view_replace_str' => [
-        '__STATIC__'    => '/static',
-    ],
-    // URL普通方式参数 用于自动生成
-    'url_common_param'       => true,
-];
+namespace app\admin\controller;
+
+use app\admin\model\GroupClassify as CoreGroupClassify;
+use think\Request;
+
+class GroupClassify extends Base
+{
+    public function __construct(Request $request = null)
+    {
+        parent::__construct($request);
+        $this->currentModel = new CoreGroupClassify();//实例化当前模型
+    }
+
+
+
+}
+
