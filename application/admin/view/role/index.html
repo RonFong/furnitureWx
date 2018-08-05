@@ -53,12 +53,6 @@
                 {type:'numbers', title:'序号', width:80}
                 ,{field:'role_name', title:'名称', edit: 'text', width: '15%'}
                 ,{field:'describe', title:'描述'}
-                ,{title:'更改排序', align:'center', width: '15%', templet: function (data) {
-                    return '<div class="layui-btn-group">' +
-                        '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeSort('+data.id+',\'asc\', \'{:url("changeSort")}\');"><i class="iconfont icon-xiangshang1"></i></a>' +
-                        '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeSort('+data.id+',\'desc\', \'{:url("changeSort")}\');"><i class="iconfont icon-xiangxia1"></i></a>' +
-                        '</div>';
-                }}
                 ,{title:'操作', toolbar: '#operating', align:'center', width: '15%'}
             ]]
             ,where: getFormJson('#searchForm')

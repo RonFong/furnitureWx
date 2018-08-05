@@ -26,7 +26,7 @@ class Login extends Controller
     public function index()
     {
         //若session已存在，则直接跳往后台主页
-        if (!empty(user_info('user_id'))) {
+        if (!empty(user_info('id'))) {
             $this->redirect('Index/index');
         }
 
@@ -58,7 +58,7 @@ class Login extends Controller
         //记住登陆前的页面，登录成功后跳转
         Cookie::set('back_url', redirect()->restore()->getData());
 
-        $data['nick_name|tel'] = $param['keyword'];
+        $data['account'] = $param['keyword'];
         $data['password'] = $param['password'];
         $this->loginGo($data);//设置session，实现登录并跳转
     }
@@ -90,7 +90,7 @@ class Login extends Controller
             $data_login['login_times'] = ['exp', 'login_times+1'];
             $data_login['last_login_ip'] = $this->request->ip(1);
             $data_login['last_login_time'] = time();
-            Db::name('user')->where('user_id', $userInfo['user_id'])->update($data_login);
+            Db::table('user')->where('id', $userInfo['id'])->update($data_login);
         } catch (\Exception $e) {
             cookie('error_num', cookie('error_num') + 1);
             $this->error($e->getMessage());
