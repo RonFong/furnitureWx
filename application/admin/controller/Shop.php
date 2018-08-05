@@ -43,14 +43,14 @@ class Shop extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
-        if (!empty($param['user_name'])) {
-            $map['user_name'] = ['like', '%' . $param['user_name'] . '%'];//帐号
+        if (!empty($param['shop_name'])) {
+            $map['shop_name'] = ['like', '%' . $param['shop_name'] . '%'];//商户名
         }
-        if (!empty($param['phone'])) {
-            $map['phone'] = ['like', '%' . $param['phone'] . '%'];//帐号
+        if (!empty($param['shop_phone'])) {
+            $map['shop_phone'] = ['like', '%' . $param['shop_phone'] . '%'];//手机号
         }
-        if (!empty($param['type'])) {
-            $map['type'] = ['like', '%' . $param['type'] . '%'];//类型
+        if (!empty($param['shop_contact'])) {
+            $map['shop_contact'] = ['like', '%' . $param['shop_contact'] . '%'];//联系人
         }
         if (empty($map)) {
             $map[] = ['exp', '1=1'];
