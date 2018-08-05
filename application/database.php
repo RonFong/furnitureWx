@@ -17,11 +17,11 @@ return [
     // 数据库名
     'database'        => 'furniture',
     // 用户名
-    'username'        => 'user',
+    'username'        => 'root',
     // 密码
-    'password'        => 'lucky2018',
+    'password'        => '123456',
     // 端口
-    'hostport'        => '',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数

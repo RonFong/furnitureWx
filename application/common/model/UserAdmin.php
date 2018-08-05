@@ -32,7 +32,7 @@ class UserAdmin extends Model
             return ['status' => false, 'msg' => '该信息关联多个帐号，异常情况！'];
         }
 
-        $res = Db::name('user_admin')
+        $res = Db::table('user_admin')
             ->field('id,account,user_name,image,role_id,password,type')
             ->where($map)
             ->find();
@@ -47,7 +47,7 @@ class UserAdmin extends Model
         }
 
         $res['image'] = !empty($res['image']) ? Request::instance()->domain().$res['image'] : '';//头像完整路径
-        $res['role_name'] = Db::name('role')->where('id', $res['role_id'])->value('role_name');//角色名称
+        $res['role_name'] = Db::table('role')->where('id', $res['role_id'])->value('role_name');//角色名称
         unset($res['password']);
         return $res;
     }

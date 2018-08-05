@@ -74,12 +74,12 @@ class Role extends Base
      */
     public function getMenuList($id)
     {
-        $list = Db::name('menu')->field('id,pid,menu_name,sort_num,url,description')->order('sort_num asc')->select();
-        $auth = Db::name('role')->where('id', $id)->value('menu_list');
+        $list = Db::table('menu')->field('id,pid,menu_name,sort_num,url,description')->order('sort_num asc')->select();
+        $auth = Db::table('role')->where('id', $id)->value('menu_list');
         $auth_arr = explode(',', $auth);
         $list = \Tree::get_Table_tree($list, 'menu_name', 'id');
         foreach ($list as $k=>$v) {
-            $list[$k]['pid_text'] = !empty($v['pid']) ? Db::name('menu')->where('id', $v['pid'])->value('menu_name') : '顶级';
+            $list[$k]['pid_text'] = !empty($v['pid']) ? Db::table('menu')->where('id', $v['pid'])->value('menu_name') : '顶级';
             $list[$k]['LAY_CHECKED'] = in_array($v['id'], $auth_arr) || $v['id'] == 1 ? true : false;
             unset($list[$k]['child']);
         }

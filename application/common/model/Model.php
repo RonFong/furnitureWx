@@ -200,4 +200,13 @@ abstract class Model extends CoreModel
             }
         }
     }
+
+    /**
+     * 获取当前实例化后的模型对应的表名
+     * @return bool|string
+     */
+    public function getTableName()
+    {
+        return $this->name;
+    }
 }

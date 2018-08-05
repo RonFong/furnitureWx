@@ -40,7 +40,7 @@ class Menu extends CoreMenu
      */
     protected function getPidTextAttr($value)
     {
-        return !empty($value) ? Db::name('menu')->where('id', $value)->value('menu_name') : '顶级';
+        return !empty($value) ? Db::table('menu')->where('id', $value)->value('menu_name') : '顶级';
     }
     /**
      * 获取“显示”字段，中文名称
@@ -86,14 +86,14 @@ class Menu extends CoreMenu
         $http_url = $_SERVER['HTTP_HOST'].$request->url();
 
         //获取当前链接的menu表主键id
-        $res = Db::name('menu')
+        $res = Db::table('menu')
             ->whereLike('url', '%'.$http_url)
             ->whereOr('', 'exp', "url='$controller' AND LOCATE(params,'".http_build_query($request->get())."') > 0")
             ->field('id,id as id_display,pid,pid as pid_display,display,is_extend')
             ->find();
         /*若当前链接菜单为隐藏，则继续查找，页面左侧菜单定位在父级菜单*/
         if ($res['display'] == 2) {
-            $res_display = Db::name('menu')
+            $res_display = Db::table('menu')
                 ->where('id', $res['pid'])
                 ->field('id as id_display,pid as pid_display')
                 ->find();
