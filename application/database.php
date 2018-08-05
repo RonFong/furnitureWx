@@ -51,5 +51,5 @@ return [
     // 是否需要进行SQL性能分析
     'sql_explain'     => false,
     //扩展Query类
-//    'query'           => ''
+    'query'           => 'app\common\db\Query'
 ];
