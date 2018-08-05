@@ -1,8 +1,84 @@
 {extend name="common/index"}
 {block name="content"}
-{include file="common/soon"}
+<div class="layui-row">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="">
+        <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
+        <div class="layui-field-box">
+            <div class="layui-main">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>帐号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="user_name" value="{$data.user_name|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phone" value="{$data.phone|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户类型：</label>
+                    <div class="layui-input-block">
+                        <select name="type">
+                            <option value="">请选择</option>
+                            <option value="1" {eq name="data.type|default=''" value="1"}selected{/eq}>厂家用户</option>
+                            <option value="2" {eq name="data.type|default=''" value="2"}selected{/eq}>商家用户</option>
+                            <option value="3" {eq name="data.type|default=''" value="3"}selected{/eq}>普通用户</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">厂/商家名称：</label>
+                    <div class="layui-input-block">
+                        <select name="group_id">
+                            <option value="">请选择</option>
+                            {volist name="groupList" id="vo"}
+                            <option value="{$vo.id}" {eq name="data.group_id|default=''" value="$vo.id"}selected{/eq}>{$vo.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status" value="1" title="正常" {eq name="$data.status|default=1" value="1"}checked{/eq}>
+                        <input type="radio" name="status" value="0" title="冻结" {eq name="$data.status|default=1" value="0"}checked{/eq}>
+                    </div>
+                </div>
+            </div>
+            <div class="tpl-form-action">
+                <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 {/block}
 
 {block name="script"}
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formSubmit)', function(data){
+            var index = layer.load(2, {shade:[0.5,'#000'],time: 10*1000});
+            $.post('{:url("save")}', $('#editForm').serialize(), function (result) {
+                layer.close(index);
+                if (result.code) {
+                    layer.msg(result.msg, {shade:[0.5,'#000'],time:1000}, function () {
+                        window.location.href = result.url;
+                    });
+                } else {
+                    layer.alert(result.msg, {icon:2, title:'保存失败！'});
+                }
+            }, 'json');
+            return false;
+        });
+    });
+
+
+</script>
 
 {/block}

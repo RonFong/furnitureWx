@@ -12,50 +12,29 @@ namespace app\common\db;
 use think\db\Query as CoreQuery;
 class Query extends CoreQuery
 {
-    public function dataTable($append=[],$hidden=[],$visible=[])
+    public function layTable($append = [], $hidden = [], $visible = [])
     {
-        $tmpOption = $this->options;
-        //得到总记录数
-        $filteredCount = $Total = $this->count();
-        $this->options = $tmpOption;
+        $options =$this->getOptions();//获取当前的查询参数
 
         $request = \think\Request::instance();
-        //得到标记
-        $draw = $request->param('draw');
-        $page = $request->param('start');
-        $rows = $request->param('length');
-        //排序
-        $order_column = $request->param('order');
+        $param = $request->param();//获取前端传过来的参数
 
-        if (empty($order_column)) {
-            $order = array_key_exists('order', $this->options) ? $this->options['order'] : '';
+        $count = $this->count();//得到记录数量
+
+        /*查找数据*/
+        if (!empty($param['limit'])) {
+            $param['limit'] = $param['limit'] < 200 ? $param['limit'] : 200;
+            $list = $this->options($options)->page($param['page'], $param['limit'])->select();
         } else {
-            if (array_key_exists('order', $this->options)) {
-                $order = $order_column . ',' . implode(',',$this->options['order']);
-            } else {
-                $order = $order_column;
-            }
+            $list = $this->options($options)->select();
         }
 
-        if ($rows > 0) {
-            $list = $this->order($order)->limit($page, $rows)->select();
-        } else {
-            $list = $this->order($order)->select();
-        }
-
-        if (empty($list)) {
-            $list = [];
-        }
-        else
-        {
+        /*追加字段，隐藏字段，显示字段*/
+        if (!empty($list)) {
             $list = collection($list)->append($append)->hidden($hidden)->visible($visible)->toArray();
         }
-        return [
-            "draw" => intval($draw),
-            'data' => $list,
-            'recordsTotal' => $Total,
-            'recordsFiltered' => $filteredCount
-        ];
+
+        return ['code' => 0, 'msg'=>"", 'count' => $count, 'data' => $list];
     }
 
     public function select2()

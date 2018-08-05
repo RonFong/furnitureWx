@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/2/21 
+// | CreateTime: 2018/2/21
 // +----------------------------------------------------------------------
 
 namespace app\common\model;
@@ -199,5 +199,14 @@ abstract class Model extends CoreModel
                 return $view_save_path.'/'.$info->getSaveName();
             }
         }
+    }
+
+    /**
+     * 获取当前实例化后的模型对应的表名
+     * @return bool|string
+     */
+    public function getTableName()
+    {
+        return $this->name;
     }
 }
