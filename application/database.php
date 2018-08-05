@@ -17,11 +17,11 @@ return [
     // 数据库名
     'database'        => 'furniture',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'user',
     // 密码
-    'password'        => '123456',
+    'password'        => 'lucky2018',
     // 端口
-    'hostport'        => '3306',
+    'hostport'        => '',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
@@ -51,5 +51,5 @@ return [
     // 是否需要进行SQL性能分析
     'sql_explain'     => false,
     //扩展Query类
-    'query'           => 'app\common\db\Query'
+//    'query'           => ''
 ];

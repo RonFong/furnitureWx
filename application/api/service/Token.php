@@ -49,7 +49,9 @@ class Token
      */
     private static function getUserInfo()
     {
+
         $userInfo = User::get(['wx_openid' => self::$openid]);
+
         if (!$userInfo) {
             $saveData = [
                 'wx_openid' => self::$openid,
