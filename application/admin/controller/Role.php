@@ -56,7 +56,7 @@ class Role extends Base
         $param = $this->request->param();
 
         if (!empty($param['id'])) {
-            $data = $this->currentModel->where('id', $param['id'])->field('id,role_name,describe,menu_list')->find();
+            $data = $this->currentModel->where('id', $param['id'])->field('id,role_name,menu_list')->find();
             if (empty($data)) {
                 $this->error('信息不存在');
             }
@@ -69,18 +69,18 @@ class Role extends Base
 
     /**
      * 获取菜单列表数据
-     * @param $role_id
+     * @param $id
      * @return array
      */
-    public function getMenuList($role_id)
+    public function getMenuList($id)
     {
-        $list = Db::name('menu')->field('menu_id,pid,menu_name,sort_num,url,description')->order('sort_num asc')->select();
-        $auth = Db::name('user_role')->where('id', $role_id)->value('menu_list');
+        $list = Db::name('menu')->field('id,pid,menu_name,sort_num,url,description')->order('sort_num asc')->select();
+        $auth = Db::name('role')->where('id', $id)->value('menu_list');
         $auth_arr = explode(',', $auth);
-        $list = \Tree::get_Table_tree($list, 'menu_name', 'menu_id');
+        $list = \Tree::get_Table_tree($list, 'menu_name', 'id');
         foreach ($list as $k=>$v) {
-            $list[$k]['pid_text'] = !empty($v['pid']) ? Db::name('menu')->where('menu_id', $v['pid'])->value('menu_name') : '顶级';
-            $list[$k]['LAY_CHECKED'] = in_array($v['menu_id'], $auth_arr) || $v['menu_id'] == 1 ? true : false;
+            $list[$k]['pid_text'] = !empty($v['pid']) ? Db::name('menu')->where('id', $v['pid'])->value('menu_name') : '顶级';
+            $list[$k]['LAY_CHECKED'] = in_array($v['id'], $auth_arr) || $v['id'] == 1 ? true : false;
             unset($list[$k]['child']);
         }
         return ['code'=>0, 'msg'=>'获取成功', 'count'=>0, 'data'=>$list];
@@ -93,7 +93,7 @@ class Role extends Base
     {
         $param = $this->request->param();//获取请求数据
         //验证数据
-        $result = $this->validate($param, 'UserRole');
+        $result = $this->validate($param, 'Role');
         if ($result !== true) {
             $this->error($result);
         }
@@ -118,7 +118,7 @@ class Role extends Base
         }
 
         //验证数据
-        $result = $this->validate($param, 'UserRole.updateField');
+        $result = $this->validate($param, 'Role.updateField');
         if ($result !== true) {
             $this->error($result);
         }

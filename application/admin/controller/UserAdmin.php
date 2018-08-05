@@ -9,16 +9,15 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\User as CoreUser;
-use think\Db;
+use app\admin\model\UserAdmin as CoreUserAdmin;
 use think\Request;
 
-class User extends Base
+class UserAdmin extends Base
 {
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new CoreUser();//实例化当前模型
+        $this->currentModel = new CoreUserAdmin();//实例化当前模型
     }
 
     /**
@@ -37,26 +36,22 @@ class User extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable(['type_text', 'gender_text', 'state_text']);
+        return $this->currentModel->where($map)->order('id desc')->layTable(['role_id_text', 'type_text']);
     }
 
     private function getDataListMap()
     {
         $param = $this->request->param();
-        if (!empty($param['user_name'])) {
-            $map['user_name'] = ['like', '%' . $param['user_name'] . '%'];//帐号
+        if (!empty($param['real_name'])) {
+            $map['account'] = ['like', '%' . $param['account'] . '%'];//真实姓名
         }
-        if (!empty($param['phone'])) {
-            $map['phone'] = ['like', '%' . $param['phone'] . '%'];//帐号
-        }
-        if (!empty($param['type'])) {
-            $map['type'] = ['like', '%' . $param['type'] . '%'];//类型
-        }
+
         if (empty($map)) {
             $map[] = ['exp', '1=1'];
         }
         return $map;
     }
+
 
     /**
      * 编辑
@@ -75,9 +70,8 @@ class User extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
         }
-        $type = !empty($data['type']) ? $data['type'] : 0;
-        $groupList = $this->currentModel->getGroupList($type);
-        $this->assign('groupList', $groupList);
+        $roleList = $this->currentModel->getRoleList();
+        $this->assign('roleList', $roleList);
 
         return $this->fetch();
     }
@@ -91,7 +85,7 @@ class User extends Base
         }
 
         //验证数据
-        $result = $this->validate($param, 'User');
+        $result = $this->validate($param, 'UserAdmin');
         if ($result !== true) {
             $this->error($result);
         }

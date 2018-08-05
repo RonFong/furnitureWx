@@ -12,14 +12,6 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-xs12 layui-col-sm7">
-            <div class="layui-form-item">
-                <label class="layui-form-label">用途描述：</label>
-                <div class="layui-input-block">
-                    <input type="text" name="describe" value="{$data.describe|default=''}" placeholder="请输入" class="layui-input">
-                </div>
-            </div>
-        </div>
         <div class="layui-row">
             <div class="layui-col-xs12">
                 <table id="roleTable"  lay-filter="roleTable"></table>
@@ -50,7 +42,6 @@
                 , {field: 'pid_text', title: '上级菜单', width: 100}
                 , {field: 'menu_name', title: '菜单名称', minWidth: 150}
                 , {field: 'url', title: '链接地址', minWidth: 250}
-                , {field: 'description', title: '简介', minWidth: 80}
                 , {type: 'checkbox', width: 100}
             ]]
             , done: function (res, curr, count) {
@@ -62,10 +53,10 @@
         table.on('checkbox(roleTable)', function(obj){
             var checkState = obj.checked;
             var pid = obj.data.pid;
-            $.post('{:url("Menu/getNextIds")}', {id:obj.data.menu_id}, function (result) {
+            $.post('{:url("Menu/getNextIds")}', {id:obj.data.id}, function (result) {
                 $.each(table_data, function (key,val) {
                     //更改当前菜单的上一级和下一级的选中状态
-                    if ((pid == val.menu_id && checkState) || $.inArray(val.menu_id,result) != '-1') {
+                    if ((pid == val.id && checkState) || $.inArray(val.id,result) != '-1') {
                         table_data[key]["LAY_CHECKED"] = checkState;//与当前操作状态保持一致
                         var index= val.LAY_TABLE_INDEX;
                         $(".layui-table-body").find('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', checkState);
@@ -87,7 +78,7 @@
             var id_list = [];
             if (checkList.data.length>0) {
                 $.each(checkList.data, function (key, val) {
-                    id_list[key] = val.menu_id;
+                    id_list[key] = val.id;
                 });
             }
             id_list = id_list.join(',');
