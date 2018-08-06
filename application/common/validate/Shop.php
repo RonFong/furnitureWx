@@ -6,13 +6,12 @@ class Shop extends BaseValidate
 {
     protected $rule = [
         'id'                => 'require',                   // 用户ID
-        'admin_user'        => 'require|number',            // 管理员id
         'shop_name'         => 'require|checkShopWx',                   // 门店名称
         'shop_contact'      => 'require',                   // 门店联系人
         'shop_phone'        => 'require|isPhoneNo',         // 门店电话
-        'province'          => 'require|number',            // 省
-        'city'              => 'require|number',            // 市
-        'district'          => 'require|number',            // 区
+        'province'          => 'require',            // 省
+        'city'              => 'require',            // 市
+        'district'          => 'require',            // 区
         'town'              => 'require',                   // 乡镇街道
         'address'           => 'require|chsDash',           // 详细地址
         'shop_img'          => 'require',                   // 门头照片
@@ -21,7 +20,6 @@ class Shop extends BaseValidate
     ];
 
     protected $message = [
-        'id.require'            => '请先授权',
         'admin_user.require'    => '请先授权',
         'admin_user.number'     => '请先授权',
         'shop_name.require'     => '请填写门店名称',

@@ -9,6 +9,7 @@
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+use think\Db;
 // 应用公共文件
 
 /**
@@ -286,3 +287,73 @@ if (!function_exists('get_thumb_img'))
     }
 }
 
+
+if (!function_exists('has_field')) {
+    /**
+     * 判断数据表是否存在该字段
+     * @param $table_name
+     * @param $field
+     * @return bool
+     */
+    function has_field($table_name, $field)
+    {
+        $field_list = Db::table($table_name)->getTableFields();
+        return in_array($field, $field_list);
+    }
+}
+
+if (!function_exists('reset_sort')) {
+    /**
+     * 重新排序
+     * @param $id
+     * @param $table_name
+     * @param string $type
+     * @param string $field_sort
+     * @return array|false|PDOStatement|string|\think\Collection
+     */
+    function reset_sort($id, $table_name, $type = 'asc', $field_sort = 'sort_num')
+    {
+        $pk = Db::name($table_name)->getPk();//获取当前表主键字段名
+        //判断是否存在'pid'，若存在，则只取同级别数据
+        if (has_field($table_name, 'pid')) {
+            $map['pid'] = Db::table($table_name)->where($pk, $id)->value('pid');
+        } elseif (has_field($table_name, 'cat_id')) {
+            $map['cat_id'] = Db::table($table_name)->where($pk, $id)->value('cat_id');
+        } elseif (has_field($table_name, 'language')) {
+            $map['language'] = session('config.language');
+        } else {
+            $map[] = ['exp', '1=1'];
+        }
+        $data = Db::table($table_name)->where($map)->field($pk . ',' . $field_sort)->order($field_sort . ' asc,' . $pk . ' desc')->select();
+
+        //将序号重新按1开始排序
+        foreach ($data as $key => $val) {
+            $data[$key][$field_sort] = $key + 1;
+        }
+        //处理更改排序操作
+        foreach ($data as $key => $val) {
+            if ($type == 'asc') {
+                if (($key == '0') && $val[$pk] == $id) {
+                    break;//首位菜单 点升序，直接中断
+                }
+                //升序操作：当前菜单序号减一，前一位的序号加一
+                if ($val[$pk] == $id) {
+                    $data[$key - 1][$field_sort]++;
+                    $data[$key][$field_sort]--;
+                    break;
+                }
+            } elseif ($type == 'desc') {
+                if (($key == count($data)) && $val[$pk] == $id) {
+                    break;//末位菜单 点降序，直接中断
+                }
+                //降序操作：当前菜单序号加一，后一位的序号减一
+                if ($val[$pk] == $id && isset($data[$key + 1])) {
+                    $data[$key][$field_sort]++;
+                    $data[$key + 1][$field_sort]--;
+                    break;
+                }
+            }
+        }
+        return !empty($data) ? $data : [];
+    }
+}
