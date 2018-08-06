@@ -126,4 +126,14 @@ class Factory extends BaseController
         return json($result);
     }
 
+    public function getFactoryInfo()
+    {
+
+        $factoryInfoData = [
+            'userId' => user_info('id'),
+        ];
+        $result                = $this->currentModel->factoryInfo($factoryInfoData);
+
+        return json($result);
+    }
 }

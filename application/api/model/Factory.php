@@ -60,5 +60,20 @@ class Factory extends CoreFactory
 
     }
 
+    public function factoryInfo($data)
+    {
+        $field  = [
+            '*',
+        ];
+        $where = [
+            'admin_user' => $data['userId']
+        ];
+        $result = $this->field($field)
+            ->where($where)
+            ->find();
+
+        return $result;
+    }
+
 
 }

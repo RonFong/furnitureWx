@@ -133,5 +133,7 @@ Route::group('api/:version',function() {
         Route::get('factoryProduct', 'api/:version.Factory/getFactoryProduct');
         //获取工厂产品详情
         Route::get('factoryProductDetail/:product_id', 'api/:version.Factory/factoryProductDetail');
+        //获取工厂详情
+        Route::get('getFactoryInfo', 'api/:version.Factory/getFactoryInfo');
     });
 });
