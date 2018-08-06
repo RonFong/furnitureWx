@@ -12,5 +12,6 @@ return [
     'view_replace_str' => [
         '__STATIC__'    => '/static',
     ],
-
+    // URL普通方式参数 用于自动生成
+    'url_common_param'       => true,
 ];

@@ -2,9 +2,37 @@
 namespace app\api\model;
 
 use app\common\model\Factory as CoreFactory;
+use think\Db;
 
 class Factory extends CoreFactory
 {
+
+    public function saveData($data)
+    {
+        $data['admin_user'] = user_info('id');
+        // 审核暂不审核
+        $data['audit_state'] = 1;
+//        // 会员分享试用期
+//        $data['probation'] = 30;
+//        $data['vip_grade'] = 0;
+        $this->data($data);
+        $registerRes = $this->save();
+        if($registerRes){
+            Db::name('user')
+                ->where('id',$data['admin_user'])
+                ->update([
+                    'type' => 1,
+                    'group_id' => $this->id,
+                    'wx_account' => $data['factory_wx']
+                ]);
+        }
+        $result = [
+            'store_type'    => 1,
+            'id'            => $this->id,
+//            'probation'     => $data['probation']
+        ];
+        return $result;
+    }
 
     public function getFactoryList($data)
     {

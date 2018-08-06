@@ -1,0 +1,179 @@
+{extend name="common/index"}
+{block name="content"}
+<div class="layui-row">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="">
+        <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
+        <div class="layui-field-box">
+            <div class="layui-main">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="factory_name" value="{$data.factory_name|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商户联系人：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="factory_contact" value="{$data.factory_contact|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商户手机号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="factory_phone" value="{$data.factory_phone|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">经营类别：</label>
+                    <div class="layui-input-block">
+                        <select name="">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">法人姓名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="user_name" value="{$data.user_name|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">法人手机号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phone" value="{$data.phone|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所在省市区：</label>
+                        <div class="layui-input-block">
+                            <select name="province" id="province" lay-filter="region">
+                                <option value="">请选择省</option>
+                                {notempty name="provinceList"}
+                                {volist name="provinceList" id="vo"}
+                                <option value="{$vo.id}" {eq name="vo.id" value="$data.province|default='0'"}selected{/eq}>{$vo.name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md3 layui-col-lg3">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: auto;"></label>
+                        <div class="layui-input-block" style="margin-left: 10px;">
+                            <select name="city" id="city" lay-filter="region">
+                                <option value="">请选择市</option>
+                                {notempty name="cityList"}
+                                {volist name="cityList" id="vo"}
+                                <option value="{$vo.id}" {eq name="vo.id" value="$data.city|default='0'"}selected{/eq}>{$vo.name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md5 layui-col-lg5">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: auto;"></label>
+                        <div class="layui-input-block" style="margin-left: 10px;">
+                            <select name="district" id="district">
+                                <option value="">请选择区/县</option>
+                                {notempty name="districtList"}
+                                {volist name="districtList" id="vo"}
+                                <option value="{$vo.id}" {eq name="vo.id" value="$data.district|default='0'"}selected{/eq}>{$vo.name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详细地址：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address" value="{$data.address|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">审核状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="audit_state" value="0" title="未审核" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default=''" value="1"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">审核结果说明：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="audit_remark" value="{$data.audit_remark|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="tpl-form-action">
+                <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var form = layui.form;
+
+        //监听省市区三级联动
+        form.on('select(region)', function (data) {
+            var id = data.value;
+            var position_now = $(data.elem).attr('id');
+            var position_next = '';
+            var position_change = '';
+
+            if (position_now == 'province') {
+                position_next = '#city';
+                position_change = '#district';
+            } else if (position_now == 'city'){
+                position_next = '#district';
+                position_change = '';
+            }
+
+            ajaxRegion(id, position_next, position_change);
+        });
+
+        /**
+         * 省市区变更
+         */
+        function ajaxRegion(id, position, position_change) {
+            $.post('{:url("getRegion")}', {pid:id}, function (result) {
+                var _html = "<option value=''>请选择</option>";
+                $.each(result, function (key, val) {
+                    _html += "<option value='"+val.id+"'>"+val.name+"</option>";
+                });
+                $(position).html(_html);
+                $(position_change).html("<option value=''>请选择</option>");
+                form.render('select');
+            });
+        }
+
+        //监听提交
+        form.on('submit(formSubmit)', function(data){
+            var index = layer.load(2, {shade:[0.5,'#000'],time: 10*1000});
+            $.post('{:url("save")}', $('#editForm').serialize(), function (result) {
+                layer.close(index);
+                if (result.code) {
+                    layer.msg(result.msg, {shade:[0.5,'#000'],time:1000}, function () {
+                        window.location.href = result.url;
+                    });
+                } else {
+                    layer.alert(result.msg, {icon:2, title:'保存失败！'});
+                }
+            }, 'json');
+            return false;
+        });
+    });
+
+
+</script>
+
+{/block}

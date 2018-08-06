@@ -108,7 +108,7 @@ Route::group('api/:version',function() {
     });
 
     Route::group('category',function (){
-        Route::get('business_list','api/:version.Category/getBusinessCategoryList');
+        Route::get('storeList','api/:version.StoreClassify/getStoreClassifyList');
     });
 
     //关注、收藏、点赞
@@ -127,6 +127,7 @@ Route::group('api/:version',function() {
 
     //工厂
     Route::group('factory', function () {
+        Route::post('register','api/:version.Factory/register');
         //获取所有工厂
         Route::get('factoryList', 'api/:version.Factory/getFactoryList');
         //获取工厂产品
