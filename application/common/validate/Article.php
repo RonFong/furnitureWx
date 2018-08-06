@@ -21,6 +21,7 @@ class Article extends BaseValidate
         'page'              => 'checkPageAndRow',
         'user_id'           => 'require|number|egt:1',
         'article_id'        => 'require|number|egt:1',
+        'order'             => 'require',
     ];
 
     protected $message = [
@@ -42,7 +43,8 @@ class Article extends BaseValidate
             'id'
         ],
         'localArticleList' => [
-            'page'
+            'page',
+            'order'
         ],
         'details'       => [
             'id'
