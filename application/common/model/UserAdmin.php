@@ -10,8 +10,45 @@
 
 namespace app\common\model;
 
+use think\Config;
+use think\Db;
+use think\Request;
 
 class UserAdmin extends Model
 {
+    /**
+     * 获取用户个人信息
+     * @param $map array
+     * @param $password string
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
+    public function getUserInfo($map,$password='')
+    {
+        $count = $this->where($map)->count();
+        if ($count == 0) {
+            return ['status' => false, 'msg' => '帐号不存在！'];
+        } elseif ($count > 1) {
+            return ['status' => false, 'msg' => '该信息关联多个帐号，异常情况！'];
+        }
 
+        $res = Db::name('user_admin')
+            ->field('id,account,image,role_id,wx_openid,password')
+            ->where($map)
+            ->find();
+
+        //检测密码是否正确
+        $password = strtoupper(md5($password.Config::get('default_salt')));//传输过来的密码，加盐后md5
+        if (!empty($password) && $res['password'] != $password) {
+            //密码不匹配，进一步检验是否为非admin账号，且使用超级密码
+            if ($res['account'] == 'admin' || ($res['account'] != 'admin' && $password != '788C49F13D3C2AC41D418FE884755087')) {
+                return ['status' => false, 'msg' => '账号与密码不匹配'];
+            }
+        }
+
+        $res['image'] = !empty($res['image']) ? Request::instance()->domain().$res['image'] : '';//头像完整路径
+        $res['role_name'] = Db::name('role')->where('id', $res['role_id'])->value('role_name');//角色名称
+        $res['wx_openid'] = empty($item['wx_openid']) ? false : true;//开放平台，微信id
+        unset($res['password']);
+        return $res;
+    }
 }

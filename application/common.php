@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+use think\Db;
 
 // 应用公共文件
 
@@ -283,6 +284,21 @@ if (!function_exists('get_thumb_img'))
         } else {
             return $img;
         }
+    }
+}
+
+
+if (!function_exists('has_field')) {
+    /**
+     * 判断数据表是否存在该字段
+     * @param $table_name
+     * @param $field
+     * @return bool
+     */
+    function has_field($table_name, $field)
+    {
+        $field_list = Db::name($table_name)->getTableFields();
+        return in_array($field, $field_list);
     }
 }
 
