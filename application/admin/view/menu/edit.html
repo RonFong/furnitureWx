@@ -1,19 +1,16 @@
 {extend name="common/index"}
-{block name="css"}
-{/block}
-
 {block name="content"}
 <div class="layui-row">
-    <form id="editForm" class="layui-form" action="">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="">
         <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">上级菜单</label>
+                    <label class="layui-form-label">上级分类</label>
                     <div class="layui-input-block">
                         <select name="pid">
                             <option value="">请选择</option>
-                            {$menuListOption}
+                            {$menuListOption|default=''}
                         </select>
                     </div>
                 </div>
@@ -64,6 +61,15 @@
                         <input type="radio" name="open_type" value="2" title="新窗口" {eq name="$data.open_type|default=1" value="2"}checked{/eq}>
                     </div>
                 </div>
+                {eq name="'user_info.id'|session" value="1"}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">仅admin可见：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="only_admin" value="1" title="是" {eq name="$data.only_admin|default=0" value="1"}checked{/eq}>
+                        <input type="radio" name="only_admin" value="0" title="否" {eq name="$data.only_admin|default=0" value="0"}checked{/eq}>
+                    </div>
+                </div>
+                {/eq}
                 <div class="layui-form-item">
                     <label class="layui-form-label">用途简介：</label>
                     <div class="layui-input-block">
@@ -77,6 +83,7 @@
         </div>
     </form>
 </div>
+
 {/block}
 
 {block name="script"}
@@ -101,5 +108,7 @@
         });
     });
 
+
 </script>
+
 {/block}

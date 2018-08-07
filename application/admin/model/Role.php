@@ -9,32 +9,11 @@
 
 namespace app\admin\model;
 
-use app\common\model\Model;
+use app\common\model\Role as CoreRole;
 
-class Role extends Model
+class Role extends CoreRole
 {
-    /**
-     * 保存字段“权限明细”
-     * @param $value
-     * @return mixed
-     */
-    protected function setAuthAttr($value){
-        if(is_array($value)){
-            $value = implode(',',$value);
-        }
-        return $value;
-    }
 
-    /**
-     * 获取角色权限列表
-     * @param $map
-     * @return false|\PDOStatement|string|\think\Collection
-     */
-    public function getRoleList($map = [])
-    {
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
-        }
-        return $this->where($map)->field('id,role_name,describe')->order('sort_num')->select();
-    }
+
+
 }

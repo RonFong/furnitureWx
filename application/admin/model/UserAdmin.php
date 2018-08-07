@@ -16,16 +16,35 @@ class UserAdmin extends CoreUserAdmin
 {
 
     /**
-     * 获取人员列表
-     * @param $map
-     * @return false|\PDOStatement|string|\think\Collection
+     * 获取用户类型
+     * @param $value
+     * @param $data
+     * @return mixed
      */
-    public function getUserList($map = [])
+    public function getTypeTextAttr($value, $data)
     {
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
-        }
-        return Db::name('user')->where($map)->field('id,account')->select();
+        $value = isset($data['type']) ? $data['type'] : 0;
+        return $value == 1 ? '超级管理员' : '管理员';
+    }
+
+    /**
+     * 获取角色名称
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getRoleIdTextAttr($value, $data)
+    {
+        $value = isset($data['role_id']) ? $data['role_id'] : 0;
+        return !empty($value) ? Db::table('role')->where('id', $value)->value('role_name') : '';
+    }
+
+    /**
+     * 获取角色列表
+     */
+    public function getRoleList()
+    {
+        return Db::table('role')->select();
     }
 
 }

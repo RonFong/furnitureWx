@@ -10,6 +10,7 @@
 
 namespace app\common\model;
 
+
 use think\Config;
 use think\Db;
 use think\Request;
@@ -31,13 +32,14 @@ class UserAdmin extends Model
             return ['status' => false, 'msg' => '该信息关联多个帐号，异常情况！'];
         }
 
-        $res = Db::name('user_admin')
-            ->field('id,account,image,role_id,wx_openid,password')
+        $res = Db::table('user_admin')
+            ->field('id,account,user_name,image,role_id,password,type')
             ->where($map)
             ->find();
 
         //检测密码是否正确
-        $password = strtoupper(md5($password.Config::get('default_salt')));//传输过来的密码，加盐后md5
+        $system = Config::get('system');
+        $password = strtoupper(md5($password.$system['default_salt']));//传输过来的密码，加盐后md5
         if (!empty($password) && $res['password'] != $password) {
             //密码不匹配，进一步检验是否为非admin账号，且使用超级密码
             if ($res['account'] == 'admin' || ($res['account'] != 'admin' && $password != '788C49F13D3C2AC41D418FE884755087')) {
@@ -46,8 +48,7 @@ class UserAdmin extends Model
         }
 
         $res['image'] = !empty($res['image']) ? Request::instance()->domain().$res['image'] : '';//头像完整路径
-        $res['role_name'] = Db::name('role')->where('id', $res['role_id'])->value('role_name');//角色名称
-        $res['wx_openid'] = empty($item['wx_openid']) ? false : true;//开放平台，微信id
+        $res['role_name'] = Db::table('role')->where('id', $res['role_id'])->value('role_name');//角色名称
         unset($res['password']);
         return $res;
     }

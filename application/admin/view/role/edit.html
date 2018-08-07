@@ -12,14 +12,6 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-xs12 layui-col-sm7">
-            <div class="layui-form-item">
-                <label class="layui-form-label">用途描述：</label>
-                <div class="layui-input-block">
-                    <input type="text" name="describe" value="{$data.describe|default=''}" placeholder="请输入" class="layui-input">
-                </div>
-            </div>
-        </div>
         <div class="layui-row">
             <div class="layui-col-xs12">
                 <table id="roleTable"  lay-filter="roleTable"></table>
@@ -50,7 +42,6 @@
                 , {field: 'pid_text', title: '上级菜单', width: 100}
                 , {field: 'menu_name', title: '菜单名称', minWidth: 150}
                 , {field: 'url', title: '链接地址', minWidth: 250}
-                , {field: 'description', title: '简介', minWidth: 80}
                 , {type: 'checkbox', width: 100}
             ]]
             , done: function (res, curr, count) {

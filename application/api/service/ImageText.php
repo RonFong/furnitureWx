@@ -144,7 +144,7 @@ class ImageText
      */
     private static function initContentModel()
     {
-        return clone self::$contentModel;
+//        return clone self::$contentModel;
     }
 
 }

@@ -9,18 +9,18 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\Menu as CoreMenu;
+use think\Request;
+
 class Index extends Base
 {
-    public function index()
+    public function __construct(Request $request = null)
     {
-
-        return $this->fetch();
+        parent::__construct($request);
+        $this->currentModel = new CoreMenu();//实例化当前模型
     }
 
-    public function edit()
-    {
-        return $this->fetch();
-    }
+
 
 }
 

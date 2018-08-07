@@ -1,24 +1,24 @@
 <?php
 // +----------------------------------------------------------------------
-// | Copyright (c) 2018-2018 http://www.donglixia.net All rights reserved.
+// | Copyright (c) 2018-{2018} http://www.donglixia.net All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: 十万马 <962863675@qq.com>
 // +----------------------------------------------------------------------
-// | DateTime: 2018-02-09 16:17
+// | DateTime: 2018/8/4 15:22
 // +----------------------------------------------------------------------
 
 namespace app\admin\controller;
 
 use app\admin\model\UserAdmin;
-use think\Controller;
-use app\admin\model\User;
 use think\Cache;
+use think\Controller;
 use think\Cookie;
 use think\Db;
 use think\Session;
 
 class Login extends Controller
 {
+
     /**
      * 登录页面
      * @return mixed
@@ -33,6 +33,7 @@ class Login extends Controller
         return $this->fetch();
     }
 
+
     /**
      * 登录处理
      */
@@ -42,11 +43,6 @@ class Login extends Controller
         if (empty($param['keyword']) || empty($param['password'])) {
             $this->error('用户名 或 密码不能为空！');
         }
-
-        //验证码校验
-//        if( cookie('error_num') > 2 && (empty($param['vercode']) || !captcha_check($param['vercode']))){
-//            $this->error('验证码错误');
-//        }
 
         //记住密码
         if(isset($param['remember']) && $param['remember'] == 1){
@@ -103,33 +99,6 @@ class Login extends Controller
         }
     }
 
-
-    /**
-     * 忘记密码，找回密码页面
-     * @return mixed
-     */
-    public function forget()
-    {
-        return $this->fetch();
-    }
-
-    /**
-     * 重置密码页面
-     * @return mixed
-     */
-    public function passwordReset()
-    {
-        return $this->fetch();
-    }
-
-    /**
-     * 保存密码
-     */
-    public function passwordSave()
-    {
-        $this->success('操作成功！');
-    }
-
     /**
      * 退出登录
      */
@@ -150,9 +119,9 @@ class Login extends Controller
             $data = collection($data)->toArray();
         }
         Session::set('user_info', $data);
-
         cookie('error_num', 0);//错误次数归0
     }
+
 
     /**
      * 清除缓存

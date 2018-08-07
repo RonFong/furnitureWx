@@ -8,12 +8,40 @@
 // +----------------------------------------------------------------------
 
 namespace app\admin\model;
-use app\common\model\Model;
+
+use app\common\model\Menu as CoreMenu;
 use think\Db;
 use think\Request;
 
-class Menu extends Model
+class Menu extends CoreMenu
 {
+
+    /**
+     * 获取完整链接地址
+     * @param $value
+     * @param $data
+     * @return string
+     */
+    protected function getUrlTextAttr($value, $data)
+    {
+        $res = $value;
+        if (empty($value)) {
+            $res = '#';
+        } elseif (($value != '#') && (strpos($value, 'http') === false)) {
+            $res = url($value, $data['params']);
+        }
+        return $res;
+    }
+
+    /**
+     * 获取“pid” 对应的中文名称
+     * @param $value
+     * @return mixed
+     */
+    protected function getPidTextAttr($value)
+    {
+        return !empty($value) ? Db::table('menu')->where('id', $value)->value('menu_name') : '顶级';
+    }
     /**
      * 获取“显示”字段，中文名称
      * @param $value
@@ -45,39 +73,31 @@ class Menu extends Model
     }
 
     /**
-     * 获取完整链接地址
-     * @param $value
-     * @param $data
-     * @return string
+     * 获取当前链接菜单信息
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws \think\exception\DbException
      */
-    protected function getUrlTextAttr($value, $data)
+    public function getMenuCurrent()
     {
-        $res = $value;
-        if (empty($value)) {
-            $res = '#';
-        } elseif (($value != '#') && (strpos($value, 'http') === false)) {
-            $res = url($value, $data['params']);
-        }
-        return $res;
-    }
+        //获取模块名，控制器名，方法名
+        $request = Request::instance();
+        $controller = $request->module(). '/' .$request->controller(). '/' .$request->action();
+        //获取完整链接
+        $http_url = $_SERVER['HTTP_HOST'].$request->url();
 
-
-    /**
-     * 获取“pid” 对应的中文名称
-     * @param $value
-     * @return mixed
-     */
-    protected function getPidTextAttr($value)
-    {
-        return !empty($value) ? Db::name('menu')->where('id', $value)->value('menu_name') : '顶级';
-    }
-
-    protected function setSortNumAttr($value, $data)
-    {
-        $res = $value;
-        if (empty($value) && !empty($data['pid'])) {
-            $count = Db::name('menu')->where('pid', $data['pid'])->count();
-            $res = $count+1;
+        //获取当前链接的menu表主键id
+        $res = Db::table('menu')
+            ->whereLike('url', '%'.$http_url)
+            ->whereOr('', 'exp', "url='$controller' AND LOCATE(params,'".http_build_query($request->get())."') > 0")
+            ->field('id,id as id_display,pid,pid as pid_display,display,is_extend')
+            ->find();
+        /*若当前链接菜单为隐藏，则继续查找，页面左侧菜单定位在父级菜单*/
+        if ($res['display'] == 2) {
+            $res_display = Db::table('menu')
+                ->where('id', $res['pid'])
+                ->field('id as id_display,pid as pid_display')
+                ->find();
+            $res = array_merge($res, $res_display);
         }
         return $res;
     }
@@ -105,12 +125,12 @@ class Menu extends Model
      * @return array|false|\PDOStatement|string|\think\Collection
      * @throws \think\exception\DbException
      */
-    public function getMenuListTree()
+    public function getMenuList()
     {
         $map = [];
         $map['display'] = 1;
         if (user_info('id') != 1) {
-            $auth = model('Role')->whereIn('id', user_info('id'))->column('menu_list');
+            $auth = model('UserRole')->whereIn('role_id', user_info('role_id'))->column('auth');
             $map['id'] = ['in', implode(',', $auth)];
         }
         $menuList = $this->where($map)
@@ -124,54 +144,22 @@ class Menu extends Model
 
     /**
      * 获取当前登录用户的菜单列表
-     * @param $value string 默认选中id
+     * @param $value
      * @return false|\PDOStatement|string|\think\Collection
      */
-    public function getMenuListOption($value)
+    public function getMenuListOption($value = 0)
     {
         $map = [];
         $map['display'] = 1;
         if (user_info('id') != 1) {
-            $auth = model('Role')->whereIn('id', user_info('id'))->column('menu_list');
+            $auth = model('UserRole')->whereIn('role_id', user_info('role_id'))->column('auth');
             $map['id'] = ['in', implode(',', $auth)];
         }
         $menuList = $this->where($map)
             ->field('id,pid,menu_name,url as url_text,params,open_type,is_extend')
             ->order('sort_num asc')
             ->select();
-        $menuList = \Tree::get_option_tree($menuList, $value, 'menu_name');
+        $menuList = \Tree::get_option_tree($menuList, $value, 'menu_name', 'id');
         return $menuList;
     }
-
-    /**
-     * 获取当前链接菜单信息
-     * @return array|false|\PDOStatement|string|\think\Model
-     * @throws \think\exception\DbException
-     */
-    public function getMenuCurrent()
-    {
-        //获取模块名，控制器名，方法名
-        $request = Request::instance();
-        $controller = $request->module(). '/' .$request->controller(). '/' .$request->action();
-        //获取完整链接
-        $http_url = $_SERVER['HTTP_HOST'].$request->url();
-
-        //获取当前链接的menu表主键id
-        $res = Db::name('menu')
-            ->whereLike('url', '%'.$http_url)
-            ->whereOr('', 'exp', "url='$controller' AND LOCATE(params,'".http_build_query($request->get())."') > 0")
-            ->field('id,id as id_display,pid,pid as pid_display,display,is_extend')
-            ->find();
-        /*若当前链接菜单为隐藏，则继续查找，页面左侧菜单定位在父级菜单*/
-        if ($res['display'] == 2) {
-            $res_display = Db::name('menu')
-                ->where('id', $res['pid'])
-                ->field('id as id_display,pid as pid_display')
-                ->find();
-            $res = array_merge($res, $res_display);
-        }
-        return $res;
-    }
-
-
 }

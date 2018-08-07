@@ -26,9 +26,10 @@ class Menu extends Base
      */
     public function index()
     {
+        $menuListOption = $this->currentModel->getMenuListOption();
+        $this->assign('menuListOption', $menuListOption);
         return $this->fetch();
     }
-
     /**
      * 菜单列表页面 获取数据
      * @throws \think\exception\DbException
@@ -82,14 +83,12 @@ class Menu extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
         }
-
-        $pid = !empty($data['pid']) ? $data['pid'] : 0 ;
+        $pid = !empty($data['pid']) ? $data['pid'] : 0;
         $menuListOption = $this->currentModel->getMenuListOption($pid);
         $this->assign('menuListOption', $menuListOption);
 
         return $this->fetch();
     }
-
 
     public function save()
     {
@@ -119,27 +118,7 @@ class Menu extends Base
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
 
-    /**
-     * 根据id，获取下一级菜单列表
-     * @param $id
-     * @return mixed
-     * @throws \think\exception\DbException
-     */
-    public function getChildInfo($id)
-    {
-        return $this->currentModel->where('pid', $id)->field('id,pid,menu_name,url')->select();
-    }
 
-    /**
-     * 根据id，获取下一级菜单id
-     * @param $id
-     * @return mixed
-     * @throws \think\exception\DbException
-     */
-    public function getNextIds($id)
-    {
-        return $this->currentModel->where('pid', $id)->column('id');
-    }
 
 }
 

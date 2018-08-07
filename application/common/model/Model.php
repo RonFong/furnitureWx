@@ -4,11 +4,12 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/2/21 
+// | CreateTime: 2018/2/21
 // +----------------------------------------------------------------------
 
 namespace app\common\model;
 
+use app\common\validate\BaseValidate;
 use think\File;
 use think\Model as CoreModel;
 use think\Request;
@@ -20,6 +21,8 @@ abstract class Model extends CoreModel
     //save方法原始数据
     protected $saveData = [];
     protected $deleteTime = null;
+
+    protected $response;
 
     public function __construct($data = [])
     {
@@ -41,6 +44,7 @@ abstract class Model extends CoreModel
         if (in_array('update_by',$db->getTableInfo('', 'fields'))) {
             array_push($this->update,'update_by');
         }
+        $this->response = new BaseValidate();
     }
 
     public function setCreateByAttr()
@@ -195,5 +199,14 @@ abstract class Model extends CoreModel
                 return $view_save_path.'/'.$info->getSaveName();
             }
         }
+    }
+
+    /**
+     * 获取当前实例化后的模型对应的表名
+     * @return bool|string
+     */
+    public function getTableName()
+    {
+        return $this->name;
     }
 }
