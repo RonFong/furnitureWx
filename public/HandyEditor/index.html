@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HandyEditor</title>
+    <style type="text/css">
+    small{font-size: 14px;color: #aaa;}
+    pre{padding: 5px;background-color: #eee;}
+    .textcenter{text-align: center;}
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <textarea id="editor" name="editor" rows="5" style="display: none;"></textarea>
+    <br>
+    <button onclick="getHtml()">获取HTML</button>&nbsp;&nbsp;
+    <button onclick="getText()">获取纯文本</button>
+    <button onclick="getData()">测试ajax</button>
+    <script src="HandyEditor.min.js"></script>
+    <script type="text/javascript">
+      var he = HE.getEditor('editor',{
+		  // width : '300px',
+		  // height : '400px',
+		  autoHeight : true,
+		  autoFloat : false,
+		  topOffset : 0,
+		  uploadPhoto : true,
+		  uploadPhotoHandler : 'php/uploadPhoto.php',
+		  uploadPhotoSize : 0,
+		  uploadPhotoType : 'gif,png,jpg,jpeg',
+		  uploadPhotoSizeError : '不能上传大于××KB的图片',
+		  uploadPhotoTypeError : '只能上传gif,png,jpg,jpeg格式的图片',
+		  lang : 'zh-jian',
+		  skin : 'HandyEditor',
+		  externalSkin : '',
+		  // item : ['bold','italic','strike','underline','fontSize','fontName','paragraph','color','backColor','|','center','left','right','full','indent','outdent','|','link','unlink','textBlock','code','selectAll','removeFormat','trash','|','image','expression','subscript','superscript','horizontal','orderedList','unorderedList','|','undo','redo','|','html','|','about']
+		  item : ['bold','italic','strike','underline']
+		});
+      function getHtml(){
+        alert(he.getHtml());
+      }
+      function getText(){
+        alert(he.getText());
+      }
+      function getData(){
+		$.ajax({
+		  type: "GET",
+		  url: "/test.php",
+		  dataType: "json",
+		  success:function(res){
+		  	console.log(res);
+		  	alert(res.code);
+		  },
+		  fail:function(res){
+			console.log(res);
+		  }
+		});
+      }
+    </script>
+  </body>
+</html>
