@@ -143,6 +143,8 @@ Route::group('api/:version',function() {
     //首页图文
     Route::group('homeContent', function () {
         //发布首页图文
+        Route::get('getHomeContentItem', 'api/:version.HomeContent/getHomeContentItem');
+        //发布首页图文
         Route::post('addHomeContent', 'api/:version.HomeContent/addHomeContent');
     });
 });

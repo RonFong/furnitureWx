@@ -40,4 +40,15 @@ class HomeContent extends BaseController
         return json_encode(['code'=>1,'msg'=>'添加成功']);
     }
 
+    public function getHomeContentItem(){
+
+        $getContentItemData = [
+            'itemId' => $this->request->param('itemId')
+        ];
+        $data = HomeContentItem::getContentItem($getContentItemData);
+        $this->result['data']  = $data;
+
+        return json($this->result);
+    }
+
 }
