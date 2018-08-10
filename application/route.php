@@ -146,5 +146,7 @@ Route::group('api/:version',function() {
         Route::get('getHomeContentItem', 'api/:version.HomeContent/getHomeContentItem');
         //发布首页图文
         Route::post('addHomeContent', 'api/:version.HomeContent/addHomeContent');
+        //保存首页图文
+        Route::post('saveHomeContent', 'api/:version.HomeContent/saveHomeContent');
     });
 });
