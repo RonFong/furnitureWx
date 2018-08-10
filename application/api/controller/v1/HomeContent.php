@@ -40,6 +40,15 @@ class HomeContent extends BaseController
         return json_encode(['code'=>1,'msg'=>'添加成功']);
     }
 
+    public function saveHomeContent(){
+
+        $homeContentItemModel = new HomeContentItem(['id' => $this->request->param('itemId')]);
+        $homeContentItemModel->text = $this->request->post('text');
+        $homeContentItemModel->save();
+
+        return json_encode(['code'=>1,'msg'=>'保存成功']);
+    }
+
     public function getHomeContentItem(){
 
         $getContentItemData = [
