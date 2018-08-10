@@ -3,6 +3,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\model\StoreClassify as ApiStoreClassify;
 use app\lib\sms\SmsApp;
 use think\Cache;
 use think\Request;
@@ -21,11 +22,12 @@ class StoreClassify extends BaseController
     {
 
         parent::__construct($request);
-        $this->currentModel    = new StoreClassify();
+        $this->currentModel    = new ApiStoreClassify();
     }
 
     public function getStoreClassifyList()
     {
-        $this->currentModel->storeClassifyList();
+        $this->result['data']['category'] = $this->currentModel->storeClassifyList();
+        return json($this->result,200);
     }
 }

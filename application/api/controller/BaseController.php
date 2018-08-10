@@ -50,6 +50,8 @@ abstract class BaseController extends Controller {
 
     public function __construct(Request $request = null)
     {
+
+
         Hook::listen('app_init');
         Hook::listen('action_init');
 
