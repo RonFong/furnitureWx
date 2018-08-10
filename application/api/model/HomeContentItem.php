@@ -12,6 +12,6 @@ class HomeContentItem extends CoreHomeContentItem
                 LIMIT 1";
         $contentItem = Db::query($sql);
 
-        return $contentItem;
+        return $contentItem[0];
     }
 }
