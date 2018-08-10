@@ -36,6 +36,8 @@ class HomeContent extends BaseController
         $homeContentItemModel->content_id = $homeContentModel->id;
         $homeContentItemModel->text = $this->request->post('text');
         $homeContentItemModel->save();
+
+        return json_encode(['code'=>1,'msg'=>'添加成功']);
     }
 
 }
