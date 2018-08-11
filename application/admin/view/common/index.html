@@ -15,7 +15,7 @@
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">{:session('config.web_name')} 后台</div>
+        <div class="layui-logo">99家 后台</div>
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item nav-display">
                 <a href="javascript:;" class="tpl-icon-rotate"><i title="隐藏/显示侧边栏" class="layui-icon layui-icon-shrink-right"> </i></a>
@@ -26,13 +26,13 @@
             <li class="layui-nav-item layui-hide-xs"><a href="{:url('login/clearCache')}" class="clearCached">清除缓存</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="{:session('userInfo.avatar')}" class="layui-nav-img">
-                    {:session('userInfo.nick_name')}
+                    <img src="{:session('user_info.image')}" class="layui-nav-img">
+                    {:session('user_info.account')}
                 </a>
                 <dl class="layui-nav-child">
                     <dd class="layui-hide-sm layui-show-xs"><a href="{:url('login/clearCache')}" class="clearCached">清除缓存</a></dd>
-                    <dd><a href="javascript:;" onclick="changePwd({:session('userInfo.id')}, '修改密码', '{:url("user/changePassword")}');">修改密码</a></dd>
-                    <dd><a href="{:url('User/edit')}?id={:session('userInfo.id')}">修改资料</a></dd>
+                    <dd><a href="javascript:;" onclick="changePwd({:session('user_info.id')}, '修改密码', '{:url("user/changePassword")}');">修改密码</a></dd>
+                    <dd><a href="{:url('User/edit')}?id={:session('user_info.id')}">修改资料</a></dd>
                     <dd><a href="{:url('login/loginOut')}">退出登录</a></dd>
                 </dl>
             </li>
@@ -80,7 +80,6 @@
     </div>
 </div>
 
-<span id="password_strong_common" style="display: none;">{:session('userInfo.password_strong')}</span>
 
 <script src="__STATIC__/js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="__STATIC__/plugin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
