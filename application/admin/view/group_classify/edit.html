@@ -123,38 +123,6 @@
     layui.use(['form'], function () {
         var form = layui.form;
 
-        //监听省市区三级联动
-        form.on('select(region)', function (data) {
-            var id = data.value;
-            var position_now = $(data.elem).attr('id');
-            var position_next = '';
-            var position_change = '';
-
-            if (position_now == 'province') {
-                position_next = '#city';
-                position_change = '#district';
-            } else if (position_now == 'city'){
-                position_next = '#district';
-                position_change = '';
-            }
-
-            ajaxRegion(id, position_next, position_change);
-        });
-
-        /**
-         * 省市区变更
-         */
-        function ajaxRegion(id, position, position_change) {
-            $.post('{:url("getRegion")}', {pid:id}, function (result) {
-                var _html = "<option value=''>请选择</option>";
-                $.each(result, function (key, val) {
-                    _html += "<option value='"+val.id+"'>"+val.name+"</option>";
-                });
-                $(position).html(_html);
-                $(position_change).html("<option value=''>请选择</option>");
-                form.render('select');
-            });
-        }
 
         //监听提交
         form.on('submit(formSubmit)', function(data){
