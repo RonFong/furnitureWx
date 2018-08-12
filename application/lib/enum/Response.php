@@ -73,4 +73,10 @@ class Response
     //order  排序参数错误
     const COMMENT_FAIL = ['code' => 400, 'errorCode' => 1000, 'msg' => '评论失败'];
 
+    //厂家用户ID错误
+    const IS_NOT_FACTORY = ['code' => 400, 'errorCode' => 1000, 'msg' => '厂家用户ID错误'];
+
+    //商家用户ID错误
+    const IS_NOT_SHOP = ['code' => 400, 'errorCode' => 1000, 'msg' => '商家用户ID错误'];
+
 }
