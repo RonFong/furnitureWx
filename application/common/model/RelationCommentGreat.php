@@ -9,7 +9,6 @@
 
 
 namespace app\common\model;
-use traits\model\SoftDelete;
 
 /**
  * 用户点赞评论
@@ -18,5 +17,5 @@ use traits\model\SoftDelete;
  */
 class RelationCommentGreat extends Model
 {
-    use SoftDelete;
+    
 }
