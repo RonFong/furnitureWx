@@ -123,6 +123,12 @@ Route::group('api/:version',function() {
         Route::post('goodsCollect', 'api/:version.Relate/goodsCollect');
         //用户关注用户
         Route::post('userCollect', 'api/:version.Relate/userCollect');
+        //厂家 拉黑 商家
+        Route::post('factoryBlacklist', 'api/:version.Relate/factoryBlacklist');
+        //商家 拉黑 厂家
+        Route::post('shopBlacklist', 'api/:version.Relate/shopBlacklist');
+        //商家 拉黑 商城商品
+        Route::post('goodsBlacklist', 'api/:version.Relate/goodsBlacklist');
     });
 
     //工厂
@@ -148,5 +154,11 @@ Route::group('api/:version',function() {
         Route::post('addHomeContent', 'api/:version.HomeContent/addHomeContent');
         //保存首页图文
         Route::post('saveHomeContent', 'api/:version.HomeContent/saveHomeContent');
+    });
+
+    //商城
+    Route::group('store', function () {
+        //获取商城首页商品列表
+        Route::get('homeGoodsList', 'api/:version.StoreGoods/getGoodsList');
     });
 });
