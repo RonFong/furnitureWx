@@ -62,7 +62,7 @@ class Relate
     protected function dec($data)
     {
         unset($data['type']);
-        $result = $this->behaviorModel->where($data)->update(['delete_time' => time()]);
+        $result = $this->behaviorModel->where($data)->delete();
         return $result ?? false;
     }
 }
