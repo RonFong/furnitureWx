@@ -50,7 +50,22 @@ class Relate extends BaseValidate
             'goods_id',
             'type'       => 'require|in:inc,dec|goodsCollect',
 
-        ]
+        ],
+        'factoryBlacklist' => [
+            'shop_id',
+            'type'       => 'require|in:inc,dec|goodsCollect',
+
+        ],
+        'goodsBlacklist' => [
+            'goods_id',
+            'type'       => 'require|in:inc,dec|goodsCollect',
+
+        ],
+        'shopBlacklist' => [
+            'factory_id',
+            'type'       => 'require|in:inc,dec|goodsCollect',
+
+        ],
     ];
 
     /**
