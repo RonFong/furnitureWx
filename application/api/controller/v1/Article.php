@@ -106,10 +106,21 @@ class Article extends BaseController
      *      "data":"12"     //所写入数据的id
      * }
      */
+
+    /**
+     * @return mixed
+     * @throws \app\lib\exception\BaseException
+     */
     public function create()
     {
         $this->currentValidate->goCheck('create');
-        $result = (new ImageText($this->currentModel, new ArticleContent(), $this->folder))::write($this->data);
+
+        $result = (new ImageText())
+            ->setMainModel($this->currentModel)         //设置图文主模型
+            ->setContentModel(new ArticleContent())     //设置图文块模型
+            ->setImgFolder($this->folder)               //设置图片保存地址
+            ->write($this->data);                       //写入数据
+
         if (!$result['state']) {
             $this->result['state'] = 0;
             $this->result['msg'] = $result['msg'];
@@ -529,7 +540,13 @@ class Article extends BaseController
     public function update()
     {
         $this->currentValidate->goCheck('update');
-        $result = (new ImageText($this->currentModel, new ArticleContent(), $this->folder))::write($this->data);
+
+        $result = (new ImageText())
+            ->setMainModel($this->currentModel)         //设置图文主模型
+            ->setContentModel(new ArticleContent())     //设置图文块模型
+            ->setImgFolder($this->folder)               //设置图片保存地址
+            ->write($this->data);                       //传入数据
+
         if (!$result['state']) {
             $this->result['state'] = 0;
             $this->result['msg'] = $result['msg'];
