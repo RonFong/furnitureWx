@@ -11,6 +11,7 @@
 
 namespace app\api\service;
 
+use app\common\validate\BaseValidate;
 use think\Db;
 
 /**
@@ -41,21 +42,40 @@ class ImageText
 
 
     /**
-     * ImageText constructor.
-     * @param $mainModel   string       图文模型名
-     * @param $contentModel  string     图文内容模型
-     * @param $folder  string           图片保存目标文件夹名  (static/img 文件夹下的文件夹名)
+     * 设置图文模型
+     * @param $mainModel
+     * @return $this
      */
-    public function __construct($mainModel, $contentModel, $folder)
+    public function setMainModel($mainModel)
     {
         self::$mainModel = $mainModel;
+        return $this;
+    }
+
+    /**
+     * 图文内容模型
+     * @param $contentModel
+     * @return $this
+     */
+    public function setContentModel($contentModel)
+    {
         self::$contentModel = $contentModel;
+        return $this;
+    }
+
+    /**
+     * 图片保存目标文件夹名  (static/img 文件夹下的文件夹名)
+     * @param $folder
+     * @return $this
+     */
+    public function setImgFolder($folder)
+    {
         self::$folder = '/' . $folder . '/';
+        return $this;
     }
 
     /**
      * 图文信息保存及更新
-     * @param $data   array   图文数据
      * [
      * 'title' => '',
      * 'classify_id' => '',
@@ -72,7 +92,6 @@ class ImageText
      *          'text'  => ''
      *      ]
      * ]
-     * @return array
      */
     public static function write($data)
     {
@@ -82,7 +101,7 @@ class ImageText
             $contentData = $data['content'];
             unset($data['content']);
 
-            //文章主信息
+            //图文主信息
             $articleData = $data;
             $articleData['id'] = user_info('id');
 
@@ -90,13 +109,13 @@ class ImageText
             if (array_key_exists('id', $data) && is_numeric($data['id']))
                 $articleData['id'] = $data['id'];
 
-            //保存文章信息
+            //保存图文信息
             self::$mainModel->save($articleData);
 
-            //获取文章ID
+            //获取图文ID
             $articleID = self::$mainModel->id;
 
-            //保存文章内容块
+            //保存图文内容块
             $contentID = [];
             foreach ($contentData as $v) {
                 $v['article_id'] = $articleID;
@@ -133,18 +152,18 @@ class ImageText
         } catch (\Exception $e) {
             //事务回滚
             Db::rollback();
-            return ['state' => false, 'msg' => $e->getMessage()];
+            (new BaseValidate())->error($e);
         }
         return ['state' => true, 'id' => $articleID];
     }
 
     /**
-     * 初始化文章内容模型，避免在循环写入中混淆数据
+     * 初始化图文内容模型，避免在循环写入中混淆数据
      * @return string
      */
     private static function initContentModel()
     {
-//        return clone self::$contentModel;
+        return clone self::$contentModel;
     }
 
 }
