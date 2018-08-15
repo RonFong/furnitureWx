@@ -34,8 +34,16 @@ class StoreGoods
      */
     private static $isSelf = false;
 
+    /**
+     * 页码
+     * @var int
+     */
     private static $page = 1;
 
+    /**
+     * 每页条目数
+     * @var int
+     */
     private static $row = 10;
 
     /**
@@ -61,8 +69,8 @@ class StoreGoods
      */
     private static function checkIsSelf()
     {
-        $shopId = (new User())->where(['id' => user_info('id'), 'group_type' => 2])->value('group_id');
-        self::$isSelf = self::$belongToShop == $shopId ? false : $shopId;
+        $shopId = (new User())->where(['id' => user_info('id'), 'type' => 2])->value('group_id');
+        self::$isSelf = ((int) self::$belongToShop) == $shopId;
     }
 
     /**
@@ -103,7 +111,7 @@ class StoreGoods
         //被当前商家拉黑的
         $shopBlacklist = (new RelationShopBlacklist())->where($map)->column('factory_id');
 
-        $blacklist['factory_id'] = array_merge($factoryBlacklist, $shopBlacklist);
+        $blacklist['factory_id'] = array_unique(array_merge($factoryBlacklist, $shopBlacklist));
 
         //当前商家拉黑的商品
         $blacklist['goods_id'] = (new RelationGoodsBlacklist())->where($map)->column('goods_id');
@@ -115,6 +123,7 @@ class StoreGoods
     {
         //TODO 排序算法 ， 暂无
         $blacklist = self::getBlacklist();
+
         $map = [
             'b.state'           => 1,
             'b.audit_state'     => 1,
@@ -124,9 +133,8 @@ class StoreGoods
             'a.state'           => 1,
             'a.delete_time'     => null,
             'a.id'              => ['not in', $blacklist['goods_id']],
-            'c.object_type'     => 3
         ];
-        if (self::$visitorUser) {
+        if (!self::$isSelf) {
             $fields = 'a.goods_name, a.goods_no, d.img';
         } else {
             $fields = 'a.goods_name, a.goods_no, a.model_no, d.img';
@@ -134,15 +142,13 @@ class StoreGoods
         $list = (new Goods())
             ->alias('a')
             ->join('factory b', 'a.factory_id = b.id')
-            ->join('popularity c', 'a.id = c.object_id')
-            ->join('goodsColor d', 'a.id = d.goods_id')
+            ->join('popularity c', 'a.id = c.object_id and object_type = 3', 'LEFT')
+            ->join('goods_color d', 'a.id = d.goods_id', 'LEFT')
             ->where($map)
             ->field($fields)
             ->order(self::$orderBy)
             ->page(self::$page, self::$row)
             ->select();
-        print_r($list);
-        die;
         return $list;
     }
 }
