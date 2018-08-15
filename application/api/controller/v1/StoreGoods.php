@@ -37,11 +37,17 @@ class StoreGoods extends BaseController
      */
     public function getGoodsList()
     {
-        $list = $this->currentServer
-            ->setBelongToShop($this->data['shop_id'])
-            ->setPage($this->page, $this->row)
-            ->getHomeList();
-        print_r($list);
-        die;
+        $this->currentValidate->goCheck('getGoodsList');
+        try {
+            $list = $this->currentServer
+                ->setBelongToShop($this->data['shop_id'])
+                ->setPage($this->page, $this->row)
+                ->getHomeList();
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        $this->result['data'] = $list;
+        return json($this->result, 200);
     }
+
 }
