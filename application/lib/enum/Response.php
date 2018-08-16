@@ -79,4 +79,7 @@ class Response
     //商家用户ID错误
     const IS_NOT_SHOP = ['code' => 400, 'errorCode' => 1000, 'msg' => '商家用户ID错误'];
 
+    //未上传图片
+    const IMG_FILE_CANT_EMPTY = ['code' => 400, 'errorCode' => 1000, 'msg' => '未上传图片'];
+
 }
