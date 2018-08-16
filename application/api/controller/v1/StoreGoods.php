@@ -32,8 +32,49 @@ class StoreGoods extends BaseController
         $this->currentValidate = new StoreGoodsValidate();
     }
 
+
     /**
-     * 获取商城首页商品列表
+     * @api      {get} /v1/store/homeGoodsList 获取商城首页商品列表
+     * @apiGroup Store
+     * @apiParam {number} shop_id  当前商家id (商城入口处的商家)
+     * @apiParam {number}  [page]  页码
+     * @apiParam {number}   [row]  每页条目数
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 略
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+    {
+        "state": 1,
+        "msg": "success",
+        "data": [
+            {
+                "goods_name": "铁王座",
+                "goods_no": "Y0123",
+                "popularity": "340",
+                "img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149_thumb.png",
+                "price": "5000.00",
+                "model_no": "SH-0012",
+                "retail_price": "8200"
+            },
+            {
+                "goods_name": "帝王之床",
+                "goods_no": "C6542",
+                "popularity": "10",
+                "img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149_thumb.png",
+                "price": "6800.00",
+                "model_no": "SH-0013",
+                "retail_price": 8840
+            }
+        ]
+    }
+     *
+     * @apiErrorExample {json} 错误返回值：
+     * {
+     *      "state":0,
+     *      "msg":"错误信息",
+     *      "data":[]
+     * }
      */
     public function getGoodsList()
     {
