@@ -50,20 +50,20 @@ class StoreGoods extends BaseController
         "data": [
             {
                 "goods_name": "铁王座",
-                "goods_no": "Y0123",
-                "popularity": "340",
-                "img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149_thumb.png",
-                "price": "5000.00",
-                "model_no": "SH-0012",
-                "retail_price": "8200"
+                "goods_no": "Y0123",     //商城商品编号
+                "popularity": "340",     //人气值
+                "img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149_thumb.png",    //缩略图
+                "price": "5000.00",      //出厂价， 当前用户为此商城商家时 返回
+                "model_no": "SH-0012",   //厂家型号， 当前用户为此商城商家时 返回
+                "retail_price": "8200"    //零售价
             },
             {
                 "goods_name": "帝王之床",
                 "goods_no": "C6542",
                 "popularity": "10",
                 "img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149_thumb.png",
-                "price": "6800.00",
-                "model_no": "SH-0013",
+                "price": "6800.00",         //出厂价， 当前用户为此商城商家时 返回
+                "model_no": "SH-0013",      //厂家型号， 当前用户为此商城商家时 返回
                 "retail_price": 8840
             }
         ]
