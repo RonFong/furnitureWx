@@ -17,5 +17,5 @@ namespace app\common\model;
  */
 class RelationGoodsCollect extends Model
 {
-    
+
 }
