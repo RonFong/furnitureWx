@@ -105,6 +105,7 @@ Route::group('api/:version',function() {
     // 门店
     Route::group('shop', function () {
         Route::post('register','api/:version.Shop/register');
+        Route::get('info','api/:version.Shop/info');
     });
 
     Route::group('category',function (){
