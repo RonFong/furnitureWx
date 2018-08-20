@@ -335,46 +335,46 @@ class Relate extends BaseController
      * }
      *
      * @apiSuccessExample {json} 成功时的数据：
-    {
-        "factory": {
-            "name": "厂家",
-            "list": []      //category = factory 时有值
-        },
-        "shop": {
-            "name": "经销商",
-            "list": []      //category = shop 时有值
-        },
-        "goods": {
-            "name": "商品",
-            "list": []      //category = goods 时有值
-        },
-        "default": [        //category 为空或未传 时有值
-            {
-                "id": 8,
-                "factory_name": "双虎家居",
-                "factory_img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531989310611&di=899df6ccda3f15e7875f30c017cc5cf1&imgtype=0&src=http%3A%2F%2Fwww.alrui.com%2Fuploads%2Fallimg%2F180601%2F162I64395_0.jpg",
-                "state": 1,             // 禁用状态， 为 0 时， 提示该 厂家/商家/商品 已 冻结/下架
-                "deleted": "",          // 删除状态， 为 0 时则未删除，  非 0 时 （时间戳）则提示  该 厂家/商家/商品 已 不存在/删除
-                "create_time": "2018-08-21"         //收藏时间
-            },
-            {
-                "id": 1,
-                "goods_name": "铁王座",
-                "state": 1,
-                "deleted": "0",
-                "shop_img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149.png",
-                "create_time": "2018-07-17"
-            },
-            {
-                "id": 7,
-                "shop_name": "三有家具城",
-                "shop_img": "/static/img/tmp/20180805\\209325e33c678d22c08c9a5e6715a1a3.jpg",
-                "state": 1,
-                "deleted": "0",
-                "create_time": "2018-07-17"
-            }
-        ]
-    }
+     *{
+     *  "factory": {
+     *      "name": "厂家",
+     *      "list": []      //category = factory 时有值
+     *  },
+     *  "shop": {
+     *      "name": "经销商",
+     *      "list": []      //category = shop 时有值
+     *  },
+     *  "goods": {
+     *      "name": "商品",
+     *      "list": []      //category = goods 时有值
+     *  },
+     *  "default": [        //category 为空或未传 时有值
+     *      {
+     *          "id": 8,
+     *          "factory_name": "双虎家居",
+     *          "factory_img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531989310611&di=899df6ccda3f15e7875f30c017cc5cf1&imgtype=0&src=http%3A%2F%2Fwww.alrui.com%2Fuploads%2Fallimg%2F180601%2F162I64395_0.jpg",
+     *          "state": 1,             // 禁用状态， 为 0 时， 提示该 厂家/商家/商品 已 冻结/下架
+     *          "deleted": "",          // 删除状态， 为 0 时则未删除，  非 0 时 （时间戳）则提示  该 厂家/商家/商品 已 不存在/删除
+     *          "create_time": "2018-08-21"         //收藏时间
+     *      },
+     *      {
+     *          "id": 1,
+     *          "goods_name": "铁王座",
+     *          "state": 1,
+     *          "deleted": "0",
+     *          "shop_img": "/static/img/tmp/20180816\\\\b8faa0c919ad80eddd6aafc6eb519149.png",
+     *          "create_time": "2018-07-17"
+     *      },
+     *      {
+     *          "id": 7,
+     *          "shop_name": "三有家具城",
+     *          "shop_img": "/static/img/tmp/20180805\\209325e33c678d22c08c9a5e6715a1a3.jpg",
+     *          "state": 1,
+     *          "deleted": "0",
+     *          "create_time": "2018-07-17"
+     *      }
+     *  ]
+     *}
      */
     public function getCollectList()
     {
