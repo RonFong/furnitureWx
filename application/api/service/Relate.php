@@ -10,6 +10,10 @@
 
 namespace app\api\service;
 
+use app\common\validate\BaseValidate;
+use app\lib\enum\Response;
+use think\Db;
+
 /**
  * 产生关联
  * Class Relate
@@ -23,22 +27,39 @@ class Relate
      */
     protected $behaviorModel;
 
-    public function __construct($behaviorModel)
+    /**
+     * Relate constructor.
+     * @param null $behaviorModel
+     * @throws \app\lib\exception\BaseException
+     */
+    public function __construct($behaviorModel = null)
     {
-        try {
-            $class =  '\\app\\common\\model\\' . $behaviorModel;
-            $class = new \ReflectionClass($class);
-            $this->behaviorModel = $class->newInstanceArgs();
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if ($behaviorModel) {
+            //写入和删除
+            try {
+                $class =  '\\app\\common\\model\\' . $behaviorModel;
+                $class = new \ReflectionClass($class);
+                $this->behaviorModel = $class->newInstanceArgs();
+            } catch (\Exception $e) {
+                (new BaseValidate())->error($e);
+            }
         }
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \app\lib\exception\BaseException
+     */
     public function save($data)
     {
-        $data['user_id'] = user_info('id');
-        $method = $data['type'];
-        return $this->$method($data);
+        try {
+            $data['user_id'] = user_info('id');
+            $method = $data['type'];
+            return $this->$method($data);
+        } catch (\Exception $e) {
+            (new BaseValidate())->error($e);
+        }
     }
 
     /**
@@ -64,5 +85,105 @@ class Relate
         unset($data['type']);
         $result = $this->behaviorModel->where($data)->delete();
         return $result ?? false;
+    }
+
+
+    /**
+     * 用户收藏列表
+     * @param array $param
+     * @param int $page
+     * @param null $row
+     * @return array
+     * @throws \app\lib\exception\BaseException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getCollectList($param = [], $page = 1, $row = null)
+    {
+        $data = [
+            'factory' => [
+                'name'  => '厂家',
+                'list'  => []
+            ],
+            'shop'  => [
+                'name'  => '经销商',
+                'list'  => []
+            ],
+            'goods' => [
+                'name'  => '商品',
+                'list'  => []
+            ],
+            'default'  => []   //所有收藏
+        ];
+
+        if (array_key_exists('category', $param) && !array_key_exists($param['category'], $data)) {
+            (new BaseValidate())->error(Response::QUERY_ERROR);
+        } else if (!array_key_exists('category', $param) || !array_key_exists($param['category'], $data)) {
+            //查询出所有数据后，再分页
+            $sumPage = $page == 0 ? 1 : $page ;
+            $sumRow = $row;
+            $page = 1;
+            $row = null;
+        }
+
+        $map = ['a.user_id'   => user_info('id')];
+
+        $order = 'a.id desc';
+
+        $field = "from_unixtime(a.create_time, '%Y-%m-%d') as create_time";
+
+        if (!array_key_exists('category', $param) || $param['category'] == 'factory') {
+            $data['factory']['list'] = Db::table('relation_factory_collect')
+                ->alias('a')
+                ->join('factory b', 'a.factory_id = b.id')
+                ->where($map)
+                ->field('b.id, b.factory_name, b.factory_img, b.state, ifnull(b.delete_time, 0) as deleted')
+                ->field($field)
+                ->order($order)
+                ->page($page, $row)
+                ->select();
+        }
+
+        if (!array_key_exists('category', $param) || $param['category'] == 'shop') {
+            $data['shop']['list'] = Db::table('relation_shop_collect')
+                ->alias('a')
+                ->join('shop b', 'a.shop_id = b.id')
+                ->where($map)
+                ->field('b.id, b.shop_name, b.shop_img, b.state, ifnull(b.delete_time, 0) as deleted')
+                ->field($field)
+                ->order($order)
+                ->page($page, $row)
+                ->select();
+        }
+
+        if (!array_key_exists('category', $param) || $param['category'] == 'goods') {
+            $data['goods']['list'] = Db::table('relation_goods_collect')
+                ->alias('a')
+                ->join('goods b', 'a.goods_id = b.id')
+                ->join('goods_color c', 'a.goods_id = c.goods_id')
+                ->where($map)
+                ->field('b.id, b.goods_name, b.state, ifnull(b.delete_time, 0) as deleted, c.img as shop_img')
+                ->field($field)
+                ->group('b.id')
+                ->order($order)
+                ->page($page, $row)
+                ->select();
+        }
+
+        //获取所有收藏，按时间排序
+        if (!array_key_exists('category', $param) || !array_key_exists($param['category'], $data)) {
+
+            $list = array_merge($data['goods']['list'], $data['shop']['list'], $data['factory']['list']);
+            $data['factory']['list'] = $data['shop']['list'] = $data['goods']['list'] = [];
+
+            $array = array_column($list, 'create_time');
+            array_multisort($array, SORT_DESC, $list);
+
+            //按分页，切割数组返回
+            $data['default'] = array_slice($list, $sumPage == 1 ? 0 : ($sumPage - 1) * $sumRow, $sumRow);
+        }
+
+        return $data;
     }
 }
