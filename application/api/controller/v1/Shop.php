@@ -63,11 +63,10 @@ class Shop extends BaseController
 
     public function info()
     {
-        $this->currentValidate->goCheck('info');
-        $admin_id = empty($this->data['admin_user']) ? '' : $this->data['admin_user'];
-        $userList = $this->currentModel->selectShop($admin_id, $this->page, $this->row);
+        $admin_id =  user_info('id');
+        $userList = $this->currentModel->getShopInfo($admin_id);
         if ($userList) {
-            return json($userList, 202);
+            return json($userList);
         }
         $this->response->error(Response::USERS_EMPTY);
     }

@@ -34,8 +34,12 @@ class Shop extends CoreShop
         return $result;
     }
 
-    public function selectShop()
+    public function getShopInfo($admin_user)
     {
-
+        $shopInfo = $this
+            ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
+            ->where('admin_user',$admin_user)
+            ->find();
+        return $shopInfo;
     }
 }
