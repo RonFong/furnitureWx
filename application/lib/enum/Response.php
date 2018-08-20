@@ -82,4 +82,7 @@ class Response
     //未上传图片
     const IMG_FILE_CANT_EMPTY = ['code' => 400, 'errorCode' => 1000, 'msg' => '未上传图片'];
 
+    //收藏的筛选条件错误
+    const QUERY_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '筛选条件错误'];
+
 }
