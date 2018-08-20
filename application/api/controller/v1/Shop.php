@@ -66,7 +66,7 @@ class Shop extends BaseController
         $admin_id =  user_info('id');
         $userList = $this->currentModel->getShopInfo($admin_id);
         if ($userList) {
-            return json($userList, 202);
+            return json($userList);
         }
         $this->response->error(Response::USERS_EMPTY);
     }
