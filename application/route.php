@@ -133,6 +133,9 @@ Route::group('api/:version',function() {
         Route::post('shopCollect', 'api/:version.Relate/shopCollect');
         //用户收藏厂家
         Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
+        //获取用户的收藏
+        Route::get('collectList', 'api/:version.Relate/getCollectList');
+
     });
 
     //工厂
