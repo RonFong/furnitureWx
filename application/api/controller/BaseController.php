@@ -50,8 +50,6 @@ abstract class BaseController extends Controller {
 
     public function __construct(Request $request = null)
     {
-
-
         Hook::listen('app_init');
         Hook::listen('action_init');
 
@@ -59,7 +57,7 @@ abstract class BaseController extends Controller {
         $params = $request->param();
         unset($params['version']);
         $this->data = $params;
-        $this->files = $request->file();
+        $this->files = $request->file() ?? [];
         $this->page = isset($this->data['page']) ? $this->data['page'] : 1;
         $this->row  = isset($this->data['row']) ? $this->data['row'] : 10;
     }

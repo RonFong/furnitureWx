@@ -4,30 +4,20 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/8/12 
+// | CreateTime: 2018/8/16 
 // +----------------------------------------------------------------------
 
 
-namespace app\common\validate;
+namespace app\api\model;
+
+use app\common\model\GoodsRetailPrice as CoreGoodsRetailPrice;
 
 /**
- * 商城商品
- * Class StoreGoods
- * @package app\common\validate
+ * 商家自定义零售价
+ * Class GoodsRetailPrice
+ * @package app\api\model
  */
-class StoreGoods extends BaseValidate
+class GoodsRetailPrice extends CoreGoodsRetailPrice
 {
-    protected $rule = [
-        'shop_id'   => 'require'
-    ];
 
-    protected $message = [
-        'shop_id.require'   => 'shop_id 不能为空'
-    ];
-
-    protected $scene = [
-        'getGoodsList'  => [
-            'shop_id'
-        ],
-    ];
 }

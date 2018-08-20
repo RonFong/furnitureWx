@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\lib\enum\Response;
 use think\Request;
 use think\Image as ThinkImage;
 
@@ -93,6 +94,8 @@ class Image extends BaseController
                     exception($info->getError());
 
                 $imgFile = $info->getSaveName();
+            } else {
+                $this->response->error(Response::IMG_FILE_CANT_EMPTY);
             }
 
             //生成后缀为 $this->thumbImgSuffix 的缩略图
@@ -116,9 +119,7 @@ class Image extends BaseController
                 'img_thumb' => $this->viewImgPath . $thumbImg
             ];
         } catch (\Exception $e) {
-            $code = 400;
-            $this->result['state'] = 0;
-            $this->result['msg'] = $e->getMessage();
+            $this->response->error($e);
         }
         return json($this->result, $code ?? 200);
     }

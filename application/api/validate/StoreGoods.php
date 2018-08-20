@@ -8,26 +8,17 @@
 // +----------------------------------------------------------------------
 
 
-namespace app\common\validate;
+namespace app\api\validate;
+
+use app\common\validate\StoreGoods as CoreStoreGoods;
+
 
 /**
  * 商城商品
  * Class StoreGoods
- * @package app\common\validate
+ * @package app\api\validate
  */
-class StoreGoods extends BaseValidate
+class StoreGoods extends CoreStoreGoods
 {
-    protected $rule = [
-        'shop_id'   => 'require'
-    ];
 
-    protected $message = [
-        'shop_id.require'   => 'shop_id 不能为空'
-    ];
-
-    protected $scene = [
-        'getGoodsList'  => [
-            'shop_id'
-        ],
-    ];
 }
