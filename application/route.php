@@ -129,6 +129,10 @@ Route::group('api/:version',function() {
         Route::post('shopBlacklist', 'api/:version.Relate/shopBlacklist');
         //商家 拉黑 商城商品
         Route::post('goodsBlacklist', 'api/:version.Relate/goodsBlacklist');
+        //用户收藏商家
+        Route::post('shopCollect', 'api/:version.Relate/shopCollect');
+        //用户收藏厂家
+        Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
     });
 
     //工厂
