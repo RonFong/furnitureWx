@@ -168,6 +168,8 @@ Route::group('api/:version',function() {
         Route::post('saveHomeContent', 'api/:version.HomeContent/saveHomeContent');
         //缓存文字
         Route::get('setCache', 'api/:version.HomeContent/setCache');
+        //获取缓存文字
+        Route::get('getCache', 'api/:version.HomeContent/getCache');
     });
 
     //商城

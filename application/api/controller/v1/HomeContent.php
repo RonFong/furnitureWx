@@ -8,8 +8,7 @@ use app\lib\enum\Response;
 use think\Cache;
 use think\Request;
 
-class HomeContent extends BaseController
-{
+class HomeContent extends BaseController {
 
     /**
      * 参数校验统一入口方法
@@ -67,10 +66,34 @@ class HomeContent extends BaseController
     public function getHomeContentItem()
     {
 
-        $getContentItemData       = [
-            'itemId'   => $this->request->param('itemId')
+        $getContentItemData   = [
+            'itemId' => $this->request->param('itemId'),
         ];
         $data                 = HomeContentItem::getContentItem($getContentItemData);
+        $this->result['data'] = $data;
+
+        return json($this->result);
+    }
+
+    public function setCache()
+    {
+
+        $setCacheData   = [
+            'itemId' => $this->request->param('itemId'),
+            'text'   => $this->request->param('text'),
+        ];
+        HomeContentItem::setCache($setCacheData);
+
+        return json($this->result);
+    }
+
+    public function getCache()
+    {
+
+        $setCacheData   = [
+            'itemId' => $this->request->param('itemId'),
+        ];
+        $data = HomeContentItem::getCache($setCacheData);
         $this->result['data'] = $data;
 
         return json($this->result);

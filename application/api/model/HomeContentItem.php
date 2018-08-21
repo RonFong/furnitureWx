@@ -2,6 +2,7 @@
 namespace app\api\model;
 
 use app\common\model\HomeContentItem as CoreHomeContentItem;
+use think\Cache;
 use think\Db;
 
 class HomeContentItem extends CoreHomeContentItem
@@ -30,6 +31,22 @@ class HomeContentItem extends CoreHomeContentItem
                 $result['items'] = $contentItemData;
             }
         }
+
+        return $result;
+    }
+
+    public static function setCache($data)
+    {
+
+        Cache::set('home_content_cache_'.$data['itemId'], $data['text']);
+
+        return true;
+    }
+
+    public static function getCache($data)
+    {
+
+        $result = Cache::get('home_content_cache_'.$data['itemId']);
 
         return $result;
     }
