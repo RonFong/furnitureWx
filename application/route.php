@@ -58,6 +58,8 @@ Route::group('api/:version',function() {
         Route::get('region/:parent_id/:level','api/:version.Site/getRegion');
         // 获取地理位置
         Route::get('address/:lat/:lng','api/:version.Site/getAddress');
+        // 获取附近的店
+        Route::get('nearbyStore/:lat/:lng/:type','api/:version.Site/getNearbyStore');
     });
 
     //保存临时图片
