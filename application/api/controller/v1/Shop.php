@@ -54,11 +54,14 @@ class Shop extends BaseController
 
         try {
             $result = $this->currentModel->saveData($this->data);
+            if(!$result['success']){
+                exception($result['msg']);
+            }
         } catch (\Exception $e) {
-            $this->response->error($e);
+            return json($this->result, 403);
         }
-        $this->result['data'] = $result;
-        return json($this->result, 201);
+        $this->result['data'] = $result['data'];
+        return json($this->result, 200);
     }
 
     public function info()
