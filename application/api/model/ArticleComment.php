@@ -100,11 +100,11 @@ class ArticleComment extends CoreArticleComment
             ->find();
         if ($info) {
             $content = [
-                'id'              => $info->id,
-                'user_id'   => $info->user_id,       //回复人id
-                'user_name'      => $info->user_name,     //回复人昵称
-                'respondent_user_name' => '',                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
-                'reply_content'   => $info->content,
+                'id'                    => $info->id,
+                'user_id'               => $info->user_id,       //回复人id
+                'user_name'             => $info->user_name,     //回复人昵称
+                'respondent_user_name'  => '',                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
+                'reply_content'         => $info->content,
             ];
             if (!empty($v['child'])) {
                 $content['respondent_user_name'] = $reply['user_name'] ?? $reply['user_name'];

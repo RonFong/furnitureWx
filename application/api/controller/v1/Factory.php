@@ -41,14 +41,21 @@ class Factory extends BaseController
             }
             Cache::rm('auth_' . $this->data['factory_phone']);
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
         }
         try {
             $result = $this->currentModel->saveData($this->data);
+            if(!$result['success']){
+                exception($result['msg']);
+            }
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
         }
-        $this->result['data'] = $result;
+        $this->result['data'] = $result['data'];
 
         return json($this->result, 201);
     }

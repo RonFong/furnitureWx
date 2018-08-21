@@ -37,20 +37,20 @@ class Shop extends BaseController
         // 参数检查暂时跳过
         $this->currentValidate->goCheck('register');
         // 检查手机验证码
-//        $authCode = Cache::get('auth_'.$this->data['shop_phone']);
-//        try {
-//            if (!$authCode) {
-//                exception('验证码不存在');
-//            }
-//            if ($authCode != $this->data['code']) {
-//                exception('验证码错误');
-//            }
-//            Cache::rm('auth_'.$this->data['shop_phone']);
-//        } catch (\Exception $e) {
-//            $this->result['state'] = 0;
-//            $this->result['msg'] = $e->getMessage();
-//            return json($this->result, 403);
-//        }
+        $authCode = Cache::get('auth_'.$this->data['shop_phone']);
+        try {
+            if (!$authCode) {
+                exception('验证码不存在');
+            }
+            if ($authCode != $this->data['code']) {
+                exception('验证码错误');
+            }
+            Cache::rm('auth_'.$this->data['shop_phone']);
+        } catch (\Exception $e) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
+        }
 
         try {
             $result = $this->currentModel->saveData($this->data);
@@ -58,6 +58,8 @@ class Shop extends BaseController
                 exception($result['msg']);
             }
         } catch (\Exception $e) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
             return json($this->result, 403);
         }
         $this->result['data'] = $result['data'];
