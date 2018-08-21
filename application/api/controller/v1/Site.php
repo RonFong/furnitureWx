@@ -51,6 +51,8 @@ class Site extends BaseController
         $lng = $this->data['lng'] ?? '';
         // 1 :厂家 2：商家
         $type = $this->data['type'] == 1 ? 1 : 2;
+
+        $word = $this->data['w'];
 //        $table = $type == 1 ? 'factory' : 'shop';
         if($type == 1){
             $table = 'factory';
@@ -73,6 +75,11 @@ class Site extends BaseController
             ->where('lat','<',$w2)
             ->where('lng','>',$w3)
             ->where('lng','<',$w4)
+            ->where(function ($query) use ($table,$word) {
+                if(!empty($word)){
+                    $query->where($table.'_name','like','%'.$word.'%');
+                }
+            })
             ->select();
 
         $result = [];
