@@ -8,8 +8,7 @@ use app\lib\enum\Response;
 use think\Cache;
 use think\Request;
 
-class HomeContent extends BaseController
-{
+class HomeContent extends BaseController {
 
     /**
      * 参数校验统一入口方法
@@ -44,11 +43,17 @@ class HomeContent extends BaseController
     public function saveHomeContent()
     {
 
-        $homeContentItemModel       = new HomeContentItem(['id' => $this->request->param('itemId')]);
-        $homeContentItemModel->text = $this->request->post('text');
-        $homeContentItemModel->save();
+        $saveContentData       = [
+            'groupId'   => user_info('group_id'),
+            'groupType' => user_info('type'),
+            'music'     => $this->request->param('music'),
+            'record'    => $this->request->param('record'),
+            'musicName' => $this->request->param('music_name'),
+            'items'     => $this->request->param('items'),
+        ];
+        $data                 = HomeContentItem::saveContent($saveContentData);
 
-        return json_encode(['code' => 1, 'msg' => '保存成功']);
+        return json($this->result);
     }
 
     public function getHomeContent()
@@ -67,10 +72,34 @@ class HomeContent extends BaseController
     public function getHomeContentItem()
     {
 
-        $getContentItemData       = [
-            'itemId'   => $this->request->param('itemId')
+        $getContentItemData   = [
+            'itemId' => $this->request->param('itemId'),
         ];
         $data                 = HomeContentItem::getContentItem($getContentItemData);
+        $this->result['data'] = $data;
+
+        return json($this->result);
+    }
+
+    public function setCache()
+    {
+
+        $setCacheData   = [
+            'itemId' => $this->request->param('itemId'),
+            'text'   => $this->request->param('text'),
+        ];
+        HomeContentItem::setCache($setCacheData);
+
+        return json($this->result);
+    }
+
+    public function getCache()
+    {
+
+        $setCacheData   = [
+            'itemId' => $this->request->param('itemId'),
+        ];
+        $data = HomeContentItem::getCache($setCacheData);
         $this->result['data'] = $data;
 
         return json($this->result);
