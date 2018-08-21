@@ -4,18 +4,14 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/7/16 
+// | CreateTime: 2018/8/16 
 // +----------------------------------------------------------------------
 
 
 namespace app\common\model;
 
-/**
- * 用户收藏商城商品
- * Class RelationGoodsLike
- * @package app\common\model
- */
-class RelationGoodsCollect extends Model
+
+class GoodsRetailPrice extends Model
 {
 
 }
