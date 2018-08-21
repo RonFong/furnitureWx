@@ -17,5 +17,17 @@ namespace app\common\validate;
  */
 class StoreGoods extends BaseValidate
 {
+    protected $rule = [
+        'shop_id'   => 'require'
+    ];
 
+    protected $message = [
+        'shop_id.require'   => 'shop_id 不能为空'
+    ];
+
+    protected $scene = [
+        'getGoodsList'  => [
+            'shop_id'
+        ],
+    ];
 }

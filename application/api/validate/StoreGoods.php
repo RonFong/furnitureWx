@@ -4,18 +4,21 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/7/16 
+// | CreateTime: 2018/8/12 
 // +----------------------------------------------------------------------
 
 
-namespace app\common\model;
+namespace app\api\validate;
+
+use app\common\validate\StoreGoods as CoreStoreGoods;
+
 
 /**
- * 用户收藏商城商品
- * Class RelationGoodsLike
- * @package app\common\model
+ * 商城商品
+ * Class StoreGoods
+ * @package app\api\validate
  */
-class RelationGoodsCollect extends Model
+class StoreGoods extends CoreStoreGoods
 {
 
 }

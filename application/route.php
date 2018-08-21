@@ -104,7 +104,10 @@ Route::group('api/:version',function() {
 
     // 门店
     Route::group('shop', function () {
+        // 入驻商家
         Route::post('register','api/:version.Shop/register');
+        // 门店信息
+        Route::get('info','api/:version.Shop/info');
     });
 
     Route::group('category',function (){
@@ -129,6 +132,13 @@ Route::group('api/:version',function() {
         Route::post('shopBlacklist', 'api/:version.Relate/shopBlacklist');
         //商家 拉黑 商城商品
         Route::post('goodsBlacklist', 'api/:version.Relate/goodsBlacklist');
+        //用户收藏商家
+        Route::post('shopCollect', 'api/:version.Relate/shopCollect');
+        //用户收藏厂家
+        Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
+        //获取用户的收藏
+        Route::get('collectList', 'api/:version.Relate/getCollectList');
+
     });
 
     //工厂

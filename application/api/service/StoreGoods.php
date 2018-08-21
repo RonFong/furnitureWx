@@ -10,6 +10,7 @@
 
 namespace app\api\service;
 use app\api\model\Goods;
+use app\api\model\GoodsRetailPrice;
 use app\common\model\RelationFactoryBlacklist;
 use app\common\model\RelationGoodsBlacklist;
 use app\common\model\RelationShopBlacklist;
@@ -34,8 +35,16 @@ class StoreGoods
      */
     private static $isSelf = false;
 
+    /**
+     * 页码
+     * @var int
+     */
     private static $page = 1;
 
+    /**
+     * 每页条目数
+     * @var int
+     */
     private static $row = 10;
 
     /**
@@ -43,6 +52,8 @@ class StoreGoods
      * @var string
      */
     private static $orderBy = '';
+
+    private static $retailPrice;
 
     /**
      * 设置当前商城的所属商家
@@ -53,6 +64,11 @@ class StoreGoods
     {
         self::$belongToShop = $shopId;
         self::checkIsSelf();
+
+        //获取此商家的零售价增幅
+        $ratio = (new GoodsRetailPrice())->where(['shop_id' => $shopId, 'goods_id' => 0])->value('ratio');
+        self::$retailPrice = $ratio ?? config('system.price_ratio');
+
         return $this;
     }
 
@@ -61,8 +77,8 @@ class StoreGoods
      */
     private static function checkIsSelf()
     {
-        $shopId = (new User())->where(['id' => user_info('id'), 'group_type' => 2])->value('group_id');
-        self::$isSelf = self::$belongToShop == $shopId ? false : $shopId;
+        $shopId = (new User())->where(['id' => user_info('id'), 'type' => 2])->value('group_id');
+        self::$isSelf = ((int) self::$belongToShop) == $shopId;
     }
 
     /**
@@ -80,7 +96,10 @@ class StoreGoods
 
     /**
      * 获取首页商品列表
-     * @return mixed
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public static function  getHomeList()
     {
@@ -103,46 +122,65 @@ class StoreGoods
         //被当前商家拉黑的
         $shopBlacklist = (new RelationShopBlacklist())->where($map)->column('factory_id');
 
-        $blacklist['factory_id'] = array_merge($factoryBlacklist, $shopBlacklist);
+        $blacklist['factory_id'] = array_unique(array_merge($factoryBlacklist, $shopBlacklist));
 
         //当前商家拉黑的商品
         $blacklist['goods_id'] = (new RelationGoodsBlacklist())->where($map)->column('goods_id');
         return $blacklist;
     }
 
-
+    /**
+     * 商城首页商品列表
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     private static function getGoodsBySort()
     {
         //TODO 排序算法 ， 暂无
+
         $blacklist = self::getBlacklist();
+
         $map = [
-            'b.state'           => 1,
-            'b.audit_state'     => 1,
-            'b.delete_time'     => null,
-            'b.id'              => ['not in', $blacklist['factory_id']],
             'a.audit_state'     => 3,
             'a.state'           => 1,
             'a.delete_time'     => null,
+            'b.state'           => 1,
+            'b.audit_state'     => 1,
+            'b.delete_time'     => null,
             'a.id'              => ['not in', $blacklist['goods_id']],
-            'c.object_type'     => 3
+            'b.id'              => ['not in', $blacklist['factory_id']],
         ];
-        if (self::$visitorUser) {
-            $fields = 'a.goods_name, a.goods_no, d.img';
-        } else {
-            $fields = 'a.goods_name, a.goods_no, a.model_no, d.img';
-        }
-        $list = (new Goods())
+
+        $fields = self::$isSelf ? 'a.model_no' : '';
+        $shopId = self::$belongToShop;
+
+        $data = (new Goods())
             ->alias('a')
             ->join('factory b', 'a.factory_id = b.id')
-            ->join('popularity c', 'a.id = c.object_id')
-            ->join('goodsColor d', 'a.id = d.goods_id')
+            ->join('popularity c', 'a.id = c.object_id and object_type = 3', 'LEFT')
+            ->join('goods_color d', 'a.id = d.goods_id', 'LEFT')
+            ->join('goods_factory_price e', 'a.id = e.goods_id', 'LEFT')
+            ->join('goods_retail_price f', "a.id = f.goods_id and f.shop_id = $shopId", 'LEFT')
             ->where($map)
+            ->field("a.goods_name, a.goods_no, SUM(c.value) as popularity, d.img, e.price, f.amount")
             ->field($fields)
+            ->group('a.id, c.object_id')
             ->order(self::$orderBy)
             ->page(self::$page, self::$row)
             ->select();
-        print_r($list);
-        die;
+
+        $list = [];
+        foreach ($data as $v) {
+            $v['img'] = get_thumb_img($v['img']);
+            $v['retail_price'] = $v['amount'] ?? $v['price'] * self::$retailPrice;
+            if (!self::$isSelf) {
+                unset($v['price']);
+            }
+            unset($v['amount']);
+            array_push($list, $v);
+        }
         return $list;
     }
 }
