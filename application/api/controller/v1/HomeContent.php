@@ -43,11 +43,17 @@ class HomeContent extends BaseController {
     public function saveHomeContent()
     {
 
-        $homeContentItemModel       = new HomeContentItem(['id' => $this->request->param('itemId')]);
-        $homeContentItemModel->text = $this->request->post('text');
-        $homeContentItemModel->save();
+        $saveContentData       = [
+            'groupId'   => user_info('group_id'),
+            'groupType' => user_info('type'),
+            'music'     => $this->request->param('music'),
+            'record'    => $this->request->param('record'),
+            'musicName' => $this->request->param('music_name'),
+            'items'     => $this->request->param('items'),
+        ];
+        $data                 = HomeContentItem::saveContent($saveContentData);
 
-        return json_encode(['code' => 1, 'msg' => '保存成功']);
+        return json($this->result);
     }
 
     public function getHomeContent()

@@ -50,4 +50,26 @@ class HomeContentItem extends CoreHomeContentItem
 
         return $result;
     }
+
+    public static function saveContent($data)
+    {
+        $groupId     = $data['groupId'];
+        $groupType   = $data['groupType'];
+        $music       = $data['music'];
+        $record      = $data['record'];
+        $musicName   = $data['musicName'];
+        $items   = $data['items'];
+        Db::query("UPDATE `home_content` SET music='{$music}',record='{$record}',music_name='{$musicName}' WHERE group_id = {$groupId} AND group_type = {$groupType}");
+
+        if(!empty($items)){
+            foreach ($items AS $key=>$value){
+                $itemId = $value['id'];
+                $text   = $value['text'];
+                $img    = $value['img'];
+                Db::query("UPDATE `home_content_item` SET text='{$text}',img='{$img}' WHERE id = {$itemId}");
+            }
+        }
+
+        return true;
+    }
 }
