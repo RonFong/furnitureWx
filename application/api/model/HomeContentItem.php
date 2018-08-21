@@ -58,7 +58,7 @@ class HomeContentItem extends CoreHomeContentItem
         $music       = $data['music'];
         $record      = $data['record'];
         $musicName   = $data['musicName'];
-        $items   = $data['items'];
+        $items       = json_decode($data['items'],true);
         Db::query("UPDATE `home_content` SET music='{$music}',record='{$record}',music_name='{$musicName}' WHERE group_id = {$groupId} AND group_type = {$groupType}");
 
         if(!empty($items)){
