@@ -2,6 +2,7 @@
 
 namespace app\api\model;
 
+use app\api\service\Site;
 use app\common\model\Shop as CoreShop;
 use think\Db;
 
@@ -9,6 +10,25 @@ class Shop extends CoreShop
 {
     public function saveData($data = [])
     {
+        // 获取经纬度
+        if($data['province'] == $data['city']){
+            $address = $data['province'].$data['district'].$data['town'].$data['address'];
+            $vague_address = $data['province'].$data['district'];
+        }else{
+            $address = $data['province'].$data['city'].$data['district'].$data['town'].$data['address'];
+            $vague_address = $data['province'].$data['city'].$data['district'];
+        }
+        $site = new Site();
+        $lat_lng = $site->getLatLngDetail($address,$data['province']);
+        if(empty($lat_lng)){
+            // 模糊搜索
+            $lat_lng = $site->getLatLngDetail($address,$data['province']);
+            if(empty($lat_lng)){
+                return ['success' => false,'msg' => '地址不清晰','data' => []];
+            }
+        }
+        $data['lat'] = $lat_lng['lat'];
+        $data['lng'] = $lat_lng['lng'];
         $data['admin_user'] = user_info('id');
         // 审核暂不审核
         $data['audit_state'] = 1;
@@ -31,7 +51,7 @@ class Shop extends CoreShop
             'id'            => $this->id,
             'probation'     => $data['probation']
         ];
-        return $result;
+        return ['success' => true,'msg' => '','data' => $result];
     }
 
     public function getShopInfo($admin_user)
@@ -41,5 +61,6 @@ class Shop extends CoreShop
             ->where('admin_user',$admin_user)
             ->find();
         return $shopInfo;
+
     }
 }

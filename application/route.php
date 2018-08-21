@@ -58,6 +58,8 @@ Route::group('api/:version',function() {
         Route::get('region/:parent_id/:level','api/:version.Site/getRegion');
         // 获取地理位置
         Route::get('address/:lat/:lng','api/:version.Site/getAddress');
+        // 获取附近的店
+        Route::get('nearbyStore/:lat/:lng/:type','api/:version.Site/getNearbyStore');
     });
 
     //保存临时图片
@@ -159,12 +161,18 @@ Route::group('api/:version',function() {
 
     //首页图文
     Route::group('homeContent', function () {
-        //发布首页图文
+        //获取首页图文
+        Route::get('getHomeContent', 'api/:version.HomeContent/getHomeContent');
+        //获取首页图文item
         Route::get('getHomeContentItem', 'api/:version.HomeContent/getHomeContentItem');
         //发布首页图文
         Route::post('addHomeContent', 'api/:version.HomeContent/addHomeContent');
         //保存首页图文
         Route::post('saveHomeContent', 'api/:version.HomeContent/saveHomeContent');
+        //缓存文字
+        Route::get('setCache', 'api/:version.HomeContent/setCache');
+        //获取缓存文字
+        Route::get('getCache', 'api/:version.HomeContent/getCache');
     });
 
     //商城
