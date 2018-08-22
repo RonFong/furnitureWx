@@ -49,25 +49,43 @@ class HomeContentItem extends CoreHomeContentItem
         $groupId   = $data['groupId'];
         $groupType = $data['groupType'];
         $cacheData = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
-        $cacheData = json_decode($cacheData, true);
-        switch ($data['type']) {
-            case 1:
-                if (!empty($cacheData['items'])) {
-                    foreach ($cacheData['items'] AS $key => &$value) {
-                        if ($value['id'] == $data['itemId']) {
-                            $value['text'] = $data['text'];
+        if (empty($cacheData)) {
+            $cacheData = [
+                'music'     => '',
+                'record'    => '',
+                'musicName' => '',
+                'items'     => [
+                    $data['itemKey'] => [
+                        'id'   => '',
+                        'text' => $data['text'],
+                        'img'  => '',
+                    ],
+                ],
+            ];
+            Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
+
+        } else {
+            $cacheData = json_decode($cacheData, true);
+            switch ($data['type']) {
+                case 1:
+                    if (!empty($cacheData['items'])) {
+                        foreach ($cacheData['items'] AS $key => &$value) {
+                            if ($key == $data['itemKey']) {
+                                $value['text'] = $data['text'];
+                                break;
+                            }
                         }
                     }
-                }
-                break;
-            case 2:
-                $pushData = [
-                    'id'   => '',
-                    'text' => '',
-                    'img'  => '',
-                ];
-                array_push($cacheData['items'],$pushData);
-                break;
+                    break;
+                case 2:
+                    $pushData = [
+                        'id'   => '',
+                        'text' => '',
+                        'img'  => '',
+                    ];
+                    array_push($cacheData['items'], $pushData);
+                    break;
+            }
         }
         Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
 
@@ -79,9 +97,19 @@ class HomeContentItem extends CoreHomeContentItem
 
         $groupId   = $data['groupId'];
         $groupType = $data['groupType'];
+        $itemKey   = $data['itemKey'];
         $result    = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
+        switch ($data['type']) {
+            case 1:
+                $result = json_decode($result, true);
+                break;
+            case 2:
+                $result = json_decode($result, true);
+                $result = $result['items'][$itemKey]['text'];
+                break;
+        }
 
-        return json_decode($result, true);
+        return $result;
     }
 
     public static function saveContent($data)
