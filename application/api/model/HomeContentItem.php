@@ -32,9 +32,9 @@ class HomeContentItem extends CoreHomeContentItem
                 $result['items'] = $contentItemData;
             }
             $cacheData = [
-                'music'     => $contentData['music'],
-                'record'    => $contentData['record'],
-                'musicName' => $contentData['musicName'],
+                'music'     => $contentData[0]['music'],
+                'record'    => $contentData[0]['record'],
+                'musicName' => $contentData[0]['musicName'],
                 'items'     => $result['items'],
             ];
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
