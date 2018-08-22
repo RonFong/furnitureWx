@@ -89,7 +89,7 @@ class HomeContent extends BaseController
             'itemKey'   => $this->request->param('item_key', ''),
             'text'      => $this->request->param('text'),
             'groupId'   => user_info('group_id'),
-            'groupType' => user_info('group_type'),
+            'groupType' => user_info('type'),
             'type'      => $this->request->param('type', 1),
         ];
         HomeContentItem::setCache($setCacheData);
@@ -103,7 +103,7 @@ class HomeContent extends BaseController
         $setCacheData         = [
             'itemKey'   => $this->request->param('item_key', ''),
             'groupId'   => user_info('group_id'),
-            'groupType' => user_info('group_type'),
+            'groupType' => user_info('type'),
             'type'      => $this->request->param('type', 1),
         ];
         $data                 = HomeContentItem::getCache($setCacheData);
