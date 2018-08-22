@@ -37,7 +37,11 @@ class HomeContentItem extends CoreHomeContentItem
 
     public static function setCache($data)
     {
-
+        $groupId     = $data['groupId'];
+        $groupType   = $data['groupType'];
+        $cacheData = Cache::get('home_content_cache_'.$groupId.'_'.$groupType);
+        $cacheData = json_decode($cacheData,true);
+        var_dump($cacheData);die;
         Cache::set('home_content_cache_'.$data['itemId'], $data['text']);
 
         return true;
@@ -69,6 +73,8 @@ class HomeContentItem extends CoreHomeContentItem
                 Db::query("UPDATE `home_content_item` SET text='{$text}',img='{$img}' WHERE id = {$itemId}");
             }
         }
+
+        Cache::set('home_content_cache_'.$groupId.'_'.$groupType, json_encode($data));
 
         return true;
     }
