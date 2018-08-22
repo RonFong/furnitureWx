@@ -42,17 +42,19 @@ class Factory extends BaseController
             Cache::rm('auth_' . $this->data['factory_phone']);
         } catch (\Exception $e) {
             $this->result['state'] = 0;
-            $this->result['msg'] = $e->getMessage();
+            $this->result['msg']   = $e->getMessage();
+
             return json($this->result, 403);
         }
         try {
             $result = $this->currentModel->saveData($this->data);
-            if(!$result['success']){
+            if (!$result['success']) {
                 exception($result['msg']);
             }
         } catch (\Exception $e) {
             $this->result['state'] = 0;
-            $this->result['msg'] = $e->getMessage();
+            $this->result['msg']   = $e->getMessage();
+
             return json($this->result, 403);
         }
         $this->result['data'] = $result['data'];
@@ -166,6 +168,8 @@ class Factory extends BaseController
 
         $factoryInfoData      = [
             'admin_user' => user_info('id'),
+            'groupId'    => user_info('group_id'),
+            'groupType'  => user_info('type'),
         ];
         $data                 = $this->currentModel->factoryInfo($factoryInfoData);
         $this->result['data'] = $data;
