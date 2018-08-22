@@ -14,31 +14,38 @@ namespace app\common\model;
 class Music extends Model
 {
     /**
+     * 根据分类id获取音乐列表
      * @param $categoryId
+     * @param $page
+     * @param $row
      * @return false|static[]
      * @throws \think\exception\DbException
      */
-    public function getByCategory($categoryId)
+    public function getByCategory($categoryId, $page, $row)
     {
-        return self::all(function ($query) use ($categoryId){
+        return self::all(function ($query) use ($categoryId, $page, $row){
             $query->where(['state' => 1, 'category_id' => $categoryId])
                 ->field('id, name, author, link, img')
+                ->page($page, $row)
                 ->order('sort');
         });
     }
 
     /**
      * 根据音乐名模糊查找
-     * @param $name
-     * @return false|static[]
+     * @param string $name
+     * @param array $page
+     * @param bool $row
+     * @return false|mixed|static[]
      * @throws \think\exception\DbException
      */
-    public function query($name)
+    public function query($name, $page, $row)
     {
-        return self::all(function ($query) use ($name){
+        return self::all(function ($query) use ($name, $page, $row){
             $query->where('state', 1)
                 ->where('name|author', 'like', "%$name%")
                 ->field('id, name, author, link, img')
+                ->pager($page, $row)
                 ->order('sort');
         });
     }
