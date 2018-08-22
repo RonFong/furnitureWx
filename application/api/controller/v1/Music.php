@@ -126,7 +126,7 @@ class Music extends BaseController
      * @api {get} /v1/music/query 根据音乐名或艺术家名模糊查找音乐
      * @apiGroup Music
      *
-     * @apiParam {string} query 音乐名或艺术家名
+     * @apiParam {string} keyword 音乐名或艺术家名
      * @apiParam {number} page
      * @apiParam {number} row
      *
@@ -159,7 +159,7 @@ class Music extends BaseController
     {
         try {
             $this->currentValidate->goCheck('query');
-            $this->result['data'] = $this->currentModel->query($this->data['query'], $this->page, $this->row);
+            $this->result['data'] = $this->currentModel->query($this->data['keyword'], $this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
