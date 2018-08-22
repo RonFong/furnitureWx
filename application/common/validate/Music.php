@@ -15,12 +15,12 @@ class Music extends BaseValidate
 {
     protected $rule = [
         'category_id'       => 'require|number',
-        'query'             => 'require',
+        'keyword'             => 'require',
     ];
 
     protected $message = [
         'category_id.require'   => '类别id不能为空',
-        'query.require'         => '查询条件不能空',
+        'keyword.require'         => '查询条件不能空',
     ];
 
     protected $scene = [
@@ -28,7 +28,7 @@ class Music extends BaseValidate
             'category_id',
         ],
         'query'      => [
-            'query',
+            'keyword',
         ],
     ];
 }
