@@ -45,7 +45,7 @@ class Music extends Model
             $query->where('state', 1)
                 ->where('name|author', 'like', "%$keyword%")
                 ->field('id, name, author, link, img')
-                ->pager($page, $row)
+                ->page($page, $row)
                 ->order('sort');
         });
     }
