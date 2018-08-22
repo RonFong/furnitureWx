@@ -105,7 +105,7 @@ class HomeContentItem extends CoreHomeContentItem
                 break;
             case 2:
 
-                $result = $result['items'][$itemKey]['text'];
+                $result = $result['items'][$itemKey];
                 break;
         }
 
