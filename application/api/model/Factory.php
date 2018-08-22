@@ -10,25 +10,26 @@ class Factory extends CoreFactory
 
     public function saveData($data)
     {
+
         // 获取经纬度
-        if($data['province'] == $data['city']){
-            $address = $data['province'].$data['district'].$data['town'].$data['address'];
-            $vague_address = $data['province'].$data['district'];
-        }else{
-            $address = $data['province'].$data['city'].$data['district'].$data['town'].$data['address'];
-            $vague_address = $data['province'].$data['city'].$data['district'];
+        if ($data['province'] == $data['city']) {
+            $address       = $data['province'] . $data['district'] . $data['town'] . $data['address'];
+            $vague_address = $data['province'] . $data['district'];
+        } else {
+            $address       = $data['province'] . $data['city'] . $data['district'] . $data['town'] . $data['address'];
+            $vague_address = $data['province'] . $data['city'] . $data['district'];
         }
-        $site = new Site();
-        $lat_lng = $site->getLatLngDetail($address,$data['province']);
-        if(empty($lat_lng)){
+        $site    = new Site();
+        $lat_lng = $site->getLatLngDetail($address, $data['province']);
+        if (empty($lat_lng)) {
             // 模糊搜索
-            $lat_lng = $site->getLatLngDetail($address,$data['province']);
-            if(empty($lat_lng)){
-                return ['success' => false,'msg' => '地址不清晰','data' => []];
+            $lat_lng = $site->getLatLngDetail($address, $data['province']);
+            if (empty($lat_lng)) {
+                return ['success' => false, 'msg' => '地址不清晰', 'data' => []];
             }
         }
-        $data['lat'] = $lat_lng['lat'];
-        $data['lng'] = $lat_lng['lng'];
+        $data['lat']        = $lat_lng['lat'];
+        $data['lng']        = $lat_lng['lng'];
         $data['admin_user'] = user_info('id');
         // 审核暂不审核
         $data['audit_state'] = 1;
@@ -52,7 +53,7 @@ class Factory extends CoreFactory
             //            'probation'     => $data['probation']
         ];
 
-        return ['success' => true,'msg' => '','data' => $result];
+        return ['success' => true, 'msg' => '', 'data' => $result];
     }
 
     public function getFactoryList($data)
@@ -88,14 +89,15 @@ class Factory extends CoreFactory
 
     public function getFactoryProduct($data)
     {
-        $result = [];
+
+        $result      = [];
         $sql         = "SELECT p.id,p.music,record,classify_name FROM `factory_product` AS p 
                 JOIN `group_classify` AS c ON c.id = p.classify_id
                 WHERE p.state = 1 AND p.factory_id = {$data['factoryId']}
                 LIMIT 1";
         $productInfo = Db::query($sql);
         if (!empty($productInfo)) {
-            $result['info'] =
+            $result['info']     =
             $sql = "SELECT * FROM `factory_product_content`
                 WHERE product_id = {$productInfo['id']}
                 ORDER BY sort DESC";
@@ -112,15 +114,21 @@ class Factory extends CoreFactory
     public function factoryInfo($data)
     {
 
-        $field  = [
+        $field                 = [
             '*',
         ];
-        $where  = [
+        $where                 = [
             'admin_user' => $data['admin_user'],
         ];
-        $result = $this->field($field)
+        $result                = $this->field($field)
             ->where($where)
             ->find();
+        $getContentData        = [
+            'groupId'   => user_info('group_id'),
+            'groupType' => user_info('type'),
+        ];
+        $homeContent           = HomeContentItem::getContent($getContentData);
+        $result['homeContent'] = $homeContent;
 
         return $result;
     }
