@@ -37,10 +37,17 @@ class Music
             return [];
         $list['row'] = count($resource['song']);
         foreach ($resource['song'] as $k => $v) {
+            $this->url .= 'method=baidu.ting.song.play&songid=' . $v['song_id'];
+            $fileInfo = $this->send();
+            if (!$fileInfo || empty($fileInfo['songinfo'])) {
+                continue;
+            }
             $list['song'][$k] = [
                 'id'     => $v['songid'],
                 'name'   => $v['songname'],
-                'artist' => $v['artistname']
+                'artist' => $v['artistname'],
+                'link'   => $fileInfo['bitrate']['file_link'],
+                'picture' => $fileInfo['songinfo']['pic_small']
             ];
         }
         return $list;
@@ -80,12 +87,20 @@ class Music
             return [];
         $list['row'] = count($resource['song_list']);
         foreach ($resource['song_list'] as $k => $v) {
-            $list['song_list'][$k] = [
-                'id'        => $v['song_id'],
-                'name'      => $v['title'],
-                'author'    => $v['author'],
-                'picture'   => $v['pic_small']
-            ];
+            if (!$resource || empty($resource['songinfo'])) {
+                $this->url .= 'method=baidu.ting.song.play&songid=' . $v['song_id'];
+                $fileInfo = $this->send();
+                if (!$fileInfo || empty($fileInfo['songinfo'])) {
+                    continue;
+                }
+                $list['song_list'][$k] = [
+                    'id' => $v['song_id'],
+                    'name' => $v['title'],
+                    'author' => $v['author'],
+                    'picture' => $v['pic_small'],
+                    'link' => $fileInfo['bitrate']['file_link']
+                ];
+            }
         }
         return $list;
     }
