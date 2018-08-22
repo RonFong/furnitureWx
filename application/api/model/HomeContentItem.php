@@ -66,7 +66,6 @@ class HomeContentItem extends CoreHomeContentItem
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
 
         } else {
-            $cacheData = json_decode($cacheData, true);
             switch ($data['type']) {
                 case 1:
                     if (!empty($cacheData['items'])) {
@@ -102,10 +101,10 @@ class HomeContentItem extends CoreHomeContentItem
         $result    = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
         switch ($data['type']) {
             case 1:
-                $result = json_decode($result, true);
+
                 break;
             case 2:
-                $result = json_decode($result, true);
+
                 $result = $result['items'][$itemKey]['text'];
                 break;
         }
