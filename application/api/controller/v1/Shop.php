@@ -75,4 +75,9 @@ class Shop extends BaseController
         }
         $this->response->error(Response::USERS_EMPTY);
     }
+
+    public function addShopGoods()
+    {
+        
+    }
 }
