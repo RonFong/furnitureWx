@@ -35,7 +35,7 @@ class HomeContentItem extends CoreHomeContentItem
                 'id'        => $contentData[0]['id'],
                 'music'     => $contentData[0]['music'],
                 'record'    => $contentData[0]['record'],
-                'musicName' => $contentData[0]['music_name'],
+                'music_name' => $contentData[0]['music_name'],
                 'items'     => $result['items'],
             ];
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
@@ -54,7 +54,7 @@ class HomeContentItem extends CoreHomeContentItem
             $cacheData = [
                 'music'     => '',
                 'record'    => '',
-                'musicName' => '',
+                'music_name' => '',
                 'items'     => [
                     $data['itemKey'] => [
                         'id'   => '',
@@ -63,7 +63,6 @@ class HomeContentItem extends CoreHomeContentItem
                     ],
                 ],
             ];
-            Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
         } else {
             switch ($data['type']) {
                 case 1:
@@ -144,7 +143,7 @@ class HomeContentItem extends CoreHomeContentItem
         $cacheData = [
             'music'     => $music,
             'record'    => $record,
-            'musicName' => $musicName,
+            'music_name' => $musicName,
             'items'     => $items,
         ];
         Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
