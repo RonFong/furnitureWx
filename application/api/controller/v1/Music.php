@@ -12,9 +12,12 @@
 namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
+use app\api\model\MusicCategory;
 use app\api\service\Music as MusicService;
 use app\lib\enum\Response;
 use think\Request;
+use app\api\model\Music as MusicModel;
+use app\common\validate\Music as MusicValidate;
 
 /**
  * 音乐
@@ -29,7 +32,138 @@ class Music extends BaseController
     {
         parent::__construct($request);
         $this->service = $service;
+        $this->currentModel = new MusicModel();
+        $this->currentValidate = new MusicValidate();
     }
+
+    /**
+     * @api {get} /v1/music/getCategoryList 获取音乐库音乐分类
+     * @apiGroup Music
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 见接口地址
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+     *  {
+     *      "state": 1,
+     *      "msg": "success",
+     *      "data": [
+     *          {
+     *              "id": 1,
+     *              "category_name": "天籁之音",        //分类名
+     *              "quantity": 2                       //音乐数量
+     *          },
+     *          {
+     *              "id": 2,
+     *              "category_name": "青葱校园",
+     *              "quantity": 2
+     *          },
+     *          {
+     *              "id": 3,
+     *              "category_name": "生活正能量",
+     *              "quantity": 3
+     *          }
+     *      ]
+     *  }
+     */
+    public function getCategoryList(MusicCategory $musicCategory)
+    {
+        try {
+            $this->result['data'] = $musicCategory->getCategoryList();
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+
+    /**
+     * @api {get} /v1/music/getByCategory 根据分类获取音乐列表
+     * @apiGroup Music
+     *
+     * @apiParam {number} category_id 分类id
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 略
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+     *{
+     *    "state": 1,
+     *    "msg": "success",
+     *    "data": [
+     *        {
+     *            "id": 1,
+     *            "name": "あの日の川へ",             //音乐名
+     *            "author": "久石让",
+     *            "link": "http://zhangmen28ebc34.mp3",   //音乐文件地址
+     *            "img": "http://qukufile2.qianqian.com/data2/pic/763021c8b43/596773143.jpg@s_1,w_90,h_90"  //缩略图
+     *            },
+     *        {
+     *            "id": 2,
+     *            "name": "あの日の川へ",
+     *            "author": "久石让",
+     *            "link": "http://zhangmen28ebc34.mp3",   //音乐文件地址
+     *            "img": "http://qukufile2.qianqian.com/data2/pic/763021c8b43/596773143.jpg@s_1,w_90,h_90"  //缩略图
+     *        }
+     *    ]
+     *}
+     */
+    public function getByCategory()
+    {
+        try {
+            $this->currentValidate->goCheck('getByCategory');
+            $this->result['data'] = $this->currentModel->getByCategory($this->data['category_id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
+     * @api {get} /v1/music/query 根据音乐名或艺术家名模糊查找音乐
+     * @apiGroup Music
+     *
+     * @apiParam {string} query 音乐名或艺术家名
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * 略
+     *
+     * @apiSuccessExample {json} 成功时的返回：
+     *{
+     *    "state": 1,
+     *    "msg": "success",
+     *    "data": [
+     *        {
+     *            "id": 1,
+     *            "name": "あの日の川へ",             //音乐名
+     *            "author": "久石让",
+     *            "link": "http://zhangmen28ebc34.mp3",   //音乐文件地址
+     *            "img": "http://qukufile2.qianqian.com/data2/pic/763021c8b43/596773143.jpg@s_1,w_90,h_90"  //缩略图
+     *            },
+     *        {
+     *            "id": 2,
+     *            "name": "あの日の川へ",
+     *            "author": "久石让",
+     *            "link": "http://zhangmen28ebc34.mp3",   //音乐文件地址
+     *            "img": "http://qukufile2.qianqian.com/data2/pic/763021c8b43/596773143.jpg@s_1,w_90,h_90"  //缩略图
+     *        }
+     *    ]
+     *}
+     */
+    public function query()
+    {
+        try {
+            $this->currentValidate->goCheck('query');
+            $this->result['data'] = $this->currentModel->query($this->data['query']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+
 
     /**
      * @api {get} /v1/music/recommend/:page/:row 获取推荐音乐
