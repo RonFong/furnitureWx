@@ -33,17 +33,17 @@ class Music extends Model
 
     /**
      * 根据音乐名模糊查找
-     * @param string $name
+     * @param string $keyword
      * @param array $page
      * @param bool $row
      * @return false|mixed|static[]
      * @throws \think\exception\DbException
      */
-    public function query($name, $page, $row)
+    public function query($keyword, $page, $row)
     {
-        return self::all(function ($query) use ($name, $page, $row){
+        return self::all(function ($query) use ($keyword, $page, $row){
             $query->where('state', 1)
-                ->where('name|author', 'like', "%$name%")
+                ->where('name|author', 'like', "%$keyword%")
                 ->field('id, name, author, link, img')
                 ->pager($page, $row)
                 ->order('sort');
