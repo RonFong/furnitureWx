@@ -83,6 +83,8 @@ class Music extends BaseController
      * @apiGroup Music
      *
      * @apiParam {number} category_id 分类id
+     * @apiParam {number} page
+     * @apiParam {number} row
      *
      * @apiParamExample  {string} 请求参数格式：
      * 略
@@ -113,7 +115,7 @@ class Music extends BaseController
     {
         try {
             $this->currentValidate->goCheck('getByCategory');
-            $this->result['data'] = $this->currentModel->getByCategory($this->data['category_id']);
+            $this->result['data'] = $this->currentModel->getByCategory($this->data['category_id'], $this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -125,6 +127,8 @@ class Music extends BaseController
      * @apiGroup Music
      *
      * @apiParam {string} query 音乐名或艺术家名
+     * @apiParam {number} page
+     * @apiParam {number} row
      *
      * @apiParamExample  {string} 请求参数格式：
      * 略
@@ -155,7 +159,7 @@ class Music extends BaseController
     {
         try {
             $this->currentValidate->goCheck('query');
-            $this->result['data'] = $this->currentModel->query($this->data['query']);
+            $this->result['data'] = $this->currentModel->query($this->data['query'], $this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
