@@ -108,12 +108,12 @@
                 //提交的网址
                 url       : "/api/v1/homeContent/getCache",
                 //提交的数据
-                data      : {itemKey: getParam('itemKey')},
+                data:{
+                    type:2,
+                    itemKey: getParam('itemKey')
+                },
                 headers   : {
                     'userToken': getParam('token')
-                },
-                data:{
-                  type:2
                 },
                 //返回数据的格式
                 datatype  : "json",//"xml", "html", "script", "json", "jsonp", "text".
