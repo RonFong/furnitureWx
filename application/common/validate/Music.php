@@ -20,7 +20,7 @@ class Music extends BaseValidate
 
     protected $message = [
         'category_id.require'   => '类别id不能为空',
-        'keyword.require'         => '查询条件不能空',
+        'keyword.require'       => '请输入查询条件',
     ];
 
     protected $scene = [
