@@ -32,6 +32,7 @@ class HomeContentItem extends CoreHomeContentItem
                 $result['items'] = $contentItemData;
             }
             $cacheData = [
+                'id'        => $contentData[0]['id'],
                 'music'     => $contentData[0]['music'],
                 'record'    => $contentData[0]['record'],
                 'musicName' => $contentData[0]['music_name'],
