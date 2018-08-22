@@ -184,23 +184,23 @@
         toolbars: [
             'insertText',
             'editText',
-            'insertImage',
-            'insertLink',
+            // 'insertImage',
+            // 'insertLink',
             'insertHr',
-            'delete',
-            //自定义一个视频按钮
-            {
-                id    : 'insertVideo',
-                // tag: 'p,img', //指定P标签操作，可不填
-                name  : '插入视频',
-                handle: function (select, controll) {//回调返回选择的dom对象和控制按钮对象
-
-                    /*因为上传要提前绑定按钮到webuploader，所以这里不做上传逻辑，写在mounted*/
-
-                    /*!!!!!!返回false编辑面板不会关掉*/
-                    return false;
-                }
-            },
+            // 'delete',
+            // //自定义一个视频按钮
+            // {
+            //     id    : 'insertVideo',
+            //     // tag: 'p,img', //指定P标签操作，可不填
+            //     name  : '插入视频',
+            //     handle: function (select, controll) {//回调返回选择的dom对象和控制按钮对象
+            //
+            //         /*因为上传要提前绑定按钮到webuploader，所以这里不做上传逻辑，写在mounted*/
+            //
+            //         /*!!!!!!返回false编辑面板不会关掉*/
+            //         return false;
+            //     }
+            // },
             'undo',
             'cancel'
         ],
