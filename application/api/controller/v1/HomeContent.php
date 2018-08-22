@@ -90,6 +90,7 @@ class HomeContent extends BaseController
             'text'      => $this->request->param('text'),
             'groupId'   => user_info('group_id'),
             'groupType' => user_info('group_type'),
+            'type'      => $this->request->param('type', 1),
         ];
         HomeContentItem::setCache($setCacheData);
 
