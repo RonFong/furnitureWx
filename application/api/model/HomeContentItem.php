@@ -70,6 +70,7 @@ class HomeContentItem extends CoreHomeContentItem
                 $itemId = $value['id'];
                 $text   = $value['text'];
                 $img    = $value['img'];
+                unset($items[$key]['format_text']);
                 Db::query("UPDATE `home_content_item` SET text='{$text}',img='{$img}' WHERE id = {$itemId}");
             }
         }
