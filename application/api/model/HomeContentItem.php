@@ -32,11 +32,11 @@ class HomeContentItem extends CoreHomeContentItem
                 $result['items'] = $contentItemData;
             }
             $cacheData = [
-                'id'        => $contentData[0]['id'],
-                'music'     => $contentData[0]['music'],
-                'record'    => $contentData[0]['record'],
+                'id'         => $contentData[0]['id'],
+                'music'      => $contentData[0]['music'],
+                'record'     => $contentData[0]['record'],
                 'music_name' => $contentData[0]['music_name'],
-                'items'     => $result['items'],
+                'items'      => $result['items'],
             ];
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
         }
@@ -52,10 +52,10 @@ class HomeContentItem extends CoreHomeContentItem
         $cacheData = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
         if (empty($cacheData)) {
             $cacheData = [
-                'music'     => '',
-                'record'    => '',
+                'music'      => '',
+                'record'     => '',
                 'music_name' => '',
-                'items'     => [
+                'items'      => [
                     $data['itemKey'] => [
                         'id'   => '',
                         'text' => $data['text'],
@@ -99,10 +99,8 @@ class HomeContentItem extends CoreHomeContentItem
         $result    = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
         switch ($data['type']) {
             case 1:
-
                 break;
             case 2:
-
                 $result = $result['items'][$itemKey];
                 break;
         }
@@ -141,10 +139,10 @@ class HomeContentItem extends CoreHomeContentItem
             }
         }
         $cacheData = [
-            'music'     => $music,
-            'record'    => $record,
+            'music'      => $music,
+            'record'     => $record,
             'music_name' => $musicName,
-            'items'     => $items,
+            'items'      => $items,
         ];
         Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
 

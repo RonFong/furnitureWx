@@ -52,7 +52,7 @@ class HomeContent extends BaseController
             'musicName' => $this->request->param('music_name'),
             'items'     => $this->request->param('items'),
         ];
-        $data            = HomeContentItem::saveContent($saveContentData);
+        HomeContentItem::saveContent($saveContentData);
 
         return json($this->result);
     }
