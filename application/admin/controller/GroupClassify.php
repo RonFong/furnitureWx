@@ -74,18 +74,7 @@ class GroupClassify extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
 
-            /*获取下拉列表：市*/
-            $city = $this->getRegion($data['province']);
-            $this->assign('cityList', $city);
-
-            /*获取下拉列表：区/镇*/
-            $district = $this->getRegion($data['city']);
-            $this->assign('districtList', $district);
         }
-
-        /*获取下拉列表：省份*/
-        $provinceList = $this->getRegion(0);
-        $this->assign('provinceList', $provinceList);
 
         return $this->fetch();
     }

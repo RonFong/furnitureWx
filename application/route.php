@@ -58,6 +58,8 @@ Route::group('api/:version',function() {
         Route::get('region/:parent_id/:level','api/:version.Site/getRegion');
         // 获取地理位置
         Route::get('address/:lat/:lng','api/:version.Site/getAddress');
+        // 获取附近的店
+        Route::get('nearbyStore/:lat/:lng/:type','api/:version.Site/getNearbyStore');
     });
 
     //保存临时图片
@@ -104,7 +106,10 @@ Route::group('api/:version',function() {
 
     // 门店
     Route::group('shop', function () {
+        // 入驻商家
         Route::post('register','api/:version.Shop/register');
+        // 门店信息
+        Route::get('info','api/:version.Shop/info');
     });
 
     Route::group('category',function (){
@@ -123,6 +128,20 @@ Route::group('api/:version',function() {
         Route::post('goodsCollect', 'api/:version.Relate/goodsCollect');
         //用户关注用户
         Route::post('userCollect', 'api/:version.Relate/userCollect');
+        //厂家 拉黑 商家
+        Route::post('factoryBlacklist', 'api/:version.Relate/factoryBlacklist');
+        //商家 拉黑 厂家
+        Route::post('shopBlacklist', 'api/:version.Relate/shopBlacklist');
+        //商家 拉黑 商城商品
+        Route::post('goodsBlacklist', 'api/:version.Relate/goodsBlacklist');
+        //用户收藏商家
+        Route::post('shopCollect', 'api/:version.Relate/shopCollect');
+        //用户收藏厂家
+        Route::post('factoryCollect', 'api/:version.Relate/factoryCollect');
+        //获取用户的收藏
+        Route::get('collectList', 'api/:version.Relate/getCollectList');
+        //获取用户的黑名单
+        Route::get('blackList', 'api/:version.Relate/getBlackList');
     });
 
     //工厂
@@ -136,5 +155,45 @@ Route::group('api/:version',function() {
         Route::get('factoryProductDetail/:product_id', 'api/:version.Factory/factoryProductDetail');
         //获取工厂详情
         Route::get('getFactoryInfo', 'api/:version.Factory/getFactoryInfo');
+        //编辑工厂信息
+        Route::post('editFactoryInfo', 'api/:version.Factory/editFactoryInfo');
+    });
+
+    //首页图文
+    Route::group('homeContent', function () {
+        //获取首页图文
+        Route::get('getHomeContent', 'api/:version.HomeContent/getHomeContent');
+        //获取首页图文item
+        Route::get('getHomeContentItem', 'api/:version.HomeContent/getHomeContentItem');
+        //发布首页图文
+        Route::post('addHomeContent', 'api/:version.HomeContent/addHomeContent');
+        //保存首页图文
+        Route::post('saveHomeContent', 'api/:version.HomeContent/saveHomeContent');
+        //缓存文字
+        Route::get('setCache', 'api/:version.HomeContent/setCache');
+        //获取缓存文字
+        Route::get('getCache', 'api/:version.HomeContent/getCache');
+    });
+
+    //商城
+    Route::group('store', function () {
+        //获取商城首页商品列表
+        Route::get('homeGoodsList', 'api/:version.StoreGoods/getGoodsList');
+    });
+
+    //推广
+    Route::group('userProposed', function () {
+        //保存推荐关系
+        Route::post('proposed', 'api/:version.UserProposed/proposed');
+        //获取推荐列表
+        Route::get('proposedList', 'api/:version.UserProposed/proposedList');
+    });
+
+    //商家自定义商城商品零售价
+    Route::group('goodsRetailPrice', function () {
+        //设置商城商品全局 零售价计算比例
+        Route::post('setGlobalRatio', 'api/:version.GoodsRetailPrice/setGlobalRatio');
+        //设置商城商品零售价
+        Route::post('setGoodsAmount', 'api/:version.GoodsRetailPrice/setGoodsAmount');
     });
 });

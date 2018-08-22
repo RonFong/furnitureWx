@@ -55,6 +55,7 @@ class Shop extends BaseValidate
             'category_id',
             'category_child_id'
         ],
+        'info' => []
     ];
 
 

@@ -54,20 +54,24 @@ class Shop extends BaseController
 
         try {
             $result = $this->currentModel->saveData($this->data);
+            if(!$result['success']){
+                exception($result['msg']);
+            }
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
         }
-        $this->result['data'] = $result;
-        return json($this->result, 201);
+        $this->result['data'] = $result['data'];
+        return json($this->result, 200);
     }
 
     public function info()
     {
-        $this->currentValidate->goCheck('info');
-        $admin_id = empty($this->data['admin_user']) ? '' : $this->data['admin_user'];
-        $userList = $this->currentModel->selectShop($admin_id, $this->page, $this->row);
+        $admin_id =  user_info('id');
+        $userList = $this->currentModel->getShopInfo($admin_id);
         if ($userList) {
-            return json($userList, 202);
+            return json($userList);
         }
         $this->response->error(Response::USERS_EMPTY);
     }

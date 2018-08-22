@@ -34,16 +34,13 @@
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
         , toolbars: [[
-            'fullscreen', 'source', '|',
-			'undo', 'redo', '|',
-            'bold', 'italic', 'underline', 'strikethrough', 'removeformat', 'formatmatch','|',
-			'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
-            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-             'indent',
+            'fullscreen', 'source', '|', 'undo', 'redo', 'pasteplain', '|',
+            'bold', 'italic', 'underline', 'removeformat', 'autotypeset', 'blockquote', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
+            'fontfamily', 'fontsize', '|',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-			'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload', 'insertimage', 'map', 'insertvideo', 'template'
+            'link', 'unlink', 'anchor', '|',
+            'simpleupload', 'insertimage', 'emotion', 'insertvideo',  'attachment', 'map', 'insertframe', '|', 'pagebreak', 'template', 'background', '|',
+            'horizontal', 'spechars', 'wordimage'
         ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
@@ -89,14 +86,14 @@
         //,indentValue:'2em'
 
         //,initialFrameWidth:1000  //初始化编辑器宽度,默认1000
-        //,initialFrameHeight:320  //初始化编辑器高度,默认320
+        ,initialFrameHeight:320  //初始化编辑器高度,默认320
 
         //,readonly : false //编辑器初始化结束后,编辑区域是否是只读的，默认是false
 
         //,autoClearEmptyNode : true //getContent时，是否删除空的inlineElement节点（包括嵌套的情况）
 
         //启用自动保存
-        //,enableAutoSave: true
+        ,enableAutoSave: false
         //自动保存间隔时间， 单位ms
         //,saveInterval: 500
 
@@ -110,7 +107,7 @@
         //粘贴只保留标签，去除标签所有属性
         //,retainOnlyLabelPasted: false
 
-        //,pasteplain:false  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+        ,pasteplain:true  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
         //纯文本粘贴模式下的过滤规则
         //'filterTxtRules' : function(){
         //    function transP(node){
@@ -272,7 +269,7 @@
         //可以最多回退的次数,默认20
         //,maxUndoCount:20
         //当输入的字符数超过该值时，保存一次现场
-        //,maxInputCount:1
+        ,maxInputCount:10
 
         //autoHeightEnabled
         // 是否自动长高,默认true
@@ -293,7 +290,7 @@
         //,toolbarTopOffset:400
 
         //设置远程图片是否抓取到本地保存
-        //,catchRemoteImageEnable: true //设置是否抓取远程图片
+        ,catchRemoteImageEnable: false //设置是否抓取远程图片
 
         //pageBreakTag
         //分页标识符,默认是_ueditor_page_break_tag_
@@ -350,9 +347,9 @@
         //, webAppKey: ""
 
         //默认过滤规则相关配置项目
-        //,disabledTableInTable:true  //禁止表格嵌套
-        //,allowDivTransToP:true      //允许进入编辑器的div标签自动变成p标签
-        //,rgb2Hex:true               //默认产出的数据中的color自动从rgb格式变成16进制格式
+        ,disabledTableInTable:false  //禁止表格嵌套
+        ,allowDivTransToP:false      //允许进入编辑器的div标签自动变成p标签
+        ,rgb2Hex:false               //默认产出的数据中的color自动从rgb格式变成16进制格式
 
 		// xss 过滤是否开启,inserthtml等操作
 		,xssFilterRules: true

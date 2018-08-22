@@ -9,14 +9,13 @@
 
 
 namespace app\common\model;
-use traits\model\SoftDelete;
 
 /**
- * 商家关注厂家
+ * 商家收藏厂家
  * Class RelationFactoryCollect
  * @package app\common\model
  */
 class RelationFactoryCollect extends Model
 {
-    use SoftDelete;
+
 }

@@ -27,10 +27,11 @@ class Factory extends BaseController
 
     public function register()
     {
+
         // 参数检查暂时跳过
         $this->currentValidate->goCheck('register');
         // 检查手机验证码
-        $authCode = Cache::get('auth_'.$this->data['factory_phone']);
+        $authCode = Cache::get('auth_' . $this->data['factory_phone']);
         try {
             if (!$authCode) {
                 exception('验证码不存在');
@@ -38,17 +39,24 @@ class Factory extends BaseController
             if ($authCode != $this->data['code']) {
                 exception('验证码错误');
             }
-            Cache::rm('auth_'.$this->data['factory_phone']);
+            Cache::rm('auth_' . $this->data['factory_phone']);
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
         }
-
         try {
             $result = $this->currentModel->saveData($this->data);
+            if(!$result['success']){
+                exception($result['msg']);
+            }
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 403);
         }
-        $this->result['data'] = $result;
+        $this->result['data'] = $result['data'];
+
         return json($this->result, 201);
     }
 
@@ -108,7 +116,7 @@ class Factory extends BaseController
     }
 
     /**
-     * @api      {get} /v1/factory/FactoryList 获取厂家商品
+     * @api      {get} /v1/factory/FactoryList 获取厂家相册
      * @apiGroup Factory
      * @apiParam {number} factoryId 厂家ID
      * @apiParam {number} page 页码 （当前只有1页）
@@ -145,23 +153,38 @@ class Factory extends BaseController
     {
 
         $getFactoryProductData = [
-            'page'      => $this->page,
-            'row'       => $this->row,
             'factoryId' => $this->data['factoryId'],
         ];
-        $result                = $this->currentModel->getFactoryProduct($getFactoryProductData);
+        $data                  = $this->currentModel->getFactoryProduct($getFactoryProductData);
+        $this->result['data']  = $data;
 
-        return json($result);
+        return json($this->result);
     }
 
     public function getFactoryInfo()
     {
 
-        $factoryInfoData = [
-            'userId' => user_info('id'),
+        $factoryInfoData      = [
+            'admin_user' => user_info('id'),
         ];
-        $result                = $this->currentModel->factoryInfo($factoryInfoData);
+        $data                 = $this->currentModel->factoryInfo($factoryInfoData);
+        $this->result['data'] = $data;
 
-        return json($result);
+        return json($this->result);
+    }
+
+    public function editFactoryInfo()
+    {
+
+        $editFactoryInfoData = [
+            'admin_user' => user_info('id'),
+        ];
+        $params              = $this->request->param();
+        unset($params['version']);
+        $editFactoryInfoData  = array_merge($editFactoryInfoData, $params);
+        $data                 = $this->currentModel->editFactoryInfo($editFactoryInfoData);
+        $this->result['data'] = $data;
+
+        return json($this->result);
     }
 }
