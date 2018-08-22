@@ -36,6 +36,13 @@ Route::group('api/:version',function() {
 
     // 音乐
     Route::group('music',function () {
+        //获取音乐库音乐分类
+        Route::get('getCategoryList', 'api/:version.Music/getCategoryList');
+        //根据分类获取音乐列表
+        Route::get('getByCategory', 'api/:version.Music/getByCategory');
+        //根据音乐名或艺术家名模糊查找音乐
+        Route::get('query', 'api/:version.Music/query');
+
         //获取推荐音乐
         Route::get('recommend/:page/:row', 'api/:version.Music/getRecommendList');
         //查找音乐
