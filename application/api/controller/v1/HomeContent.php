@@ -100,7 +100,8 @@ class HomeContent extends BaseController
     {
 
         $setCacheData         = [
-            'itemId' => $this->request->param('itemId'),
+            'groupId'   => user_info('group_id'),
+            'groupType' => user_info('group_type'),
         ];
         $data                 = HomeContentItem::getCache($setCacheData);
         $this->result['data'] = $data;

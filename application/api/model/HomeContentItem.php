@@ -42,9 +42,14 @@ class HomeContentItem extends CoreHomeContentItem
         $groupType = $data['groupType'];
         $cacheData = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
         $cacheData = json_decode($cacheData, true);
-        var_dump($cacheData);
-        die;
-        Cache::set('home_content_cache_' . $data['itemId'], $data['text']);
+        if (!empty($cacheData['items'])) {
+            foreach ($cacheData['items'] AS $key => &$value) {
+                if ($value['id'] == $data['itemId']) {
+                    $value['text'] = $data['text'];
+                }
+            }
+        }
+        Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
 
         return true;
     }
@@ -52,9 +57,11 @@ class HomeContentItem extends CoreHomeContentItem
     public static function getCache($data)
     {
 
-        $result = Cache::get('home_content_cache_' . $data['itemId']);
+        $groupId   = $data['groupId'];
+        $groupType = $data['groupType'];
+        $result    = Cache::get('home_content_cache_' . $groupId . '_' . $groupType);
 
-        return $result;
+        return json_decode($result, true);
     }
 
     public static function saveContent($data)
