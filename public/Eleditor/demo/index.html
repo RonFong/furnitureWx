@@ -101,14 +101,17 @@
 </div>
 <script>
     $(function () {
-        if (getParam('itemId') != '' && getParam('itemId') != undefined) {
+        if (getParam('itemKey') != '' && getParam('itemKey') != undefined) {
             $.ajax({
                 //提交数据的类型 POST GET
                 type      : "GET",
                 //提交的网址
-                url       : "/api/v1/homeContent/getHomeContentItem",
+                url       : "/api/v1/homeContent/getCache",
                 //提交的数据
-                data      : {itemId: getParam('itemId')},
+                data:{
+                    type:2,
+                    itemKey: getParam('itemKey')
+                },
                 headers   : {
                     'userToken': getParam('token')
                 },
@@ -120,7 +123,9 @@
                 },
                 //成功返回之后调用的函数
                 success   : function (data) {
-                    $('#contentEditor').html(data.data.text);
+                    if(data.data.text != ''){
+                        $('#contentEditor').html(data.data.text);
+                    }
                 },
                 //调用执行后调用的函数
                 complete  : function (XMLHttpRequest, textStatus) {
@@ -209,14 +214,14 @@
     $('#saveBtn').click(function () {
         var text   = contentEditor.getContent();
         var token  = getParam('token');
-        var itemId = getParam('itemId');
+        var itemKey = getParam('itemKey');
         $.ajax({
             //提交数据的类型 POST GET
             type      : "GET",
             //提交的网址
             url       : "/api/v1/homeContent/setCache",
             //提交的数据
-            data      : {text: text, itemId: itemId},
+            data      : {text: text, itemKey: itemKey},
             headers   : {
                 'userToken': token
             },
@@ -228,7 +233,7 @@
             },
             //成功返回之后调用的函数
             success   : function (data) {
-                wx.miniProgram.redirectTo({url: '/pages/manufactor/editor/editor?type=2'});
+                wx.miniProgram.navigateTo({url: '/pages/manufactor/editor/editor?type=2'});
             },
             //调用执行后调用的函数
             complete  : function (XMLHttpRequest, textStatus) {
