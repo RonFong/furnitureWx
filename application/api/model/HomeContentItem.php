@@ -59,7 +59,7 @@ class HomeContentItem extends CoreHomeContentItem
                     $data['itemKey'] => [
                         'id'   => '',
                         'text' => $data['text'],
-                        'img'  => '',
+                        'img'  => $data['img'],
                     ],
                 ],
             ];
@@ -70,6 +70,9 @@ class HomeContentItem extends CoreHomeContentItem
                         foreach ($cacheData['items'] AS $key => &$value) {
                             if ($key == $data['itemKey']) {
                                 $value['text'] = $data['text'];
+                                if(!empty($data['img'])){
+                                    $value['img'] = $data['img'];
+                                }
                                 break;
                             }
                         }
