@@ -64,7 +64,6 @@ class HomeContentItem extends CoreHomeContentItem
                 ],
             ];
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
-
         } else {
             switch ($data['type']) {
                 case 1:
