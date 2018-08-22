@@ -52,7 +52,7 @@ class Site extends BaseController
         // 1 :厂家 2：商家
         $type = $this->data['type'] == 1 ? 1 : 2;
 
-        $word = $this->data['w'];
+        $word = empty($this->data['w']) ? '' : $this->data['w'];
 //        $table = $type == 1 ? 'factory' : 'shop';
         if($type == 1){
             $table = 'factory';
