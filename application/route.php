@@ -43,12 +43,16 @@ Route::group('api/:version',function() {
         //根据音乐名或艺术家名模糊查找音乐
         Route::get('query', 'api/:version.Music/query');
 
-        //获取推荐音乐
-        Route::get('recommend/:page/:row', 'api/:version.Music/getRecommendList');
-        //查找音乐
-        Route::get('search/:query', 'api/:version.Music/searchMusic');
-        //获取指定音乐地址
-        Route::get('getLink/:id', 'api/:version.Music/getLink');
+        /*
+         * 因百度音乐接口发生变更，以下接口已不可用
+         *
+        *获取推荐音乐
+        *Route::get('recommend/:page/:row', 'api/:version.Music/getRecommendList');
+        *查找音乐
+        *Route::get('search/:query', 'api/:version.Music/searchMusic');
+        *获取指定音乐地址
+        *Route::get('getLink/:id', 'api/:version.Music/getLink');
+        */
     });
 
     //短信
