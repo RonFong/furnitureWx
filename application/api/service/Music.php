@@ -94,11 +94,11 @@ class Music
                     continue;
                 }
                 $list['song_list'][$k] = [
-                    'id' => $v['song_id'],
-                    'name' => $v['title'],
-                    'author' => $v['author'],
-                    'picture' => $v['pic_small'],
-                    'link' => $fileInfo['bitrate']['file_link']
+                    'id'        => $v['song_id'],
+                    'name'      => $v['title'],
+                    'author'    => $v['author'],
+                    'picture'   => $v['pic_small'],
+                    'link'      => $fileInfo['bitrate']['file_link']
                 ];
             }
         }
