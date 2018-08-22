@@ -28,7 +28,7 @@ class MusicCategory extends Model
             ->where('a.state', 1)
             ->field('a.id, a.category_name, count(b.id) as quantity')
             ->group('a.id')
-            ->order('sort')
+            ->order('a.sort')
             ->select();
     }
 }
