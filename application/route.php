@@ -123,9 +123,12 @@ Route::group('api/:version', function () {
         Route::get('storeList', 'api/:version.StoreClassify/getStoreClassifyList');
     });
     // 用户产品分类
-    Route::group('classify', function () {
+    Route::group('classify',function () {
+        // 产品分类列表
+        Route::get('groupClassify','api/:version.Category/getGroupClassifyList');
+        // 添加产品分类
+        Route::post('addGroupClassify','api/:version.Category/AddGroupClassify');
 
-        Route::get('groupClassify', 'api/:version.Category/getGroupClassifyList');
     });
     //关注、收藏、点赞
     Route::group('relate', function () {
