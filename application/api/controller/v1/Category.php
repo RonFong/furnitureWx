@@ -46,7 +46,6 @@ class Category extends BaseController
         $save_data = $this->data;
         $save_data['group_id'] = user_info('group_id');
         $save_data['group_type'] = user_info('group_type');
-        $save_data['fdsfsdfds'] = 'dass';
         $groupModel = new GroupClassify();
         $res = $groupModel->save($save_data);
         if(!$res){
