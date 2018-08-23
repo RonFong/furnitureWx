@@ -127,6 +127,11 @@ Route::group('api/:version',function() {
         Route::get('storeList','api/:version.StoreClassify/getStoreClassifyList');
     });
 
+    // 用户产品分类
+    Route::group('classify',function () {
+        Route::get('groupClassify','api/:version.Category/getGroupClassifyList');
+    });
+
     //关注、收藏、点赞
     Route::group('relate', function() {
         //用户收藏文章
