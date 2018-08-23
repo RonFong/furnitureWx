@@ -129,9 +129,6 @@
 								<div class="Eleditor-textStyle-align Eleditor-textStyle-alignRight" align="right">\
 								</div>\
 							</div>\
-							<!--<div class="Eleditor-textStyle-item Eleditor-textStyle-item-upImg">\
-								<div class="Eleditor-textStyle-upImg"></div>\
-							</div>\-->\
 						</div>\
 						<div class="Eleditor-textEditor-colors">\
 							<div class="Eleditor-textEditor-modulePane"><span></span></div>\
