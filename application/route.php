@@ -129,7 +129,10 @@ Route::group('api/:version',function() {
 
     // 用户产品分类
     Route::group('classify',function () {
+        // 产品分类列表
         Route::get('groupClassify','api/:version.Category/getGroupClassifyList');
+        // 添加产品分类
+        Route::post('addGroupClassify','api/:version.Category/AddGroupClassify');
     });
 
     //关注、收藏、点赞
