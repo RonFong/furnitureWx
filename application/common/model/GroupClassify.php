@@ -33,29 +33,23 @@ class GroupClassify extends Model
 
     public function _picker_tree_data($tree)
     {
-        $result = ['0' => '无'];
+        $result_data = ['0' => '无'];
+        $result_obj = ['0' => ['id' => 0,'classify_name' => '无']];
         foreach ($tree as $id => $item){
-            $result[$id] = $item['classify_name'];
+            $tmp['id'] = $id;
+            $tmp['classify_name'] = $item['classify_name'];
+            $result_data[] = $item['classify_name'];
+            $result_obj[] = $tmp;
             if(!empty($item['son'])){
                 foreach ($item['son'] as $son_id => $value){
-                    $result[$son_id] = '|--'.$value['classify_name'];
+                    $tmp['id'] = $son_id;
+                    $tmp['classify_name'] = '|--'.$value['classify_name'];
+                    $result_obj[] = $tmp;
+                    $result_data[] = $item['classify_name'];
                 }
             }
         }
+        $result = ['array' => $result_data,'objArray' => $result_obj];
         return $result;
-//        $result = ['0' => ['id' =>0,'classify_name' => '无']];
-//        foreach ($tree as $id => $item){
-//            $tmp['id'] = $id;
-//            $tmp['classify_name'] = $item['classify_name'];
-//            $result[] = $tmp;
-//            if(!empty($item['son'])){
-//                foreach ($item['son'] as $son_id => $value){
-//                    $tmp['id'] = $son_id;
-//                    $tmp['classify_name'] = '|--'.$value['classify_name'];
-//                    $result[] = $tmp;
-//                }
-//            }
-//        }
-//        return $result;
     }
 }
