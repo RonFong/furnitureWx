@@ -96,7 +96,9 @@ class HomeContent extends BaseController
             'type'      => $this->request->param('type', 1),
         ];
         HomeContentItem::setCache($setCacheData);
-
+//        $this->result['data'] = [
+//            'groupType' => $setCacheData['groupType']
+//        ];
         return json($this->result);
     }
 

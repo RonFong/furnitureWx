@@ -498,7 +498,9 @@
 			var _uploaderHanlder = function(){
 
 				var _hasStyleBarBtn = $(this).hasClass('Eleditor-textStyle-item-upImg');
-
+				// 额外添加
+                $(this).addClass('Eleditor-textStyle-item-upImg-disabled');
+				
 				try{
 					_args.uploader.call(this).then(function(_url){
 

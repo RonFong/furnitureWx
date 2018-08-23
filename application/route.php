@@ -8,15 +8,14 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-
 use \think\Route;
 
 /**
  * 路由
  * @param :version string 版本号    v1 | v2
  */
+Route::group('api/:version', function () {
 
-Route::group('api/:version',function() {
     //用户授权，注册 | 更新
     Route::post('user', 'api/:version.User/saveUser');
     //查找用户数据
@@ -25,17 +24,15 @@ Route::group('api/:version',function() {
     Route::put('user', 'api/:version.User/update');
     //删除用户数据
     Route::delete('user/:id', 'api/:version.User/delete');
-
     //获取openid
     Route::get('getOpenid', 'api/:version.User/getOpenid');
-
     //获取token
     Route::get('getToken', 'api/:version.Token/getToken');
     //（测试用）通过用户ID直接获取 token
     Route::get('getTestToken', 'api/:version.Token/getTestToken');
-
     // 音乐
-    Route::group('music',function () {
+    Route::group('music', function () {
+
         //获取音乐库音乐分类
         Route::get('getCategoryList', 'api/:version.Music/getCategoryList');
         //根据分类获取音乐列表
@@ -54,30 +51,29 @@ Route::group('api/:version',function() {
         *Route::get('getLink/:id', 'api/:version.Music/getLink');
         */
     });
-
     //短信
     Route::group('sms', function () {
+
         //发送短信验证码
         Route::get('getAuthCode/:phoneNumber', 'api/:version.Sms/getAuthCode');
         //校验短信验证码
         Route::get('checkAuthCode/:phoneNumber/:authCode', 'api/:version.Sms/checkAuthCode');
     });
-
     // 地址信息
-    Route::group('site',function() {
-        // 获取省市区
-        Route::get('region/:parent_id/:level','api/:version.Site/getRegion');
-        // 获取地理位置
-        Route::get('address/:lat/:lng','api/:version.Site/getAddress');
-        // 获取附近的店
-        Route::get('nearbyStore/:lat/:lng/:type','api/:version.Site/getNearbyStore');
-    });
+    Route::group('site', function () {
 
+        // 获取省市区
+        Route::get('region/:parent_id/:level', 'api/:version.Site/getRegion');
+        // 获取地理位置
+        Route::get('address/:lat/:lng', 'api/:version.Site/getAddress');
+        // 获取附近的店
+        Route::get('nearbyStore/:lat/:lng/:type', 'api/:version.Site/getNearbyStore');
+    });
     //保存临时图片
     Route::post('image/temporary', 'api/:version.Image/saveTmpImg');
-
     //圈子 文章
     Route::group('article', function () {
+
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
         //创建文章
@@ -107,33 +103,33 @@ Route::group('api/:version',function() {
         //获取文章更多评论
         Route::get('moreComment', 'api/:version.Article/getMoreComment');
     });
-
     Route::group('articleComment', function () {
+
         //评论文章
         Route::post('comment', 'api/:version.ArticleComment/comment');
         //回复评论
         Route::post('replyComment', 'api/:version.ArticleComment/replyComment');
     });
-
     // 门店
     Route::group('shop', function () {
+
         // 入驻商家
-        Route::post('register','api/:version.Shop/register');
+        Route::post('register', 'api/:version.Shop/register');
         // 门店信息
-        Route::get('info','api/:version.Shop/info');
+        Route::get('info', 'api/:version.Shop/info');
     });
+    Route::group('category', function () {
 
-    Route::group('category',function (){
-        Route::get('storeList','api/:version.StoreClassify/getStoreClassifyList');
+        Route::get('storeList', 'api/:version.StoreClassify/getStoreClassifyList');
     });
-
     // 用户产品分类
-    Route::group('classify',function () {
-        Route::get('groupClassify','api/:version.Category/getGroupClassifyList');
-    });
+    Route::group('classify', function () {
 
+        Route::get('groupClassify', 'api/:version.Category/getGroupClassifyList');
+    });
     //关注、收藏、点赞
-    Route::group('relate', function() {
+    Route::group('relate', function () {
+
         //用户收藏文章
         Route::post('articleCollect', 'api/:version.Relate/articleCollect');
         //用户点赞文章
@@ -159,10 +155,10 @@ Route::group('api/:version',function() {
         //获取用户的黑名单
         Route::get('blackList', 'api/:version.Relate/getBlackList');
     });
-
     //工厂
     Route::group('factory', function () {
-        Route::post('register','api/:version.Factory/register');
+
+        Route::post('register', 'api/:version.Factory/register');
         //获取所有工厂
         Route::get('factoryList', 'api/:version.Factory/getFactoryList');
         //获取工厂产品
@@ -174,9 +170,9 @@ Route::group('api/:version',function() {
         //编辑工厂信息
         Route::post('editFactoryInfo', 'api/:version.Factory/editFactoryInfo');
     });
-
     //首页图文
     Route::group('homeContent', function () {
+
         //获取首页图文
         Route::get('getHomeContent', 'api/:version.HomeContent/getHomeContent');
         //获取首页图文item
@@ -190,23 +186,23 @@ Route::group('api/:version',function() {
         //获取缓存文字
         Route::get('getCache', 'api/:version.HomeContent/getCache');
     });
-
     //商城
     Route::group('store', function () {
+
         //获取商城首页商品列表
         Route::get('homeGoodsList', 'api/:version.StoreGoods/getGoodsList');
     });
-
     //推广
     Route::group('userProposed', function () {
+
         //保存推荐关系
         Route::post('proposed', 'api/:version.UserProposed/proposed');
         //获取推荐列表
         Route::get('proposedList', 'api/:version.UserProposed/proposedList');
     });
-
     //商家自定义商城商品零售价
     Route::group('goodsRetailPrice', function () {
+
         //设置商城商品全局 零售价计算比例
         Route::post('setGlobalRatio', 'api/:version.GoodsRetailPrice/setGlobalRatio');
         //设置商城商品零售价
