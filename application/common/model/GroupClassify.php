@@ -21,8 +21,13 @@ class GroupClassify extends Model
             })
             ->order(['sort' => 'desc'])
             ->select();
-        $tree =$this->formatTree($result,0);
-        $data = $this->_picker_tree_data($type,$tree);
+        if($type == 1){
+            $tree =$this->formatTree($result,0);
+            $data = $this->_picker_tree_data($type,$tree);
+        }elseif ($type == 2){
+            $data = array_values($this->formatTree($result,0));
+        }
+
         return $data;
     }
 
@@ -31,7 +36,7 @@ class GroupClassify extends Model
         foreach($arr as $k => $v){
             if($v['parent_id']==$pid){
                 $data[$v['id']]=$v;
-                $data[$v['id']]['son']= $this->formatTree($arr,$v['id']);
+                $data[$v['id']]['son']= array_values($this->formatTree($arr,$v['id']));
             }
         }
         return isset($data)?$data:array();
