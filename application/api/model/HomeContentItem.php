@@ -69,13 +69,21 @@ class HomeContentItem extends CoreHomeContentItem
                     if (!empty($cacheData['items'])) {
                         foreach ($cacheData['items'] AS $key => &$value) {
                             if ($key == $data['itemKey']) {
-                                $value['text'] = $data['text'];
-                                if(!empty($data['img'])){
+                                if($data['text'] != false){
+                                    $value['text'] = $data['text'];
+                                }
+                                if($data['img'] != false){
                                     $value['img'] = $data['img'];
                                 }
                                 break;
                             }
                         }
+                    }
+                    if($data['music'] != false){
+                        $cacheData['music'] = $data['music'];
+                    }
+                    if($data['musicName'] != false){
+                        $cacheData['music_name'] = $data['musicName'];
                     }
                     break;
                 case 2:
@@ -85,6 +93,9 @@ class HomeContentItem extends CoreHomeContentItem
                         'img'  => '',
                     ];
                     array_push($cacheData['items'], $pushData);
+                    break;
+                case 3:
+                    array_splice($cacheData['items'], $data['itemKey'], 1);
                     break;
             }
         }
