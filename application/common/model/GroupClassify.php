@@ -7,8 +7,8 @@ class GroupClassify extends Model
 {
     public function getClassifyList($group_id,$group_type)
     {
-        $group_id = 2;
-        $group_type = 1;
+//        $group_id = 2;
+//        $group_type = 1;
         $result = $this
             ->field(['id','parent_id','classify_name'])
             ->where('group_id',$group_id)
