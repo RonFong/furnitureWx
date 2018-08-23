@@ -498,7 +498,7 @@
 			var _uploaderHanlder = function(){
 
 				var _hasStyleBarBtn = $(this).hasClass('Eleditor-textStyle-item-upImg');
-
+				
 				try{
 					_args.uploader.call(this).then(function(_url){
 
