@@ -21,7 +21,14 @@ class HomeContentItem extends CoreHomeContentItem
 
         $groupId     = $data['groupId'];
         $groupType   = $data['groupType'];
-        $result      = [];
+        $result      = [
+            'id'         => '',
+            'music'      => '',
+            'record'     => '',
+            'music_name' => '',
+            'items'      => [],
+        ];
+        $cacheData = $result;
         $contentData = Db::query("SELECT id,music,record,music_name FROM `home_content` WHERE group_id = {$groupId} AND group_type = {$groupType}");
         if (!empty($contentData)) {
             $contentId       = $contentData[0]['id'];
@@ -38,8 +45,8 @@ class HomeContentItem extends CoreHomeContentItem
                 'music_name' => $contentData[0]['music_name'],
                 'items'      => $result['items'],
             ];
-            Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
         }
+        Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
 
         return $result;
     }
