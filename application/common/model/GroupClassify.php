@@ -69,4 +69,9 @@ class GroupClassify extends Model
         $result = ['array' => $result_data,'objArray' => $result_obj];
         return $result;
     }
+
+    public function sortGroupClassify($sort_data,$group_id,$group_type)
+    {
+        dump($sort_data);die;
+    }
 }

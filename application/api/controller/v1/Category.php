@@ -56,4 +56,13 @@ class Category extends BaseController
         }
         return json($this->result, 200);
     }
+
+    public function getSortGroupClassify()
+    {
+        $sort_data = $this->data;
+        $group_id = user_info('group_id');
+        $group_type = user_info('type');
+        $groupModel = new GroupClassify();
+        $res = $groupModel->sortGroupClassify($sort_data,$group_id,$group_type);
+    }
 }
