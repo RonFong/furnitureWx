@@ -52,7 +52,7 @@ class Category extends BaseController
         if(!$res){
             $this->result['state'] = 0;
             $this->result['msg'] = '保存分类失败';
-            return json($this->result, 403);
+            return json($this->result, 200);
         }
         return json($this->result, 200);
     }
@@ -64,5 +64,11 @@ class Category extends BaseController
         $group_type = user_info('type');
         $groupModel = new GroupClassify();
         $res = $groupModel->sortGroupClassify($sort_data,$group_id,$group_type);
+        if(!$res){
+            $this->result['state'] = 0;
+            $this->result['msg'] = '分类排序失败';
+            return json($this->result, 200);
+        }
+        return json($this->result, 200);
     }
 }

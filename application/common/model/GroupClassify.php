@@ -89,6 +89,6 @@ class GroupClassify extends Model
                 $save_data[] = $tmp;
             }
         }
-        dump($sort_data);die;
+        return $this->saveAll($save_data);
     }
 }
