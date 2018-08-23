@@ -44,8 +44,8 @@ class HomeContentItem extends CoreHomeContentItem
                 'music_name' => $contentData[0]['music_name'],
                 'items'      => $result['items'],
             ];
-            Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
         }
+        Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
 
         return $result;
     }
