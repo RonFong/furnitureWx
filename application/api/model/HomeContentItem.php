@@ -77,6 +77,12 @@ class HomeContentItem extends CoreHomeContentItem
                             }
                         }
                     }
+                    if($data['music'] != false){
+                        $cacheData['music'] = $data['music'];
+                    }
+                    if($data['music_name'] != false){
+                        $cacheData['music_name'] = $data['musicName'];
+                    }
                     break;
                 case 2:
                     $pushData = [
