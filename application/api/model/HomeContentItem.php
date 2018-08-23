@@ -76,20 +76,20 @@ class HomeContentItem extends CoreHomeContentItem
                     if (!empty($cacheData['items'])) {
                         foreach ($cacheData['items'] AS $key => &$value) {
                             if ($key == $data['itemKey']) {
-                                if($data['text'] != NULL){
+                                if($data['text'] !== false){
                                     $value['text'] = $data['text'];
                                 }
-                                if($data['img'] != NULL){
+                                if($data['img'] !== false){
                                     $value['img'] = $data['img'];
                                 }
                                 break;
                             }
                         }
                     }
-                    if($data['music'] != NULL){
+                    if($data['music'] !== false){
                         $cacheData['music'] = $data['music'];
                     }
-                    if($data['musicName'] != NULL){
+                    if($data['musicName'] !== false){
                         $cacheData['music_name'] = $data['musicName'];
                     }
                     break;
