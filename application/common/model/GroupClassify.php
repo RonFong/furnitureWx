@@ -75,8 +75,8 @@ class GroupClassify extends Model
 //        dump($sort_data);die;
         // 一级分类的长度
         $save_data = [];
-        $one_length = count($sort_data);
-        foreach ($sort_data as $item){
+        $one_length = count($sort_data['classifyList']);
+        foreach ($sort_data['classifyList'] as $item){
             $tmp['id'] = $item['id'];
             $tmp['sort'] = $one_length;
             $one_length --;
