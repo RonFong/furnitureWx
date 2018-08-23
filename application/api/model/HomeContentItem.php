@@ -86,6 +86,9 @@ class HomeContentItem extends CoreHomeContentItem
                     ];
                     array_push($cacheData['items'], $pushData);
                     break;
+                case 3:
+                    array_splice($cacheData['items'], $data['itemKey'], 1);
+                    break;
             }
         }
         Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
