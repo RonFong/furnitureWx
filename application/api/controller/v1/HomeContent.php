@@ -87,8 +87,8 @@ class HomeContent extends BaseController
 
         $setCacheData = [
             'itemKey'    => $this->request->param('itemKey', ''),
-            'text'       => $this->request->param('text', ''),
-            'img'        => $this->request->param('img', ''),
+            'text'       => $this->request->param('text', false),
+            'img'        => $this->request->param('img', false),
             'music'      => $this->request->param('music', false),
             'musicName' => $this->request->param('music_name', false),
             'groupId'    => user_info('group_id'),
