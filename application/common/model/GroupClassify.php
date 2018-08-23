@@ -72,6 +72,23 @@ class GroupClassify extends Model
 
     public function sortGroupClassify($sort_data,$group_id,$group_type)
     {
+//        dump($sort_data);die;
+        // 一级分类的长度
+        $save_data = [];
+        $one_length = count($sort_data);
+        foreach ($sort_data as $item){
+            $tmp['id'] = $item['id'];
+            $tmp['sort'] = $one_length;
+            $one_length --;
+            $save_data[] = $tmp;
+            $two_length = count($sort_data);
+            foreach ($item['son'] as $value){
+                $tmp['id'] = $value['id'];
+                $tmp['sort'] = $two_length;
+                $two_length --;
+                $save_data[] = $tmp;
+            }
+        }
         dump($sort_data);die;
     }
 }
