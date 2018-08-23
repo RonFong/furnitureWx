@@ -80,7 +80,7 @@ class HomeContentItem extends CoreHomeContentItem
                     if($data['music'] != false){
                         $cacheData['music'] = $data['music'];
                     }
-                    if($data['music_name'] != false){
+                    if($data['musicName'] != false){
                         $cacheData['music_name'] = $data['musicName'];
                     }
                     break;
