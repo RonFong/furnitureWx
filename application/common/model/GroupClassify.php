@@ -13,6 +13,7 @@ class GroupClassify extends Model
             ->field(['id','parent_id','classify_name'])
             ->where('group_id',$group_id)
             ->where('group_type',$group_type)
+            ->where('parent_id',0)
             ->order(['sort' => 'desc'])
             ->select();
         $tree =$this->formatTree($result,0);
