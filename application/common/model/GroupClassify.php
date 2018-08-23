@@ -33,19 +33,29 @@ class GroupClassify extends Model
 
     public function _picker_tree_data($tree)
     {
-        $result = ['0' => ['id' =>0,'classify_name' => '无']];
+        $result = ['0' => '无'];
         foreach ($tree as $id => $item){
-            $tmp['id'] = $id;
-            $tmp['classify_name'] = $item['classify_name'];
-            $result[] = $tmp;
+            $result[$id] = $item['classify_name'];
             if(!empty($item['son'])){
                 foreach ($item['son'] as $son_id => $value){
-                    $tmp['id'] = $son_id;
-                    $tmp['classify_name'] = '|--'.$value['classify_name'];
-                    $result[] = $tmp;
+                    $result[$son_id] = '|--'.$value['classify_name'];
                 }
             }
         }
         return $result;
+//        $result = ['0' => ['id' =>0,'classify_name' => '无']];
+//        foreach ($tree as $id => $item){
+//            $tmp['id'] = $id;
+//            $tmp['classify_name'] = $item['classify_name'];
+//            $result[] = $tmp;
+//            if(!empty($item['son'])){
+//                foreach ($item['son'] as $son_id => $value){
+//                    $tmp['id'] = $son_id;
+//                    $tmp['classify_name'] = '|--'.$value['classify_name'];
+//                    $result[] = $tmp;
+//                }
+//            }
+//        }
+//        return $result;
     }
 }
