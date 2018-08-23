@@ -32,11 +32,12 @@ class Category extends BaseController
 
     public function getGroupClassifyList()
     {
+        $type = $this->data['type'] ?? 1;
         $group_id = user_info('group_id');
         $group_type = user_info('type');
 
         $groupModel = new GroupClassify();
-        $result = $groupModel->getClassifyList($group_id,$group_type);
+        $result = $groupModel->getClassifyList($type,$group_id,$group_type);
         $this->result['data'] = $result;
         return json($this->result,200);
     }
