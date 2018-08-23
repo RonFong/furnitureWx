@@ -15,9 +15,6 @@ class GroupClassify extends Model
             ->where('group_type',$group_type)
             ->order(['sort' => 'desc'])
             ->select();
-//        dump(collection($result)->toArray());die;
-//        $data = \Tree::getTree($result,$name='classify_name',$id='id',$pid='parent_id');
-//        dump($data);die;
         $tree =$this->formatTree($result,0);
         $data = $this->_picker_tree_data($tree);
         return $data;
@@ -36,12 +33,16 @@ class GroupClassify extends Model
 
     public function _picker_tree_data($tree)
     {
-        $result = ['0' => '无'];
+        $result = ['0' => ['id' =>0,'classify_name' => '无']];
         foreach ($tree as $id => $item){
-            $result[$id] = $item['classify_name'];
+            $tmp['id'] = $id;
+            $tmp['classify_name'] = $item['classify_name'];
+            $result[] = $tmp;
             if(!empty($item['son'])){
                 foreach ($item['son'] as $son_id => $value){
-                    $result[$son_id] = '|--'.$value['classify_name'];
+                    $tmp['id'] = $son_id;
+                    $tmp['classify_name'] = '|--'.$value['classify_name'];
+                    $result[] = $tmp;
                 }
             }
         }
