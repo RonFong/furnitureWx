@@ -80,5 +80,18 @@ class Category extends BaseController
     public function delGroupClassify()
     {
         $id = $this->data['id'] ?? '' ;
+        $parent = $this->data['id'] ?? false;
+        $groupModel = new GroupClassify();
+        if($parent){
+            $delRes = $groupModel->where('id',$id)->whereOr('parent_id',$id)->delete();
+        }else{
+            $delRes = $groupModel->where('id',$id)->delete();
+        }
+        if(!$delRes){
+            $this->result['state'] = 0;
+            $this->result['msg'] = '分类删除失败';
+            return json($this->result, 200);
+        }
+        return json($this->result, 200);
     }
 }
