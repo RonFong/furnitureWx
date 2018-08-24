@@ -76,4 +76,9 @@ class Category extends BaseController
         }
         return json($this->result, 200);
     }
+
+    public function delGroupClassify()
+    {
+        $id = $this->data['id'] ?? '' ;
+    }
 }
