@@ -131,7 +131,7 @@ Route::group('api/:version', function () {
         // 产品分类排序
         Route::post('sort','api/:version.Category/getSortGroupClassify');
         // 删除产品分类
-        Route::get('del','api/:version.Category/delSortGroupClassify');
+        Route::post('del','api/:version.Category/delSortGroupClassify');
     });
 
     //关注、收藏、点赞
