@@ -106,6 +106,8 @@ Route::group('api/:version', function () {
         Route::get('setCache', 'api/:version.Article/setCache');
         //获取缓存文字
         Route::get('getCache', 'api/:version.Article/getCache');
+        //获取文章部分详情（文字编辑）
+        Route::get('getArticleContent', 'api/:version.Article/getArticleContent');
     });
     Route::group('articleComment', function () {
 

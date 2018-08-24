@@ -753,4 +753,22 @@ class Article extends BaseController
         return json($this->result);
     }
 
+    /**
+     * 获取文章部分详情（文字编辑）
+     * @return mixed
+     * @throws \app\lib\exception\BaseException
+     */
+    public function getArticleContent()
+    {
+
+        $this->currentValidate->goCheck('details');
+        try {
+            $this->result['data'] = $this->currentModel->getArticleContent(['articleId' => $this->data['id'], 'userId' => user_info('id')]);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+
+        return json($this->result, 200);
+    }
+
 }
