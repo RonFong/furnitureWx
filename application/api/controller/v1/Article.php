@@ -56,15 +56,18 @@ class Article extends BaseController
      *      "data": [
      *          {
      *              "id": 1,
-     *              "classify_name": "秀家"
+     *              "classify_name": "秀家",
+     *              "classify_img": "/home.png"
      *          },
      *          {
      *              "id": 2,
-     *              "classify_name": "招聘"
+     *              "classify_name": "招聘",
+     *              "classify_img": "/home.png"
      *          },
      *          {
      *              "id": 3,
-     *              "classify_name": "其他"
+     *              "classify_name": "其他",
+     *              "classify_img": "/home.png"
      *          }
      *      ]
      */
