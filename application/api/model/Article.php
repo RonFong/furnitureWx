@@ -167,7 +167,7 @@ class Article extends CoreArticle
             'a.delete_time'     => null,
             'b.state'           => 1,
             'b.delete_time'     => null,
-            //'c.delete_time'     => null,
+            'c.delete_time'     => null,
             'd.state'           => 1,
             'd.delete_time'     => null,
             //'e.delete_time'     => null

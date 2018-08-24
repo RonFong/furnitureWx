@@ -59,7 +59,7 @@ class ArticleComment extends CoreArticleComment
             'a.delete_time' => null,
             'b.state'       => 1,
             'b.delete_time' => null,
-            'c.delete_time' => null
+//            'c.delete_time' => null
         ];
         $comments = Db::table('article_comment')
             ->alias('a')
