@@ -5,7 +5,7 @@ namespace app\common\model;
 
 class GroupClassify extends Model
 {
-    public function getClassifyList($type,$group_id,$group_type)
+    public function getClassifyList($type,$id,$group_id,$group_type)
     {
         // type  1:只要一级分类 (带无) 2：一二级分类（不带无）
 //        $group_id = 2;
@@ -21,9 +21,17 @@ class GroupClassify extends Model
             })
             ->order(['sort' => 'desc'])
             ->select();
+
         if($type == 1){
             $tree =$this->formatTree($result,0);
             $data = $this->_picker_tree_data($type,$tree);
+            if(!empty($id) && $type == 1){
+                $edit_classify = $this
+                    ->field(['classify_name'])
+                    ->where('id',$id)
+                    ->find();
+                $data['edit_classify'] = $edit_classify;
+            }
         }elseif ($type == 2){
             $data = array_values($this->formatTree($result,0));
         }
