@@ -49,7 +49,11 @@ class Category extends BaseController
         $save_data['group_id'] = user_info('group_id');
         $save_data['group_type'] = user_info('type');
         $groupModel = new GroupClassify();
-        $res = $groupModel->save($save_data);
+        $update = false;
+        if(isset($save_data['id'])){
+            $update = true;
+        }
+        $res = $groupModel->isUpdate($update)->save($save_data);
         if(!$res){
             $this->result['state'] = 0;
             $this->result['msg'] = '保存分类失败';
