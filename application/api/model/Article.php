@@ -306,7 +306,6 @@ class Article extends CoreArticle
     {
 
         $articleId   = $data['articleId'];
-        $userId      = $data['userId'];
         $result      = [
             'id'         => '',
             'music'      => '',
@@ -330,7 +329,7 @@ class Article extends CoreArticle
             ];
         }
         // 重置缓存
-        Cache::set('article_cache_' . $userId, json_encode($cacheData));
+        Cache::set('article_cache_' . $articleId, json_encode($cacheData));
 
         return $result;
     }

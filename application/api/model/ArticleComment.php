@@ -125,8 +125,8 @@ class ArticleComment extends CoreArticleComment
     public static function setCache($data)
     {
 
-        $userId    = $data['userId'];
-        $cacheData = Cache::get('article_cache_' . $userId);
+        $articleId = $data['articleId'];
+        $cacheData = Cache::get('article_cache_' . $articleId);
         if (empty($cacheData)) {
             $cacheData = [
                 'music'      => '',
@@ -175,7 +175,7 @@ class ArticleComment extends CoreArticleComment
                     break;
             }
         }
-        Cache::set('article_cache_' . $userId, json_encode($cacheData));
+        Cache::set('article_cache_' . $articleId, json_encode($cacheData));
 
         return true;
     }
@@ -183,9 +183,9 @@ class ArticleComment extends CoreArticleComment
     public static function getCache($data)
     {
 
-        $userId  = $data['userId'];
-        $itemKey = $data['itemKey'];
-        $result  = Cache::get('article_cache_' . $userId);
+        $articleId = $data['articleId'];
+        $itemKey   = $data['itemKey'];
+        $result    = Cache::get('article_cache_' . $articleId);
         switch ($data['type']) {
             case 1:
                 break;

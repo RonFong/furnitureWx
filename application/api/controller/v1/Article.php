@@ -729,10 +729,10 @@ class Article extends BaseController
     {
 
         $setCacheData = [
-            'itemKey' => $this->request->param('itemKey', ''),
-            'text'    => $this->request->param('text', false),
-            'userId'  => user_info('id'),
-            'type'    => $this->request->param('type', 1),
+            'itemKey'   => $this->request->param('itemKey', ''),
+            'text'      => $this->request->param('text', false),
+            'articleId' => $this->request->param('articleId'),
+            'type'      => $this->request->param('type', 1),
         ];
         ArticleComment::setCache($setCacheData);
 
@@ -743,9 +743,9 @@ class Article extends BaseController
     {
 
         $setCacheData         = [
-            'itemKey' => $this->request->param('itemKey', ''),
-            'userId'  => user_info('id'),
-            'type'    => $this->request->param('type', 1),
+            'itemKey'   => $this->request->param('itemKey', ''),
+            'articleId' => $this->request->param('articleId'),
+            'type'      => $this->request->param('type', 1),
         ];
         $data                 = ArticleComment::getCache($setCacheData);
         $this->result['data'] = $data;
@@ -763,7 +763,7 @@ class Article extends BaseController
 
         $this->currentValidate->goCheck('details');
         try {
-            $this->result['data'] = $this->currentModel->getArticleContent(['articleId' => $this->data['id'], 'userId' => user_info('id')]);
+            $this->result['data'] = $this->currentModel->getArticleContent(['articleId' => $this->data['id']]);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
