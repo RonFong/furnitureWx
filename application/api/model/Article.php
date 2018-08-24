@@ -14,6 +14,7 @@ use app\common\model\Article as CoreArticle;
 use app\common\model\RelationArticleCollect;
 use app\common\model\RelationUserCollect;
 use app\common\validate\BaseValidate;
+use think\Cache;
 use think\Db;
 
 class Article extends CoreArticle
