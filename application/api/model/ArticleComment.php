@@ -8,10 +8,10 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-
 namespace app\api\model;
 
 use app\common\model\ArticleComment as CoreArticleComment;
+use think\Cache;
 use think\Db;
 
 /**
@@ -21,22 +21,26 @@ use think\Db;
  */
 class ArticleComment extends CoreArticleComment
 {
+
     public function saveData($data)
     {
+
         $data['user_id'] = user_info('id');
         if ($this->save($data)) {
             $result = [
-                'user_name'     => user_info('user_name'),
-                'content'       => $data['content'],
-                'create_time'   => date('m-d H:i', time())
+                'user_name'   => user_info('user_name'),
+                'content'     => $data['content'],
+                'create_time' => date('m-d H:i', time()),
             ];
             //所回复的评论的发布者
             if (array_key_exists('parent_id', $data)) {
-                $info = self::with('appendUserName')->where('id', $this->data['parent_id'])->find();
+                $info                       = self::with('appendUserName')->where('id', $this->data['parent_id'])->find();
                 $result['parent_user_name'] = $info->user_name;
             }
-             return $result;
+
+            return $result;
         }
+
         return false;
     }
 
@@ -52,14 +56,15 @@ class ArticleComment extends CoreArticleComment
      */
     public function getComments($articleId, $page, $row)
     {
-        $map = [
+
+        $map      = [
             'a.article_id'  => $articleId,
             'a.state'       => 1,
             'a.parent_id'   => 0,
             'a.delete_time' => null,
             'b.state'       => 1,
             'b.delete_time' => null,
-//            'c.delete_time' => null
+            //            'c.delete_time' => null
         ];
         $comments = Db::table('article_comment')
             ->alias('a')
@@ -71,12 +76,12 @@ class ArticleComment extends CoreArticleComment
             ->order('a.create_time')
             ->page($page, $row)
             ->select();
-
-        $list = [];
+        $list     = [];
         foreach ($comments as $v) {
             $v = $this->recursionComment($v);
             array_push($list, $v);
         }
+
         return $list;
     }
 
@@ -91,8 +96,9 @@ class ArticleComment extends CoreArticleComment
      */
     private function recursionComment(&$v, $reply = [])
     {
+
         if (empty($reply)) {
-            $v['child'] = [];
+            $v['child']  = [];
             $reply['id'] = $v['id'];
         }
         $info = self::with('appendUserName')
@@ -100,11 +106,11 @@ class ArticleComment extends CoreArticleComment
             ->find();
         if ($info) {
             $content = [
-                'id'                    => $info->id,
-                'user_id'               => $info->user_id,       //回复人id
-                'user_name'             => $info->user_name,     //回复人昵称
-                'respondent_user_name'  => '',                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
-                'reply_content'         => $info->content,
+                'id'                   => $info->id,
+                'user_id'              => $info->user_id,       //回复人id
+                'user_name'            => $info->user_name,     //回复人昵称
+                'respondent_user_name' => '',                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
+                'reply_content'        => $info->content,
             ];
             if (!empty($v['child'])) {
                 $content['respondent_user_name'] = $reply['user_name'] ?? $reply['user_name'];
@@ -112,6 +118,82 @@ class ArticleComment extends CoreArticleComment
             array_push($v['child'], $content);
             $this->recursionComment($v, $info);
         }
+
         return $v;
+    }
+
+    public static function setCache($data)
+    {
+
+        $userId    = $data['userId'];
+        $cacheData = Cache::get('article_cache_' . $userId);
+        if (empty($cacheData)) {
+            $cacheData = [
+                'music'      => '',
+                'music_name' => '',
+                'items'      => [
+                    $data['itemKey'] => [
+                        'id'   => '',
+                        'text' => $data['text'],
+                        'img'  => $data['img'],
+                    ],
+                ],
+            ];
+        } else {
+            switch ($data['type']) {
+                case 1:
+                    if (!empty($cacheData['items'])) {
+                        foreach ($cacheData['items'] AS $key => &$value) {
+                            if ($key == $data['itemKey']) {
+                                if ($data['text'] !== false) {
+                                    $value['text'] = $data['text'];
+                                }
+                                if ($data['img'] !== false) {
+                                    $value['img'] = $data['img'];
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if ($data['music'] !== false) {
+                        $cacheData['music'] = $data['music'];
+                    }
+                    if ($data['musicName'] !== false) {
+                        $cacheData['music_name'] = $data['musicName'];
+                    }
+                    break;
+                case 2:
+                    $pushData = [
+                        'id'   => '',
+                        'text' => '',
+                        'img'  => '',
+                    ];
+                    array_push($cacheData['items'], $pushData);
+                    break;
+                case 3:
+                    array_splice($cacheData['items'], $data['itemKey'], 1);
+                    break;
+            }
+        }
+        Cache::set('article_cache_' . $userId, json_encode($cacheData));
+
+        return true;
+    }
+
+    public static function getCache($data)
+    {
+
+        $userId  = $data['userId'];
+        $itemKey = $data['itemKey'];
+        $result  = Cache::get('article_cache_' . $userId);
+        switch ($data['type']) {
+            case 1:
+                break;
+            case 2:
+                $result = $result['items'][$itemKey];
+                break;
+        }
+
+        return $result;
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>图文编辑</title>
+    <title>文字编辑</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- 引入jQuery -->
     <script src="../jquery.min.js"></script>
@@ -102,11 +102,19 @@
 <script>
     $(function () {
         if (getParam('itemKey') != '' && getParam('itemKey') != undefined) {
+            switch (getParam('editor')){
+                case 'homeContent':
+                    var url = '/api/v1/homeContent/getCache';
+                    break;
+                case 'article':
+                    var url = '/api/v1/article/getCache';
+                    break;
+            }
             $.ajax({
                 //提交数据的类型 POST GET
                 type      : "GET",
                 //提交的网址
-                url       : "/api/v1/homeContent/getCache",
+                url       : url,
                 //提交的数据
                 data:{
                     type:2,
@@ -215,11 +223,21 @@
         var text   = contentEditor.getContent();
         var token  = getParam('token');
         var itemKey = getParam('itemKey');
+        switch (getParam('editor')){
+            case 'homeContent':
+                var url = '/api/v1/homeContent/getCache';
+                var navigateUrl = '/pages/manufactor/editor/editor?type=2';
+                break;
+            case 'article':
+                var url = '/api/v1/article/getCache';
+                var navigateUrl = '/pages/community/editor/editor?type=2';
+                break;
+        }
         $.ajax({
             //提交数据的类型 POST GET
             type      : "GET",
             //提交的网址
-            url       : "/api/v1/homeContent/setCache",
+            url       : url,
             //提交的数据
             data      : {text: text, itemKey: itemKey},
             headers   : {
@@ -238,7 +256,7 @@
                 // }else if(data.data.groupType == 2){
                 //     wx.miniProgram.switchTab({url: '/pages/manufactor/editor/editor?type=2'});
                 // }
-                wx.miniProgram.switchTab({url: '/pages/manufactor/editor/editor?type=2'});
+                wx.miniProgram.navigateTo({url: navigateUrl});
             },
             //调用执行后调用的函数
             complete  : function (XMLHttpRequest, textStatus) {
