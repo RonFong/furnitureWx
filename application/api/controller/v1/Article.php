@@ -700,4 +700,35 @@ class Article extends BaseController
         return json($this->result, 200);
     }
 
+    public function setCache()
+    {
+
+        $setCacheData = [
+            'itemKey'   => $this->request->param('itemKey', ''),
+            'text'      => $this->request->param('text', false),
+            'groupId'   => user_info('group_id'),
+            'groupType' => user_info('type'),
+            'type'      => $this->request->param('type', 1),
+        ];
+        HomeContentItem::setCache($setCacheData);
+
+        return json($this->result);
+    }
+
+    public function getCache()
+    {
+
+        $setCacheData         = [
+            'itemKey'   => $this->request->param('itemKey', ''),
+            'groupId'   => user_info('group_id'),
+            'groupType' => user_info('type'),
+            'type'      => $this->request->param('type', 1),
+        ];
+        $data                 = HomeContentItem::getCache($setCacheData);
+        $this->result['data'] = $data;
+
+        return json($this->result);
+    }
+
+
 }

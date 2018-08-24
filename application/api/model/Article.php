@@ -170,7 +170,7 @@ class Article extends CoreArticle
             'c.delete_time'     => null,
             'd.state'           => 1,
             'd.delete_time'     => null,
-            'e.delete_time'     => null
+            //'e.delete_time'     => null
         ];
         $model = $this->alias('a')
             ->join('user b', 'a.user_id = b.id')
