@@ -33,11 +33,12 @@ class Category extends BaseController
     public function getGroupClassifyList()
     {
         $type = $this->data['type'] ?? 1;
+        $id = $this->data['id'] ?? '';
         $group_id = user_info('group_id');
         $group_type = user_info('type');
 
         $groupModel = new GroupClassify();
-        $result = $groupModel->getClassifyList($type,$group_id,$group_type);
+        $result = $groupModel->getClassifyList($type,$id,$group_id,$group_type);
         $this->result['data'] = $result;
         return json($this->result,200);
     }
@@ -48,7 +49,11 @@ class Category extends BaseController
         $save_data['group_id'] = user_info('group_id');
         $save_data['group_type'] = user_info('type');
         $groupModel = new GroupClassify();
-        $res = $groupModel->save($save_data);
+        $update = false;
+        if(isset($save_data['id'])){
+            $update = true;
+        }
+        $res = $groupModel->isUpdate($update)->save($save_data);
         if(!$res){
             $this->result['state'] = 0;
             $this->result['msg'] = '保存分类失败';
@@ -70,5 +75,10 @@ class Category extends BaseController
             return json($this->result, 200);
         }
         return json($this->result, 200);
+    }
+
+    public function delGroupClassify()
+    {
+        $id = $this->data['id'] ?? '' ;
     }
 }

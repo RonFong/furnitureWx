@@ -123,13 +123,15 @@ Route::group('api/:version', function () {
         Route::get('storeList', 'api/:version.StoreClassify/getStoreClassifyList');
     });
     // 用户产品分类
-    Route::group('classify',function () {
+    Route::group('group_classify',function () {
         // 产品分类列表
-        Route::get('groupClassify','api/:version.Category/getGroupClassifyList');
-        // 添加产品分类
-        Route::post('addGroupClassify','api/:version.Category/AddGroupClassify');
+        Route::get('list','api/:version.Category/getGroupClassifyList');
+        // 添加/更新产品分类
+        Route::post('add','api/:version.Category/AddGroupClassify');
         // 产品分类排序
         Route::post('sort','api/:version.Category/getSortGroupClassify');
+        // 删除产品分类
+        Route::get('del','api/:version.Category/delSortGroupClassify');
     });
 
     //关注、收藏、点赞
