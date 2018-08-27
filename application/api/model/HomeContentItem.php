@@ -21,6 +21,7 @@ class HomeContentItem extends CoreHomeContentItem
 
         $groupId     = $data['groupId'];
         $groupType   = $data['groupType'];
+        $editType   = $data['editType'];
         $result      = [
             'id'         => '',
             'music'      => '',
@@ -46,7 +47,11 @@ class HomeContentItem extends CoreHomeContentItem
                 'items'      => $result['items'],
             ];
         }
-        Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
+        // 添加或编辑时才重置缓存
+        if($editType === 1){
+            Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
+        }
+
 
         return $result;
     }

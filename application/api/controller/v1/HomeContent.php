@@ -63,6 +63,7 @@ class HomeContent extends BaseController
         $getContentData       = [
             'groupId'   => user_info('group_id'),
             'groupType' => user_info('type'),
+            'editType'  => $this->request->param('edit_type', 0),
         ];
         $data                 = HomeContentItem::getContent($getContentData);
         $this->result['data'] = $data;
@@ -96,9 +97,9 @@ class HomeContent extends BaseController
             'type'      => $this->request->param('type', 1),
         ];
         HomeContentItem::setCache($setCacheData);
-//        $this->result['data'] = [
-//            'groupType' => $setCacheData['groupType']
-//        ];
+        //        $this->result['data'] = [
+        //            'groupType' => $setCacheData['groupType']
+        //        ];
         return json($this->result);
     }
 
