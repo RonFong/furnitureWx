@@ -138,6 +138,8 @@ Route::group('api/:version', function () {
         Route::post('sort','api/:version.Category/getSortGroupClassify');
         // 删除产品分类
         Route::post('del','api/:version.Category/delGroupClassify');
+        // 二级分类
+        Route::get('second','api/:version.Category/getSecondGroupClassify');
     });
 
     //关注、收藏、点赞

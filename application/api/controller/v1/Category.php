@@ -94,4 +94,13 @@ class Category extends BaseController
         }
         return json($this->result, 200);
     }
+
+    public function getSecondGroupClassify()
+    {
+        $group_id = user_info('group_id');
+        $group_type = user_info('type');
+        $groupModel = new GroupClassify();
+        $this->result['data'] = $groupModel->secondGroupClassify($group_id,$group_type);
+        return json($this->result, 200);
+    }
 }
