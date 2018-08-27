@@ -214,5 +214,7 @@ Route::group('api/:version', function () {
         Route::post('setGlobalRatio', 'api/:version.GoodsRetailPrice/setGlobalRatio');
         //设置商城商品零售价
         Route::post('setGoodsAmount', 'api/:version.GoodsRetailPrice/setGoodsAmount');
+        // 获取零售价计算比例
+        Route::get('index','api/:version.GoodsRetailPrice/getGoodsRetailPrice');
     });
 });
