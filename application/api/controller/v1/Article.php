@@ -739,7 +739,7 @@ class Article extends BaseController
             'userId'     => user_info('id'),
             'type'       => $this->request->param('type', 1),
         ];
-        ArticleComment::setCache($setCacheData);
+        \app\api\model\ArticleContent::setCache($setCacheData);
 
         return json($this->result);
     }
@@ -753,7 +753,7 @@ class Article extends BaseController
             'userId'    => user_info('id'),
             'type'      => $this->request->param('type', 1),
         ];
-        $data                 = ArticleComment::getCache($setCacheData);
+        $data                 = \app\api\model\ArticleContent::getCache($setCacheData);
         $this->result['data'] = $data;
 
         return json($this->result);
