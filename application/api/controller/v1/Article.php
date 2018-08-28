@@ -729,10 +729,15 @@ class Article extends BaseController
     {
 
         $setCacheData = [
-            'itemKey'   => $this->request->param('itemKey', ''),
-            'text'      => $this->request->param('text', false),
-            'articleId' => $this->request->param('articleId'),
-            'type'      => $this->request->param('type', 1),
+            'itemKey'    => $this->request->param('itemKey', ''),
+            'text'       => $this->request->param('text', false),
+            'img'        => $this->request->param('img', false),
+            'articleId'  => $this->request->param('articleId', ''),
+            'classifyId' => $this->request->param('classifyId', ''),
+            'music'      => $this->request->param('music', ''),
+            'music_name' => $this->request->param('musicName', ''),
+            'userId'     => user_info('id'),
+            'type'       => $this->request->param('type', 1),
         ];
         ArticleComment::setCache($setCacheData);
 
@@ -745,6 +750,7 @@ class Article extends BaseController
         $setCacheData         = [
             'itemKey'   => $this->request->param('itemKey', ''),
             'articleId' => $this->request->param('articleId'),
+            'userId'    => user_info('id'),
             'type'      => $this->request->param('type', 1),
         ];
         $data                 = ArticleComment::getCache($setCacheData);

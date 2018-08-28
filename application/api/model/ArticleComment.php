@@ -126,56 +126,92 @@ class ArticleComment extends CoreArticleComment
     {
 
         $articleId = $data['articleId'];
-        $cacheData = Cache::get('article_cache_' . $articleId);
-        if (empty($cacheData)) {
-            $cacheData = [
-                'music'      => '',
-                'music_name' => '',
-                'items'      => [
-                    $data['itemKey'] => [
-                        'id'   => '',
-                        'text' => $data['text'],
-                        'img'  => $data['img'],
+        $userId    = $data['userId'];
+        if (empty($articleId)) {
+            $cacheTmpData = Cache::get('article_cache_tmp_' . $userId);
+            if (empty($cacheTmpData)) {
+                $cacheTmpData = [
+                    'classify_id' => '',
+                    'music'       => '',
+                    'music_name'  => '',
+                    'items'       => [
+                        [
+                            'id'   => '',
+                            'text' => '',
+                            'img'  => '',
+                        ],
                     ],
-                ],
-            ];
+                ];
+            } else {
+                switch ($data['type']) {
+                    case 1:
+                        break;
+                    case 2:// addBox 添加
+                        $pushData = [
+                            'id'   => '',
+                            'text' => '',
+                            'img'  => '',
+                        ];
+                        array_push($cacheTmpData['items'], $pushData);
+                        break;
+                    case 3:// delBox 删除
+                        array_splice($cacheTmpData['items'], $data['itemKey'], 1);
+                        break;
+                }
+            }
+            Cache::set('article_cache_tmp_' . $userId, json_encode($cacheTmpData));
         } else {
-            switch ($data['type']) {
-                case 1:
-                    if (!empty($cacheData['items'])) {
-                        foreach ($cacheData['items'] AS $key => &$value) {
-                            if ($key == $data['itemKey']) {
-                                if ($data['text'] !== false) {
-                                    $value['text'] = $data['text'];
+            $cacheData = Cache::get('article_cache_' . $articleId);
+            if (empty($cacheData)) {
+                $cacheData = [
+                    'music'      => '',
+                    'music_name' => '',
+                    'items'      => [
+                        $data['itemKey'] => [
+                            'id'   => '',
+                            'text' => $data['text'],
+                            'img'  => $data['img'],
+                        ],
+                    ],
+                ];
+            } else {
+                switch ($data['type']) {
+                    case 1:
+                        if (!empty($cacheData['items'])) {
+                            foreach ($cacheData['items'] AS $key => &$value) {
+                                if ($key == $data['itemKey']) {
+                                    if ($data['text'] !== false) {
+                                        $value['text'] = $data['text'];
+                                    }
+                                    if ($data['img'] !== false) {
+                                        $value['img'] = $data['img'];
+                                    }
+                                    break;
                                 }
-                                if ($data['img'] !== false) {
-                                    $value['img'] = $data['img'];
-                                }
-                                break;
                             }
                         }
-                    }
-                    if ($data['music'] !== false) {
-                        $cacheData['music'] = $data['music'];
-                    }
-                    if ($data['musicName'] !== false) {
-                        $cacheData['music_name'] = $data['musicName'];
-                    }
-                    break;
-                case 2:
-                    $pushData = [
-                        'id'   => '',
-                        'text' => '',
-                        'img'  => '',
-                    ];
-                    array_push($cacheData['items'], $pushData);
-                    break;
-                case 3:
-                    array_splice($cacheData['items'], $data['itemKey'], 1);
-                    break;
+                        if ($data['music'] !== false) {
+                            $cacheData['music'] = $data['music'];
+                        }
+                        if ($data['musicName'] !== false) {
+                            $cacheData['music_name'] = $data['musicName'];
+                        }
+                        break;
+                    case 2:
+                        $pushData = [
+                            'id'   => '',
+                            'text' => '',
+                            'img'  => '',
+                        ];
+                        array_push($cacheData['items'], $pushData);
+                        break;
+                    case 3:
+                        array_splice($cacheData['items'], $data['itemKey'], 1);
+                        break;
+                }
             }
+            Cache::set('article_cache_' . $articleId, json_encode($cacheData));
         }
-        Cache::set('article_cache_' . $articleId, json_encode($cacheData));
 
         return true;
     }
@@ -185,13 +221,60 @@ class ArticleComment extends CoreArticleComment
 
         $articleId = $data['articleId'];
         $itemKey   = $data['itemKey'];
-        $result    = Cache::get('article_cache_' . $articleId);
-        switch ($data['type']) {
-            case 1:
-                break;
-            case 2:
-                $result = $result['items'][$itemKey];
-                break;
+        $userId    = $data['userId'];
+        $result = [
+            'classify_id' => '',
+            'music'       => '',
+            'music_name'  => '',
+            'items'       => [
+                [
+                    'id'   => '',
+                    'text' => '',
+                    'img'  => '',
+                ],
+            ],
+        ];
+        if(empty($articleId)){
+            $cacheTmpData = Cache::get('article_cache_tmp_' . $userId);
+            if(empty($cacheTmpData)){
+                Cache::set('article_cache_tmp_' . $userId, json_encode($result));
+                switch ($data['type']) {
+                    // 获取所有缓存
+                    case 1:
+
+                        break;
+                    // 获取单个item缓存
+                    case 2:
+                        $result = $result['items'][0];
+                        break;
+                }
+            }else{
+                switch ($data['type']) {
+                    // 获取所有缓存
+                    case 1:
+                        $result = $cacheTmpData;
+                        break;
+                    // 获取单个item缓存
+                    case 2:
+                        $result = $cacheTmpData['items'][$itemKey];
+                        break;
+                }
+            }
+
+        }else{
+            $cacheData    = Cache::get('article_cache_' . $articleId);
+            if($cacheData){
+                switch ($data['type']) {
+                    // 获取所有缓存
+                    case 1:
+                        $result = $cacheData;
+                        break;
+                    // 获取单个item缓存
+                    case 2:
+                        $result = $cacheData['items'][$itemKey];
+                        break;
+                }
+            }
         }
 
         return $result;
