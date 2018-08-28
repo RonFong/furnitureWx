@@ -125,15 +125,21 @@ class ArticleComment extends CoreArticleComment
     public static function setCache($data)
     {
 
-        $articleId = $data['articleId'];
-        $userId    = $data['userId'];
+        $articleId  = $data['articleId'];
+        $userId     = $data['userId'];
+        $music      = $data['music'];
+        $musicName  = $data['musicName'];
+        $classifyId = $data['classifyId'];
+        $itemKey    = $data['itemKey'];
+        $text       = $data['text'];
+        $img        = $data['img'];
         if (empty($articleId)) {
             $cacheTmpData = Cache::get('article_cache_tmp_' . $userId);
             if (empty($cacheTmpData)) {
                 $cacheTmpData = [
-                    'classify_id' => '',
-                    'music'       => '',
-                    'music_name'  => '',
+                    'classify_id' => !empty($classifyId) ? $classifyId : '',
+                    'music'       => $music !== false ? $music : '',
+                    'music_name'  => $musicName !== false ? $musicName : '',
                     'items'       => [
                         [
                             'id'   => '',
@@ -144,7 +150,10 @@ class ArticleComment extends CoreArticleComment
                 ];
             } else {
                 switch ($data['type']) {
-                    case 1:
+                    case 1:// 编辑
+                        $cacheTmpData['music']       = $music !== false ? $music : $cacheTmpData['music'];
+                        $cacheTmpData['music_name']  = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
+                        $cacheTmpData['classify_id'] = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
                         break;
                     case 2:// addBox 添加
                         $pushData = [
@@ -163,20 +172,22 @@ class ArticleComment extends CoreArticleComment
         } else {
             $cacheData = Cache::get('article_cache_' . $articleId);
             if (empty($cacheData)) {
+                $articleData        = Db::query("SELECT * FROM `article` WHERE id = {$articleId}");
+                $articleContentData = Db::query("SELECT * FROM `article_content` WHERE article_id = {$articleId}");
                 $cacheData = [
-                    'music'      => '',
-                    'music_name' => '',
-                    'items'      => [
-                        $data['itemKey'] => [
-                            'id'   => '',
-                            'text' => $data['text'],
-                            'img'  => $data['img'],
-                        ],
-                    ],
+                    'classify_id' => !empty($articleData) ? $articleData['classify_id'] : '',
+                    'music'       => !empty($articleData) ? $articleData['music'] : '',
+                    'music_name'  => !empty($articleData) ? $articleData['music_name'] : '',
+                    'items'       => !empty($articleContentData) ? $articleContentData : [],
                 ];
+                $cacheData['music']       = $music !== false ? $music : $cacheData['music'];
+                $cacheData['music_name']  = $musicName !== false ? $musicName : $cacheData['music_name'];
+                $cacheData['classify_id'] = !empty($classifyId) ? $classifyId : $cacheData['classify_id'];
             } else {
                 switch ($data['type']) {
-                    case 1:
+                    case 1:// 编辑
+                        $cacheData['music']       = $music !== false ? $music : $cacheData['music'];
+                        $cacheData['music_name']  = $musicName !== false ? $musicName : $cacheData['music_name'];
                         if (!empty($cacheData['items'])) {
                             foreach ($cacheData['items'] AS $key => &$value) {
                                 if ($key == $data['itemKey']) {
@@ -190,14 +201,8 @@ class ArticleComment extends CoreArticleComment
                                 }
                             }
                         }
-                        if ($data['music'] !== false) {
-                            $cacheData['music'] = $data['music'];
-                        }
-                        if ($data['musicName'] !== false) {
-                            $cacheData['music_name'] = $data['musicName'];
-                        }
                         break;
-                    case 2:
+                    case 2:// addBox 添加
                         $pushData = [
                             'id'   => '',
                             'text' => '',
@@ -205,7 +210,7 @@ class ArticleComment extends CoreArticleComment
                         ];
                         array_push($cacheData['items'], $pushData);
                         break;
-                    case 3:
+                    case 3:// delBox 删除
                         array_splice($cacheData['items'], $data['itemKey'], 1);
                         break;
                 }
@@ -222,7 +227,7 @@ class ArticleComment extends CoreArticleComment
         $articleId = $data['articleId'];
         $itemKey   = $data['itemKey'];
         $userId    = $data['userId'];
-        $result = [
+        $result    = [
             'classify_id' => '',
             'music'       => '',
             'music_name'  => '',
@@ -234,21 +239,20 @@ class ArticleComment extends CoreArticleComment
                 ],
             ],
         ];
-        if(empty($articleId)){
+        if (empty($articleId)) {
             $cacheTmpData = Cache::get('article_cache_tmp_' . $userId);
-            if(empty($cacheTmpData)){
+            if (empty($cacheTmpData)) {
                 Cache::set('article_cache_tmp_' . $userId, json_encode($result));
                 switch ($data['type']) {
                     // 获取所有缓存
                     case 1:
-
                         break;
                     // 获取单个item缓存
                     case 2:
                         $result = $result['items'][0];
                         break;
                 }
-            }else{
+            } else {
                 switch ($data['type']) {
                     // 获取所有缓存
                     case 1:
@@ -261,9 +265,9 @@ class ArticleComment extends CoreArticleComment
                 }
             }
 
-        }else{
-            $cacheData    = Cache::get('article_cache_' . $articleId);
-            if($cacheData){
+        } else {
+            $cacheData = Cache::get('article_cache_' . $articleId);
+            if ($cacheData) {
                 switch ($data['type']) {
                     // 获取所有缓存
                     case 1:

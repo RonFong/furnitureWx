@@ -734,8 +734,8 @@ class Article extends BaseController
             'img'        => $this->request->param('img', false),
             'articleId'  => $this->request->param('articleId', ''),
             'classifyId' => $this->request->param('classifyId', ''),
-            'music'      => $this->request->param('music', ''),
-            'music_name' => $this->request->param('musicName', ''),
+            'music'      => $this->request->param('music', false),
+            'musicName'  => $this->request->param('musicName', false),
             'userId'     => user_info('id'),
             'type'       => $this->request->param('type', 1),
         ];
