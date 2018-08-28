@@ -13,6 +13,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\lib\enum\Response;
+use think\Config;
 use think\Request;
 use app\api\model\GoodsRetailPrice as GoodsRetailPriceModel;
 use app\common\validate\GoodsRetailPrice as GoodsRetailPriceValidate;
@@ -32,6 +33,12 @@ class GoodsRetailPrice extends BaseController
         $this->currentValidate = new GoodsRetailPriceValidate();
     }
 
+    public function getGoodsRetailPrice()
+    {
+        $config = Config::get('system');
+        $this->result['data']['ratio'] = isset($config['price_ratio']) ? $config['price_ratio'] : 1.3;
+        return json($this->result, 201);
+    }
 
     /**
      * @api {post} /v1/GoodsRetailPrice/setGlobalRatio  设置商城商品全局 零售价计算比例

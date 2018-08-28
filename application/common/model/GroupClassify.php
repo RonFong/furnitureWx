@@ -99,4 +99,17 @@ class GroupClassify extends Model
         }
         return $this->saveAll($save_data);
     }
+
+    public function secondGroupClassify($group_id,$group_type)
+    {
+        $objGroup = $this
+            ->field(['id','classify_name'])
+            ->where('group_id',$group_id)
+            ->where('group_type',$group_type)
+            ->where('parent_id','>',0)
+            ->order(['sort' => 'desc'])
+            ->select();
+        $arrGroup = array_column($objGroup,'classify_name');
+        return ['obj' => $objGroup,'arr' => $arrGroup];
+    }
 }

@@ -138,6 +138,8 @@ Route::group('api/:version', function () {
         Route::post('sort','api/:version.Category/getSortGroupClassify');
         // 删除产品分类
         Route::post('del','api/:version.Category/delGroupClassify');
+        // 二级分类
+        Route::get('second','api/:version.Category/getSecondGroupClassify');
     });
 
     //关注、收藏、点赞
@@ -220,5 +222,7 @@ Route::group('api/:version', function () {
         Route::post('setGlobalRatio', 'api/:version.GoodsRetailPrice/setGlobalRatio');
         //设置商城商品零售价
         Route::post('setGoodsAmount', 'api/:version.GoodsRetailPrice/setGoodsAmount');
+        // 获取零售价计算比例
+        Route::get('index','api/:version.GoodsRetailPrice/getGoodsRetailPrice');
     });
 });
