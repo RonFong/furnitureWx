@@ -67,9 +67,9 @@ class Site extends BaseController
             ->where('lat','<',$w2)
             ->where('lng','>',$w3)
             ->where('lng','<',$w4)
-            ->where(function ($query) use ($table,$word) {
+            ->where(function ($query) use ($word) {
                 if(!empty($word)){
-                    $query->where($table.'_name','like','%'.$word.'%');
+                    $query->where('shop_name','like','%'.$word.'%');
                 }
             })
             ->select();
@@ -81,9 +81,9 @@ class Site extends BaseController
             ->where('lat','<',$w2)
             ->where('lng','>',$w3)
             ->where('lng','<',$w4)
-            ->where(function ($query) use ($table,$word) {
+            ->where(function ($query) use ($word) {
                 if(!empty($word)){
-                    $query->where($table.'_name','like','%'.$word.'%');
+                    $query->where('factory_name','like','%'.$word.'%');
                 }
             })
             ->select();
