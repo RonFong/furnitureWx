@@ -14,6 +14,7 @@ use app\api\controller\BaseController;
 use app\api\model\Shop as shopModel;
 use app\lib\enum\Response;
 use think\Cache;
+use think\Db;
 use think\Request;
 
 class Shop extends BaseController
@@ -80,8 +81,41 @@ class Shop extends BaseController
     {
         $user_id = user_info('id');
         $group_id = user_info('group_id');
-        $shop_detail = $this->currentModel->where('id',$group_id)->where('admin_user',$user_id)->find();
-        $this->result['data'] = $shop_detail;
+        $type = user_info('type');
+        if($type == 2){
+            $detail = $this->currentModel->where('id',$group_id)->where('admin_user',$user_id)->find();
+        }elseif ($type == 1){
+            $detail = Db::name('factory')->where('id',$group_id)->where('admin_user',$user_id)->find();
+        }
+        // 数据整理
+        $result = [];
+        if(!empty($detail)){
+            $result = [
+                'id'    =>  $detail['id'],
+                'group_type'    =>  $type,
+                'store_name'    =>  isset($detail['shop_name']) ? $detail['shop_name'] : $detail['factory_name'],
+                'store_contact'    =>  isset($detail['shop_contact']) ? $detail['shop_contact'] : $detail['factory_contact'],
+                'store_phone'    =>  isset($detail['shop_phone']) ? $detail['shop_phone'] : $detail['factory_phone'],
+                'store_wx'    =>  isset($detail['shop_wx']) ? $detail['shop_wx'] : $detail['factory_wx'],
+                'wx_code'    =>  isset($detail['shop_wx']) ? $detail['shop_wx'] : $detail['factory_wx'],
+                'province'  =>  $detail['province'],
+                'city'  =>  $detail['city'],
+                'district'  =>  $detail['district'],
+                'town'  =>  $detail['town'],
+                'address'  =>  $detail['address'],
+                'shop_img'  =>  isset($detail['shop_img']) ? $detail['shop_img'] : $detail['factory_img'],
+                'factory_address'  =>  isset($detail['factory_address']) ? $detail['factory_address'] : '',
+                'category_id'   =>  $detail['category_id'],
+                'category_child_id'   =>  array_filter(explode(',',$detail['category_child_id'])),
+                'license'   =>  $detail['license'],
+                'user_name'   =>  $detail['user_name'],
+                'phone'   =>  $detail['phone'],
+                'wx_account'   =>  $detail['wx_account'],
+                'license_code'   =>  $detail['license_code'],
+            ];
+        }
+
+        $this->result['data'] = $result;
         return json($this->result, 200);
     }
 }
