@@ -6,8 +6,6 @@
 // +----------------------------------------------------------------------
 // | CreateTime: 2018/7/15 
 // +----------------------------------------------------------------------
-
-
 namespace app\api\model;
 
 use app\common\model\ArticleContent as CoreArticleContent;
@@ -15,6 +13,7 @@ use think\Cache;
 
 class ArticleContent extends CoreArticleContent
 {
+
     public static function setCache($data)
     {
 
@@ -44,9 +43,10 @@ class ArticleContent extends CoreArticleContent
             } else {
                 switch ($data['type']) {
                     case 1:// 编辑
-                        $cacheTmpData['music']       = $music !== false ? $music : $cacheTmpData['music'];
-                        $cacheTmpData['music_name']  = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
-                        $cacheTmpData['classify_id'] = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
+                        $cacheTmpData['music']                  = $music !== false ? $music : $cacheTmpData['music'];
+                        $cacheTmpData['music_name']             = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
+                        $cacheTmpData['classify_id']            = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
+                        $cacheTmpData['items'][$itemKey]['img'] = $img !== false ? $img : $cacheTmpData['items'][$itemKey]['img'];
                         break;
                     case 2:// addBox 添加
                         $pushData = [
@@ -65,9 +65,9 @@ class ArticleContent extends CoreArticleContent
         } else {
             $cacheData = Cache::get('article_cache_' . $articleId);
             if (empty($cacheData)) {
-                $articleData        = Db::query("SELECT * FROM `article` WHERE id = {$articleId}");
-                $articleContentData = Db::query("SELECT * FROM `article_content` WHERE article_id = {$articleId}");
-                $cacheData = [
+                $articleData              = Db::query("SELECT * FROM `article` WHERE id = {$articleId}");
+                $articleContentData       = Db::query("SELECT * FROM `article_content` WHERE article_id = {$articleId}");
+                $cacheData                = [
                     'classify_id' => !empty($articleData) ? $articleData['classify_id'] : '',
                     'music'       => !empty($articleData) ? $articleData['music'] : '',
                     'music_name'  => !empty($articleData) ? $articleData['music_name'] : '',
@@ -79,8 +79,8 @@ class ArticleContent extends CoreArticleContent
             } else {
                 switch ($data['type']) {
                     case 1:// 编辑
-                        $cacheData['music']       = $music !== false ? $music : $cacheData['music'];
-                        $cacheData['music_name']  = $musicName !== false ? $musicName : $cacheData['music_name'];
+                        $cacheData['music']      = $music !== false ? $music : $cacheData['music'];
+                        $cacheData['music_name'] = $musicName !== false ? $musicName : $cacheData['music_name'];
                         if (!empty($cacheData['items'])) {
                             foreach ($cacheData['items'] AS $key => &$value) {
                                 if ($key == $data['itemKey']) {
