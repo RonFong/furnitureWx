@@ -11,6 +11,7 @@
 namespace app\api\model;
 
 use app\common\model\ArticleContent as CoreArticleContent;
+use think\Cache;
 
 class ArticleContent extends CoreArticleContent
 {

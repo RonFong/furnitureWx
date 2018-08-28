@@ -11,7 +11,6 @@
 namespace app\api\model;
 
 use app\common\model\ArticleComment as CoreArticleComment;
-use think\Cache;
 use think\Db;
 
 /**
