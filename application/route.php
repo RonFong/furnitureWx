@@ -123,6 +123,8 @@ Route::group('api/:version', function () {
         Route::post('register', 'api/:version.Shop/register');
         // 门店信息
         Route::get('info', 'api/:version.Shop/info');
+        // 编辑门店注册信息
+        Route::get('editRegister','api/:version.Shop/editRegister');
     });
     Route::group('category', function () {
 

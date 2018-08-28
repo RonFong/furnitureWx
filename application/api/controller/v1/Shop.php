@@ -76,8 +76,12 @@ class Shop extends BaseController
         $this->response->error(Response::USERS_EMPTY);
     }
 
-    public function addShopGoods()
+    public function editRegister()
     {
-        
+        $user_id = user_info('id');
+        $group_id = user_info('group_id');
+        $shop_detail = $this->currentModel->where('id',$group_id)->where('admin_user',$user_id)->find();
+        $this->result['data'] = $shop_detail;
+        return json($this->result, 200);
     }
 }
