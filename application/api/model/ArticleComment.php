@@ -11,7 +11,6 @@
 namespace app\api\model;
 
 use app\common\model\ArticleComment as CoreArticleComment;
-use think\Cache;
 use think\Db;
 
 /**
@@ -122,78 +121,5 @@ class ArticleComment extends CoreArticleComment
         return $v;
     }
 
-    public static function setCache($data)
-    {
 
-        $articleId = $data['articleId'];
-        $cacheData = Cache::get('article_cache_' . $articleId);
-        if (empty($cacheData)) {
-            $cacheData = [
-                'music'      => '',
-                'music_name' => '',
-                'items'      => [
-                    $data['itemKey'] => [
-                        'id'   => '',
-                        'text' => $data['text'],
-                        'img'  => $data['img'],
-                    ],
-                ],
-            ];
-        } else {
-            switch ($data['type']) {
-                case 1:
-                    if (!empty($cacheData['items'])) {
-                        foreach ($cacheData['items'] AS $key => &$value) {
-                            if ($key == $data['itemKey']) {
-                                if ($data['text'] !== false) {
-                                    $value['text'] = $data['text'];
-                                }
-                                if ($data['img'] !== false) {
-                                    $value['img'] = $data['img'];
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    if ($data['music'] !== false) {
-                        $cacheData['music'] = $data['music'];
-                    }
-                    if ($data['musicName'] !== false) {
-                        $cacheData['music_name'] = $data['musicName'];
-                    }
-                    break;
-                case 2:
-                    $pushData = [
-                        'id'   => '',
-                        'text' => '',
-                        'img'  => '',
-                    ];
-                    array_push($cacheData['items'], $pushData);
-                    break;
-                case 3:
-                    array_splice($cacheData['items'], $data['itemKey'], 1);
-                    break;
-            }
-        }
-        Cache::set('article_cache_' . $articleId, json_encode($cacheData));
-
-        return true;
-    }
-
-    public static function getCache($data)
-    {
-
-        $articleId = $data['articleId'];
-        $itemKey   = $data['itemKey'];
-        $result    = Cache::get('article_cache_' . $articleId);
-        switch ($data['type']) {
-            case 1:
-                break;
-            case 2:
-                $result = $result['items'][$itemKey];
-                break;
-        }
-
-        return $result;
-    }
 }

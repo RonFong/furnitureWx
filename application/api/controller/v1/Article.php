@@ -729,12 +729,17 @@ class Article extends BaseController
     {
 
         $setCacheData = [
-            'itemKey'   => $this->request->param('itemKey', ''),
-            'text'      => $this->request->param('text', false),
-            'articleId' => $this->request->param('articleId'),
-            'type'      => $this->request->param('type', 1),
+            'itemKey'    => $this->request->param('itemKey', ''),
+            'text'       => $this->request->param('text', false),
+            'img'        => $this->request->param('img', false),
+            'articleId'  => $this->request->param('articleId', ''),
+            'classifyId' => $this->request->param('classifyId', ''),
+            'music'      => $this->request->param('music', false),
+            'musicName'  => $this->request->param('musicName', false),
+            'userId'     => user_info('id'),
+            'type'       => $this->request->param('type', 1),
         ];
-        ArticleComment::setCache($setCacheData);
+        \app\api\model\ArticleContent::setCache($setCacheData);
 
         return json($this->result);
     }
@@ -745,9 +750,10 @@ class Article extends BaseController
         $setCacheData         = [
             'itemKey'   => $this->request->param('itemKey', ''),
             'articleId' => $this->request->param('articleId'),
+            'userId'    => user_info('id'),
             'type'      => $this->request->param('type', 1),
         ];
-        $data                 = ArticleComment::getCache($setCacheData);
+        $data                 = \app\api\model\ArticleContent::getCache($setCacheData);
         $this->result['data'] = $data;
 
         return json($this->result);
