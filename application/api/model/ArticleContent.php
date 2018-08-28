@@ -46,7 +46,9 @@ class ArticleContent extends CoreArticleContent
                         $cacheTmpData['music']                  = $music !== false ? $music : $cacheTmpData['music'];
                         $cacheTmpData['music_name']             = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
                         $cacheTmpData['classify_id']            = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
-                        $cacheTmpData['items'][$itemKey]['img'] = $img !== false ? $img : $cacheTmpData['items'][$itemKey]['img'];
+                        if($itemKey != ''){
+                            $cacheTmpData['items'][$itemKey]['img'] = $img !== false ? $img : $cacheTmpData['items'][$itemKey]['img'];
+                        }
                         break;
                     case 2:// addBox 添加
                         $pushData = [
