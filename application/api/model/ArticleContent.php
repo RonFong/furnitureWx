@@ -212,6 +212,7 @@ class ArticleContent extends CoreArticleContent
                 unset($items[$key]['format_text']);
             }
         }
+        Cache::rm('article_cache_tmp_'.$userId);
         return true;
     }
 }
