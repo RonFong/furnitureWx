@@ -225,12 +225,21 @@
         var itemKey = getParam('itemKey');
         switch (getParam('editor')){
             case 'homeContent':
-                var url = '/api/v1/homeContent/getCache';
+                var url = '/api/v1/homeContent/setCache';
                 var navigateUrl = '/pages/manufactor/editor/editor?type=2';
+                var requestData = {
+                    text: text,
+                    itemKey: itemKey
+                };
                 break;
             case 'article':
-                var url = '/api/v1/article/getCache';
+                var url = '/api/v1/article/setCache';
                 var navigateUrl = '/pages/community/editor/editor?type=2';
+                var requestData = {
+                    text: text,
+                    itemKey: itemKey,
+                    articleId: ''
+                };
                 break;
         }
         $.ajax({
@@ -239,7 +248,7 @@
             //提交的网址
             url       : url,
             //提交的数据
-            data      : {text: text, itemKey: itemKey},
+            data      : requestData,
             headers   : {
                 'userToken': token
             },
