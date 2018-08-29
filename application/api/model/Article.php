@@ -91,7 +91,7 @@ class Article extends CoreArticle
         //已关注用户
         $users         = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
         $ids           = array_merge($this->ids, $users);
-        $where['a.id'] = ['in', $ids];
+        $where['a.user_id'] = ['in', $ids];
         if ($classifyId) {
             $where['d.id'] = $classifyId;
         }
