@@ -93,6 +93,7 @@ class Site extends BaseController
         if(!empty($store_data)){
             foreach ($store_data as $item){
                 $tmp['id'] = $item['id'];
+                $tmp['store_type'] = isset($item['factory_name']) ? 1 : 2;
                 $tmp['name'] = isset($item['factory_name']) ? $item['factory_name'] : $item['shop_name'];
                 $tmp['img'] = isset($item['factory_img']) ? $item['factory_img'] : $item['shop_img'];
                 if($item['province'] == $item['city']){
