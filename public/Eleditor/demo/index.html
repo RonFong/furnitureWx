@@ -102,7 +102,7 @@
 <script>
     $(function () {
         if (getParam('itemKey') != '' && getParam('itemKey') != undefined) {
-            switch (getParam('editor')){
+            switch (getParam('editorType')){
                 case 'homeContent':
                     var url = '/api/v1/homeContent/getCache';
                     break;
@@ -223,7 +223,7 @@
         var text   = contentEditor.getContent();
         var token  = getParam('token');
         var itemKey = getParam('itemKey');
-        switch (getParam('editor')){
+        switch (getParam('editorType')){
             case 'homeContent':
                 var url = '/api/v1/homeContent/setCache';
                 var navigateUrl = '/pages/manufactor/editor/editor?type=2';
