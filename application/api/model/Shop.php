@@ -56,8 +56,7 @@ class Shop extends CoreShop
                 ]);
         }
         $result = [
-            'store_type'    => 2,
-            'id'            => $shop_id
+            'user_info' => User::get(['id' => $data['admin_user']])
         ];
         return ['success' => true,'msg' => '','data' => $result];
     }

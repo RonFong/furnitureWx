@@ -53,8 +53,7 @@ class Factory extends CoreFactory
                 ]);
         }
         $result = [
-            'store_type' => 1,
-            'id'         => $this->id,
+            'user_info' => User::get(['id' => $data['admin_user']])
         ];
 
         return ['success' => true, 'msg' => '', 'data' => $result];
