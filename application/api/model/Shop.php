@@ -42,6 +42,7 @@ class Shop extends CoreShop
         }else{
             $shop_id = user_info('group_id');
             unset($data['editState']);
+            $data['update_time'] = time();
             $registerRes = $this->save($data,['id' => $shop_id]);
         }
 

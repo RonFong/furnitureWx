@@ -36,24 +36,25 @@ class Factory extends CoreFactory
         if(!$data['editState']){
             unset($data['editState']);
             $registerRes = $this->save($data);
+            $factory_id = $this->id;
         }else{
             unset($data['editState']);
-            $shop_id = user_info('group_id');
-            $registerRes = $this->save($data,['id' => $shop_id]);
+            $factory_id = user_info('group_id');
+            $data['update_time'] = time();
+            $registerRes = $this->save($data,['id' => $factory_id]);
         }
         if ($registerRes) {
             Db::name('user')
                 ->where('id', $data['admin_user'])
                 ->update([
                     'type'       => 1,
-                    'group_id'   => $this->id,
+                    'group_id'   => $factory_id,
                     'wx_account' => $data['factory_wx'],
                 ]);
         }
         $result = [
             'store_type' => 1,
             'id'         => $this->id,
-            //            'probation'     => $data['probation']
         ];
 
         return ['success' => true, 'msg' => '', 'data' => $result];
