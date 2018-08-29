@@ -121,7 +121,7 @@ Route::group('api/:version', function () {
     // 门店
     Route::group('shop', function () {
 
-        // 入驻商家
+        // 入驻商家(完善信息)
         Route::post('register', 'api/:version.Shop/register');
         // 门店信息
         Route::get('info', 'api/:version.Shop/info');
