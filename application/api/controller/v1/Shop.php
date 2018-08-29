@@ -102,7 +102,7 @@ class Shop extends BaseController
                 'store_contact'    =>  isset($detail['shop_contact']) ? $detail['shop_contact'] : $detail['factory_contact'],
                 'store_phone'    =>  isset($detail['shop_phone']) ? $detail['shop_phone'] : $detail['factory_phone'],
                 'store_wx'    =>  isset($detail['shop_wx']) ? $detail['shop_wx'] : $detail['factory_wx'],
-                'wx_code'    =>  isset($detail['shop_wx']) ? $detail['shop_wx'] : $detail['factory_wx'],
+                'wx_code'    =>  isset($detail['wx_code']) ? $detail['wx_code'] : $detail['wx_code'],
                 'province'  =>  $detail['province'],
                 'city'  =>  $detail['city'],
                 'district'  =>  $detail['district'],
