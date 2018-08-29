@@ -178,7 +178,7 @@ class Article extends BaseController
      */
     public function localArticleList()
     {
-
+        $this->data['order'] = $this->data['order'] ? $this->data['order'] : 0;
         $this->currentValidate->goCheck('localArticleList');
         try {
             $this->result['data'] = $this->currentModel->localArticleList('', $this->data['order']);
