@@ -139,10 +139,10 @@ class Article extends BaseController
     }
 
 
-    public function queryArticleList($query)
+    public function queryArticleList()
     {
         if (!array_key_exists('type', $this->data)) {
-            $this->response->error(Response::RELATE_ERROR);
+            $this->response->error(Response::PARAM_ERROR);
         }
 
         //获取首页列表
@@ -157,13 +157,15 @@ class Article extends BaseController
 
         //根据用户ID获取文章列表
         if ($this->data['type'] == 'byUid') {
-            return $this->getOwnArticleList();
+            return $this->getArticleListByUserId();
         }
 
-        //根据用户ID获取文章列表
+        //根据分类获取文章列表
         if ($this->data['type'] == 'classify') {
             return $this->getListByClassify();
         }
+
+        $this->response->error(Response::PARAM_ERROR);
     }
 
     /**
@@ -176,6 +178,7 @@ class Article extends BaseController
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
+     *      "order":0,
      *      "page":1,
      *      "row":10
      * }
@@ -208,10 +211,9 @@ class Article extends BaseController
      */
     public function localArticleList()
     {
-        $this->data['order'] = $this->data['order'] ? $this->data['order'] : 0;
         $this->currentValidate->goCheck('localArticleList');
         try {
-            $this->result['data'] = $this->currentModel->localArticleList('', $this->data['order']);
+            $this->result['data'] = $this->currentModel->localArticleList('', $this->data);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -427,7 +429,7 @@ class Article extends BaseController
     {
 
         try {
-            $this->result['data'] = $this->currentModel->getListByUserId(user_info('id'));
+            $this->result['data'] = $this->currentModel->getListByUserId(user_info('id'), $this->data);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -454,10 +456,9 @@ class Article extends BaseController
      */
     public function getListByClassify()
     {
-
         $this->currentValidate->goCheck('listByClassify');
         try {
-            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->data['order']);
+            $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->data);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -532,7 +533,7 @@ class Article extends BaseController
 
         $this->currentValidate->goCheck('getByUserId');
         try {
-            $this->result['data'] = $this->currentModel->getListByUserId($this->data['user_id']);
+            $this->result['data'] = $this->currentModel->getListByUserId($this->data['user_id'], $this->data);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
@@ -548,7 +549,6 @@ class Article extends BaseController
      */
     protected function getListByUserId($userId)
     {
-
         return $this->currentModel->getListByUserId($userId);
     }
 
