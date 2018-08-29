@@ -47,7 +47,7 @@ class Shop extends BaseController
                 if ($authCode != $this->data['code']) {
                     exception('验证码错误');
                 }
-//                Cache::rm('auth_'.$this->data['shop_phone']);
+                Cache::rm('auth_'.$this->data['shop_phone']);
             } catch (\Exception $e) {
                 $this->result['state'] = 0;
                 $this->result['msg'] = $e->getMessage();
