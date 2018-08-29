@@ -75,7 +75,7 @@ class Article extends CoreArticle
     {
 
         //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
-        $this->ids = [15, 16, 17];
+        $this->ids = [26];
     }
 
     /**
