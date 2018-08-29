@@ -49,18 +49,9 @@ class Site extends BaseController
         $lat = $this->data['lat'] ?? '' ;
         // 经度
         $lng = $this->data['lng'] ?? '';
-        // 1 :厂家 2：商家
-        $type = $this->data['type'] == 1 ? 1 : 2;
 
         $word = empty($this->data['w']) ? '' : $this->data['w'];
 //        $table = $type == 1 ? 'factory' : 'shop';
-        if($type == 1){
-            $table = 'factory';
-            $fields = ['id','factory_img','factory_name','province','city','district','town','address','lng','lat'];
-        }else{
-            $table = 'shop';
-            $fields = ['id','shop_img','shop_name','province','city','district','town','address','lng','lat'];
-        }
         $longitude = sprintf("%.5f", $lng);
         $latitude  = sprintf("%.5f", $lat);
         $squares   = \app\api\service\Site::getaround(250, $latitude, $longitude);
@@ -68,26 +59,42 @@ class Site extends BaseController
         $w2        = $squares['left-top']['lat'] + 0.00001;
         $w3        = $squares['left-top']['lng'] - 0.00001;
         $w4        = $squares['right-bottom']['lng'] + 0.00001;
-        $store_data = Db::name($table)
-            ->field($fields)
+
+        $shop_data = Db::name('shop')
+            ->field(['id','shop_img','shop_name','province','city','district','town','address','lng','lat'])
             ->where('lat','>',0)
             ->where('lat','>',$w1)
             ->where('lat','<',$w2)
             ->where('lng','>',$w3)
             ->where('lng','<',$w4)
-            ->where(function ($query) use ($table,$word) {
+            ->where(function ($query) use ($word) {
                 if(!empty($word)){
-                    $query->where($table.'_name','like','%'.$word.'%');
+                    $query->where('shop_name','like','%'.$word.'%');
                 }
             })
             ->select();
 
+        $factory_data = Db::name('factory')
+            ->field(['id','factory_img','factory_name','province','city','district','town','address','lng','lat'])
+            ->where('lat','>',0)
+            ->where('lat','>',$w1)
+            ->where('lat','<',$w2)
+            ->where('lng','>',$w3)
+            ->where('lng','<',$w4)
+            ->where(function ($query) use ($word) {
+                if(!empty($word)){
+                    $query->where('factory_name','like','%'.$word.'%');
+                }
+            })
+            ->select();
+
+        $store_data = array_merge($shop_data,$factory_data);
         $result = [];
         if(!empty($store_data)){
             foreach ($store_data as $item){
                 $tmp['id'] = $item['id'];
-                $tmp['name'] = $type == 1 ? $item['factory_name'] : $item['shop_name'];
-                $tmp['img'] = $type == 1 ? $item['factory_img'] : $item['shop_img'];
+                $tmp['name'] = isset($item['factory_name']) ? $item['factory_name'] : $item['shop_name'];
+                $tmp['img'] = isset($item['factory_img']) ? $item['factory_img'] : $item['shop_img'];
                 if($item['province'] == $item['city']){
                     $tmp['address'] = $item['province'].$item['district'].$item['town'].$item['address'];
                 }else{
