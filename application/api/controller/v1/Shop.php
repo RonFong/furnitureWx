@@ -90,6 +90,11 @@ class Shop extends BaseController
         // 数据整理
         $result = [];
         if(!empty($detail)){
+            // 查询分类名称
+            $classify_name = Db::name('group_classify')
+                ->where('id',$detail['category_id'])
+                ->column('classify_name');
+
             $result = [
                 'id'    =>  $detail['id'],
                 'group_type'    =>  $type,
@@ -106,6 +111,7 @@ class Shop extends BaseController
                 'shop_img'  =>  isset($detail['shop_img']) ? $detail['shop_img'] : $detail['factory_img'],
                 'factory_address'  =>  isset($detail['factory_address']) ? $detail['factory_address'] : '',
                 'category_id'   =>  $detail['category_id'],
+                'classify_name'   =>  $classify_name[0],
                 'category_child_id'   =>  $detail['category_child_id'],
                 'license'   =>  $detail['license'],
                 'user_name'   =>  $detail['user_name'],
