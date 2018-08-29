@@ -18,6 +18,8 @@ use app\common\model\ArticleClassify;
 use app\common\model\ArticleContent;
 use app\api\model\ArticleComment;
 use app\lib\enum\Response;
+use Carbon\Carbon;
+use think\Cache;
 use think\Request;
 
 /**
@@ -134,6 +136,34 @@ class Article extends BaseController
         }
 
         return json($this->result, $code ?? 200);
+    }
+
+
+    public function queryArticleList($query)
+    {
+        if (!array_key_exists('type', $this->data)) {
+            $this->response->error(Response::RELATE_ERROR);
+        }
+
+        //获取首页列表
+        if ($this->data['type'] == 'homePage') {
+            return $this->localArticleList();
+        }
+
+        //获取本人文章列表
+        if ($this->data['type'] == 'self') {
+            return $this->getOwnArticleList();
+        }
+
+        //根据用户ID获取文章列表
+        if ($this->data['type'] == 'byUid') {
+            return $this->getOwnArticleList();
+        }
+
+        //根据用户ID获取文章列表
+        if ($this->data['type'] == 'classify') {
+            return $this->getListByClassify();
+        }
     }
 
     /**
