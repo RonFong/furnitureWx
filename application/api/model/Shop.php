@@ -38,6 +38,7 @@ class Shop extends CoreShop
             $data['vip_grade'] = 0;
             unset($data['editState']);
             $registerRes = $this->save($data);
+            $shop_id = $this->id;
         }else{
             $shop_id = user_info('group_id');
             unset($data['editState']);
@@ -49,13 +50,13 @@ class Shop extends CoreShop
                 ->where('id',$data['admin_user'])
                 ->update([
                     'type' => 2,
-                    'group_id' => $this->id,
+                    'group_id' => $shop_id,
                     'wx_account' => $data['shop_wx']
                 ]);
         }
         $result = [
             'store_type'    => 2,
-            'id'            => $this->id,
+            'id'            => $shop_id,
             'probation'     => $data['probation']
         ];
         return ['success' => true,'msg' => '','data' => $result];
