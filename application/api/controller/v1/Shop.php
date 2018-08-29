@@ -106,7 +106,7 @@ class Shop extends BaseController
                 'shop_img'  =>  isset($detail['shop_img']) ? $detail['shop_img'] : $detail['factory_img'],
                 'factory_address'  =>  isset($detail['factory_address']) ? $detail['factory_address'] : '',
                 'category_id'   =>  $detail['category_id'],
-                'category_child_id'   =>  array_filter(explode(',',$detail['category_child_id'])),
+                'category_child_id'   =>  $detail['category_child_id'],
                 'license'   =>  $detail['license'],
                 'user_name'   =>  $detail['user_name'],
                 'phone'   =>  $detail['phone'],
