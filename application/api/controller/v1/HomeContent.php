@@ -118,4 +118,16 @@ class HomeContent extends BaseController
         return json($this->result);
     }
 
+    public function getStoreHomeContent()
+    {
+        $params       = [
+            'groupId'   => $this->data['id'],
+            'groupType' => $this->data['store_type'],
+            'editType'  => 0,
+        ];
+        $data                 = HomeContentItem::getContent($params);
+        $this->result['data'] = $data;
+
+        return json($this->result);
+    }
 }

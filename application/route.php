@@ -204,6 +204,8 @@ Route::group('api/:version', function () {
         Route::get('setCache', 'api/:version.HomeContent/setCache');
         //获取缓存文字
         Route::get('getCache', 'api/:version.HomeContent/getCache');
+        // 获取商/厂首页图文
+        Route::get('getStoreHomeContent','api/:version.HomeContent/getStoreHomeContent');
     });
     //商城
     Route::group('store', function () {
