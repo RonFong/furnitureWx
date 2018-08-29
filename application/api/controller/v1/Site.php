@@ -60,6 +60,9 @@ class Site extends BaseController
         $w3        = $squares['left-top']['lng'] - 0.00001;
         $w4        = $squares['right-bottom']['lng'] + 0.00001;
 
+        $user_store_id = user_info('group_id');
+        $user_store_type = user_info('type');
+
         $shop_data = Db::name('shop')
             ->field(['id','shop_img','shop_name','province','city','district','town','address','lng','lat'])
             ->where('lat','>',0)
@@ -70,6 +73,11 @@ class Site extends BaseController
             ->where(function ($query) use ($word) {
                 if(!empty($word)){
                     $query->where('shop_name','like','%'.$word.'%');
+                }
+            })
+            ->where(function ($query) use ($user_store_id,$user_store_type){
+                if($user_store_type == 2){
+                    $query->whereNotIn('id',[$user_store_id]);
                 }
             })
             ->where('state',1)
@@ -84,6 +92,11 @@ class Site extends BaseController
             ->where(function ($query) use ($word) {
                 if(!empty($word)){
                     $query->where('factory_name','like','%'.$word.'%');
+                }
+            })
+            ->where(function ($query) use ($user_store_id,$user_store_type){
+                if($user_store_type == 1){
+                    $query->whereNotIn('id',[$user_store_id]);
                 }
             })
             ->where('state',1)
