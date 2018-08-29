@@ -61,11 +61,11 @@ class Shop extends CoreShop
         return ['success' => true,'msg' => '','data' => $result];
     }
 
-    public function getShopInfo($admin_user)
+    public function getShopInfo($group_id)
     {
         $shopInfo = $this
             ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
-            ->where('admin_user',$admin_user)
+            ->where('id',$group_id)
             ->find();
         return $shopInfo;
 

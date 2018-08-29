@@ -72,8 +72,8 @@ class Shop extends BaseController
 
     public function info()
     {
-        $admin_id =  user_info('id');
-        $userList = $this->currentModel->getShopInfo($admin_id);
+        $group_id = user_info('group_id');
+        $userList = $this->currentModel->getShopInfo($group_id);
         if ($userList) {
             return json($userList);
         }
