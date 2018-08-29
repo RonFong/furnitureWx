@@ -85,4 +85,7 @@ class Response
     //收藏的筛选条件错误
     const QUERY_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '筛选条件错误'];
 
+    //参数错误
+    const PARAM_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '参数错误'];
+
 }
