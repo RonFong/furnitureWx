@@ -56,8 +56,7 @@ class Shop extends CoreShop
         }
         $result = [
             'store_type'    => 2,
-            'id'            => $shop_id,
-            'probation'     => $data['probation']
+            'id'            => $shop_id
         ];
         return ['success' => true,'msg' => '','data' => $result];
     }
