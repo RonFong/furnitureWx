@@ -67,7 +67,7 @@ Route::group('api/:version', function () {
         // 获取地理位置
         Route::get('address/:lat/:lng', 'api/:version.Site/getAddress');
         // 获取附近的店
-        Route::get('nearbyStore/:lat/:lng/:type', 'api/:version.Site/getNearbyStore');
+        Route::get('nearbyStore/:lat/:lng', 'api/:version.Site/getNearbyStore');
     });
     //保存临时图片
     Route::post('image/temporary', 'api/:version.Image/saveTmpImg');
@@ -111,6 +111,8 @@ Route::group('api/:version', function () {
         Route::get('getCache', 'api/:version.Article/getCache');
         //获取文章部分详情（文字编辑）
         Route::get('getArticleContent', 'api/:version.Article/getArticleContent');
+        //保存动态
+        Route::post('saveArticleContent', 'api/:version.Article/saveArticleContent');
     });
     Route::group('articleComment', function () {
 
@@ -122,10 +124,12 @@ Route::group('api/:version', function () {
     // 门店
     Route::group('shop', function () {
 
-        // 入驻商家
+        // 入驻商家(完善信息)
         Route::post('register', 'api/:version.Shop/register');
         // 门店信息
         Route::get('info', 'api/:version.Shop/info');
+        // 编辑门店注册信息
+        Route::get('editRegister','api/:version.Shop/editRegister');
     });
     Route::group('category', function () {
 
@@ -203,12 +207,16 @@ Route::group('api/:version', function () {
         Route::get('setCache', 'api/:version.HomeContent/setCache');
         //获取缓存文字
         Route::get('getCache', 'api/:version.HomeContent/getCache');
+        // 获取商/厂首页图文
+        Route::get('getStoreHomeContent','api/:version.HomeContent/getStoreHomeContent');
     });
     //商城
     Route::group('store', function () {
 
         //获取商城首页商品列表
         Route::get('homeGoodsList', 'api/:version.StoreGoods/getGoodsList');
+        // 获取商/厂家基本信息
+        Route::get('info','api/:version.Shop/getStoreInfo');
     });
     //推广
     Route::group('userProposed', function () {

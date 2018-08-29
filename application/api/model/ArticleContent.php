@@ -10,6 +10,7 @@ namespace app\api\model;
 
 use app\common\model\ArticleContent as CoreArticleContent;
 use think\Cache;
+use think\Db;
 
 class ArticleContent extends CoreArticleContent
 {
@@ -43,10 +44,13 @@ class ArticleContent extends CoreArticleContent
             } else {
                 switch ($data['type']) {
                     case 1:// 编辑
-                        $cacheTmpData['music']                  = $music !== false ? $music : $cacheTmpData['music'];
-                        $cacheTmpData['music_name']             = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
-                        $cacheTmpData['classify_id']            = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
-                        $cacheTmpData['items'][$itemKey]['img'] = $img !== false ? $img : $cacheTmpData['items'][$itemKey]['img'];
+                        $cacheTmpData['music']       = $music !== false ? $music : $cacheTmpData['music'];
+                        $cacheTmpData['music_name']  = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
+                        $cacheTmpData['classify_id'] = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
+                        if ($itemKey != '') {
+                            $cacheTmpData['items'][$itemKey]['img']  = $img !== false ? $img : $cacheTmpData['items'][$itemKey]['img'];
+                            $cacheTmpData['items'][$itemKey]['text'] = $text !== false ? $text : $cacheTmpData['items'][$itemKey]['text'];
+                        }
                         break;
                     case 2:// addBox 添加
                         $pushData = [
@@ -175,5 +179,41 @@ class ArticleContent extends CoreArticleContent
         }
 
         return $result;
+    }
+
+    public static function saveContent($data)
+    {
+
+        $userId     = $data['userId'];
+        $articleId  = $data['article_id'];
+        $classifyId = $data['classify_id'];
+        $music      = $data['music'];
+        $musicName  = $data['musicName'];
+        $items      = json_decode($data['items'], true);
+        $time      = time();
+        if (empty($articleId)) {
+            $articleId = Db::execute("INSERT INTO `article`(user_id,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')");
+        }else{
+            $res = Db::execute("UPDATE `article` SET classify_id='{$classifyId}',music='{$music}',music_name='{$musicName}',update_time='{$time}',update_by='{$userId}' WHERE id = {$articleId} ");
+            if(!$res){
+                return false;
+            }
+        }
+        if (!empty($items)) {
+            foreach ($items AS $key => &$value) {
+                $itemId = $value['id'];
+                $text   = $value['text'];
+                $img    = $value['img'];
+                if (empty($itemId)) {
+                    $itemId      = Db::execute("INSERT INTO `article_content`(article_id,text,sort,img) values('{$articleId}','{$text}',0,'{$img}')");
+                    $value['id'] = $itemId;
+                } else {
+                    Db::execute("UPDATE `article_content` SET text='{$text}',img='{$img}' WHERE id = {$itemId}");
+                }
+                unset($items[$key]['format_text']);
+            }
+        }
+        Cache::rm('article_cache_tmp_'.$userId);
+        return true;
     }
 }

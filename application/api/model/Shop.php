@@ -22,7 +22,7 @@ class Shop extends CoreShop
         $lat_lng = $site->getLatLngDetail($address,$data['province']);
         if(empty($lat_lng)){
             // 模糊搜索
-            $lat_lng = $site->getLatLngDetail($address,$data['province']);
+            $lat_lng = $site->getLatLngDetail($vague_address,$data['province']);
             if(empty($lat_lng)){
                 return ['success' => false,'msg' => '地址不清晰','data' => []];
             }
@@ -32,24 +32,31 @@ class Shop extends CoreShop
         $data['admin_user'] = user_info('id');
         // 审核暂不审核
         $data['audit_state'] = 1;
-        // 会员分享试用期
-        $data['probation'] = 30;
-        $data['vip_grade'] = 0;
-        $this->data($data);
-        $registerRes = $this->save();
+        if(!$data['editState']){
+            // 会员分享试用期
+            $data['probation'] = 30;
+            $data['vip_grade'] = 0;
+            unset($data['editState']);
+            $registerRes = $this->save($data);
+            $shop_id = $this->id;
+        }else{
+            $shop_id = user_info('group_id');
+            unset($data['editState']);
+            $data['update_time'] = time();
+            $registerRes = $this->save($data,['id' => $shop_id]);
+        }
+
         if($registerRes){
             Db::name('user')
                 ->where('id',$data['admin_user'])
                 ->update([
                     'type' => 2,
-                    'group_id' => $this->id,
+                    'group_id' => $shop_id,
                     'wx_account' => $data['shop_wx']
                 ]);
         }
         $result = [
-            'store_type'    => 2,
-            'id'            => $this->id,
-            'probation'     => $data['probation']
+            'user_info' => User::get(['id' => $data['admin_user']])
         ];
         return ['success' => true,'msg' => '','data' => $result];
     }
@@ -62,5 +69,26 @@ class Shop extends CoreShop
             ->find();
         return $shopInfo;
 
+    }
+
+    public function getStoreInfo($data)
+    {
+        $result = [
+            'shop'  => [],
+            'factory' => []
+        ];
+        if(isset($data['store_type'])){
+            // 厂家
+            if($data['store_type'] == 1){
+
+            }elseif ($data['store_type'] == 2){
+                $shop_data = $this
+                    ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
+                    ->where('id',$data['id'])
+                    ->find();
+                $result['shop'] = $shop_data;
+            }
+        }
+        return $result;
     }
 }
