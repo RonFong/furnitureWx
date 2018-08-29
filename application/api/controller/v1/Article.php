@@ -139,6 +139,93 @@ class Article extends BaseController
     }
 
 
+    /**
+     * @api      {get} /v1/article/getArticleList  获取文章列表统一接口
+     * @apiGroup Article
+     *
+     * @apiParam {string} type 列表类型  【homePage、self、byUid、classify】
+     * @apiParam {number} [order] 排序 默认0 ; 0 最新， 1 人气， 2 最近， 3 回复
+     * @apiParam {string} keyword 搜索关键字
+     *
+     * @apiParamExample  {string} 请求参数格式：
+     * {
+     *      "type":"homePage",
+     *      "order":0,
+     *      "keyword":"我是标题"
+     * }
+     *
+     * @apiSuccessExample {json} 成功时的响应：
+     *{
+     *  "state": 1,
+     *  "msg": "success",
+     *  "data": {
+     *  "id": 1,                                //文章id
+     *  "user_id": 1,                           //作者id
+     *  "user_name": "Trump",                   //作者昵称
+     *  "avatar": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",   //头像
+     *  "create_time": "2018-07-15 03:29:15",    //发布时间
+     *  "music":
+     *  "http://zhangmenshiting.qianqian.com/data2/music/dcd350d9c095d40d276914eece786513/594668014/594668014.mp3?xcode=40e5a4864e417ada180b9e6dd2675aac",
+     *  "classify_name": "秀家",                 //分类名
+     *  "pageview": 5,                          //阅读数
+     *  "great_total": 5,                       //点赞数
+     *  "comment_total": 5,                     //评论数
+     *  "is_self": false,                       //是否为当前用户自己发布的文章！
+     *  "content":                              //文章图文内容
+     *      [
+     *          {
+     *              "img": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *              "text": "我就是我",
+     *              "sort": 1
+     *          },
+     *          {
+     *              "img": "/static/img/article/f7bd2c070f0c8323e1463018ab5e2433.png",
+     *              "text": "wewewewe",
+     *              "sort": 1
+     *          }
+     *      ],
+     *  "comments": [                           //文章的评论
+     *          {
+     *              "id": 22,                   //评论id
+     *              "user_id": 16,              //评论人id
+     *              "user_name": "test2",       //评论人昵称
+     *              "avatar":
+     *              "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *              "content": "挣了5毛钱22",
+     *              "great_total": 1,
+     *              "create_time": 1532515666,
+     *          "child": [                      //评论的回复
+     *              {
+     *                  "id": 23,
+     *                  "user_id": 17,
+     *                  "user_name": "user2",
+     *                  "respondent_user_name": "",     //所回复的评论的发布人昵称   （首条回复，值为空）
+     *                  "reply_content": "评论的回复"    //回复内容
+     *              },
+     *              {
+     *                  "id": 24,
+     *                  "user_id": 16,
+     *                  "user_name": "test2",
+     *                  "respondent_user_name": "Jack",   //所回复的评论的发布人昵称
+     *                  "reply_content": "回复的回复"      //回复内容
+     *              }
+     *          ]
+     *      },
+     *      {
+     *          "user_id": 16,
+     *          "user_name": "test2",
+     *          "avatar":
+     *          "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJmRLtDgppCh5HkNXFVRyXqE0q49GBkC3kpCZgIaE2b4o62jDX4KZ5CloNn5MkYWu3VQocibb9FHWw/132",
+     *          "content": "挣了5毛钱",
+     *          "great_total": 0,
+     *          "create_time": 1532515780,
+     *          "id": 25,
+     *          "child": []                               //此评论无回复
+     *          }
+     *      ]
+     *  }
+     *}
+     */
     public function queryArticleList()
     {
         if (!array_key_exists('type', $this->data)) {
