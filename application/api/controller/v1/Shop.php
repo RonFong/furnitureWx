@@ -127,4 +127,16 @@ class Shop extends BaseController
         $this->result['data'] = $result;
         return json($this->result, 200);
     }
+
+    public function getStoreInfo()
+    {
+        $info_params = [
+            'id' => $this->data['id'],
+            'store_type' => $this->data['store_type'],
+        ];
+
+        $result = $this->currentModel->getStoreInfo($info_params);
+        $this->result['data'] = $result;
+        return json($this->result,200);
+    }
 }

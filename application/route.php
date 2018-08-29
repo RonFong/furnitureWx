@@ -210,6 +210,8 @@ Route::group('api/:version', function () {
 
         //获取商城首页商品列表
         Route::get('homeGoodsList', 'api/:version.StoreGoods/getGoodsList');
+        // 获取商/厂家基本信息
+        Route::get('info','api/:version.Shop/getStoreInfo');
     });
     //推广
     Route::group('userProposed', function () {

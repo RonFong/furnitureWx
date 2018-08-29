@@ -70,4 +70,25 @@ class Shop extends CoreShop
         return $shopInfo;
 
     }
+
+    public function getStoreInfo($data)
+    {
+        $result = [
+            'shop'  => [],
+            'factory' => []
+        ];
+        if(isset($data['store_type'])){
+            // 厂家
+            if($data['store_type'] == 1){
+
+            }elseif ($data['store_type'] == 2){
+                $shop_data = $this
+                    ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
+                    ->where('id',$data['id'])
+                    ->find();
+                $result['shop'] = $shop_data;
+            }
+        }
+        return $result;
+    }
 }
