@@ -72,8 +72,8 @@ class Site extends BaseController
                     $query->where('shop_name','like','%'.$word.'%');
                 }
             })
+            ->where('state',1)
             ->select();
-
         $factory_data = Db::name('factory')
             ->field(['id','factory_img','factory_name','province','city','district','town','address','lng','lat'])
             ->where('lat','>',0)
@@ -86,8 +86,8 @@ class Site extends BaseController
                     $query->where('factory_name','like','%'.$word.'%');
                 }
             })
+            ->where('state',1)
             ->select();
-
         $store_data = array_merge($shop_data,$factory_data);
         $result = [];
         if(!empty($store_data)){
