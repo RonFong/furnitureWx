@@ -777,4 +777,20 @@ class Article extends BaseController
         return json($this->result, 200);
     }
 
+    public function saveArticleContent()
+    {
+
+        $saveContentData = [
+            'userId'      => user_info('id'),
+            'article_id'  => $this->request->param('article_id'),
+            'classify_id' => $this->request->param('classify_id'),
+            'music'       => $this->request->param('music'),
+            'musicName'   => $this->request->param('music_name'),
+            'items'       => $this->request->param('items'),
+        ];
+        \app\api\model\ArticleContent::saveContent($saveContentData);
+
+        return json($this->result);
+    }
+
 }
