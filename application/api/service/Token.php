@@ -62,7 +62,8 @@ class Token
                 'phone'         => '',
                 'wx_account'    => '',
                 'type'          => 3,
-                'state'         => 1
+                'state'         => 1,
+                'create_by'     => 0
             ];
             $userInfo = User::create($saveData);
         }
