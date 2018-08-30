@@ -66,7 +66,8 @@ class Token
                 'create_by'     => 0,
                 'update_by'     => 0
             ];
-            $userInfo = User::create($saveData);
+            (new User())->save($saveData);
+            $userInfo = $saveData;
         }
         if (!$userInfo) {
             exception('读取信息失败');
