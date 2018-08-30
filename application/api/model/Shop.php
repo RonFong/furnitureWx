@@ -77,6 +77,7 @@ class Shop extends CoreShop
             'shop'  => [],
             'factory' => []
         ];
+        $date = date('Ymd');
         if(isset($data['store_type'])){
             // 厂家
             if($data['store_type'] == 1){
@@ -87,6 +88,29 @@ class Shop extends CoreShop
                     ->where('id',$data['id'])
                     ->find();
                 $result['shop'] = $shop_data;
+            }
+            // 增加人气
+            $count = Db::name('popularity')
+                ->where('object_id',$data['id'])
+                ->where('object_type',$data['store_type'])
+                ->where('date',$date)
+                ->count();
+            if($count > 0){
+                Db::name('popularity')
+                    ->where('object_id',$data['id'])
+                    ->where('object_type',$data['store_type'])
+                    ->where('date',$date)
+                    ->setInc('value');
+            }else{
+                $month = date('Ym');
+                Db::name('popularity')
+                    ->insert([
+                        'object_id' => $data['id'],
+                        'object_type' => $data['store_type'],
+                        'date' => $date,
+                        'value' => 1,
+                        'month' => $month
+                    ]);
             }
         }
         return $result;
