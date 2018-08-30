@@ -77,6 +77,7 @@ class Shop extends CoreShop
             'shop'  => [],
             'factory' => []
         ];
+        $date = date('Ymd');
         if(isset($data['store_type'])){
             // 厂家
             if($data['store_type'] == 1){
@@ -84,9 +85,41 @@ class Shop extends CoreShop
             }elseif ($data['store_type'] == 2){
                 $shop_data = $this
                     ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
+                    ->with(['pop'=>function($query){
+                        $query->where('month',date('Ym'))
+                        ->where('object_type',2);
+                    }])
                     ->where('id',$data['id'])
                     ->find();
+                $pop = 0;
+                if(!empty($shop_data['pop'])){
+                    $pop = array_sum(array_column($shop_data['pop'],'value'));
+                }
                 $result['shop'] = $shop_data;
+                $result['shop']['pop_value'] = $pop;
+            }
+            // 增加人气
+            $count = Db::name('popularity')
+                ->where('object_id',$data['id'])
+                ->where('object_type',$data['store_type'])
+                ->where('date',$date)
+                ->count();
+            if($count > 0){
+                Db::name('popularity')
+                    ->where('object_id',$data['id'])
+                    ->where('object_type',$data['store_type'])
+                    ->where('date',$date)
+                    ->setInc('value');
+            }else{
+                $month = date('Ym');
+                Db::name('popularity')
+                    ->insert([
+                        'object_id' => $data['id'],
+                        'object_type' => $data['store_type'],
+                        'date' => $date,
+                        'value' => 1,
+                        'month' => $month
+                    ]);
             }
         }
         return $result;
@@ -112,5 +145,37 @@ class Shop extends CoreShop
                 break;
         }
         return $result;
+    }
+
+    public function getNearByShop($data)
+    {
+        $shop_data = $this
+            ->field(['id','shop_img','shop_name','province','city','district','town','address','lng','lat'])
+            ->with(['pop' => function($query){
+                $query->where('object_type',2);
+            }])
+            ->where('lat','>',0)
+            ->where('lat','>',$data['w1'])
+            ->where('lat','<',$data['w2'])
+            ->where('lng','>',$data['w3'])
+            ->where('lng','<',$data['w4'])
+            ->where(function ($query) use ($data) {
+                if(!empty($data['word'])){
+                    $query->where('shop_name','like','%'.$data['word'].'%');
+                }
+            })
+            ->where(function ($query) use ($data){
+                if($data['user_store_type'] == 2){
+                    $query->whereNotIn('id',[$data['user_store_id']]);
+                }
+            })
+            ->where('state',1)
+            ->select();
+        return $shop_data;
+    }
+
+    public function pop()
+    {
+        return $this->hasMany('Popularity','object_id','id');
     }
 }
