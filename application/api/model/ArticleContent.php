@@ -26,6 +26,7 @@ class ArticleContent extends CoreArticleContent
         $itemKey    = $data['itemKey'];
         $text       = $data['text'];
         $img        = $data['img'];
+        $title      = $data['title'];
         if (empty($articleId)) {
             $cacheTmpData = Cache::get('article_cache_tmp_' . $userId);
             if (empty($cacheTmpData)) {
@@ -33,6 +34,7 @@ class ArticleContent extends CoreArticleContent
                     'classify_id' => !empty($classifyId) ? $classifyId : '',
                     'music'       => $music !== false ? $music : '',
                     'music_name'  => $musicName !== false ? $musicName : '',
+                    'title'       => $title !== false ? $title : '',
                     'items'       => [
                         [
                             'id'   => '',
@@ -44,6 +46,7 @@ class ArticleContent extends CoreArticleContent
             } else {
                 switch ($data['type']) {
                     case 1:// 编辑
+                        $cacheTmpData['title']       = $title !== false ? $title : $cacheTmpData['title'];
                         $cacheTmpData['music']       = $music !== false ? $music : $cacheTmpData['music'];
                         $cacheTmpData['music_name']  = $musicName !== false ? $musicName : $cacheTmpData['music_name'];
                         $cacheTmpData['classify_id'] = !empty($classifyId) ? $classifyId : $cacheTmpData['classify_id'];
@@ -72,11 +75,13 @@ class ArticleContent extends CoreArticleContent
                 $articleData              = Db::query("SELECT * FROM `article` WHERE id = {$articleId}");
                 $articleContentData       = Db::query("SELECT * FROM `article_content` WHERE article_id = {$articleId}");
                 $cacheData                = [
+                    'title'       => !empty($articleData) ? $articleData['title'] : '',
                     'classify_id' => !empty($articleData) ? $articleData['classify_id'] : '',
                     'music'       => !empty($articleData) ? $articleData['music'] : '',
                     'music_name'  => !empty($articleData) ? $articleData['music_name'] : '',
                     'items'       => !empty($articleContentData) ? $articleContentData : [],
                 ];
+                $cacheData['title']       = $title !== false ? $title : $cacheData['title'];
                 $cacheData['music']       = $music !== false ? $music : $cacheData['music'];
                 $cacheData['music_name']  = $musicName !== false ? $musicName : $cacheData['music_name'];
                 $cacheData['classify_id'] = !empty($classifyId) ? $classifyId : $cacheData['classify_id'];
@@ -125,6 +130,7 @@ class ArticleContent extends CoreArticleContent
         $itemKey   = $data['itemKey'];
         $userId    = $data['userId'];
         $result    = [
+            'title'       => '',
             'classify_id' => '',
             'music'       => '',
             'music_name'  => '',
@@ -189,13 +195,14 @@ class ArticleContent extends CoreArticleContent
         $classifyId = $data['classify_id'];
         $music      = $data['music'];
         $musicName  = $data['musicName'];
+        $title  = $data['title'];
         $items      = json_decode($data['items'], true);
-        $time      = time();
+        $time       = time();
         if (empty($articleId)) {
-            $articleId = Db::execute("INSERT INTO `article`(user_id,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')");
-        }else{
-            $res = Db::execute("UPDATE `article` SET classify_id='{$classifyId}',music='{$music}',music_name='{$musicName}',update_time='{$time}',update_by='{$userId}' WHERE id = {$articleId} ");
-            if(!$res){
+            $articleId = Db::execute("INSERT INTO `article`(user_id,title,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$title}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')");
+        } else {
+            $res = Db::execute("UPDATE `article` SET title='{$title}',classify_id='{$classifyId}',music='{$music}',music_name='{$musicName}',update_time='{$time}',update_by='{$userId}' WHERE id = {$articleId} ");
+            if (!$res) {
                 return false;
             }
         }
@@ -213,7 +220,8 @@ class ArticleContent extends CoreArticleContent
                 unset($items[$key]['format_text']);
             }
         }
-        Cache::rm('article_cache_tmp_'.$userId);
+        Cache::rm('article_cache_tmp_' . $userId);
+
         return true;
     }
 }
