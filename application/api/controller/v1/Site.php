@@ -63,48 +63,24 @@ class Site extends BaseController
         $user_store_id = user_info('group_id');
         $user_store_type = user_info('type');
 
-        $shop_data = Db::name('shop')
-            ->field(['id','shop_img','shop_name','province','city','district','town','address','lng','lat'])
-            ->where('lat','>',0)
-            ->where('lat','>',$w1)
-            ->where('lat','<',$w2)
-            ->where('lng','>',$w3)
-            ->where('lng','<',$w4)
-            ->where(function ($query) use ($word) {
-                if(!empty($word)){
-                    $query->where('shop_name','like','%'.$word.'%');
-                }
-            })
-            ->where(function ($query) use ($user_store_id,$user_store_type){
-                if($user_store_type == 2){
-                    $query->whereNotIn('id',[$user_store_id]);
-                }
-            })
-            ->where('state',1)
-            ->select();
-        $factory_data = Db::name('factory')
-            ->field(['id','factory_img','factory_name','province','city','district','town','address','lng','lat'])
-            ->where('lat','>',0)
-            ->where('lat','>',$w1)
-            ->where('lat','<',$w2)
-            ->where('lng','>',$w3)
-            ->where('lng','<',$w4)
-            ->where(function ($query) use ($word) {
-                if(!empty($word)){
-                    $query->where('factory_name','like','%'.$word.'%');
-                }
-            })
-            ->where(function ($query) use ($user_store_id,$user_store_type){
-                if($user_store_type == 1){
-                    $query->whereNotIn('id',[$user_store_id]);
-                }
-            })
-            ->where('state',1)
-            ->select();
+        $shop = new \app\api\model\Shop();
+        $factory = new \app\api\model\Factory();
+        $select_data = [
+            'w1' => $w1,
+            'w2' => $w2,
+            'w3' => $w3,
+            'w4' => $w4,
+            'word' => $word,
+            'user_store_id' => $user_store_id,
+            'user_store_type' => $user_store_type,
+        ];
+        $shop_data = $shop->getNearByShop($select_data);
+        $factory_data = $factory->getNearByFactory($select_data);
         $store_data = array_merge($shop_data,$factory_data);
         $result = [];
         if(!empty($store_data)){
             foreach ($store_data as $item){
+
                 $tmp['id'] = $item['id'];
                 $tmp['store_type'] = isset($item['factory_name']) ? 1 : 2;
                 $tmp['name'] = isset($item['factory_name']) ? $item['factory_name'] : $item['shop_name'];
@@ -115,7 +91,11 @@ class Site extends BaseController
                     $tmp['address'] = $item['province'].$item['city'].$item['district'].$item['town'].$item['address'];
                 }
                 $tmp['distance'] = \app\api\service\Site::getDistance($lng,$lat,$item['lng'],$item['lat']);
-                $tmp['pop'] = rand(100,1000);
+                $tmp['pop'] = 0;
+                if(!empty($item['pop'])){
+                    $pop = array_column($item['pop'],'value');
+                    $tmp['pop'] = array_sum($pop);
+                }
                 $result[] = $tmp;
                 $sort_pop[] = $tmp['pop'];
             }
