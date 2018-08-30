@@ -63,8 +63,10 @@ class Token
                 'state'         => 1
             ];
             $user = new User();
-            $result = $user->fetchSql(true)->save($saveData);
+            print_r($saveData);
+            $result = $user->save($saveData);
             dump($result);
+            die;
             if (!$result) {
                 exception('注册失败');
             }
