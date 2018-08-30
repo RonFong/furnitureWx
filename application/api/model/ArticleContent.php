@@ -195,11 +195,11 @@ class ArticleContent extends CoreArticleContent
         $classifyId = $data['classify_id'];
         $music      = $data['music'];
         $musicName  = $data['musicName'];
-        $title  = $data['title'];
+        $title      = $data['title'];
         $items      = json_decode($data['items'], true);
         $time       = time();
         if (empty($articleId)) {
-            $articleId = Db::execute("INSERT INTO `article`(user_id,title,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$title}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')");
+            $articleId = Db::execute("INSERT INTO `article`(user_id,title,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$title}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')")->getLastInsID();
         } else {
             $res = Db::execute("UPDATE `article` SET title='{$title}',classify_id='{$classifyId}',music='{$music}',music_name='{$musicName}',update_time='{$time}',update_by='{$userId}' WHERE id = {$articleId} ");
             if (!$res) {
