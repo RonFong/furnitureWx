@@ -147,4 +147,35 @@ class Factory extends CoreFactory
         return $this->factoryInfo($where);
     }
 
+    public function getNearByFactory($data)
+    {
+        $factory_data = $this
+            ->field(['id','factory_img','factory_name','province','city','district','town','address','lng','lat'])
+            ->with(['pop'=>function($query) {
+                $query->where('object_type',1);
+            }])
+            ->where('lat','>',0)
+            ->where('lat','>',$data['w1'])
+            ->where('lat','<',$data['w2'])
+            ->where('lng','>',$data['w3'])
+            ->where('lng','<',$data['w4'])
+            ->where(function ($query) use ($data) {
+                if(!empty($data['word'])){
+                    $query->where('factory_name','like','%'.$data['word'].'%');
+                }
+            })
+            ->where(function ($query) use ($data){
+                if($data['user_store_type'] == 1){
+                    $query->whereNotIn('id',[$data['user_store_id']]);
+                }
+            })
+            ->where('state',1)
+            ->select();
+        return $factory_data;
+    }
+
+    public function pop()
+    {
+        return $this->hasMany('Popularity','object_id','id');
+    }
 }
