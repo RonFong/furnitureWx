@@ -64,9 +64,19 @@ class Shop extends CoreShop
     public function getShopInfo($group_id)
     {
         $shopInfo = $this
+            ->with(['pop'=>function($query){
+                $query->where('month',date('Ym'))
+                    ->where('object_type',2);
+            }])
             ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
             ->where('id',$group_id)
             ->find();
+//        dump($shopInfo->toArray());die;
+        $pop = 0;
+        if(!empty($shopInfo['pop'])){
+            $pop = array_sum(array_column($shopInfo['pop'],'value'));
+        }
+        $shopInfo['pop_value'] = $pop;
         return $shopInfo;
 
     }
