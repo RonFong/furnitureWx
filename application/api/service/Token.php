@@ -39,19 +39,17 @@ class Token
         }
         self::$openid = $openid;
         $userInfo = self::getUserInfo();
-        $userInfo['token'] = self::createToken($userInfo->id);
+        $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
 
     /**
      * 此微信用户未注册，则注册，返回用户信息
-     * @return $this|null|static
+     * @return array|null|static
      */
     private static function getUserInfo()
     {
-
         $userInfo = User::get(['wx_openid' => self::$openid]);
-
         if (!$userInfo) {
             $saveData = [
                 'wx_openid' => self::$openid,
@@ -64,12 +62,18 @@ class Token
                 'type'          => 3,
                 'state'         => 1
             ];
-            $userInfo = User::create($saveData);
+            $user = new User();
+            print_r($saveData);
+            $result = $user->save($saveData);
+            dump($result);
+            die;
+            if (!$result) {
+                exception('注册失败');
+            }
+            $saveData['id'] = $user->id;
+            return $saveData;
         }
-        if (!$userInfo) {
-            exception('读取信息失败');
-        }
-        return $userInfo;
+        return $userInfo->toArray();
     }
 
     /**
