@@ -56,9 +56,18 @@ class Token
             $saveData = [
                 'wx_openid' => self::$openid,
                 'avatar'    => config('api.default_avatar'),
-                'user_name' => 'wx_' . substr(str_shuffle(self::$openid), 0, 6)
+                'user_name' => 'wx_' . substr(str_shuffle(self::$openid), 0, 6),
+                'group_id'      => 0,
+                'gender'        => 0,
+                'phone'         => '',
+                'wx_account'    => '',
+                'type'          => 3,
+                'state'         => 1,
+                'create_by'     => 0,
+                'update_by'     => 0
             ];
-            $userInfo = (new User())->save($saveData);
+            (new User())->save($saveData);
+            $userInfo = $saveData;
         }
         if (!$userInfo) {
             exception('读取信息失败');
