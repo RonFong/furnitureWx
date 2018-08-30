@@ -851,6 +851,7 @@ class Article extends BaseController
             'classifyId' => $this->request->param('classifyId', ''),
             'music'      => $this->request->param('music', false),
             'musicName'  => $this->request->param('musicName', false),
+            'title'      => $this->request->param('title', false),
             'userId'     => user_info('id'),
             'type'       => $this->request->param('type', 1),
         ];
@@ -901,6 +902,7 @@ class Article extends BaseController
             'classify_id' => $this->request->param('classify_id'),
             'music'       => $this->request->param('music'),
             'musicName'   => $this->request->param('music_name'),
+            'title'       => $this->request->param('title'),
             'items'       => $this->request->param('items'),
         ];
         \app\api\model\ArticleContent::saveContent($saveContentData);
