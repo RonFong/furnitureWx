@@ -39,6 +39,7 @@ class Token
         }
         self::$openid = $openid;
         $userInfo = self::getUserInfo();
+        echo 234234234234;
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
