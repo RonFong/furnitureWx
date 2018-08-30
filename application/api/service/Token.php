@@ -39,7 +39,6 @@ class Token
         }
         self::$openid = $openid;
         $userInfo = self::getUserInfo();
-        echo 234234234234;
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
@@ -63,10 +62,8 @@ class Token
                 'type'          => 3,
                 'state'         => 1
             ];
-            print_r($saveData);
             $user = new User();
-            $result = $user->save($saveData);
-            print_r($user);
+            $result = $user->fetchSql(true)->save($saveData);
             dump($result);
             if (!$result) {
                 exception('注册失败');
