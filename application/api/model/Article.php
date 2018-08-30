@@ -289,7 +289,7 @@ class Article extends CoreArticle
 
         $data            = $this->recombination()
             ->where('a.id', $id)
-            ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time,a.title, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('e.id, c.id')
             ->find();
         $data['is_self'] = user_info('id') == $data['user_id'];
