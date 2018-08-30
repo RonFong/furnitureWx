@@ -69,7 +69,9 @@ class Token
             if (!$openid) {
                 exception('获取用户openid失败');
             }
+            echo 232323;
             $data = TokenServer::getToken($openid);
+            echo 6754645;
             $token = $data['token'];
             unset($data['token']);
             $result = [
