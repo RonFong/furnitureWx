@@ -63,7 +63,8 @@ class Token
                 'wx_account'    => '',
                 'type'          => 3,
                 'state'         => 1,
-                'create_by'     => 0
+                'create_by'     => 0,
+                'update_by'     => 0
             ];
             $userInfo = User::create($saveData);
         }
