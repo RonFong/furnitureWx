@@ -72,8 +72,8 @@ class Shop extends BaseController
 
     public function info()
     {
-        $admin_id =  user_info('id');
-        $userList = $this->currentModel->getShopInfo($admin_id);
+        $group_id = user_info('group_id');
+        $userList = $this->currentModel->getShopInfo($group_id);
         if ($userList) {
             return json($userList);
         }
@@ -126,5 +126,17 @@ class Shop extends BaseController
 
         $this->result['data'] = $result;
         return json($this->result, 200);
+    }
+
+    public function getStoreInfo()
+    {
+        $info_params = [
+            'id' => $this->data['id'],
+            'store_type' => $this->data['store_type'],
+        ];
+
+        $result = $this->currentModel->getStoreInfo($info_params);
+        $this->result['data'] = $result;
+        return json($this->result,200);
     }
 }

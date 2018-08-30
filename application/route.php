@@ -74,6 +74,9 @@ Route::group('api/:version', function () {
     //圈子 文章
     Route::group('article', function () {
 
+        //获取文章列表统一接口
+        Route::get('getArticleList', 'api/:version.Article/queryArticleList');
+
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
         //创建文章
@@ -204,12 +207,16 @@ Route::group('api/:version', function () {
         Route::get('setCache', 'api/:version.HomeContent/setCache');
         //获取缓存文字
         Route::get('getCache', 'api/:version.HomeContent/getCache');
+        // 获取商/厂首页图文
+        Route::get('getStoreHomeContent','api/:version.HomeContent/getStoreHomeContent');
     });
     //商城
     Route::group('store', function () {
 
         //获取商城首页商品列表
         Route::get('homeGoodsList', 'api/:version.StoreGoods/getGoodsList');
+        // 获取商/厂家基本信息
+        Route::get('info','api/:version.Shop/getStoreInfo');
     });
     //推广
     Route::group('userProposed', function () {

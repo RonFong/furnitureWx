@@ -60,6 +60,9 @@ class Site extends BaseController
         $w3        = $squares['left-top']['lng'] - 0.00001;
         $w4        = $squares['right-bottom']['lng'] + 0.00001;
 
+        $user_store_id = user_info('group_id');
+        $user_store_type = user_info('type');
+
         $shop_data = Db::name('shop')
             ->field(['id','shop_img','shop_name','province','city','district','town','address','lng','lat'])
             ->where('lat','>',0)
@@ -72,8 +75,13 @@ class Site extends BaseController
                     $query->where('shop_name','like','%'.$word.'%');
                 }
             })
+            ->where(function ($query) use ($user_store_id,$user_store_type){
+                if($user_store_type == 2){
+                    $query->whereNotIn('id',[$user_store_id]);
+                }
+            })
+            ->where('state',1)
             ->select();
-
         $factory_data = Db::name('factory')
             ->field(['id','factory_img','factory_name','province','city','district','town','address','lng','lat'])
             ->where('lat','>',0)
@@ -86,13 +94,19 @@ class Site extends BaseController
                     $query->where('factory_name','like','%'.$word.'%');
                 }
             })
+            ->where(function ($query) use ($user_store_id,$user_store_type){
+                if($user_store_type == 1){
+                    $query->whereNotIn('id',[$user_store_id]);
+                }
+            })
+            ->where('state',1)
             ->select();
-
         $store_data = array_merge($shop_data,$factory_data);
         $result = [];
         if(!empty($store_data)){
             foreach ($store_data as $item){
                 $tmp['id'] = $item['id'];
+                $tmp['store_type'] = isset($item['factory_name']) ? 1 : 2;
                 $tmp['name'] = isset($item['factory_name']) ? $item['factory_name'] : $item['shop_name'];
                 $tmp['img'] = isset($item['factory_img']) ? $item['factory_img'] : $item['shop_img'];
                 if($item['province'] == $item['city']){
