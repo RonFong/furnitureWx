@@ -91,4 +91,26 @@ class Shop extends CoreShop
         }
         return $result;
     }
+
+    public function getAttract($type)
+    {
+        $result = [
+            'attract' => [],
+            'about' => [],
+        ];
+        switch ($type){
+            case 1:
+                $result['attract'] = [
+                    'title' => '诚招全国代理商',
+                    'content' => '注册成本厂代理商小程序网店，本厂产品可授权同步到你的小程序网店，你可在当地给消费者“代购、送货、安装、售后”一条龙服务。我们将为你做好产品一件代发业务'
+                ];
+                break;
+            case 2:
+                $result['about'] = [
+                  'content' =>  '服务线下各大家具经销商、厂商'
+                ];
+                break;
+        }
+        return $result;
+    }
 }

@@ -139,4 +139,11 @@ class Shop extends BaseController
         $this->result['data'] = $result;
         return json($this->result,200);
     }
+
+    public function getAttract()
+    {
+        $type = $this->data['type'];
+        $this->result['data'] = $this->currentModel->getAttract($type);
+        return json($this->result,200);
+    }
 }
