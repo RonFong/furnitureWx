@@ -138,7 +138,6 @@ class Article extends BaseController
         return json($this->result, $code ?? 200);
     }
 
-
     /**
      * @api      {get} /v1/article/getArticleList  获取文章列表统一接口
      * @apiGroup Article
@@ -228,30 +227,26 @@ class Article extends BaseController
      */
     public function queryArticleList()
     {
+
         if (!array_key_exists('type', $this->data)) {
             $this->response->error(Response::PARAM_ERROR);
         }
-
         //获取首页列表
         if ($this->data['type'] == 'homePage') {
             return $this->localArticleList();
         }
-
         //获取本人文章列表
         if ($this->data['type'] == 'self') {
             return $this->getOwnArticleList();
         }
-
         //根据用户ID获取文章列表
         if ($this->data['type'] == 'byUid') {
             return $this->getArticleListByUserId();
         }
-
         //根据分类获取文章列表
         if ($this->data['type'] == 'classify') {
             return $this->getListByClassify();
         }
-
         $this->response->error(Response::PARAM_ERROR);
     }
 
@@ -298,6 +293,7 @@ class Article extends BaseController
      */
     public function localArticleList()
     {
+
         $this->currentValidate->goCheck('localArticleList');
         try {
             $this->result['data'] = $this->currentModel->localArticleList('', $this->data);
@@ -543,6 +539,7 @@ class Article extends BaseController
      */
     public function getListByClassify()
     {
+
         $this->currentValidate->goCheck('listByClassify');
         try {
             $this->result['data'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->data);
@@ -636,6 +633,7 @@ class Article extends BaseController
      */
     protected function getListByUserId($userId)
     {
+
         return $this->currentModel->getListByUserId($userId);
     }
 
@@ -910,4 +908,23 @@ class Article extends BaseController
         return json($this->result);
     }
 
+    public function queryArticle()
+    {
+
+        $queryArticleData = [
+            'selfUserId' => user_info('id'),
+            'order'      => $this->request->param('order', 0),// 排序 默认0 ; 0 最新， 1 人气， 2 最近， 3 回复
+            'classifyId' => $this->request->param('classify_id', 0),// 分类ID 默认0 ; 0 全部
+            'keyword'    => $this->request->param('keyword', ''),// 关键字 默认''
+            'userId'     => $this->request->param('user_id', 0),// 需要查询用户ID 默认为0 ：全部
+            'isSelf'     => $this->request->param('is_self', 0),// 是否为查询自己动态 默认为0 ：否 1：是
+        ];
+        try {
+            $this->result['data'] = $this->currentModel->queryArticle($queryArticleData);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+
+        return json($this->result, 200);
+    }
 }

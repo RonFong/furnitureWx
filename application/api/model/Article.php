@@ -86,12 +86,12 @@ class Article extends CoreArticle
      */
     public function localArticleList($classifyId = '', $param)
     {
-        $order = $param['order'];
 
+        $order = $param['order'];
         $this->getNearbyUsers();
         //已关注用户
-        $users         = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
-        $ids           = array_merge($this->ids, $users);
+        $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
+        $ids                = array_merge($this->ids, $users);
         $where['a.user_id'] = ['in', $ids];
         if ($classifyId) {
             $where['d.id'] = $classifyId;
@@ -112,7 +112,6 @@ class Article extends CoreArticle
     {
 
         $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
-
         if (array_key_exists('keyword', $param)) {
             $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
         }
@@ -162,6 +161,7 @@ class Article extends CoreArticle
      */
     public function getListByClassify($classifyId, $param)
     {
+
         if (!array_key_exists('order', $param)) {
             $param['order'] = 0;
         }
@@ -169,10 +169,10 @@ class Article extends CoreArticle
             $this->getNearbyUsers();
         }
         $where = ['a.classify_id' => $classifyId];
-
         if (array_key_exists('keyword', $param)) {
             $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
         }
+
         return $this->executeSelect($where, $param['order']);
     }
 
@@ -212,13 +212,14 @@ class Article extends CoreArticle
      */
     private function executeSelect($where, $order = 0)
     {
+
         $orderWord = $order == 2 ? 0 : $order;
         $orderBy   = $this->order[$orderWord];
         $data      = $this->recombination()
             ->where($where)
             ->field("a.id, a.title, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('a.id, c.article_id, e.article_id')
-//            ->page($this->page, $this->row)
+            //            ->page($this->page, $this->row)
             ->order($orderBy)
             ->select();
         if ($order == 2) {
@@ -252,7 +253,7 @@ class Article extends CoreArticle
     {
 
         $contents = ArticleContent::all(['article_id' => $articleId]);
-        $imgs = [];
+        $imgs     = [];
         foreach ($contents as $k => $v) {
             if (count($imgs) < $this->imgNum) {
                 array_push($imgs, get_thumb_img($v->img));
@@ -285,6 +286,7 @@ class Article extends CoreArticle
      */
     public function details($id)
     {
+
         $data            = $this->recombination()
             ->where('a.id', $id)
             ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
@@ -338,6 +340,36 @@ class Article extends CoreArticle
         Cache::set('article_cache_' . $articleId, json_encode($cacheData));
 
         return $result;
+    }
+
+    public function queryArticle($data)
+    {
+
+        $order      = $data['order'];
+        $classifyId = $data['classifyId'];
+        $keyword    = $data['keyword'];
+        $userId     = $data['userId'];
+        $selfUserId = $data['selfUserId'];
+        $isSelf     = $data['isSelf'];
+        $this->getNearbyUsers();
+        //已关注用户
+        $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
+        $ids                = array_merge($this->ids, $users);
+        $where['a.user_id'] = ['in', $ids];
+        if (!empty($classifyId)) {
+            $where['d.id'] = $classifyId;
+        }
+        if (!empty($keyword)) {
+            $where['a.title'] = ['like', "%" . $keyword . "%"];
+        }
+        if (!empty($userId)) {
+            $where['b.id'] = is_array($userId) ? ['in', $userId] : $userId;
+        }
+        if (!empty($isSelf)) {
+            $where['b.id'] = $selfUserId;
+        }
+
+        return $this->executeSelect($where, $order);
     }
 
 }
