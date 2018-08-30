@@ -63,9 +63,9 @@ class Token
                 'state'         => 1
             ];
             $user = new User();
-            print_r($saveData);
+            print_r($user);
             $result = $user->save($saveData);
-            dump($result);
+//            dump($result);
             die;
             if (!$result) {
                 exception('注册失败');
