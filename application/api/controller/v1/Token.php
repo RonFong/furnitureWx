@@ -60,7 +60,7 @@ class Token
      */
     public function getToken()
     {
-//        try {
+        try {
             if (!Request::instance()->has('code','get')) {
                 exception('code 参数不能为空');
             }
@@ -80,10 +80,10 @@ class Token
                     'user_info' => $data
                 ]
             ];
-//        } catch (\Exception $e) {
-//            (new BaseValidate())->error($e);
-//            return json(['state' => 0, 'msg' => $e->getMessage()], 400);
-//        }
+        } catch (\Exception $e) {
+            (new BaseValidate())->error($e);
+            return json(['state' => 0, 'msg' => $e->getMessage()], 400);
+        }
         return json($result, 200);
     }
 
