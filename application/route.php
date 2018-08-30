@@ -74,8 +74,8 @@ Route::group('api/:version', function () {
     //圈子 文章
     Route::group('article', function () {
 
-        //获取文章列表
-        Route::get('geyArticleList', 'api/:version.Article/queryArticleList');
+        //获取文章列表统一接口
+        Route::get('getArticleList', 'api/:version.Article/queryArticleList');
 
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');

@@ -84,8 +84,9 @@ class Article extends CoreArticle
      * @param int $order
      * @return array
      */
-    public function localArticleList($classifyId = '', $order = 0)
+    public function localArticleList($classifyId = '', $param)
     {
+        $order = $param['order'];
 
         $this->getNearbyUsers();
         //已关注用户
@@ -94,6 +95,9 @@ class Article extends CoreArticle
         $where['a.user_id'] = ['in', $ids];
         if ($classifyId) {
             $where['d.id'] = $classifyId;
+        }
+        if (array_key_exists('keyword', $param)) {
+            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
         }
 
         return $this->executeSelect($where, $order);
@@ -104,10 +108,14 @@ class Article extends CoreArticle
      * @param $id
      * @return array
      */
-    public function getListByUserId($id)
+    public function getListByUserId($id, $param)
     {
 
         $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
+
+        if (array_key_exists('keyword', $param)) {
+            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
+        }
 
         return $this->executeSelect($where);
     }
@@ -148,18 +156,24 @@ class Article extends CoreArticle
     /**
      * 根据分类获取文章列表
      * @param $classifyId
-     * @param int $order
+     * @param $param
      * @return array
+     * @throws \think\exception\DbException
      */
-    public function getListByClassify($classifyId, $order = 0)
+    public function getListByClassify($classifyId, $param)
     {
-
-        if ($order == 2) {
+        if (!array_key_exists('order', $param)) {
+            $param['order'] = 0;
+        }
+        if ($param['order'] == 2) {
             $this->getNearbyUsers();
         }
         $where = ['a.classify_id' => $classifyId];
 
-        return $this->executeSelect($where, $order);
+        if (array_key_exists('keyword', $param)) {
+            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
+        }
+        return $this->executeSelect($where, $param['order']);
     }
 
     /**
@@ -194,17 +208,17 @@ class Article extends CoreArticle
      * @param $where
      * @param int $order
      * @return array
+     * @throws \think\exception\DbException
      */
     private function executeSelect($where, $order = 0)
     {
-
         $orderWord = $order == 2 ? 0 : $order;
         $orderBy   = $this->order[$orderWord];
         $data      = $this->recombination()
             ->where($where)
-            ->field("a.id, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->field("a.id, a.title, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('a.id, c.article_id, e.article_id')
-            ->page($this->page, $this->row)
+//            ->page($this->page, $this->row)
             ->order($orderBy)
             ->select();
         if ($order == 2) {
@@ -221,7 +235,7 @@ class Article extends CoreArticle
             if (array_key_exists('sort', $v)) {
                 unset($v['sort']);
             }
-            $v['content'] = $this->getFirstTextAndImages($v['id']);
+            $v['img'] = $this->getContentImages($v['id']);
             array_push($list, $v);
         }
 
@@ -234,28 +248,21 @@ class Article extends CoreArticle
      * @return array
      * @throws \think\exception\DbException
      */
-    private function getFirstTextAndImages($articleId)
+    private function getContentImages($articleId)
     {
 
         $contents = ArticleContent::all(['article_id' => $articleId]);
-        $result   = [
-            'text' => '',
-            'img'  => [],
-        ];
+        $imgs = [];
         foreach ($contents as $k => $v) {
-            if (empty($result['text']) && !empty($v->text)) {
-                //文字内容过长则只截取部分
-                $result['text'] = mb_strlen($v->text) > $this->textLength ? mb_substr($v->text, 0, $this->textLength, 'utf-8') : $v->text;
+            if (count($imgs) < $this->imgNum) {
+                array_push($imgs, get_thumb_img($v->img));
             }
-            if (count($result['img']) < $this->imgNum) {
-                array_push($result['img'], get_thumb_img($v->img));
-            }
-            if (!empty($result['text']) && count($result['img']) == $this->imgNum) {
+            if (count($imgs) == $this->imgNum) {
                 break;
             }
         }
 
-        return $result;
+        return $imgs;
     }
 
     /**
@@ -278,7 +285,6 @@ class Article extends CoreArticle
      */
     public function details($id)
     {
-
         $data            = $this->recombination()
             ->where('a.id', $id)
             ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
