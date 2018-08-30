@@ -14,6 +14,7 @@ namespace app\api\service;
 
 use app\api\model\User;
 use think\Cache;
+use think\Db;
 
 class Token
 {
@@ -62,15 +63,11 @@ class Token
                 'type'          => 3,
                 'state'         => 1
             ];
-            $user = new User();
-            print_r($user);
-            $result = $user->save($saveData);
-//            dump($result);
-            die;
-            if (!$result) {
+            $id = Db::table('user')->insertGetId($saveData);
+            if (!$id) {
                 exception('注册失败');
             }
-            $saveData['id'] = $user->id;
+            $saveData['id'] = $id;
             return $saveData;
         }
         return $userInfo->toArray();
