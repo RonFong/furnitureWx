@@ -15,6 +15,7 @@ namespace app\api\controller\v1;
 use app\api\model\User;
 use app\api\service\Wechat;
 use app\api\service\Token as TokenServer;
+use app\common\validate\BaseValidate;
 use think\Request;
 
 class Token
@@ -69,8 +70,8 @@ class Token
                 exception('获取用户openid失败');
             }
             $data = TokenServer::getToken($openid);
-            $token = $data->token;
-            unset($data->token);
+            $token = $data['token'];
+            unset($data['token']);
             $result = [
                 'state'     => 1,
                 'msg'       => 'success',
@@ -80,6 +81,7 @@ class Token
                 ]
             ];
 //        } catch (\Exception $e) {
+//            (new BaseValidate())->error($e);
 //            return json(['state' => 0, 'msg' => $e->getMessage()], 400);
 //        }
         return json($result, 200);
