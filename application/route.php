@@ -77,6 +77,9 @@ Route::group('api/:version', function () {
         //获取文章列表统一接口
         Route::get('getArticleList', 'api/:version.Article/queryArticleList');
 
+        //获取文章列表统一接口(修改)
+        Route::get('queryArticle', 'api/:version.Article/queryArticle');
+
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
         //创建文章
