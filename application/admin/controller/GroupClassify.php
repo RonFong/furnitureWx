@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\GroupClassify as CoreGroupClassify;
+use think\Db;
 use think\Request;
 
 class GroupClassify extends Base
@@ -26,6 +27,11 @@ class GroupClassify extends Base
      */
     public function index()
     {
+        //分类名称列表
+        $classifyList = Db::name('group_classify')->select();
+        $classifyList = \Tree::get_option_tree($classifyList, 0, 'classify_name', 'id', 'parent_id');
+        $this->assign('classifyList', $classifyList);
+
         return $this->fetch();
     }
 
@@ -35,27 +41,29 @@ class GroupClassify extends Base
      */
     public function getDataList()
     {
-        $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable();
-    }
-
-    private function getDataListMap()
-    {
         $param = $this->request->param();
-        if (!empty($param['factory_name'])) {
-            $map['factory_name'] = ['like', '%' . $param['factory_name'] . '%'];//厂家名
+        if (!empty($param['classify_name'])) {
+            $map['classify_name'] = ['like', '%' . $param['classify_name'] . '%'];//分类名称
         }
-        if (!empty($param['factory_phone'])) {
-            $map['factory_phone'] = ['like', '%' . $param['factory_phone'] . '%'];//手机号
-        }
-        if (!empty($param['factory_contact'])) {
-            $map['factory_contact'] = ['like', '%' . $param['factory_contact'] . '%'];//联系人
+        if (!empty($param['group_type'])) {
+            $map['group_type'] = $param['group_type'];//类型 1 厂家  2 商家
         }
         if (empty($map)) {
             $map[] = ['exp', '1=1'];
         }
-        return $map;
+
+        $count = $this->currentModel->where($map)->count();
+        $list = $this->currentModel->where($map)->order('sort asc,id desc')->select();
+        $list = collection($list)->append(['parent_text', 'group_type_name', 'group_name'])->toArray();
+        $list = \Tree::get_Table_tree($list, 'classify_name', 'id', 'parent_id');
+
+        foreach ($list as $key=>$val) {
+            unset($list[$key]['child']);
+        }
+        $list = array_slice($list, ($param['page'] - 1) * $param['limit'], $param['limit']);
+        return ['code'=>0, 'msg'=>'', 'count'=>$count, 'data'=>$list];
     }
+
 
     /**
      * 编辑
@@ -73,8 +81,23 @@ class GroupClassify extends Base
             }
             $data = $data->toArray();
             $this->assign('data', $data);
-
         }
+
+        //分类名称列表
+        $value_id = !empty($data['parent_id']) ? $data['parent_id'] : 0;
+        $classifyList = Db::name('group_classify')->select();
+        $classifyList = \Tree::get_option_tree($classifyList, $value_id, 'classify_name', 'id', 'parent_id');
+        $this->assign('classifyList', $classifyList);
+
+        $groupList = [];
+        if (isset($data['group_type'])) {
+            if ($data['group_type'] == 1) {
+                $groupList =  Db::name('factory')->field('id,factory_name as name')->select();
+            } elseif ($data['group_type'] == 2) {
+                $groupList =  Db::name('shop')->field('id,shop_name as name')->select();
+            }
+        }
+        $this->assign('groupList', $groupList);
 
         return $this->fetch();
     }

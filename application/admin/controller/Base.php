@@ -126,19 +126,19 @@ abstract class Base extends Controller
             //若存在pid字段，则先删除子部门资料
             $table_name = $this->currentModel->getTableName();
             if (has_field($table_name, 'pid')) {
-                $data_child = Db::table($table_name)->whereIn('pid', $id)->select();
+                $data_child = Db::name($table_name)->whereIn('pid', $id)->select();
                 if (!empty($data_child)) {
-                    $this->currentModel->whereIn('pid', $id)->update(['delete_time'=>null]);
+                    $this->currentModel->whereIn('pid', $id)->delete();
                 }
             }
 
             //删除当前资料，并记录删除日志
             $pk = $this->currentModel->getPk();
-            $data = Db::table($table_name)->whereIn($pk, $id)->select();
+            $data = Db::name($table_name)->whereIn($pk, $id)->select();
             if (empty($data)) {
                 throw new \Exception('信息不存在');
             }
-            $this->currentModel->whereIn($pk, $id)->update(['delete_time'=>null]);//删除当前资料
+            $this->currentModel->whereIn($pk, $id)->delete();//删除当前资料
         } catch (\Exception $e) {
             Db::rollback();
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
