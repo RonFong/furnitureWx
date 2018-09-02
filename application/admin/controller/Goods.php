@@ -43,7 +43,7 @@ class Goods extends Base
         return $this->currentModel
             ->where($map)
             ->order('id desc')
-            ->layTable(['state_text', 'classify_name', 'factory_name']);
+            ->layTable(['audit_state_text', 'classify_name', 'factory_name']);
     }
 
     private function getDataListMap()
