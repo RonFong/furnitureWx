@@ -100,7 +100,7 @@ class Factory extends Base
         }
 
         //验证数据
-        $result = $this->validate($param, 'User');
+        $result = $this->validate($param, 'Factory');
         if ($result !== true) {
             $this->error($result);
         }
