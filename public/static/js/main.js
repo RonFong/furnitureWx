@@ -158,3 +158,58 @@ function setState(ids, state, field_name, url) {
         }, 'json');
     });
 }
+
+/*上传图片*/
+function uploadImgAjax(element, url, size) {
+    if (!size) {size = 2048;}
+    if (!url) {url = '/admin_fussen/system/uploadimg.html';}
+    var lay_load;
+    layui.use(['layer', 'upload'], function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: element
+            ,url: url
+            ,size: size //限制文件大小，单位 KB
+            ,exts: "jpg|png|gif|bmp|jpeg"
+            ,before: function(obj){
+                lay_load = layer.load(2, {time: 20*1000});
+            }
+            ,done: function(res){
+                layer.close(lay_load);
+                if(res.code){
+                    var control = $(element);
+                    $(control).find('.image-text').css('display','none'); //隐藏文字
+                    $(control).find('.image-preview').css('display','block'); //显示图片
+                    $(control).find('img').attr('src', res.data); //图片链接
+                    $(control).find('input[type="hidden"]').val(res.data); //赋值上传
+                } else {
+                    layer.alert(res.msg);
+                }
+            }
+        });
+    });
+}
+
+/*删除图片*/
+function delImgAjax(element) {
+    var dom = $(element).closest('.layui-input-block');
+    var field = dom.find('input[type="hidden"]');
+
+    var data = {id:field.data("id"), table_name:field.data("table"), field_name:field.attr("name"), img_url:field.val()};
+    layer.confirm('删除后无法恢复，确定继续吗？', function(index){
+        $.post('deleteImg', data, function (result) {
+            layer.close(index);
+            if (result.code) {
+                dom.find('.image-text').css('display', 'block');
+                dom.find('.image-preview').css('display', 'none');
+                dom.find('input[type="hidden"]').val('');
+            } else {
+                layer.alert(result.msg, {icon:2});
+            }
+        }, 'json');
+    });
+}
+
+$('.tools-bottom').on('click', function (e) {
+    e.stopPropagation();
+});

@@ -455,3 +455,44 @@ html {
 .layuiadmin-card-status li > span {
     color: #999
 }
+
+.layui-upload-drag {
+    padding: 0px;
+    width: 100%;
+}
+
+.layui-upload-drag img {
+    height: 90px;
+}
+
+.layui-upload-drag.tools {
+    top: 0;
+    bottom: 0;
+    left: -30px;
+    width: 24px;
+    vertical-align: middle;
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.layui-upload-drag .tools{
+    position: absolute;
+    text-align: center;
+    background-color: rgba(0,0,0,.55);
+}
+
+.layui-upload-drag .tools.tools-bottom {
+    width: auto;
+    height: 22px;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    cursor: auto;
+}
+
+.layui-upload-drag .tools.tools-bottom i{
+    font-size: 24px;
+    color: #FF5722;
+}

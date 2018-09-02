@@ -357,3 +357,39 @@ if (!function_exists('reset_sort')) {
         return !empty($data) ? $data : [];
     }
 }
+
+if (!function_exists('imgTempFileMove')) {
+    /**
+     * 处理图片，从临时文件夹转移到 img/** 文件夹
+     * @param array $img temp文件夹中的图片路径集
+     * @param string $folder
+     * @return array
+     */
+    function imgTempFileMove($img = [], $folder = '')
+    {
+        $request = \think\Request::instance();
+        $folder = !empty($folder) ? $folder : 'img/user/';//文件新目录
+        foreach ($img as $k => $v) {
+            //内容信息不为空，且确定为temp文件夹
+            $v = str_replace($request->domain(), '', $v);
+            $v = str_replace('//', '/', $v);
+            if (!empty($v) && strpos($v, '/temp/') !== false) {
+                $img[$k] = str_replace('/img/temp/', '/' . $folder, $v);
+
+                if (file_exists(PUBLIC_PATH . $v)) {
+                    if (!is_dir(PUBLIC_PATH . dirname($img[$k]))) {
+                        // 创建目录
+                        mkdir(PUBLIC_PATH . dirname($img[$k]), 0777, true);
+                    }
+
+                    //转移图片文件，从 img/temp 文件夹，移到 img/** 文件夹中
+                    copy(PUBLIC_PATH . $v, PUBLIC_PATH . $img[$k]);
+
+                    //删除 img/temp 文件夹中对应的图片
+                    delete_file($v);
+                }
+            }
+        }
+        return $img;
+    }
+}

@@ -9,16 +9,16 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Article as CoreArticle;
+use app\admin\model\MusicCategory as CoreMusicCategory;
 use think\Db;
 use think\Request;
 
-class Article extends Base
+class MusicCategory extends Base
 {
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new CoreArticle();//实例化当前模型
+        $this->currentModel = new CoreMusicCategory();//实例化当前模型
     }
 
     /**
@@ -27,9 +27,6 @@ class Article extends Base
      */
     public function index()
     {
-        //分类名称列表
-        $classifyList = Db::name('article_classify')->select();
-        $this->assign('classifyList', $classifyList);
         return $this->fetch();
     }
 
@@ -40,23 +37,14 @@ class Article extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel
-            ->where($map)
-            ->order('id desc')
-            ->layTable(['state_text', 'classify_name', 'user_name']);
+        return $this->currentModel->where($map)->order('id desc')->layTable(['state_text']);
     }
 
     private function getDataListMap()
     {
         $param = $this->request->param();
-        if (!empty($param['classify_id'])) {
-            $map['classify_id'] = $param['classify_id'];//分类名称
-        }
-        if (!empty($param['title'])) {
-            $map['title'] = ['like', '%' . $param['title'] . '%'];//标题
-        }
-        if (isset($param['state']) && $param['state'] !== '') {
-            $map['state'] = $param['state'];//状态
+        if (!empty($param['category_name'])) {
+            $map['category_name'] = ['like', '%' . $param['category_name'] . '%'];//分类名称
         }
         if (empty($map)) {
             $map[] = ['exp', '1=1'];
@@ -81,13 +69,6 @@ class Article extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
         }
-        //分类名称列表
-        $classifyList = Db::name('article_classify')->select();
-        $this->assign('classifyList', $classifyList);
-
-        //作者列表
-        $userList = Db::name('user')->select();
-        $this->assign('userList', $userList);
         return $this->fetch();
     }
 
@@ -100,7 +81,7 @@ class Article extends Base
         }
 
         //验证数据
-        $result = $this->validate($param, 'Article');
+        $result = $this->validate($param, 'MusicCategory');
         if ($result !== true) {
             $this->error($result);
         }
@@ -114,6 +95,7 @@ class Article extends Base
         }
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
+
 
 }
 

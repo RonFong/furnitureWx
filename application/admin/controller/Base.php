@@ -150,6 +150,7 @@ abstract class Base extends Controller
 
     /**
      * @note上传图片
+     * @return \think\response\Json
      */
     public function uploadImg()
     {
@@ -162,11 +163,28 @@ abstract class Base extends Controller
                 $this->error($file->getError());
             } else {
                 $image = VIEW_STATIC_PATH . '/img/temp/' . $info->getSaveName();
-                $this->success('上传成功', null, $image);
+                return json(['code'=>1, 'msg'=>'上传成功', 'data'=>$image], 200, ['Content-Type'=>'text/html']);
+//                $this->success('上传成功', null, $image);
             }
         }
     }
 
+    /**
+     * @note删除图片
+     */
+    public function deleteImg()
+    {
+        $param = $this->request->param();
+        if (empty($param['table_name']) || empty($param['field_name']) || empty($param['id']) || empty($param['img_url'])) {
+            $this->error("参数错误！");
+        }
+
+        if (delete_file($param['img_url'])) {
+            $pk = Db::name($param['table_name'])->getPk();
+            Db::name($param['table_name'])->where($pk, $param['id'])->update([$param['field_name']=>'']);
+        }
+        $this->success('操作成功');
+    }
 
     /**
      * 更改排序

@@ -1,17 +1,18 @@
 <?php
 // +----------------------------------------------------------------------
-// | Copyright (c) 2018-2018 http://www.donglixia.net All rights reserved.
+// | Copyright (c) 2018-{2018} http://www.donglixia.net All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: 十万马 <962863675@qq.com>
 // +----------------------------------------------------------------------
-// | DateTime: 2018-02-09 16:17
+// | DateTime: 2018/9/1 16:45
 // +----------------------------------------------------------------------
 
 namespace app\admin\model;
 
-use app\common\model\ArticleClassify as CoreArticleClassify;
+use app\common\model\Music as CoreMusic;
+use think\Db;
 
-class ArticleClassify extends CoreArticleClassify
+class Music extends CoreMusic
 {
     /**
      * 获取状态名称
@@ -26,15 +27,14 @@ class ArticleClassify extends CoreArticleClassify
     }
 
     /**
-     * 获取上级分类名称
+     * 获取分类名称
      * @param string $value
      * @param string $data
      * @return mixed
      */
-    public function getParentTextAttr($value, $data)
+    public function getCategoryNameAttr($value, $data)
     {
-        $value = isset($data['parent_id']) ? $data['parent_id'] : $value;
-        return $this->where('id', $value)->value('classify_name');
+        $value = isset($data['category_id']) ? $data['category_id'] : $value;
+        return Db::name('music_category')->where('id', $value)->value('category_name');
     }
-
 }
