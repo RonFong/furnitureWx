@@ -277,6 +277,9 @@ if (!function_exists('get_thumb_img'))
      */
     function get_thumb_img($img)
     {
+        if (!$img) {
+            return '';
+        }
         if (file_exists(PUBLIC_PATH . $img)) {
             $array = explode('.', $img);
             $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
@@ -355,6 +358,21 @@ if (!function_exists('reset_sort')) {
             }
         }
         return !empty($data) ? $data : [];
+    }
+
+    if (!function_exists('get_retail_price'))
+    {
+        /**
+         * 获取商城商品默认零售价
+         * @param $price
+         * @param $ratio
+         * @return float
+         */
+        function get_retail_price($price, $ratio)
+        {
+            //TODO 零售价计算规则
+            return ceil($price * $ratio);
+        }
     }
 }
 

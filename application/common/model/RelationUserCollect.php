@@ -9,7 +9,6 @@
 
 
 namespace app\common\model;
-use traits\model\SoftDelete;
 
 /**
  * 用户关注商家
@@ -18,7 +17,6 @@ use traits\model\SoftDelete;
  */
 class RelationUserCollect extends Model
 {
-    use SoftDelete;
 
     /**
      * 我关注的用户

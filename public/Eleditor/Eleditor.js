@@ -129,9 +129,6 @@
 								<div class="Eleditor-textStyle-align Eleditor-textStyle-alignRight" align="right">\
 								</div>\
 							</div>\
-							<div class="Eleditor-textStyle-item Eleditor-textStyle-item-upImg">\
-								<div class="Eleditor-textStyle-upImg"></div>\
-							</div>\
 						</div>\
 						<div class="Eleditor-textEditor-colors">\
 							<div class="Eleditor-textEditor-modulePane"><span></span></div>\
@@ -498,7 +495,7 @@
 			var _uploaderHanlder = function(){
 
 				var _hasStyleBarBtn = $(this).hasClass('Eleditor-textStyle-item-upImg');
-
+				
 				try{
 					_args.uploader.call(this).then(function(_url){
 
@@ -512,6 +509,7 @@
 							if( _$selected.hasClass('Eleditor-placeholder') ){
 								_$selected.remove();
 							}
+							_hideEditorControllerLayer();
 						}
 						_args.changer();
 					}, function(_err){

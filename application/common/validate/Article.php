@@ -21,28 +21,35 @@ class Article extends BaseValidate
         'page'              => 'checkPageAndRow',
         'user_id'           => 'require|number|egt:1',
         'article_id'        => 'require|number|egt:1',
+        'order'             => 'require',
+        'title'             => 'require|max:10',
     ];
 
     protected $message = [
         'content.require'       => '图文内容不能为空',
+        'title.max'             => '标题过长',
     ];
 
     protected $scene = [
         'create'        => [
             'id'        => 'idCantExist',
+            'title',
             'classify_id',
             'content',
+            'title'
         ],
         'update'        => [
             'id',
             'classify_id',
             'content',
+            'title'
         ],
         'delete'        => [
             'id'
         ],
         'localArticleList' => [
-            'page'
+            'page',
+            'order'
         ],
         'details'       => [
             'id'
@@ -59,6 +66,9 @@ class Article extends BaseValidate
         ],
         'listByClassify'    => [
             'classify_id',
+        ],
+        'getArticleContent'       => [
+            'id'
         ],
     ];
 

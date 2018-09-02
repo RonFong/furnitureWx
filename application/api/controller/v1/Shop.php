@@ -14,6 +14,7 @@ use app\api\controller\BaseController;
 use app\api\model\Shop as shopModel;
 use app\lib\enum\Response;
 use think\Cache;
+use think\Db;
 use think\Request;
 
 class Shop extends BaseController
@@ -36,39 +37,113 @@ class Shop extends BaseController
     {
         // 参数检查暂时跳过
         $this->currentValidate->goCheck('register');
-        // 检查手机验证码
-        $authCode = Cache::get('auth_'.$this->data['shop_phone']);
+        if(($this->data['editState'] && !empty($this->data['code'])) || !$this->data['editState']){
+            // 检查手机验证码
+            $authCode = Cache::get('auth_'.$this->data['shop_phone']);
+            try {
+                if (!$authCode) {
+                    exception('验证码不存在');
+                }
+                if ($authCode != $this->data['code']) {
+                    exception('验证码错误');
+                }
+                Cache::rm('auth_'.$this->data['shop_phone']);
+            } catch (\Exception $e) {
+                $this->result['state'] = 0;
+                $this->result['msg'] = $e->getMessage();
+                return json($this->result, 403);
+            }
+            unset($this->data['code']);
+        }
+
         try {
-            if (!$authCode) {
-                exception('验证码不存在');
+            $result = $this->currentModel->saveData($this->data);
+            if(!$result['success']){
+                exception($result['msg']);
             }
-            if ($authCode != $this->data['code']) {
-                exception('验证码错误');
-            }
-            Cache::rm('auth_'.$this->data['shop_phone']);
         } catch (\Exception $e) {
             $this->result['state'] = 0;
             $this->result['msg'] = $e->getMessage();
             return json($this->result, 403);
         }
-
-        try {
-            $result = $this->currentModel->saveData($this->data);
-        } catch (\Exception $e) {
-            $this->response->error($e);
-        }
-        $this->result['data'] = $result;
-        return json($this->result, 201);
+        $this->result['data'] = $result['data'];
+        return json($this->result, 200);
     }
 
     public function info()
     {
-        $this->currentValidate->goCheck('info');
-        $admin_id = empty($this->data['admin_user']) ? '' : $this->data['admin_user'];
-        $userList = $this->currentModel->selectShop($admin_id, $this->page, $this->row);
+        $group_id = user_info('group_id');
+        $userList = $this->currentModel->getShopInfo($group_id);
         if ($userList) {
-            return json($userList, 202);
+            return json($userList);
         }
         $this->response->error(Response::USERS_EMPTY);
+    }
+
+    public function editRegister()
+    {
+        $user_id = user_info('id');
+        $group_id = user_info('group_id');
+        $type = user_info('type');
+        if($type == 2){
+            $detail = $this->currentModel->where('id',$group_id)->where('admin_user',$user_id)->find();
+        }elseif ($type == 1){
+            $detail = Db::name('factory')->where('id',$group_id)->where('admin_user',$user_id)->find();
+        }
+        // 数据整理
+        $result = [];
+        if(!empty($detail)){
+            // 查询分类名称
+            $classify_name = Db::name('group_classify')
+                ->where('id',$detail['category_id'])
+                ->column('classify_name');
+
+            $result = [
+                'id'    =>  $detail['id'],
+                'group_type'    =>  $type,
+                'store_name'    =>  isset($detail['shop_name']) ? $detail['shop_name'] : $detail['factory_name'],
+                'store_contact'    =>  isset($detail['shop_contact']) ? $detail['shop_contact'] : $detail['factory_contact'],
+                'store_phone'    =>  isset($detail['shop_phone']) ? $detail['shop_phone'] : $detail['factory_phone'],
+                'store_wx'    =>  isset($detail['shop_wx']) ? $detail['shop_wx'] : $detail['factory_wx'],
+                'wx_code'    =>  isset($detail['wx_code']) ? $detail['wx_code'] : $detail['wx_code'],
+                'province'  =>  $detail['province'],
+                'city'  =>  $detail['city'],
+                'district'  =>  $detail['district'],
+                'town'  =>  $detail['town'],
+                'address'  =>  $detail['address'],
+                'shop_img'  =>  isset($detail['shop_img']) ? $detail['shop_img'] : $detail['factory_img'],
+                'factory_address'  =>  isset($detail['factory_address']) ? $detail['factory_address'] : '',
+                'category_id'   =>  $detail['category_id'],
+                'classify_name'   =>  $classify_name[0],
+                'category_child_id'   =>  $detail['category_child_id'],
+                'license'   =>  $detail['license'],
+                'user_name'   =>  $detail['user_name'],
+                'phone'   =>  $detail['phone'],
+                'wx_account'   =>  $detail['wx_account'],
+                'license_code'   =>  $detail['license_code'],
+            ];
+        }
+
+        $this->result['data'] = $result;
+        return json($this->result, 200);
+    }
+
+    public function getStoreInfo()
+    {
+        $info_params = [
+            'id' => $this->data['id'],
+            'store_type' => $this->data['store_type'],
+        ];
+
+        $result = $this->currentModel->getStoreInfo($info_params);
+        $this->result['data'] = $result;
+        return json($this->result,200);
+    }
+
+    public function getAttract()
+    {
+        $type = $this->data['type'];
+        $this->result['data'] = $this->currentModel->getAttract($type);
+        return json($this->result,200);
     }
 }

@@ -9,7 +9,6 @@
 
 
 namespace app\common\model;
-use traits\model\SoftDelete;
 
 /**
  * 用户收藏文章
@@ -18,5 +17,5 @@ use traits\model\SoftDelete;
  */
 class RelationArticleCollect extends Model
 {
-    use SoftDelete;
+    
 }

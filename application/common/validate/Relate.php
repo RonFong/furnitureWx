@@ -14,7 +14,9 @@ namespace app\common\validate;
 use app\common\model\RelationArticleCollect;
 use app\common\model\RelationArticleGreat;
 use app\common\model\RelationCommentGreat;
+use app\common\model\RelationFactoryCollect;
 use app\common\model\RelationGoodsCollect;
+use app\common\model\RelationShopCollect;
 use app\common\model\RelationUserCollect;
 
 class Relate extends BaseValidate
@@ -50,8 +52,72 @@ class Relate extends BaseValidate
             'goods_id',
             'type'       => 'require|in:inc,dec|goodsCollect',
 
-        ]
+        ],
+        'factoryBlacklist' => [
+            'shop_id',
+            'type'       => 'require|in:inc,dec|goodsCollect',
+
+        ],
+        'goodsBlacklist' => [
+            'goods_id',
+            'type'       => 'require|in:inc,dec|goodsCollect',
+
+        ],
+        'shopBlacklist' => [
+            'factory_id',
+            'type'       => 'require|in:inc,dec|goodsCollect',
+        ],
+        'shopCollect'   => [
+            'shop_id',
+            'type'      => 'require|in:inc,dec|shopCollect',
+        ],
+        'factoryCollect'   => [
+            'factory_id',
+            'type'      => 'require|in:inc,dec|factoryCollect',
+        ],
     ];
+
+    /**
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
+    protected function shopCollect($value, $rule, $data)
+    {
+        $isExist =  RelationShopCollect::get([
+            'user_id' => user_info('id'),
+            'shop_id' => $data['shop_id']
+        ]);
+        if ($data['type'] == 'inc' && $isExist) {
+            return '请勿重复收藏';
+        } elseif ($data['type'] == 'dec' && !$isExist) {
+            return '此商家未被收藏';
+        }
+        return true;
+    }
+
+    /**
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
+    protected function factoryCollect($value, $rule, $data)
+    {
+        $isExist =  RelationFactoryCollect::get([
+            'user_id' => user_info('id'),
+            'factory_id' => $data['factory_id']
+        ]);
+        if ($data['type'] == 'inc' && $isExist) {
+            return '请勿重复收藏';
+        } elseif ($data['type'] == 'dec' && !$isExist) {
+            return '此厂家未被收藏';
+        }
+        return true;
+    }
 
     /**
      * @param $value

@@ -9,7 +9,6 @@
 
 
 namespace app\common\model;
-use traits\model\SoftDelete;
 
 /**
  * 用户收藏商城商品
@@ -18,5 +17,5 @@ use traits\model\SoftDelete;
  */
 class RelationGoodsCollect extends Model
 {
-    use SoftDelete;
+
 }

@@ -14,6 +14,7 @@ namespace app\api\service;
 
 use app\api\model\User;
 use think\Cache;
+use think\Db;
 
 class Token
 {
@@ -39,19 +40,17 @@ class Token
         }
         self::$openid = $openid;
         $userInfo = self::getUserInfo();
-        $userInfo['token'] = self::createToken($userInfo->id);
+        $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
 
     /**
      * 此微信用户未注册，则注册，返回用户信息
-     * @return $this|null|static
+     * @return array|null|static
      */
     private static function getUserInfo()
     {
-
         $userInfo = User::get(['wx_openid' => self::$openid]);
-
         if (!$userInfo) {
             $saveData = [
                 'wx_openid' => self::$openid,
@@ -64,12 +63,14 @@ class Token
                 'type'          => 3,
                 'state'         => 1
             ];
-            $userInfo = User::create($saveData);
+            $id = Db::table('user')->insertGetId($saveData);
+            if (!$id) {
+                exception('注册失败');
+            }
+            $saveData['id'] = $id;
+            return $saveData;
         }
-        if (!$userInfo) {
-            exception('读取信息失败');
-        }
-        return $userInfo;
+        return $userInfo->toArray();
     }
 
     /**

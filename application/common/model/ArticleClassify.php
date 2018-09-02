@@ -36,7 +36,7 @@ class ArticleClassify extends Model
     static public function getClassify($parentId = 0)
     {
         return self::all(function($query) use ($parentId){
-            $query->where(['state' => 1, 'parent_id' => $parentId])->field('id,classify_name')->order('sort');
+            $query->where(['state' => 1, 'parent_id' => $parentId])->field('id,classify_name,classify_img')->order('sort');
         });
     }
 }

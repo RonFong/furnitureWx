@@ -73,4 +73,19 @@ class Response
     //order  排序参数错误
     const COMMENT_FAIL = ['code' => 400, 'errorCode' => 1000, 'msg' => '评论失败'];
 
+    //厂家用户ID错误
+    const IS_NOT_FACTORY = ['code' => 400, 'errorCode' => 1000, 'msg' => '厂家用户ID错误'];
+
+    //商家用户ID错误
+    const IS_NOT_SHOP = ['code' => 400, 'errorCode' => 1000, 'msg' => '商家用户ID错误'];
+
+    //未上传图片
+    const IMG_FILE_CANT_EMPTY = ['code' => 400, 'errorCode' => 1000, 'msg' => '未上传图片'];
+
+    //收藏的筛选条件错误
+    const QUERY_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '筛选条件错误'];
+
+    //参数错误
+    const PARAM_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '参数错误'];
+
 }

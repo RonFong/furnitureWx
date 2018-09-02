@@ -8,17 +8,18 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-
 namespace app\api\model;
 
 use app\common\model\Article as CoreArticle;
 use app\common\model\RelationArticleCollect;
 use app\common\model\RelationUserCollect;
 use app\common\validate\BaseValidate;
+use think\Cache;
 use think\Db;
 
 class Article extends CoreArticle
 {
+
     /**
      * 在列表中，文字显示的字数长度
      * @var int
@@ -42,10 +43,10 @@ class Article extends CoreArticle
     protected $row = 10;
 
     protected $order = [
-        0     => 'a.create_time desc',      //最新
-        1     => 'pageview desc',           //人气
-        2     => '',                        //最近
-        3     => 'comment_total desc',      //回复
+        0 => 'a.create_time desc',      //最新
+        1 => 'pageview desc',           //人气
+        2 => '',                        //最近
+        3 => 'comment_total desc',      //回复
     ];
 
     /**
@@ -61,10 +62,10 @@ class Article extends CoreArticle
      */
     public function setPage($page, $row)
     {
-        $this->page = $page;
-        $this->row = $row;
-    }
 
+        $this->page = $page;
+        $this->row  = $row;
+    }
 
     /**
      * 获取附近的用户
@@ -72,10 +73,10 @@ class Article extends CoreArticle
      */
     protected function getNearbyUsers()
     {
-        //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
-        $this->ids = [15,16,17];
-    }
 
+        //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
+        $this->ids = [26];
+    }
 
     /**
      * 圈子  同城的 和已关注的用户的动态
@@ -83,30 +84,37 @@ class Article extends CoreArticle
      * @param int $order
      * @return array
      */
-    public function localArticleList($classifyId = '', $order = 0)
+    public function localArticleList($classifyId = '', $param)
     {
-        $this->getNearbyUsers();
 
+        $order = $param['order'];
+        $this->getNearbyUsers();
         //已关注用户
-        $users = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
-        $ids = array_merge($this->ids, $users);
-        $where['a.id'] = ['in', $ids];
+        $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
+        $ids                = array_merge($this->ids, $users);
+        $where['a.user_id'] = ['in', $ids];
         if ($classifyId) {
             $where['d.id'] = $classifyId;
+        }
+        if (array_key_exists('keyword', $param)) {
+            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
         }
 
         return $this->executeSelect($where, $order);
     }
-
 
     /**
      * 根据用户id获取圈子文章
      * @param $id
      * @return array
      */
-    public function getListByUserId($id)
+    public function getListByUserId($id, $param)
     {
+
         $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
+        if (array_key_exists('keyword', $param)) {
+            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
+        }
 
         return $this->executeSelect($where);
     }
@@ -117,7 +125,8 @@ class Article extends CoreArticle
      */
     public function myCollectArticle()
     {
-        $ids = RelationArticleCollect::where('user_id', user_info('id'))->page($this->page, $this->row)->column('article_id');
+
+        $ids   = RelationArticleCollect::where('user_id', user_info('id'))->page($this->page, $this->row)->column('article_id');
         $where = ['a.id' => ['in', $ids]];
 
         return $this->executeSelect($where);
@@ -129,6 +138,7 @@ class Article extends CoreArticle
      */
     public function myCollect()
     {
+
         return (new RelationUserCollect())->myCollect($this->page, $this->row);
     }
 
@@ -138,22 +148,32 @@ class Article extends CoreArticle
      */
     public function collectMe()
     {
+
         return (new RelationUserCollect())->collectMe($this->page, $this->row);
     }
 
     /**
      * 根据分类获取文章列表
      * @param $classifyId
-     * @param int $order
+     * @param $param
      * @return array
+     * @throws \think\exception\DbException
      */
-    public function getListByClassify($classifyId, $order = 0)
+    public function getListByClassify($classifyId, $param)
     {
-        if ($order == 2) {
+
+        if (!array_key_exists('order', $param)) {
+            $param['order'] = 0;
+        }
+        if ($param['order'] == 2) {
             $this->getNearbyUsers();
         }
         $where = ['a.classify_id' => $classifyId];
-        return $this->executeSelect($where, $order);
+        if (array_key_exists('keyword', $param)) {
+            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
+        }
+
+        return $this->executeSelect($where, $param['order']);
     }
 
     /**
@@ -162,22 +182,24 @@ class Article extends CoreArticle
      */
     private function recombination()
     {
-        $map = [
-            'a.state'           => 1,
-            'a.delete_time'     => null,
-            'b.state'           => 1,
-            'b.delete_time'     => null,
-            'c.delete_time'     => null,
-            'd.state'           => 1,
-            'd.delete_time'     => null,
-            'e.delete_time'     => null
+
+        $map   = [
+            'a.state'       => 1,
+            'a.delete_time' => null,
+            'b.state'       => 1,
+            'b.delete_time' => null,
+            'c.delete_time' => null,
+            'd.state'       => 1,
+            'd.delete_time' => null,
+            //'e.delete_time'     => null
         ];
         $model = $this->alias('a')
             ->join('user b', 'a.user_id = b.id')
-            ->join('article_classify d', 'a.classify_id = d.id')                //分类
-            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')          //评论
-            ->join('relation_article_great e', 'a.id = e.article_id', 'LEFT')   //点赞
+            ->join('article_classify d', 'a.classify_id = d.id')//分类
+            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')//评论
+            ->join('relation_article_great e', 'a.id = e.article_id', 'LEFT')//点赞
             ->where($map);
+
         return $model;
     }
 
@@ -186,16 +208,18 @@ class Article extends CoreArticle
      * @param $where
      * @param int $order
      * @return array
+     * @throws \think\exception\DbException
      */
     private function executeSelect($where, $order = 0)
     {
+
         $orderWord = $order == 2 ? 0 : $order;
-        $orderBy = $this->order[$orderWord];
-        $data = $this->recombination()
+        $orderBy   = $this->order[$orderWord];
+        $data      = $this->recombination()
             ->where($where)
-            ->field("a.id, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->field("a.id, a.title, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('a.id, c.article_id, e.article_id')
-            ->page($this->page, $this->row)
+            //            ->page($this->page, $this->row)
             ->order($orderBy)
             ->select();
         if ($order == 2) {
@@ -203,7 +227,7 @@ class Article extends CoreArticle
             $sort = [];
             foreach ($data as $k => $v) {
                 $data[$k]['sort'] = array_search($v['user_id'], $this->ids);
-                $sort[$k] = $data[$k]['sort'];
+                $sort[$k]         = $data[$k]['sort'];
             }
             array_multisort($sort, SORT_ASC, $data);
         }
@@ -212,9 +236,10 @@ class Article extends CoreArticle
             if (array_key_exists('sort', $v)) {
                 unset($v['sort']);
             }
-            $v['content'] = $this->getFirstTextAndImages($v['id']);
+            $v['img'] = $this->getContentImages($v['id']);
             array_push($list, $v);
         }
+
         return $list;
     }
 
@@ -224,26 +249,21 @@ class Article extends CoreArticle
      * @return array
      * @throws \think\exception\DbException
      */
-    private function getFirstTextAndImages($articleId)
+    private function getContentImages($articleId)
     {
+
         $contents = ArticleContent::all(['article_id' => $articleId]);
-        $result = [
-            'text' => '',
-            'img'  => []
-        ];
+        $imgs     = [];
         foreach ($contents as $k => $v) {
-            if (empty($result['text']) && !empty($v->text)) {
-                //文字内容过长则只截取部分
-                $result['text'] = mb_strlen($v->text) > $this->textLength ? mb_substr($v->text, 0, $this->textLength, 'utf-8') : $v->text;
+            if (count($imgs) < $this->imgNum) {
+                array_push($imgs, get_thumb_img($v->img));
             }
-            if (count($result['img']) < $this->imgNum) {
-                array_push($result['img'], get_thumb_img($v->img));
-            }
-            if (!empty($result['text']) && count($result['img']) == $this->imgNum) {
+            if (count($imgs) == $this->imgNum) {
                 break;
             }
         }
-        return $result;
+
+        return $imgs;
     }
 
     /**
@@ -254,6 +274,7 @@ class Article extends CoreArticle
      */
     public function share($id)
     {
+
         return $this->where('id', $id)->setInc('share');
     }
 
@@ -265,19 +286,90 @@ class Article extends CoreArticle
      */
     public function details($id)
     {
-        $data = $this->recombination()
+
+        $data            = $this->recombination()
             ->where('a.id', $id)
-            ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
+            ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time,a.title, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
             ->group('e.id, c.id')
             ->find();
         $data['is_self'] = user_info('id') == $data['user_id'];
         //文章内容
-        $data['content'] = ArticleContent::all(function ($query) use ($id){
+        $data['content'] = ArticleContent::all(function ($query) use ($id) {
+
             $query->where('article_id', $id)->field('img, text, sort')->order('sort');
         });
         //文章评论
         $data['comments'] = (new ArticleComment())->getComments($id, 1, $this->commentRow);
+
         return $data;
+    }
+
+    /**
+     * 根据id 获取部分详情 编辑时使用
+     * @param $id
+     * @throws \think\exception\DbException
+     * @return array
+     */
+    public function getArticleContent($data)
+    {
+
+        $articleId   = $data['articleId'];
+        $result      = [
+            'id'         => '',
+            'music'      => '',
+            'music_name' => '',
+            'items'      => [],
+        ];
+        $cacheData   = $result;
+        $contentData = Db::query("SELECT id,user_id,music,music_name FROM `article` WHERE id = {$articleId}");
+        if (!empty($contentData)) {
+            $contentItemData = Db::query("SELECT id,text,img FROM `article_content` WHERE article_id = {$articleId} ORDER BY sort DESC,id ASC");
+            $result          = $contentData[0];
+            $result['items'] = [];
+            if (!empty($contentItemData)) {
+                $result['items'] = $contentItemData;
+            }
+            $cacheData = [
+                'id'         => $contentData[0]['id'],
+                'music'      => $contentData[0]['music'],
+                'music_name' => $contentData[0]['music_name'],
+                'items'      => $result['items'],
+            ];
+        }
+        // 重置缓存
+        Cache::set('article_cache_' . $articleId, json_encode($cacheData));
+
+        return $result;
+    }
+
+    public function queryArticle($data)
+    {
+
+        $order      = $data['order'];
+        $classifyId = $data['classifyId'];
+        $keyword    = $data['keyword'];
+        $userId     = $data['userId'];
+        $selfUserId = $data['selfUserId'];
+        $isSelf     = $data['isSelf'];
+        $this->getNearbyUsers();
+        //已关注用户
+        $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
+        $ids                = array_merge($this->ids, $users);
+        $where['a.user_id'] = ['in', $ids];
+        if (!empty($classifyId)) {
+            $where['d.id'] = $classifyId;
+        }
+        if (!empty($keyword)) {
+            $where['a.title'] = ['like', "%" . $keyword . "%"];
+        }
+        if (!empty($userId)) {
+            $where['b.id'] = is_array($userId) ? ['in', $userId] : $userId;
+        }
+        if (!empty($isSelf)) {
+            $where['b.id'] = $selfUserId;
+        }
+
+        return $this->executeSelect($where, $order);
     }
 
 }
