@@ -19,92 +19,168 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">所属分类：</label>
+                    <label class="layui-form-label">商品分类：</label>
                     <div class="layui-input-block">
-                        <select name="classify_id">
+                        <select name="classify">
                             <option value="">请选择</option>
                             {volist name="$classifyList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.classify_id|default=''"}selected{/eq}>{$vo.classify_name}</option>
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.classify|default=''"}selected{/eq}>{$vo.classify_name}</option>
                             {/volist}
                         </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>标题：</label>
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商品名：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" value="{$data.title|default=''}" placeholder="请输入" class="layui-input"  lay-verify="required">
+                        <input type="text" name="goods_name" value="{$data.goods_name|default=''}" placeholder="请输入" class="layui-input"  lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">作者：</label>
+                    <label class="layui-form-label">所属厂家：</label>
                     <div class="layui-input-block">
-                        <select name="user_id">
+                        <select name="factory_id">
+                            <option value="">请选择</option>
+                            {volist name="$classifyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.factory_id|default=''"}selected{/eq}>{$vo.classify_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">厂家分类：</label>
+                    <div class="layui-input-block">
+                        <select name="factory_classify">
+                            <option value="">请选择</option>
+                            {volist name="$classifyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.factory_classify|default=''"}selected{/eq}>{$vo.classify_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属一级分类：</label>
+                    <div class="layui-input-block">
+                        <select name="base_classify">
+                            <option value="">请选择</option>
+                            {volist name="$classifyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.base_classify|default=''"}selected{/eq}>{$vo.classify_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">品牌：</label>
+                    <div class="layui-input-block">
+                        <select name="brand">
                             <option value="">请选择</option>
                             {volist name="$userList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.user_id|default=''"}selected{/eq}>{$vo.user_name}</option>
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.brand|default=''"}selected{/eq}>{$vo.user_name}</option>
                             {/volist}
                         </select>
                     </div>
                 </div>
-                factory_id	int	10	0	True	False		所属厂家
-                factory_classify	int	1	0	False	False		厂家分类
-                goods_name	char	50	0	True	False		商品名
-                classify	int	10	0	True	False		商品分类
-                base_classify	int	10	0	True	False		所属一级分类
-                brand	char	15	0	True	False		品牌
-                model_no	char	10	0	True	False		厂家产品型号
-                goods_no	char	10	0	True	False		商城商品编号
-                texture_id	int	10	0	True	False		材质
-                texture_describe	char	50	0	True	False		材质描述
-                style_id	int	10	0	True	False		风格
-                style_describe	char	50	0	True	False		风格描述
-                function_id	int	10	0	True	False		功能
-                function_describe	char	50	0	True	False		功能描述
-                specification	varchar	255	0	True	False		规格 （json）
-                state	tinyint	1	0	True	False
-                audit_state	tinyint	1	0	True	False		0 未提交审核  1 未审核  2 已审核未通过 3 通过审核
-                audit_remark	varchar	255	0	True	False		审核未通过的提示信息
-                packaging	varchar	255	0	True	False		包装方式
-                detail	text	0	0	True	False		图文详情
-                remark	text	0	0	True	False		说明备注
-                sort	int	10	0	True	False		排序
-
                 <div class="layui-form-item">
-                    <label class="layui-form-label">背景音乐歌名：</label>
+                    <label class="layui-form-label">厂家产品型号：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="music_name" value="{$data.music_name|default=''}" placeholder="请输入" class="layui-input">
+                        <input type="text" name="model_no" value="{$data.model_no|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">背景音乐：</label>
+                    <label class="layui-form-label">商城商品编号：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="music" value="{$data.music|default=''}" placeholder="请输入" class="layui-input">
+                        <input type="text" name="goods_no" value="{$data.goods_no|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">阅读数：</label>
+                    <label class="layui-form-label">材质：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="pageview" value="{$data.pageview|default=''}" placeholder="请输入" class="layui-input">
+                        <input type="text" name="texture_id" value="{$data.texture_id|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">分享次数：</label>
+                    <label class="layui-form-label">材质描述：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="share" value="{$data.share|default=''}" placeholder="请输入" class="layui-input">
+                        <input type="text" name="texture_describe" value="{$data.texture_describe|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">风格：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="style_id" value="{$data.style_id|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">风格描述：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="style_describe" value="{$data.style_describe|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">功能：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="function_id" value="{$data.function_id|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">功能描述：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="function_describe" value="{$data.function_describe|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">规格：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="specification" value="{$data.specification|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">规格：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="specification" value="{$data.specification|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">规格：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="specification" value="{$data.specification|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">包装方式：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="packaging" value="{$data.packaging|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图文详情：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="detail" value="{$data.detail|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">说明备注：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="remark" value="{$data.remark|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sort" value="{$data.sort|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="state" value="0" title="待审核" {eq name="$data.state|default=''" value="0"}checked{/eq}>
-                        <input type="radio" name="state" value="1" title="审核通过" {eq name="$data.state|default=''" value="1"}checked{/eq}>
-                        <input type="radio" name="state" value="2" title="审核不通过" {eq name="$data.state|default=''" value="2"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="0" title="待审核" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default=''" value="1"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default=''" value="2"}checked{/eq}>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">备注：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="hide_remark" value="{$data.hide_remark|default=''}" placeholder="请输入" class="layui-input">
+                        <input type="text" name="audit_remark" value="{$data.audit_remark|default=''}" placeholder="请输入" class="layui-input">
                         <span style="color: #FFB800;">审核不通过的原因</span>
                     </div>
                 </div>
