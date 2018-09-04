@@ -33,15 +33,15 @@ class Factory extends CoreFactory
         $data['admin_user'] = user_info('id');
         // 审核暂不审核
         $data['audit_state'] = 1;
-        if(!$data['editState']){
+        if (!$data['editState']) {
             unset($data['editState']);
             $registerRes = $this->save($data);
-            $factory_id = $this->id;
-        }else{
+            $factory_id  = $this->id;
+        } else {
             unset($data['editState']);
-            $factory_id = user_info('group_id');
+            $factory_id          = user_info('group_id');
             $data['update_time'] = time();
-            $registerRes = $this->save($data,['id' => $factory_id]);
+            $registerRes         = $this->save($data, ['id' => $factory_id]);
         }
         if ($registerRes) {
             Db::name('user')
@@ -53,7 +53,7 @@ class Factory extends CoreFactory
                 ]);
         }
         $result = [
-            'user_info' => User::get(['id' => $data['admin_user']])
+            'user_info' => User::get(['id' => $data['admin_user']]),
         ];
 
         return ['success' => true, 'msg' => '', 'data' => $result];
@@ -129,6 +129,7 @@ class Factory extends CoreFactory
         $getContentData        = [
             'groupId'   => user_info('group_id'),
             'groupType' => user_info('type'),
+            'editType'  => 0,
         ];
         $homeContent           = HomeContentItem::getContent($getContentData);
         $result['homeContent'] = $homeContent;
@@ -149,33 +150,41 @@ class Factory extends CoreFactory
 
     public function getNearByFactory($data)
     {
+
         $factory_data = $this
-            ->field(['id','factory_img','factory_name','province','city','district','town','address','lng','lat'])
-            ->with(['pop'=>function($query) {
-                $query->where('object_type',1);
-            }])
-            ->where('lat','>',0)
-            ->where('lat','>',$data['w1'])
-            ->where('lat','<',$data['w2'])
-            ->where('lng','>',$data['w3'])
-            ->where('lng','<',$data['w4'])
+            ->field(['id', 'factory_img', 'factory_name', 'province', 'city', 'district', 'town', 'address', 'lng', 'lat'])
+            ->with([
+                'pop' => function ($query) {
+
+                    $query->where('object_type', 1);
+                },
+            ])
+            ->where('lat', '>', 0)
+            ->where('lat', '>', $data['w1'])
+            ->where('lat', '<', $data['w2'])
+            ->where('lng', '>', $data['w3'])
+            ->where('lng', '<', $data['w4'])
             ->where(function ($query) use ($data) {
-                if(!empty($data['word'])){
-                    $query->where('factory_name','like','%'.$data['word'].'%');
+
+                if (!empty($data['word'])) {
+                    $query->where('factory_name', 'like', '%' . $data['word'] . '%');
                 }
             })
-            ->where(function ($query) use ($data){
-                if($data['user_store_type'] == 1){
-                    $query->whereNotIn('id',[$data['user_store_id']]);
+            ->where(function ($query) use ($data) {
+
+                if ($data['user_store_type'] == 1) {
+                    $query->whereNotIn('id', [$data['user_store_id']]);
                 }
             })
-            ->where('state',1)
+            ->where('state', 1)
             ->select();
+
         return $factory_data;
     }
 
     public function pop()
     {
-        return $this->hasMany('Popularity','object_id','id');
+
+        return $this->hasMany('Popularity', 'object_id', 'id');
     }
 }
