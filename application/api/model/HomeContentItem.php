@@ -48,7 +48,7 @@ class HomeContentItem extends CoreHomeContentItem
             ];
         }
         // 添加或编辑时才重置缓存
-        if($editType === 1){
+        if($editType == 1){
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
         }
 
