@@ -126,6 +126,7 @@ abstract class Base extends Controller
             //若存在pid字段，则先删除子部门资料
             $table_name = $this->currentModel->getTableName();
             if (has_field($table_name, 'pid')) {
+                var_dump(Db::table($table_name)->whereIn('pid', $id)->fetchSql(true)->select());die;
                 $data_child = Db::table($table_name)->whereIn('pid', $id)->select();
                 if (!empty($data_child)) {
                     $this->currentModel->whereIn('pid', $id)->delete();
@@ -134,8 +135,8 @@ abstract class Base extends Controller
 
             //删除当前资料，并记录删除日志
             $pk = $this->currentModel->getPk();
+            var_dump(Db::table($table_name)->whereIn($pk, $id)->fetchSql(true)->select());die;
             $data = Db::table($table_name)->whereIn($pk, $id)->select();
-            var_dump(Db::table($table_name)->whereIn($pk, $id)->select());die;
             if (empty($data)) {
                 throw new \Exception('信息不存在');
             }
