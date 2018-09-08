@@ -100,7 +100,7 @@ class Goods extends Base
         }
 
         //验证数据
-        $result = $this->validate($param, 'FactoryProduct');
+        $result = $this->validate($param, 'Goods');
         if ($result !== true) {
             $this->error($result);
         }
