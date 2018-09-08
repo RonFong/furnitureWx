@@ -10,6 +10,15 @@
         display: none;
     }
     {/notempty}
+    .article-content {
+        max-width: 350px;
+    }
+    .article-content .content-text {
+        margin: 15px;
+    }
+    .article-content img {
+        max-width: 350px;
+    }
 </style>
 {/block}
 {block name="content"}
@@ -86,12 +95,12 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">内容详情：</label>
-                    <div class="layui-input-block" style="max-width: 300px;">
+                    <div class="layui-input-block article-content">
                         {volist name="$content" id="vo"}
                         <a href="{$vo.img}" target="_blank">
                             <img src="{$vo.img}" alt="图片">
                         </a>
-                        <div>{$vo.text}</div>
+                        <div class="content-text">{$vo.text}</div>
                         {/volist}
                     </div>
                 </div>
