@@ -40,7 +40,7 @@
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
             'link', 'unlink', 'anchor', '|',
             'simpleupload', 'insertimage', 'emotion', 'insertvideo',  'attachment', 'map', 'insertframe', '|', 'pagebreak', 'template', 'background', '|',
-            'horizontal', 'spechars', 'wordimage'
+            'horizontal'
         ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
@@ -107,7 +107,7 @@
         //粘贴只保留标签，去除标签所有属性
         //,retainOnlyLabelPasted: false
 
-        ,pasteplain:true  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+        ,pasteplain:false  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
         //纯文本粘贴模式下的过滤规则
         //'filterTxtRules' : function(){
         //    function transP(node){

@@ -152,12 +152,6 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">图文详情：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="detail" value="{$data.detail|default=''}" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label class="layui-form-label">说明备注：</label>
                     <div class="layui-input-block">
                         <input type="text" name="remark" value="{$data.remark|default=''}" placeholder="请输入" class="layui-input">
@@ -183,6 +177,13 @@
                         <input type="text" name="audit_remark" value="{$data.audit_remark|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图文详情：</label>
+                    <div class="layui-input-block">
+                        <!-- 加载编辑器的容器 -->
+                        <script id="goods_detail" name="detail" type="text/html">{$data.detail|default=''}</script>
+                    </div>
+                </div>
             </div>
             <div class="tpl-form-action">
                 <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
@@ -194,6 +195,9 @@
 {/block}
 
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/plugin/ueditor/ueditor.config.js"></script><!-- 编辑器配置文件 -->
+<script type="text/javascript" src="__STATIC__/plugin/ueditor/ueditor.all.min.js"></script><!-- 编辑器源码文件 -->
+
 <script type="text/javascript">
     layui.use(['form'], function () {
         var form = layui.form;
@@ -215,7 +219,8 @@
         });
     });
 
-
+    //实例化编辑器*
+    UE.getEditor('goods-detail');
 </script>
 
 {/block}
