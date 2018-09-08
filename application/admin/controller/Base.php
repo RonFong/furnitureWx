@@ -121,12 +121,13 @@ abstract class Base extends Controller
      */
     public function delete($id)
     {
+        $table_name = $this->currentModel->getTableName();
+        var_dump(Db::table($table_name)->whereIn('pid', $id)->fetchSql(true)->select());die;
         Db::startTrans();
         try{
             //若存在pid字段，则先删除子部门资料
             $table_name = $this->currentModel->getTableName();
             if (has_field($table_name, 'pid')) {
-                var_dump(Db::table($table_name)->whereIn('pid', $id)->fetchSql(true)->select());die;
                 $data_child = Db::table($table_name)->whereIn('pid', $id)->select();
                 if (!empty($data_child)) {
                     $this->currentModel->whereIn('pid', $id)->delete();
