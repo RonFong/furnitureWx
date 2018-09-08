@@ -12,6 +12,7 @@ namespace app\admin\controller;
 use app\common\controller\Controller;
 use app\admin\model\Menu;
 use app\admin\model\UserAdmin;
+use think\Loader;
 use think\Session;
 use think\Cookie;
 use think\Db;
@@ -121,14 +122,12 @@ abstract class Base extends Controller
      */
     public function delete($id)
     {
-        $table_name = $this->currentModel->getTableName();
-        var_dump(Db::table($table_name)->whereIn('pid', $id)->fetchSql(true)->select());die;
         Db::startTrans();
         try{
             //若存在pid字段，则先删除子部门资料
-            $table_name = $this->currentModel->getTableName();
+            $table_name = Loader::parseName($this->currentModel->getTableName());
             if (has_field($table_name, 'pid')) {
-                $data_child = Db::table($table_name)->whereIn('pid', $id)->select();
+                $data_child = Db::name($table_name)->whereIn('pid', $id)->select();
                 if (!empty($data_child)) {
                     $this->currentModel->whereIn('pid', $id)->delete();
                 }
@@ -136,8 +135,7 @@ abstract class Base extends Controller
 
             //删除当前资料，并记录删除日志
             $pk = $this->currentModel->getPk();
-            var_dump(Db::table($table_name)->whereIn($pk, $id)->fetchSql(true)->select());die;
-            $data = Db::table($table_name)->whereIn($pk, $id)->select();
+            $data = Db::name($table_name)->whereIn($pk, $id)->select();
             if (empty($data)) {
                 throw new \Exception('信息不存在');
             }
