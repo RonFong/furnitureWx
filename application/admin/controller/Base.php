@@ -135,6 +135,7 @@ abstract class Base extends Controller
             //删除当前资料，并记录删除日志
             $pk = $this->currentModel->getPk();
             $data = Db::table($table_name)->whereIn($pk, $id)->select();
+            var_dump(Db::table($table_name)->whereIn($pk, $id)->select());die;
             if (empty($data)) {
                 throw new \Exception('信息不存在');
             }
