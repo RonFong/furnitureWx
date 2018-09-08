@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Article as CoreArticle;
+use app\admin\model\ArticleContent;
 use think\Db;
 use think\Request;
 
@@ -78,6 +79,11 @@ class Article extends Base
             if (empty($data)) {
                 $this->error('信息不存在');
             }
+
+            $ArticleContent = new ArticleContent();
+            $content = $ArticleContent->where('article_id', $param['id'])->order('sort')->select();
+            $this->assign('content', $content);
+
             $data = $data->toArray();
             $this->assign('data', $data);
         }

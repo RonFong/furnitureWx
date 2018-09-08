@@ -38,7 +38,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">作者：</label>
                     <div class="layui-input-block">
-                        <select name="user_id">
+                        <select name="user_id" disabled>
                             <option value="">请选择</option>
                             {volist name="$userList" id="vo"}
                             <option value="{$vo.id}" {eq name="vo.id" value="$data.user_id|default=''"}selected{/eq}>{$vo.user_name}</option>
@@ -79,10 +79,20 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">备注：</label>
+                    <label class="layui-form-label">审核结果说明：</label>
                     <div class="layui-input-block">
                         <input type="text" name="hide_remark" value="{$data.hide_remark|default=''}" placeholder="请输入" class="layui-input">
-                        <span style="color: #FFB800;">审核不通过的原因</span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容详情：</label>
+                    <div class="layui-input-block" style="max-width: 300px;">
+                        {volist name="$content" id="vo"}
+                        <a href="{$vo.img}" target="_blank">
+                            <img src="{$vo.img}" alt="图片">
+                        </a>
+                        <div>{$vo.text}</div>
+                        {/volist}
                     </div>
                 </div>
             </div>
