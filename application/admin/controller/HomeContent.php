@@ -79,13 +79,21 @@ class HomeContent extends Base
 
         }
 
-        //商家列表
-        $shopList = Db::name('shop')->field('id,shop_name')->select();
-        $this->assign('shopList', $shopList);
-
-        //分类列表
-        $classifyList = Db::name('group_classify')->field('id,classify_name')->select();
+        //分类名称列表
+        $value_id = !empty($data['parent_id']) ? $data['parent_id'] : 0;
+        $classifyList = Db::name('group_classify')->select();
+        $classifyList = \Tree::get_option_tree($classifyList, $value_id, 'classify_name', 'id', 'parent_id');
         $this->assign('classifyList', $classifyList);
+
+        $groupList = [];
+        if (isset($data['group_type'])) {
+            if ($data['group_type'] == 1) {
+                $groupList =  Db::name('factory')->field('id,factory_name as name')->select();
+            } elseif ($data['group_type'] == 2) {
+                $groupList =  Db::name('shop')->field('id,shop_name as name')->select();
+            }
+        }
+        $this->assign('groupList', $groupList);
 
         //音乐列表
         $musicList = Db::name('music')->field('id,name')->select();

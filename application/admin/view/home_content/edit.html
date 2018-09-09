@@ -19,23 +19,19 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
+                    <label class="layui-form-label">类型：</label>
                     <div class="layui-input-block">
-                        <select name="shop_id">
-                            <option value="">请选择</option>
-                            {volist name="$shopList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.shop_id|default=''"}selected{/eq}>{$vo.shop_name}</option>
-                            {/volist}
-                        </select>
+                        <input type="radio" name="group_type" value="1" title="厂家" {eq name="$data.group_type|default=''" value="1"}checked{/eq}>
+                        <input type="radio" name="group_type" value="2" title="商家" {eq name="$data.group_type|default=''" value="2"}checked{/eq}>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">分类：</label>
+                    <label class="layui-form-label">厂/商家名称：</label>
                     <div class="layui-input-block">
-                        <select name="classify_id">
+                        <select name="group_id">
                             <option value="">请选择</option>
-                            {volist name="$classifyList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.classify_id|default=''"}selected{/eq}>{$vo.classify_name}</option>
+                            {volist name="groupList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.group_id|default=''"}selected{/eq}>{$vo.name}</option>
                             {/volist}
                         </select>
                     </div>
@@ -55,19 +51,6 @@
                     <label class="layui-form-label">录音：</label>
                     <div class="layui-input-block">
                         <input type="text" name="record" value="{$data.record|default=''}" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">排序：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="sort" value="{$data.sort|default=''}" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">状态：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="state" value="0" title="禁用" {eq name="$data.state|default=''" value="0"}checked{/eq}>
-                        <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default=''" value="1"}checked{/eq}>
                     </div>
                 </div>
                 {notempty name="content"}
