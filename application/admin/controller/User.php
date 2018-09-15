@@ -88,9 +88,14 @@ class User extends Base
             $this->assign('data', $data);
         }
 
-        /*随机头像 */
+        /*随机头像*/
         $avatar = !empty($data['avatar']) ? $data['avatar'] : VIEW_STATIC_PATH . '/img/avatar/user' . rand(10, 50) . '.png';
         $this->assign('avatar', $avatar);
+
+        //厂家列表
+        $type = !empty($data['type']) ? $data['type'] : 0;
+        $groupList = $this->currentModel->getGroupList($type);
+        $this->assign('groupList', $groupList);
 
         return $this->fetch();
     }
