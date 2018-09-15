@@ -85,8 +85,8 @@ class Login extends Controller
             if(isset($userInfo['status']) && $userInfo['status'] == false){
                 throw new \Exception($userInfo['msg']);
             }
-            $User->save(['id'=>$userInfo['id'], 'login_count'=>['exp', 'login_count+1'], 'login_last_time'=>time()]);
             $this->setSession($userInfo);//设置session
+            $User->save(['id'=>$userInfo['id'], 'login_count'=>['exp', 'login_count+1'], 'login_last_time'=>time()]);
         } catch (\Exception $e) {
             cookie('error_num', cookie('error_num') + 1);
             $this->error($e->getMessage());
