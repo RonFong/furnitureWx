@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\UserAdmin as CoreUserAdmin;
+use think\Db;
 use think\Request;
 
 class UserAdmin extends Base
@@ -95,6 +96,23 @@ class UserAdmin extends Base
         }
 
         try {
+            //图片有变更，从临时文件夹移动图片，压缩头像100*100
+            if (!empty($param['image'])) {
+                $old = !empty($param['user_id']) ? Db::name('user')->where('user_id', $param['user_id'])->value('image') : '';
+                if (empty($old) || $param['image'] != $old) {
+                    $param['image'] = current(imgTempFileMove([$param['image']], 'admin/images/user/'));//从临时文件夹移动图片
+                    if (strpos($param['image'], 'user/') && file_exists(PUBLIC_PATH . $param['image'])) {
+                        \think\Image::open(PUBLIC_PATH . $param['image'])->thumb(100, 100)->save(PUBLIC_PATH . $param['image'], null, 100);
+                    }
+                    if (!empty($param['user_id'])) {
+                        $count = Db::name('user')->where('image', $old)->count();//编辑且换图，则删除旧图片
+                        //若其他地方没使用该旧图片，则删除
+                        if ($count == 1){
+                            delete_file($old);
+                        }
+                    }
+                }
+            }
             //保存数据
             $this->currentModel->save($param);
         } catch (\Exception $e) {

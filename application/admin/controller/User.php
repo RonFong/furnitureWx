@@ -115,6 +115,23 @@ class User extends Base
         }
 
         try {
+            //图片有变更，从临时文件夹移动图片，压缩头像100*100
+            if (!empty($param['avatar'])) {
+                $old = !empty($param['user_id']) ? Db::name('user')->where('user_id', $param['user_id'])->value('avatar') : '';
+                if (empty($old) || $param['avatar'] != $old) {
+                    $param['avatar'] = current(imgTempFileMove([$param['avatar']], 'admin_fussen/images/user/'));//从临时文件夹移动图片
+                    if (strpos($param['avatar'], 'user/') && file_exists(PUBLIC_PATH . $param['avatar'])) {
+                        \think\Image::open(PUBLIC_PATH . $param['avatar'])->thumb(100, 100)->save(PUBLIC_PATH . $param['avatar'], null, 100);
+                    }
+                    if (!empty($param['user_id'])) {
+                        $count = Db::name('user')->where('avatar', $old)->count();//编辑且换图，则删除旧图片
+                        //若其他地方没使用该旧图片，则删除
+                        if ($count == 1){
+                            delete_file($old);
+                        }
+                    }
+                }
+            }
             //保存数据
             $this->currentModel->save($param);
         } catch (\Exception $e) {
