@@ -68,6 +68,9 @@
     layui.use(['form'], function () {
         var form = layui.form;
 
+        //上传图片
+        uploadImgAjax('.img-avatar', '{:url("uploadImg")}', 1024);//头像
+
         //监听提交
         form.on('submit(formSubmit)', function(data){
             var index = layer.load(2, {shade:[0.5,'#000'],time: 10*1000});
