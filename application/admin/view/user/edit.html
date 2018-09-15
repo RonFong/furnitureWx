@@ -6,6 +6,13 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
+                    <label class="layui-form-label">头像：</label>
+                    <div class="layui-input-block img-avatar" style="text-align: center;">
+                        <input type="hidden" name="avatar" value="{$avatar}">
+                        <img src="{$avatar}" class="tpl-img-avatar">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>帐号：</label>
                     <div class="layui-input-block">
                         <input type="text" name="user_name" value="{$data.user_name|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">

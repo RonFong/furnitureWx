@@ -74,7 +74,7 @@ class UserAdmin extends Base
         $this->assign('roleList', $roleList);
 
         /*随机头像*/
-        $avatar = !empty($data['avatar']) ? $data['avatar'] : VIEW_STATIC_PATH . '/img/avatar/user' . rand(10, 50) . '.png';
+        $avatar = !empty($data['image']) ? $data['image'] : VIEW_STATIC_PATH . '/img/avatar/user' . rand(10, 50) . '.png';
         $this->assign('avatar', $avatar);
 
         return $this->fetch();
