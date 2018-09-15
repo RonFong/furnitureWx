@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\User as CoreUser;
+use Carbon\Carbon;
 use think\Db;
 use think\Request;
 
@@ -28,6 +29,17 @@ class User extends Base
     public function index()
     {
         return $this->fetch();
+    }
+
+
+    /**
+     * 列表页
+     * @return mixed
+     */
+    public function time()
+    {
+        echo Carbon::now()->diffForHumans(Carbon::now()->subYear());
+        die('1');
     }
 
     /**
@@ -75,9 +87,10 @@ class User extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
         }
-        $type = !empty($data['type']) ? $data['type'] : 0;
-        $groupList = $this->currentModel->getGroupList($type);
-        $this->assign('groupList', $groupList);
+
+        /*随机头像*/
+        $avatar = !empty($data['avatar']) ? $data['avatar'] : VIEW_STATIC_PATH . '/img/avatar/user' . rand(10, 50) . '.png';
+        $this->assign('avatar', $avatar);
 
         return $this->fetch();
     }

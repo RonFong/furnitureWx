@@ -162,7 +162,7 @@ function setState(ids, state, field_name, url) {
 /*上传图片*/
 function uploadImgAjax(element, url, size) {
     if (!size) {size = 2048;}
-    if (!url) {url = '/admin_fussen/system/uploadimg.html';}
+    if (!url) {url = '/admin/system/uploadimg.html';}
     var lay_load;
     layui.use(['layer', 'upload'], function () {
         var upload = layui.upload;
