@@ -88,7 +88,7 @@ class User extends Base
             $this->assign('data', $data);
         }
 
-        /*随机头像*/
+        /*随机头像 */
         $avatar = !empty($data['avatar']) ? $data['avatar'] : VIEW_STATIC_PATH . '/img/avatar/user' . rand(10, 50) . '.png';
         $this->assign('avatar', $avatar);
 
