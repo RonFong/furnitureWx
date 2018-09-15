@@ -25,6 +25,12 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">微信号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="wx_account" value="{$data.wx_account|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">用户类型：</label>
                     <div class="layui-input-block">
                         <select name="type">
@@ -44,6 +50,14 @@
                             <option value="{$vo.id}" {eq name="data.group_id|default=''" value="$vo.id"}selected{/eq}>{$vo.name}</option>
                             {/volist}
                         </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="gender" value="0" title="未知" {eq name="$data.gender|default=0" value="0"}checked{/eq}>
+                        <input type="radio" name="gender" value="1" title="男" {eq name="$data.gender|default=0" value="1"}checked{/eq}>
+                        <input type="radio" name="gender" value="2" title="女" {eq name="$data.gender|default=0" value="2"}checked{/eq}>
                     </div>
                 </div>
                 <div class="layui-form-item">
