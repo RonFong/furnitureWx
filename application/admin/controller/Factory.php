@@ -37,7 +37,7 @@ class Factory extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable();
+        return $this->currentModel->where($map)->order('id desc')->layTable(['admin_user_name', 'audit_state_text']);
     }
 
     private function getDataListMap()
