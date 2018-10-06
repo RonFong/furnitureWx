@@ -17,15 +17,36 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">门店联系人</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="shop_contact" class="layui-input">
-                </div>
+            <label class="layui-form-label">门店联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="shop_contact" class="layui-input">
             </div>
+        </div>
             <div class="layui-inline">
                 <label class="layui-form-label">门店电话</label>
                 <div class="layui-input-inline">
                     <input type="text" name="shop_phone" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审核状态</label>
+                <div class="layui-input-inline">
+                    <select name="audit_state">
+                        <option value="">请选择</option>
+                        <option value="0">未审核</option>
+                        <option value="1">通过</option>
+                        <option value="2">未通过</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">启用状态</label>
+                <div class="layui-input-inline">
+                    <select name="state">
+                        <option value="">请选择</option>
+                        <option value="0">禁用</option>
+                        <option value="1">启用</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline">
@@ -66,9 +87,11 @@
             ,cols: [[
                 {type:'numbers', title:'序号', width:45}
                 ,{field:'shop_name', title:'商户号'}
+                ,{field:'admin_user_name', title:'创建人'}
                 ,{field:'shop_contact', title:'门店联系人'}
                 ,{field:'shop_phone', title:'门店电话'}
-                ,{field:'audit_state_text', title:'审核状态'}
+                ,{field:'audit_state_des', title:'审核状态'}
+                ,{field:'state_des', title:'启用状态'}
                 ,{title:'操作', toolbar: '#operating', align:'center'}
             ]]
             ,where: getFormJson('#searchForm')
