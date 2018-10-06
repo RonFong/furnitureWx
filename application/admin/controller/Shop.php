@@ -37,12 +37,19 @@ class Shop extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable();
+
+        return $this->currentModel
+            ->field(true)
+            ->field('admin_user as admin_user_name, state as state_des, audit_state as audit_state_des')
+            ->where($map)
+            ->order('id desc')
+            ->layTable();
     }
 
     private function getDataListMap()
     {
         $param = $this->request->param();
+
         if (!empty($param['shop_name'])) {
             $map['shop_name'] = ['like', '%' . $param['shop_name'] . '%'];//商户名
         }
@@ -51,6 +58,12 @@ class Shop extends Base
         }
         if (!empty($param['shop_contact'])) {
             $map['shop_contact'] = ['like', '%' . $param['shop_contact'] . '%'];//联系人
+        }
+        if ($param['state'] !== '') {
+            $map['state'] = $param['state'];
+        }
+        if ($param['audit_state'] !== '') {
+            $map['audit_state'] = $param['audit_state'];
         }
         if (empty($map)) {
             $map[] = ['exp', '1=1'];
