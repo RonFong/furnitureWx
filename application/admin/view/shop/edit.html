@@ -26,7 +26,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">经营类别：</label>
                     <div class="layui-input-block">
-                        <select name="">
+                        <select name="category">
                             <option value="">请选择</option>
                         </select>
                     </div>
@@ -48,10 +48,10 @@
                         <label class="layui-form-label">所在省市区：</label>
                         <div class="layui-input-block">
                             <select name="province" id="province" lay-filter="region">
-                                <option value="">请选择省</option>
+                                <option value="{$data.province|default=''}">{$data.province|default='所在省'}</option>
                                 {notempty name="provinceList"}
                                 {volist name="provinceList" id="vo"}
-                                <option value="{$vo.id}" {eq name="vo.id" value="$data.province|default='0'"}selected{/eq}>{$vo.name}</option>
+                                <option value="{$vo.name}">{$vo.name}</option>
                                 {/volist}
                                 {/notempty}
                             </select>
@@ -63,10 +63,10 @@
                         <label class="layui-form-label" style="width: auto;"></label>
                         <div class="layui-input-block" style="margin-left: 10px;">
                             <select name="city" id="city" lay-filter="region">
-                                <option value="">请选择市</option>
+                                <option value="{$data.city|default=''}">{$data.city|default='请选择市'}</option>
                                 {notempty name="cityList"}
                                 {volist name="cityList" id="vo"}
-                                <option value="{$vo.id}" {eq name="vo.id" value="$data.city|default='0'"}selected{/eq}>{$vo.name}</option>
+                                <option value="{$vo.name}">{$vo.name}</option>
                                 {/volist}
                                 {/notempty}
                             </select>
@@ -78,10 +78,10 @@
                         <label class="layui-form-label" style="width: auto;"></label>
                         <div class="layui-input-block" style="margin-left: 10px;">
                             <select name="district" id="district">
-                                <option value="">请选择区/县</option>
+                                <option value="{$data.district|default=''}">{$data.district|default='请选择区/县'}</option>
                                 {notempty name="districtList"}
                                 {volist name="districtList" id="vo"}
-                                <option value="{$vo.id}" {eq name="vo.id" value="$data.district|default='0'"}selected{/eq}>{$vo.name}</option>
+                                <option value="{$vo.name}">{$vo.name}</option>
                                 {/volist}
                                 {/notempty}
                             </select>
