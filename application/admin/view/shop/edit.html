@@ -6,6 +6,10 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>门头照：</label>
+                    <img src="{$data.shop_img}" height="200" alt="门头照">
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="shop_name" value="{$data.shop_name|default=''}" placeholder="请输入" class="layui-input">
@@ -27,7 +31,9 @@
                     <label class="layui-form-label">经营类别：</label>
                     <div class="layui-input-block">
                         <select name="category">
-                            <option value="">请选择</option>
+                            {volist name="categoryList" id="category"}
+                                <option value="{$category.id}"  {eq name="$category.id" value="$data.category_id|default='0'"}selected{/eq}>{$category.name}</option>
+                            {/volist}
                         </select>
                     </div>
                 </div>
@@ -41,6 +47,12 @@
                     <label class="layui-form-label">法人手机号：</label>
                     <div class="layui-input-block">
                         <input type="text" name="phone" value="{$data.phone|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">法人微信号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="wx_account" value="{$data.wx_account|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
@@ -108,6 +120,9 @@
                         <input type="text" name="audit_remark" value="{$data.audit_remark|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
+                <label class="layui-form-label">营业执照：</label>
+                <a href="{$data.license}" target="_blank"><img src="{$data.license}" height="300" alt="营业执照"></a>
+            </div>
             </div>
             <div class="tpl-form-action">
                 <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
