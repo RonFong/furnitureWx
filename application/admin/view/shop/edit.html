@@ -10,6 +10,10 @@
                     <img src="{$data.shop_img}" height="200" alt="门头照">
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
+                    <img src="{$data.wx_code}" height="100" alt="微信二维码">
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="shop_name" value="{$data.shop_name|default=''}" placeholder="请输入" class="layui-input">
