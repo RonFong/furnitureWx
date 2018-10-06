@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Shop as CoreShop;
+use app\common\model\StoreClassify;
 use think\Db;
 use think\Request;
 
@@ -100,6 +101,13 @@ class Shop extends Base
         /*获取下拉列表：省份*/
         $provinceList = $this->getRegion(0);
         $this->assign('provinceList', $provinceList);
+
+        //经营类别
+        $categoryList = StoreClassify::all(function ($query) {
+            $query->where(['state' => 1, 'parent_id' => 0])->field('id, name');
+        });
+
+        $this->assign('categoryList', $categoryList);
 
         return $this->fetch();
     }
