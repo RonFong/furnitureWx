@@ -6,19 +6,27 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>门头照：</label>
+                    <img src="{$data.factory_img}" height="200" alt="门头照">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
+                    <img src="{$data.wx_code}" height="100" alt="微信二维码">
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="factory_name" value="{$data.factory_name|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">商户联系人：</label>
+                    <label class="layui-form-label">厂家联系人：</label>
                     <div class="layui-input-block">
                         <input type="text" name="factory_contact" value="{$data.factory_contact|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">商户手机号：</label>
+                    <label class="layui-form-label">厂家手机号：</label>
                     <div class="layui-input-block">
                         <input type="text" name="factory_phone" value="{$data.factory_phone|default=''}" placeholder="请输入" class="layui-input">
                     </div>
@@ -43,15 +51,21 @@
                         <input type="text" name="phone" value="{$data.phone|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">法人微信号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="wx_account" value="{$data.wx_account|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
                 <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
                     <div class="layui-form-item">
                         <label class="layui-form-label">所在省市区：</label>
                         <div class="layui-input-block">
                             <select name="province" id="province" lay-filter="region">
-                                <option value="">请选择省</option>
+                                <option value="{$data.province|default=''}">{$data.province|default='所在省'}</option>
                                 {notempty name="provinceList"}
                                 {volist name="provinceList" id="vo"}
-                                <option value="{$vo.id}" {eq name="vo.id" value="$data.province|default='0'"}selected{/eq}>{$vo.name}</option>
+                                <option value="{$vo.name}">{$vo.name}</option>
                                 {/volist}
                                 {/notempty}
                             </select>
@@ -63,10 +77,10 @@
                         <label class="layui-form-label" style="width: auto;"></label>
                         <div class="layui-input-block" style="margin-left: 10px;">
                             <select name="city" id="city" lay-filter="region">
-                                <option value="">请选择市</option>
+                                <option value="{$data.city|default=''}">{$data.city|default='请选择市'}</option>
                                 {notempty name="cityList"}
                                 {volist name="cityList" id="vo"}
-                                <option value="{$vo.id}" {eq name="vo.id" value="$data.city|default='0'"}selected{/eq}>{$vo.name}</option>
+                                <option value="{$vo.name}">{$vo.name}</option>
                                 {/volist}
                                 {/notempty}
                             </select>
@@ -78,10 +92,10 @@
                         <label class="layui-form-label" style="width: auto;"></label>
                         <div class="layui-input-block" style="margin-left: 10px;">
                             <select name="district" id="district">
-                                <option value="">请选择区/县</option>
+                                <option value="{$data.district|default=''}">{$data.district|default='请选择区/县'}</option>
                                 {notempty name="districtList"}
                                 {volist name="districtList" id="vo"}
-                                <option value="{$vo.id}" {eq name="vo.id" value="$data.district|default='0'"}selected{/eq}>{$vo.name}</option>
+                                <option value="{$vo.name}">{$vo.name}</option>
                                 {/volist}
                                 {/notempty}
                             </select>
@@ -109,6 +123,8 @@
                     </div>
                 </div>
             </div>
+            <label class="layui-form-label">营业执照：</label>
+            <a href="{$data.license}" target="_blank"><img src="{$data.license}" height="300" alt="营业执照"></a>
             <div class="tpl-form-action">
                 <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
             </div>
