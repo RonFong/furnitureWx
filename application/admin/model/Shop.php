@@ -16,7 +16,7 @@ class Shop extends CoreShop
     public function getAdminUserNameAttr($value, $data)
     {
         $user = User::get($value);
-        return $user->user_name;
+        return $user->user_name ?? '';
     }
 
     public function getStateDesAttr($value)
