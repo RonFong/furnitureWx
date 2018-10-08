@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Factory as CoreFactory;
+use app\common\model\FactoryMargin;
 use think\Db;
 use think\Request;
 
@@ -108,6 +109,16 @@ class Factory extends Base
         try {
             //保存数据
             $this->currentModel->save($param);
+            if (!empty($param['margin'])) {
+                if (!array_key_exists($param['margin'], config('system.margin_star'))) {
+                    exception('保证金额度不合法');
+                }
+                $marginData = [
+                    'factory_id'    => $param['id'],
+                    'margin_fee'    => $param['margin']
+                ];
+                (new FactoryMargin())->save($marginData);
+            }
         } catch (\Exception $e) {
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
             $this->error($msg);
