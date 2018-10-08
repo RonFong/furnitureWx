@@ -69,7 +69,11 @@ class Factory extends Base
         $param = $this->request->param();
 
         if (!empty($param['id'])) {
-            $data = $this->currentModel->where('id', $param['id'])->find();
+            $data = $this->currentModel
+                ->alias('a')
+                ->join('factoryMargin b', 'a.id = b.factory_id')
+                ->where('a.id', $param['id'])
+                ->find();
             if (empty($data)) {
                 $this->error('信息不存在');
             }
