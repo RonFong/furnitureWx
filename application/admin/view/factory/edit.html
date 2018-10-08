@@ -14,7 +14,7 @@
                     <img src="{$data.wx_code}" height="100" alt="微信二维码">
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>厂家名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="factory_name" value="{$data.factory_name|default=''}" placeholder="请输入" class="layui-input">
                     </div>
@@ -106,6 +106,13 @@
                     <label class="layui-form-label">详细地址：</label>
                     <div class="layui-input-block">
                         <input type="text" name="address" value="{$data.address|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">质量保证金：</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="margin" value="{$data.margin|default=''}" placeholder="请输入" class="layui-input">
+                        <p style="font-size: 9px;">1钻：1000；2钻：2000；3钻：3000；4钻：12000</p>
                     </div>
                 </div>
                 <div class="layui-form-item">
