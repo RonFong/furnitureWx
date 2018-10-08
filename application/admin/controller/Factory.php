@@ -71,7 +71,7 @@ class Factory extends Base
         if (!empty($param['id'])) {
             $data = $this->currentModel
                 ->alias('a')
-                ->join('factoryMargin b', 'a.id = b.factory_id')
+                ->join('factory_margin b', 'a.id = b.factory_id')
                 ->where('a.id', $param['id'])
                 ->find();
             if (empty($data)) {
