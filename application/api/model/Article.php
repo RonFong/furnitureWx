@@ -368,7 +368,7 @@ class Article extends CoreArticle
         if (!empty($isSelf)) {
             $where['b.id'] = $selfUserId;
         }
-
+        $where = [];
         return $this->executeSelect($where, $order);
     }
 
