@@ -28,9 +28,7 @@ class HomeContent extends Base
      */
     public function index()
     {
-        //商家列表
-        $shopList = Db::name('shop')->field('id,shop_name')->select();
-        $this->assign('shopList', $shopList);
+        $this->assign('groupType', $this->request->param('type'));
         return $this->fetch();
     }
 
@@ -41,18 +39,13 @@ class HomeContent extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable(['group_name','group_type_name']);
+        return $this->currentModel->where($map)->order('id desc')->layTable(['group_name']);
     }
 
     private function getDataListMap()
     {
         $param = $this->request->param();
-        if (!empty($param['shop_id'])) {
-            $map['shop_id'] = $param['shop_id'];//商户id
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
-        }
+        $map['group_type'] = $param['group_type'];
         return $map;
     }
 
@@ -70,10 +63,11 @@ class HomeContent extends Base
             if (empty($data)) {
                 $this->error('信息不存在');
             }
+            $groupName = $this->currentModel->getGroupNameAttr('', $data);
+            $this->assign('groupName', $groupName);
             $HomeContentItem = new HomeContentItem();
-            $content = $HomeContentItem->where('commodity_id', $param['id'])->order('sort')->select();
+            $content = $HomeContentItem->where('content_id', $param['id'])->order('sort')->select();
             $this->assign('content', $content);
-
             $data = $data->toArray();
             $this->assign('data', $data);
 

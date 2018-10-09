@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Factory as CoreFactory;
+use app\common\model\FactoryMargin;
 use think\Db;
 use think\Request;
 
@@ -68,7 +69,11 @@ class Factory extends Base
         $param = $this->request->param();
 
         if (!empty($param['id'])) {
-            $data = $this->currentModel->where('id', $param['id'])->find();
+            $data = $this->currentModel
+                ->alias('a')
+                ->join('factory_margin b', 'a.id = b.factory_id')
+                ->where('a.id', $param['id'])
+                ->find();
             if (empty($data)) {
                 $this->error('信息不存在');
             }
@@ -108,6 +113,16 @@ class Factory extends Base
         try {
             //保存数据
             $this->currentModel->save($param);
+            if (!empty($param['margin'])) {
+                if (!array_key_exists($param['margin'], config('system.margin_star'))) {
+                    exception('保证金额度不合法');
+                }
+                $marginData = [
+                    'factory_id'    => $param['id'],
+                    'margin_fee'    => $param['margin']
+                ];
+                (new FactoryMargin())->save($marginData);
+            }
         } catch (\Exception $e) {
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
             $this->error($msg);

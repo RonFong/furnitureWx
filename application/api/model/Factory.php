@@ -49,6 +49,7 @@ class Factory extends CoreFactory
                 ->update([
                     'type'       => 1,
                     'group_id'   => $factory_id,
+                    'phone' => $data['shop_phone'],
                     'wx_account' => $data['factory_wx'],
                 ]);
         }
