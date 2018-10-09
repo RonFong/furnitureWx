@@ -48,7 +48,7 @@ class HomeContent extends BaseController
             'groupId'   => user_info('group_id'),
             'groupType' => user_info('type'),
             'music'     => $this->request->param('music'),
-            'record'    => $this->request->param('record'),
+            'record'    => $this->request->param('record',''),
             'musicName' => $this->request->param('music_name'),
             'items'     => $this->request->param('items'),
         ];
@@ -91,7 +91,7 @@ class HomeContent extends BaseController
             'text'      => $this->request->param('text', false),
             'img'       => $this->request->param('img', false),
             'music'     => $this->request->param('music', false),
-            'musicName' => $this->request->param('music_name', false),
+            'musicName' => $this->request->param('musicName', false),
             'groupId'   => user_info('group_id'),
             'groupType' => user_info('type'),
             'type'      => $this->request->param('type', 1),
