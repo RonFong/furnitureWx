@@ -50,6 +50,7 @@ class Shop extends CoreShop
             Db::name('user')
                 ->where('id',$data['admin_user'])
                 ->update([
+                    'user_name' => $data['shop_name'],
                     'type' => 2,
                     'group_id' => $shop_id,
                     'phone' => $data['shop_phone'],
