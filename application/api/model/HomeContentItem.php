@@ -21,7 +21,7 @@ class HomeContentItem extends CoreHomeContentItem
 
         $groupId     = $data['groupId'];
         $groupType   = $data['groupType'];
-        $editType   = $data['editType'];
+        $editType    = $data['editType'];
         $result      = [
             'id'         => '',
             'music'      => '',
@@ -29,7 +29,7 @@ class HomeContentItem extends CoreHomeContentItem
             'music_name' => '',
             'items'      => [],
         ];
-        $cacheData = $result;
+        $cacheData   = $result;
         $contentData = Db::query("SELECT id,music,record,music_name FROM `home_content` WHERE group_id = {$groupId} AND group_type = {$groupType}");
         if (!empty($contentData)) {
             $contentId       = $contentData[0]['id'];
@@ -48,10 +48,9 @@ class HomeContentItem extends CoreHomeContentItem
             ];
         }
         // 添加或编辑时才重置缓存
-        if($editType == 1){
+        if ($editType == 1) {
             Cache::set('home_content_cache_' . $groupId . '_' . $groupType, json_encode($cacheData));
         }
-
 
         return $result;
     }
@@ -81,20 +80,20 @@ class HomeContentItem extends CoreHomeContentItem
                     if (!empty($cacheData['items'])) {
                         foreach ($cacheData['items'] AS $key => &$value) {
                             if ($key == $data['itemKey']) {
-                                if($data['text'] !== false){
+                                if ($data['text'] !== false) {
                                     $value['text'] = $data['text'];
                                 }
-                                if($data['img'] !== false){
+                                if ($data['img'] !== false) {
                                     $value['img'] = $data['img'];
                                 }
                                 break;
                             }
                         }
                     }
-                    if($data['music'] !== false){
+                    if ($data['music'] !== false) {
                         $cacheData['music'] = $data['music'];
                     }
-                    if($data['musicName'] !== false){
+                    if ($data['musicName'] !== false) {
                         $cacheData['music_name'] = $data['musicName'];
                     }
                     break;
@@ -148,7 +147,15 @@ class HomeContentItem extends CoreHomeContentItem
             Db::execute("UPDATE `home_content` SET music='{$music}',record='{$record}',music_name='{$musicName}' WHERE group_id = {$groupId} AND group_type = {$groupType}");
             $contentId = $contentData[0]['id'];
         } else {
-            $contentId = Db::execute("INSERT INTO `home_content`(group_id,group_type,music,record,music_name) values('{$groupId}','{$groupType}','{$music}','{$record}','{$musicName}')");
+            $homeContentModel             = new HomeContent();
+            $homeContentModel->group_id   = $groupId;
+            $homeContentModel->group_type = $groupType;
+            $homeContentModel->music      = $music;
+            $homeContentModel->record     = $record;
+            $homeContentModel->music_name = $musicName;
+            $homeContentModel->save();
+            $contentId = $homeContentModel->id;
+            //            $contentId = Db::execute("INSERT INTO `home_content`(group_id,group_type,music,record,music_name) values('{$groupId}','{$groupType}','{$music}','{$record}','{$musicName}')");
         }
         if (!empty($items)) {
             foreach ($items AS $key => &$value) {
@@ -156,7 +163,14 @@ class HomeContentItem extends CoreHomeContentItem
                 $text   = $value['text'];
                 $img    = $value['img'];
                 if (empty($itemId)) {
-                    $itemId      = Db::execute("INSERT INTO `home_content_item`(content_id,text,sort,img) values('{$contentId}','{$text}',0,'{$img}')");
+                    $homeContentItemModel             = new HomeContentItem();
+                    $homeContentItemModel->content_id = $contentId;
+                    $homeContentItemModel->text       = $text;
+                    $homeContentItemModel->sort       = 0;
+                    $homeContentItemModel->img        = $img;
+                    $homeContentItemModel->save();
+                    $itemId = $homeContentItemModel->id;
+                    //                    $itemModel   = Db::execute("INSERT INTO `home_content_item`(content_id,text,sort,img) values('{$contentId}','{$text}',0,'{$img}')");
                     $value['id'] = $itemId;
                 } else {
                     Db::execute("UPDATE `home_content_item` SET text='{$text}',img='{$img}' WHERE id = {$itemId}");

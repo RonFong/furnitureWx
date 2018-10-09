@@ -356,6 +356,7 @@ class Article extends CoreArticle
         $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
         $ids                = array_merge($this->ids, $users);
         $where['a.user_id'] = ['in', $ids];
+        $where = [];
         if (!empty($classifyId)) {
             $where['d.id'] = $classifyId;
         }
@@ -368,7 +369,6 @@ class Article extends CoreArticle
         if (!empty($isSelf)) {
             $where['b.id'] = $selfUserId;
         }
-        $where = [];
         return $this->executeSelect($where, $order);
     }
 
