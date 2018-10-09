@@ -35,7 +35,13 @@ class HomeContent extends Model
      */
     public function getGroupNameAttr($value, $data)
     {
-        $value = isset($data['group_id']) ? $data['group_id'] : $value;
-        return '待明确';
+        if ($data['group_type'] == 1) {
+            return Db::table('factory')->where('id', $data['group_id'])->value('factory_name');
+        }
+
+        if ($data['group_type'] == 2) {
+            return Db::table('shop')->where('id', $data['group_id'])->value('shop_name');
+        }
+        return '查询错误';
     }
 }
