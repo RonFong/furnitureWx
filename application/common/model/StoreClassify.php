@@ -14,5 +14,23 @@ namespace app\common\model;
 
 class StoreClassify extends Model
 {
+    /**
+     * @param $value
+     * @param $data
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
+    public function getParentNameAttr($value, $data)
+    {
+        if ($data['parent_id'] != 0) {
+            $classify = self::get($data['parent_id']);
+            return $classify->getData('name');
+        }
+        return '';
+    }
 
+    public function getStateTextAttr($value, $data)
+    {
+        return $data['state'] != 0 ? '启用' : '禁用';
+    }
 }
