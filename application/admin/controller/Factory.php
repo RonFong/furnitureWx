@@ -71,7 +71,8 @@ class Factory extends Base
         if (!empty($param['id'])) {
             $data = $this->currentModel
                 ->alias('a')
-                ->join('factory_margin b', 'a.id = b.factory_id')
+                ->join('factory_margin b', 'a.id = b.factory_id', 'LEFT')
+                ->field('a.*,b.margin_fee')
                 ->where('a.id', $param['id'])
                 ->find();
             if (empty($data)) {
@@ -92,6 +93,10 @@ class Factory extends Base
         /*获取下拉列表：省份*/
         $provinceList = $this->getRegion(0);
         $this->assign('provinceList', $provinceList);
+
+        /*获取下拉列表：管理员*/
+        $user_list = Db::name('user')->field('id,user_name')->select();
+        $this->assign('user_list', $user_list);
 
         return $this->fetch();
     }

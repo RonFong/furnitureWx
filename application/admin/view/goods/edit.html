@@ -19,12 +19,23 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
+                    <label class="layui-form-label">所属厂家：</label>
+                    <div class="layui-input-block">
+                        <select name="factory_id">
+                            <option value="">请选择</option>
+                            {volist name="$factoryList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.factory_id|default=''"}selected{/eq}>{$vo.factory_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">商品分类：</label>
                     <div class="layui-input-block">
                         <select name="classify">
                             <option value="">请选择</option>
-                            {volist name="$classifyList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.classify|default=''"}selected{/eq}>{$vo.classify_name}</option>
+                            {volist name="$storeClassifyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.id|default=''"}selected{/eq}>{$vo.name}</option>
                             {/volist}
                         </select>
                     </div>
@@ -35,17 +46,7 @@
                         <input type="text" name="goods_name" value="{$data.goods_name|default=''}" placeholder="请输入" class="layui-input"  lay-verify="required">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">所属厂家：</label>
-                    <div class="layui-input-block">
-                        <select name="factory_id">
-                            <option value="">请选择</option>
-                            {volist name="$classifyList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.factory_id|default=''"}selected{/eq}>{$vo.classify_name}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">厂家分类：</label>
                     <div class="layui-input-block">
@@ -58,25 +59,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">所属一级分类：</label>
-                    <div class="layui-input-block">
-                        <select name="base_classify">
-                            <option value="">请选择</option>
-                            {volist name="$classifyList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.base_classify|default=''"}selected{/eq}>{$vo.classify_name}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label class="layui-form-label">品牌：</label>
                     <div class="layui-input-block">
-                        <select name="brand">
-                            <option value="">请选择</option>
-                            {volist name="$userList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.brand|default=''"}selected{/eq}>{$vo.user_name}</option>
-                            {/volist}
-                        </select>
+                        <input type="text" name="brand" value="{$data.brand|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -94,7 +79,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">材质：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="texture_id" value="{$data.texture_id|default=''}" placeholder="请输入" class="layui-input">
+                        <select name="texture_id">
+                            <option value="">请选择</option>
+                            {notempty name="$propertyList"}
+                            {volist name="$propertyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.texture_id|default=''"}selected{/eq}>{$vo.property_name}</option>
+                            {/volist}
+                            {/notempty}
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -106,7 +98,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">风格：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="style_id" value="{$data.style_id|default=''}" placeholder="请输入" class="layui-input">
+                        <select name="style_id">
+                            <option value="">请选择</option>
+                            {notempty name="$propertyList"}
+                            {volist name="$propertyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.style_id|default=''"}selected{/eq}>{$vo.property_name}</option>
+                            {/volist}
+                            {/notempty}
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -118,25 +117,18 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">功能：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="function_id" value="{$data.function_id|default=''}" placeholder="请输入" class="layui-input">
+                        <select name="function_id">
+                            <option value="">请选择</option>
+                            {volist name="$propertyList" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.function_id|default=''"}selected{/eq}>{$vo.property_name}</option>
+                            {/volist}
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">功能描述：</label>
                     <div class="layui-input-block">
                         <input type="text" name="function_describe" value="{$data.function_describe|default=''}" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">规格：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="specification" value="{$data.specification|default=''}" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">规格：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="specification" value="{$data.specification|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -165,6 +157,13 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="state" value="0" title="禁用" {eq name="$data.state|default=''" value="0"}checked{/eq}>
+                        <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default=''" value="1"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">审核状态：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="audit_state" value="0" title="待审核" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
                         <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default=''" value="1"}checked{/eq}>
@@ -201,6 +200,39 @@
 <script type="text/javascript">
     layui.use(['form'], function () {
         var form = layui.form;
+
+        //监听省市区三级联动
+        form.on('select(region)', function (data) {
+            var id = data.value;
+            var position_now = $(data.elem).attr('id');
+            var position_next = '';
+            var position_change = '';
+
+            if (position_now == 'province') {
+                position_next = '#city';
+                position_change = '#district';
+            } else if (position_now == 'city'){
+                position_next = '#district';
+                position_change = '';
+            }
+
+            ajaxRegion(id, position_next, position_change);
+        });
+
+        /**
+         * 省市区变更
+         */
+        function ajaxRegion(id, position, position_change) {
+            $.post('{:url("getRegion")}', {pid:id}, function (result) {
+                var _html = "<option value=''>请选择</option>";
+                $.each(result, function (key, val) {
+                    _html += "<option value='"+val.id+"'>"+val.name+"</option>";
+                });
+                $(position).html(_html);
+                $(position_change).html("<option value=''>请选择</option>");
+                form.render('select');
+            });
+        }
 
         //监听提交
         form.on('submit(formSubmit)', function(data){
