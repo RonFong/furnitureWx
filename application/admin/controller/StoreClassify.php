@@ -42,7 +42,7 @@ class StoreClassify extends Base
             $ids = $this->currentModel->where('name', 'like', "%$parentName%")->column('id');
             $map['parent_id'] = ['in', $ids];
         }
-        return $this->currentModel->where($map)->order('parent_id')->layTable(['parent_name', 'state_text']);
+        return $this->currentModel->where($map)->order('parent_id, sort')->layTable(['parent_name', 'state_text']);
     }
 
     /**
