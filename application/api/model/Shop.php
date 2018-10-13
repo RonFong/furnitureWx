@@ -50,8 +50,10 @@ class Shop extends CoreShop
             Db::name('user')
                 ->where('id',$data['admin_user'])
                 ->update([
+                    'user_name' => $data['shop_name'],
                     'type' => 2,
                     'group_id' => $shop_id,
+                    'phone' => $data['shop_phone'],
                     'wx_account' => $data['shop_wx']
                 ]);
         }
@@ -94,7 +96,7 @@ class Shop extends CoreShop
 
             }elseif ($data['store_type'] == 2){
                 $shop_data = $this
-                    ->field(['id','shop_name','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone'])
+                    ->field(['id','shop_name','shop_contact','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone','license','user_name','phone','wx_account','license_code'])
                     ->with(['pop'=>function($query){
                         $query->where('month',date('Ym'))
                         ->where('object_type',2);

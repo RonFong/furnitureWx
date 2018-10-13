@@ -199,8 +199,24 @@ class ArticleContent extends CoreArticleContent
         $items      = json_decode($data['items'], true);
         $time       = time();
         if (empty($articleId)) {
-            Db::execute("INSERT INTO `article`(user_id,title,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$title}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')");
-            $articleId = Db::name('article')->getLastInsID();
+            $articleModel              = new Article();
+            $articleModel->user_id     = $userId;
+            $articleModel->title       = $title;
+            $articleModel->classify_id = $classifyId;
+            $articleModel->music       = $music;
+            $articleModel->music_name  = $musicName;
+            $articleModel->pageview    = 0;
+            $articleModel->share       = 0;
+            $articleModel->state       = 1;
+            $articleModel->hide_remark = '';
+            $articleModel->create_time = $time;
+            $articleModel->create_by   = $userId;
+            $articleModel->update_time = $time;
+            $articleModel->update_by   = $userId;
+            $articleModel->save();
+            $articleId = $articleModel->id;
+            //            Db::execute("INSERT INTO `article`(user_id,title,classify_id,music,music_name,pageview,share,state,hide_remark,create_time,create_by,update_time,update_by) values('{$userId}','{$title}','{$classifyId}','{$music}','{$musicName}',0,0,1,'','{$time}','{$userId}','{$time}','{$userId}')");
+            //            $articleId = Db::name('article')->getLastInsID();
         } else {
             $res = Db::execute("UPDATE `article` SET title='{$title}',classify_id='{$classifyId}',music='{$music}',music_name='{$musicName}',update_time='{$time}',update_by='{$userId}' WHERE id = {$articleId} ");
             if (!$res) {
@@ -213,7 +229,14 @@ class ArticleContent extends CoreArticleContent
                 $text   = $value['text'];
                 $img    = $value['img'];
                 if (empty($itemId)) {
-                    $itemId      = Db::execute("INSERT INTO `article_content`(article_id,text,sort,img) values('{$articleId}','{$text}',0,'{$img}')");
+                    $articleContentModel             = new ArticleContent();
+                    $articleContentModel->article_id = $articleId;
+                    $articleContentModel->text       = $text;
+                    $articleContentModel->sort       = 0;
+                    $articleContentModel->img        = $img;
+                    $articleContentModel->save();
+                    $itemId   = $articleContentModel->id;
+//                    $itemId      = Db::execute("INSERT INTO `article_content`(article_id,text,sort,img) values('{$articleId}','{$text}',0,'{$img}')");
                     $value['id'] = $itemId;
                 } else {
                     Db::execute("UPDATE `article_content` SET text='{$text}',img='{$img}' WHERE id = {$itemId}");

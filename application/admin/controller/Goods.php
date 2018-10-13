@@ -81,13 +81,22 @@ class Goods extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
         }
-        //分类名称列表
+        //厂家分类名称列表
         $classifyList = Db::name('group_classify')->select();
         $this->assign('classifyList', $classifyList);
 
+        //商品所属顶级分类名称列表
+        $storeClassifyList = Db::name('store_classify')->field('id,name')->select();
+        $this->assign('storeClassifyList', $storeClassifyList);
+
+        //商品所属顶级分类名称列表
+        $propertyList = Db::name('store_classify_property')->field('id,property_name')->select();
+        $this->assign('propertyList', $propertyList);
+
         //厂家列表
-        $userList = Db::name('user')->select();
-        $this->assign('userList', $userList);
+        $factoryList = Db::name('factory')->field('id,factory_name')->select();
+        $this->assign('factoryList', $factoryList);
+
         return $this->fetch();
     }
 
@@ -98,6 +107,9 @@ class Goods extends Base
         if (empty($param)) {
             $this->error('没有需要保存的数据！');
         }
+
+
+
 
         //验证数据
         $result = $this->validate($param, 'Goods');

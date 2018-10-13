@@ -7,11 +7,11 @@
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>门头照：</label>
-                    <img src="{$data.factory_img}" height="200" alt="门头照">
+                    <img src="{$data.factory_img|default=''}" height="200" alt="门头照">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
-                    <img src="{$data.wx_code}" height="100" alt="微信二维码">
+                    <img src="{$data.wx_code|default=''}" height="100" alt="微信二维码">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>厂家名：</label>
@@ -31,6 +31,18 @@
                         <input type="text" name="factory_phone" value="{$data.factory_phone|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">管理员：</label>
+                    <div class="layui-input-block">
+                        <select name="admin_user">
+                            <option value="">请选择</option>
+                            {volist name="$user_list" id="vo"}
+                            <option value="{$vo.id}" {eq name="vo.id" value="$data.admin_user|default=''"}selected{/eq}>{$vo.user_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">经营类别：</label>
                     <div class="layui-input-block">
@@ -131,7 +143,7 @@
                 </div>
             </div>
             <label class="layui-form-label">营业执照：</label>
-            <a href="{$data.license}" target="_blank"><img src="{$data.license}" height="300" alt="营业执照"></a>
+            <a href="{$data.license|default=''}" target="_blank"><img src="{$data.license|default=''}" height="300" alt="营业执照"></a>
             <div class="tpl-form-action">
                 <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
             </div>
