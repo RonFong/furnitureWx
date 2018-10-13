@@ -96,7 +96,7 @@ class Shop extends CoreShop
 
             }elseif ($data['store_type'] == 2){
                 $shop_data = $this
-                    ->field(['id','shop_name','shop_contact','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone','license','user_name','phone','wx_account','license_code'])
+                    ->field(['id','shop_name','shop_contact','shop_img','province','city','district','town','address','shop_wx','wx_code','shop_phone','license','user_name','phone','wx_account','license_code','create_time'])
                     ->with(['pop'=>function($query){
                         $query->where('month',date('Ym'))
                         ->where('object_type',2);
@@ -107,6 +107,7 @@ class Shop extends CoreShop
                 if(!empty($shop_data['pop'])){
                     $pop = array_sum(array_column($shop_data['pop'],'value'));
                 }
+                $shop_data['create_time'] = date('Y-m-d H:i:s',$shop_data['create_time']);
                 $result['shop'] = $shop_data;
                 $result['shop']['pop_value'] = $pop;
             }
