@@ -70,6 +70,8 @@ class Token
             if (!$openid) {
                 exception('获取用户openid失败');
             }
+            return json_encode($userInfo);
+            die;
             $data = TokenServer::getToken($openid, $userInfo);
             $token = $data['token'];
             unset($data['token']);
