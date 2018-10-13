@@ -56,8 +56,8 @@ class Token
         if (!$userInfo) {
 
             $userName = $wxUserInfo['nickName'] ?? 'wx_' . substr(str_shuffle(self::$openid), 0, 6);
-            $city = $wxUserInfo['city'] ? Db::table('district')->where('pinyin', strtolower($wxUserInfo['city']))->value('name') : '';
-            $province = $wxUserInfo['province'] ? Db::table('district')->where('pinyin', strtolower($wxUserInfo['province']))->value('name') : '';
+            $city = $wxUserInfo['city'] ? (Db::table('district')->where('pinyin', strtolower($wxUserInfo['city']))->value('name') ?? '') : '';
+            $province = $wxUserInfo['province'] ? (Db::table('district')->where('pinyin', strtolower($wxUserInfo['province']))->value('name') ?? '') : '';
 
             $saveData = [
                 'wx_openid'     => self::$openid,
@@ -72,6 +72,8 @@ class Token
                 'type'          => 3,
                 'state'         => 1
             ];
+            print_r($saveData);
+            die;
             $id = Db::table('user')->insertGetId($saveData);
             if (!$id) {
                 exception('注册失败');
