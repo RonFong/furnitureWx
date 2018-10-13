@@ -186,7 +186,7 @@
                                     <input type="text" name="color_list[{$key}][color]" value="{$vo.color}" class="layui-input"/>
                                 </td>
                                 <td>
-                                    <div class="color-img">
+                                    <div class="img-num color-img-{$key}">
                                         <input type="hidden" name="color_list[{$key}][img]" value="{$vo.img}">
                                         <img src="{$vo.img}">
                                     </div>
@@ -333,7 +333,9 @@
     });
 
     //上传图片
-    uploadImgAjax('.color-img', '{:url("uploadImg")}', 4096);//头像
+    $('.img-num').each(function (key) {
+        uploadImgAjax('.color-img-'+key, '{:url("uploadImg")}', 4096);//头像
+    });
 
     function addColorList(element) {
         var row = $(element).closest('table').find('tbody').find('tr').length+1;
@@ -344,7 +346,7 @@
             '<input type="text" name="color_list['+row+'][color]" class="layui-input"/>'+
             '</td>';
         _html += '<td>'+
-            '<div class="color-img">'+
+            '<div class="color-img-'+row+'">'+
             '<input type="hidden" name="color_list['+row+'][img]">'+
             '<img src="__STATIC__/img/user_icon/holder.jpg">'+
             '</div>'+
@@ -354,6 +356,7 @@
             '</td>';
         _html +=    '</tr>';
         $(element).closest('table').find('tbody').append(_html);
+        uploadImgAjax('.color-img-'+row, '{:url("uploadImg")}', 4096);//头像
     }
 
     function delColorRow(element, id) {

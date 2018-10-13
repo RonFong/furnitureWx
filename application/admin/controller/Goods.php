@@ -27,9 +27,14 @@ class Goods extends Base
      */
     public function index()
     {
+        $param = $this->request->param();
+
         //分类名称列表
         $classifyList = Db::name('group_classify')->select();
         $this->assign('classifyList', $classifyList);
+
+        //页面类型：厂家/商城
+        $this->assign('web_type', isset($param['web_type']) ? $param['web_type'] : '');
         return $this->fetch();
     }
 
@@ -58,6 +63,9 @@ class Goods extends Base
         if (isset($param['state']) && $param['state'] !== '') {
             $map['state'] = $param['state'];//状态
         }
+        if (!empty($param['web_type'])) {
+            $map['audit_state'] = $param['web_type']=="factory" ? ['<>', 3] : 3;//产品显示规则：厂家（未通过审核），商城（通过审核）
+        }
         if (empty($map)) {
             $map[] = ['exp', '1=1'];
         }
@@ -82,11 +90,11 @@ class Goods extends Base
             $this->assign('data', $data);
 
             //商品颜色
-            $data_color = $this->currentModel->goodsColor()->where('goods_id',$param['id'])->select();
+            $data_color = $this->currentModel->goodsColor()->where('goods_id',$param['id'])->order('id asc')->select();
             $this->assign('data_color', $data_color);
 
             //商品优惠券
-            $data_coupon = $this->currentModel->goodsCoupon()->where('goods_id',$param['id'])->select();
+            $data_coupon = $this->currentModel->goodsCoupon()->where('goods_id',$param['id'])->order('id asc')->select();
             $this->assign('data_coupon', $data_coupon);
         }
         //厂家分类名称列表
@@ -104,6 +112,9 @@ class Goods extends Base
         //厂家列表
         $factoryList = Db::name('factory')->field('id,factory_name')->select();
         $this->assign('factoryList', $factoryList);
+
+        //页面类型：厂家/商城
+        $this->assign('web_type', isset($param['web_type']) ? $param['web_type'] : '');
 
         return $this->fetch();
     }

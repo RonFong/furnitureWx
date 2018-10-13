@@ -24,8 +24,8 @@ class Goods extends CoreGoods
      */
     public function getAuditStateTextAttr($value, $data)
     {
-        $value = isset($data['state']) ? $data['state'] : $value;
-        $item = ['0'=>'待审核', '1'=>'审核通过', '2'=>'审核不通过'];
+        $value = isset($data['audit_state']) ? $data['audit_state'] : $value;
+        $item = ['0'=>'未提交审核', '1'=>'未审核', '2'=>'审核不通过', '3'=>'通过审核'];
         return isset($item[$value]) ? $item[$value] : "";
     }
 

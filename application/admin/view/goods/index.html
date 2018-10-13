@@ -9,6 +9,7 @@
 {block name="content"}
 <div class="layui-row">
     <form id="searchForm" class="layui-form layui-form-pane tpl-form-search" onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
+        <input type="hidden" name="web_type" id="web_type" value="{$web_type|default=''}">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">标题</label>
@@ -63,6 +64,7 @@
 <script type="text/javascript">
     layui.use(['table'], function () {
         var table = layui.table;
+        var web_type = $("#web_type").val();
 
         //表格数据渲染
         tableIns = table.render({
@@ -81,7 +83,7 @@
                 ,{field:'goods_no', title:'商品编号'}
                 ,{field:'brand', title:'品牌'}
                 ,{field:'sort', title:'排序'}
-                ,{field:'audit_state_text', title:'状态'}
+                ,{field:'audit_state_text', title:'审核状态'}
                 ,{title:'操作', toolbar: '#operating', align:'center'}
             ]]
             ,where: getFormJson('#searchForm')
@@ -102,7 +104,7 @@
                     }, 'json');
                 });
             } else if (obj.event === 'edit') {
-                window.open('edit?id='+data.id);
+                window.open('edit?web_type='+web_type+'&id='+data.id);
             }
         });
     });
