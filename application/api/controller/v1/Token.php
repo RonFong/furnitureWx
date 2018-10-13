@@ -61,18 +61,15 @@ class Token
     public function getToken()
     {
         try {
-            if (!Request::instance()->has('code','get') || !Request::instance()->has('userInfo','get')) {
-                exception('参数错误');
+            if (!Request::instance()->has('code','get')) {
+                exception('code 参数不能为空');
             }
             $code = Request::instance()->param('code');
-            $userInfo = Request::instance()->param('userInfo');
             $openid = (new Wechat())->getOpenid(['code' => $code]);
             if (!$openid) {
                 exception('获取用户openid失败');
             }
-            return json_encode($userInfo);
-            die;
-            $data = TokenServer::getToken($openid, $userInfo);
+            $data = TokenServer::getToken($openid);
             $token = $data['token'];
             unset($data['token']);
             $result = [
