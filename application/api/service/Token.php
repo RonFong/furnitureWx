@@ -40,6 +40,7 @@ class Token
             exception('缺少参数：openid');
         }
         self::$openid = $openid;
+        return 111;
         $userInfo = self::getUserInfo($userInfo);
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
@@ -72,8 +73,6 @@ class Token
                 'type'          => 3,
                 'state'         => 1
             ];
-            print_r($saveData);
-            die;
             $id = Db::table('user')->insertGetId($saveData);
             if (!$id) {
                 exception('注册失败');
