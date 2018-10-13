@@ -65,4 +65,21 @@ class Goods extends CoreGoods
         return Db::name('factory')->where('id', $value)->value('category_id');
     }
 
+    /**
+     * 关联子表：颜色图片
+     * @return \think\model\relation\HasMany
+     */
+    public function goodsColor()
+    {
+        return $this->hasMany('GoodsColor', 'goods_id');
+    }
+
+    /**
+     * 关联子表：优惠券
+     * @return \think\model\relation\HasMany
+     */
+    public function goodsCoupon()
+    {
+        return $this->hasMany('GoodsCoupon', 'goods_id');
+    }
 }

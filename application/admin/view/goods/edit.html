@@ -10,6 +10,15 @@
         display: none;
     }
     {/notempty}
+
+    .layui-input-block .layui-table input {
+        width: 100%;
+        height: 25px;
+    }
+    .layui-input-block .layui-table img {
+        height: 30px;
+        cursor: pointer;
+    }
 </style>
 {/block}
 {block name="content"}
@@ -156,6 +165,77 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">商品颜色：</label>
+                    <div class="layui-input-block">
+                        <table class="layui-table" lay-size="sm">
+                            <thead>
+                            <tr>
+                                <th width="40%">颜色描述</th>
+                                <th width="40%">图片</th>
+                                <th width="20%" style="text-align: center;">
+                                    <button type="button" class="layui-btn layui-btn-xs" onclick="addColorList(this);">添加</button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {notempty name="data_color"}
+                            {volist name="data_color" id="vo"}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="color_list[{$key}][id]" value="{$vo.id}"/>
+                                    <input type="text" name="color_list[{$key}][color]" value="{$vo.color}" class="layui-input"/>
+                                </td>
+                                <td>
+                                    <div class="color-img">
+                                        <input type="hidden" name="color_list[{$key}][img]" value="{$vo.img}">
+                                        <img src="{$vo.img}">
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-danger" onclick="delColorRow(this,{$vo.id});">删除</button>
+                                </td>
+                            </tr>
+                            {/volist}
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品优惠券：</label>
+                    <div class="layui-input-block">
+                        <table class="layui-table" lay-size="sm">
+                            <thead>
+                            <tr>
+                                <th width="40%">达到金额</th>
+                                <th width="40%">优惠金额</th>
+                                <th width="20%" style="text-align: center;">
+                                    <button type="button" class="layui-btn layui-btn-xs" onclick="addCouponList(this);">添加</button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {notempty name="data_coupon"}
+                            {volist name="data_coupon" id="vo"}
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="coupon_list[1][id]" value="{$vo.id}"/>
+                                    <input type="text" name="coupon_list[1][param_x]" value="{$vo.param_x}" class="layui-input"/>
+                                </td>
+                                <td>
+                                    <input type="text" name="coupon_list[1][param_y]" value="{$vo.param_y}" class="layui-input"/>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-danger" onclick="delCouponRow(this,{$vo.id});">删除</button>
+                                </td>
+                            </tr>
+                            {/volist}
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">状态：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="state" value="0" title="禁用" {eq name="$data.state|default=''" value="0"}checked{/eq}>
@@ -251,6 +331,86 @@
             return false;
         });
     });
+
+    //上传图片
+    uploadImgAjax('.color-img', '{:url("uploadImg")}', 4096);//头像
+
+    function addColorList(element) {
+        var row = $(element).closest('table').find('tbody').find('tr').length+1;
+
+        var _html = '<tr>';
+        _html += '<td>'+
+            '<input type="hidden" name="color_list['+row+'][id]" />'+
+            '<input type="text" name="color_list['+row+'][color]" class="layui-input"/>'+
+            '</td>';
+        _html += '<td>'+
+            '<div class="color-img">'+
+            '<input type="hidden" name="color_list['+row+'][img]">'+
+            '<img src="__STATIC__/img/user_icon/holder.jpg">'+
+            '</div>'+
+            '</td>';
+        _html += '<td style="text-align: center;">'+
+            '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger" onclick="delColorRow(this,0);">删除</button>'+
+            '</td>';
+        _html +=    '</tr>';
+        $(element).closest('table').find('tbody').append(_html);
+    }
+
+    function delColorRow(element, id) {
+        layer.confirm('确定继续吗？', function(index){
+            if (id == 0) {
+                layer.close(index);
+                $(element).closest('tr').remove();
+                return true;
+            }
+
+            $.post('{:url("deleteColor")}',{id:id}, function (result) {
+                layer.close(index);
+                if (result.code) {
+                    $(element).closest('tr').remove();
+                } else {
+                    layer.alert(result.msg, {icon:2});
+                }
+            }, 'json');
+        });
+    }
+
+    function addCouponList(element) {
+        var row = $(element).closest('table').find('tbody').find('tr').length+1;
+
+        var _html = '<tr>';
+        _html += '<td>'+
+            '<input type="hidden" name="coupon_list['+row+'][id]" />'+
+            '<input type="text" name="coupon_list['+row+'][param_x]" class="layui-input"/>'+
+            '</td>';
+        _html += '<td>'+
+            '<input type="text" name="coupon_list['+row+'][param_y]" class="layui-input"/>'+
+            '</td>';
+        _html += '<td style="text-align: center;">'+
+            '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger" onclick="delCouponRow(this,0);">删除</button>'+
+            '</td>';
+        _html +=    '</tr>';
+        $(element).closest('table').find('tbody').append(_html);
+    }
+
+    function delCouponRow(element, id) {
+        layer.confirm('确定继续吗？', function(index){
+            if (id == 0) {
+                layer.close(index);
+                $(element).closest('tr').remove();
+                return true;
+            }
+
+            $.post('{:url("deleteCoupon")}',{id:id}, function (result) {
+                layer.close(index);
+                if (result.code) {
+                    $(element).closest('tr').remove();
+                } else {
+                    layer.alert(result.msg, {icon:2});
+                }
+            }, 'json');
+        });
+    }
 
     //实例化编辑器*
     UE.getEditor('goods_detail');

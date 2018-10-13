@@ -80,6 +80,14 @@ class Goods extends Base
             }
             $data = $data->toArray();
             $this->assign('data', $data);
+
+            //商品颜色
+            $data_color = $this->currentModel->goodsColor()->where('goods_id',$param['id'])->select();
+            $this->assign('data_color', $data_color);
+
+            //商品优惠券
+            $data_coupon = $this->currentModel->goodsCoupon()->where('goods_id',$param['id'])->select();
+            $this->assign('data_coupon', $data_coupon);
         }
         //厂家分类名称列表
         $classifyList = Db::name('group_classify')->select();
@@ -117,6 +125,12 @@ class Goods extends Base
         try {
             //保存数据
             $this->currentModel->save($param);
+            if (!empty($param['color_list'])) {
+                $this->currentModel->goodsColor()->saveAll($param['color_list']);
+            }
+            if (!empty($param['coupon_list'])) {
+                $this->currentModel->goodsCoupon()->saveAll($param['coupon_list']);
+            }
         } catch (\Exception $e) {
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
             $this->error($msg);
@@ -150,6 +164,16 @@ class Goods extends Base
         return Db::name('store_classify_property')->where($where)->field('id,property_name,type')->select();
     }
 
+    public function deleteColor($id)
+    {
+        Db::name('goods_color')->where('id', $id)->delete();
+        $this->success('删除成功');
+    }
 
+    public function deleteCoupon($id)
+    {
+        Db::name('goods_coupon')->where('id', $id)->delete();
+        $this->success('删除成功');
+    }
 }
 
