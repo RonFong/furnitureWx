@@ -14,6 +14,8 @@ use think\Db;
 
 class Goods extends CoreGoods
 {
+    protected $auto = ['base_classify'];
+
     /**
      * 获取状态名称
      * @param string $value
@@ -50,4 +52,17 @@ class Goods extends CoreGoods
         $value = isset($data['factory_id']) ? $data['factory_id'] : $value;
         return Db::name('factory')->where('id', $value)->value('factory_name');
     }
+
+    /**
+     * 设置顶级分类
+     * @param string $value
+     * @param string $data
+     * @return mixed
+     */
+    public function setBaseClassifyAttr($value, $data)
+    {
+        $value = isset($data['factory_id']) ? $data['factory_id'] : $value;
+        return Db::name('factory')->where('id', $value)->value('category_id');
+    }
+
 }

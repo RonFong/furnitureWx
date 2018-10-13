@@ -85,8 +85,8 @@ class Goods extends Base
         $classifyList = Db::name('group_classify')->select();
         $this->assign('classifyList', $classifyList);
 
-        //商品所属顶级分类名称列表
-        $storeClassifyList = Db::name('store_classify')->field('id,name')->select();
+        //商品分类名称列表
+        $storeClassifyList = Db::name('store_classify')->where('parent_id', '<>', 0)->field('id,name')->select();
         $this->assign('storeClassifyList', $storeClassifyList);
 
         //商品所属顶级分类名称列表
@@ -108,9 +108,6 @@ class Goods extends Base
             $this->error('没有需要保存的数据！');
         }
 
-
-
-
         //验证数据
         $result = $this->validate($param, 'Goods');
         if ($result !== true) {
@@ -127,6 +124,31 @@ class Goods extends Base
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
 
+    /**
+     * 获取商品分类列表
+     * @param $factory_id
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    public function getStoreClassify($factory_id)
+    {
+        $category_id = Db::name('factory')->where('id', $factory_id)->value('category_id');
+        return Db::name('store_classify')->where('parent_id', $category_id)->where('state', 1)->field('id,name')->select();
+    }
+
+    /**
+     * 获取商品分类下的属性列表
+     * @param $classify_id
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    public function getStoreClassifyProperty($classify_id)
+    {
+        $map = [];
+        $ids = get_parent_ids($classify_id, 'store_classify', $map);
+        $where = [];
+        $where['id'] = ['in', array_push($ids,$classify_id)];
+        $where['state'] = 1;
+        return Db::name('store_classify_property')->where($where)->field('id,property_name,type')->select();
+    }
 
 
 }

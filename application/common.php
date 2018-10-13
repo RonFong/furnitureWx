@@ -411,3 +411,32 @@ if (!function_exists('imgTempFileMove')) {
         return $img;
     }
 }
+
+
+if (!function_exists('get_parent_ids')) {
+    /**
+     * 递归获取上级资料id集合
+     * @param $id
+     * @param $table_name
+     * @param bool $merge
+     * @param array $res
+     * @param array $map
+     * @return array
+     */
+    function get_parent_ids($id, $table_name, &$map = [], $merge = true, &$res=[])
+    {
+        $pk = Db::name($table_name)->getPk();//获取当前表主键
+        $map[$pk] = $id;
+        if (has_field($table_name, 'state')) {
+            $map['state'] = 1;//启用状态
+        }
+        $pid = Db::name($table_name)->where($map)->value('parent_id');
+        if (!empty($pid)){
+            $res[] = $pid;
+            get_parent_ids($pid, $table_name, $map, false, $res);
+        }
+        krsort($res);//进行升序排序
+        if ($merge) array_push($res, $id);
+        return $res;
+    }
+}
