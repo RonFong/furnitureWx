@@ -31,33 +31,42 @@ class Token
     /**
      * 获取 token 和用户信息
      * @param $openid
-     * @return Token|null
+     * @param $userInfo
+     * @return Token|array|null
      */
-    public static function getToken($openid)
+    public static function getToken($openid, $userInfo)
     {
         if (!$openid) {
             exception('缺少参数：openid');
         }
         self::$openid = $openid;
-        $userInfo = self::getUserInfo();
+        $userInfo = self::getUserInfo($userInfo);
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
 
     /**
      * 此微信用户未注册，则注册，返回用户信息
+     * @param $userInfo array 用户的微信信息
      * @return array|null|static
      */
-    private static function getUserInfo()
+    private static function getUserInfo($userInfo)
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
         if (!$userInfo) {
+
+            $userName = $userInfo['nickName'] ?? 'wx_' . substr(str_shuffle(self::$openid), 0, 6);
+            $city = $userInfo['city'] ? Db::table('district')->where('pinyin', strtolower($userInfo['city']))->value('name') : '';
+            $province = $userInfo['province'] ? Db::table('district')->where('pinyin', strtolower($userInfo['province']))->value('name') : '';
+
             $saveData = [
-                'wx_openid' => self::$openid,
-                'avatar'    => config('api.default_avatar'),
-                'user_name' => 'wx_' . substr(str_shuffle(self::$openid), 0, 6),
+                'wx_openid'     => self::$openid,
+                'avatar'        => $userInfo['avatarUrl'] ?? config('api.default_avatar'),
+                'user_name'     => $userName,
                 'group_id'      => 0,
-                'gender'        => 0,
+                'gender'        => $userInfo['gender'] ?? 0,
+                'city'          => $city,
+                'province'      => $province,
                 'phone'         => '',
                 'wx_account'    => '',
                 'type'          => 3,
