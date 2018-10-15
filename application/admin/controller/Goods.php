@@ -170,7 +170,7 @@ class Goods extends Base
         $map = [];
         $ids = get_parent_ids($classify_id, 'store_classify', $map);
         $where = [];
-        $where['id'] = ['in', array_push($ids,$classify_id)];
+        $where['id'] = ['in', $ids];
         $where['state'] = 1;
         return Db::name('store_classify_property')->where($where)->field('id,property_name,type')->select();
     }
