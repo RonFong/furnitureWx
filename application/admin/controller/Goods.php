@@ -28,13 +28,14 @@ class Goods extends Base
     public function index()
     {
         $param = $this->request->param();
+        $web_type = !empty($param['web_type']) ? $param['web_type'] : '';
 
         //分类名称列表
         $classifyList = Db::name('group_classify')->select();
         $this->assign('classifyList', $classifyList);
 
         //页面类型：厂家/商城
-        $this->assign('web_type', isset($param['web_type']) ? $param['web_type'] : '');
+        $this->assign('web_type', $web_type);
         return $this->fetch();
     }
 
@@ -80,6 +81,7 @@ class Goods extends Base
     public function edit()
     {
         $param = $this->request->param();
+        $web_type = !empty($param['web_type']) ? $param['web_type'] : '';
 
         if (!empty($param['id'])) {
             $data = $this->currentModel->where('id', $param['id'])->find();
@@ -114,7 +116,7 @@ class Goods extends Base
         $this->assign('factoryList', $factoryList);
 
         //页面类型：厂家/商城
-        $this->assign('web_type', isset($param['web_type']) ? $param['web_type'] : '');
+        $this->assign('web_type', $web_type);
 
         return $this->fetch();
     }
@@ -122,6 +124,7 @@ class Goods extends Base
     public function save()
     {
         $param = $this->request->param();//获取请求数据
+        $web_type = !empty($param['web_type']) ? $param['web_type'] : '';
 
         if (empty($param)) {
             $this->error('没有需要保存的数据！');
@@ -146,7 +149,7 @@ class Goods extends Base
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
             $this->error($msg);
         }
-        $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
+        $this->success('保存成功！', 'edit?web_type='.$web_type.'&id='.$this->currentModel->id);
     }
 
     /**
