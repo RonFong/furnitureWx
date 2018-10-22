@@ -31,43 +31,33 @@ class Token
     /**
      * 获取 token 和用户信息
      * @param $openid
-     * @param $wxUserInfo
-     * @return Token|array|null
+     * @return Token|null
      */
-    public static function getToken($openid, $wxUserInfo)
+    public static function getToken($openid)
     {
         if (!$openid) {
             exception('缺少参数：openid');
         }
         self::$openid = $openid;
-        $userInfo = self::getUserInfo($wxUserInfo);
+        $userInfo = self::getUserInfo();
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
 
     /**
      * 此微信用户未注册，则注册，返回用户信息
-     * @param $wxUserInfo array 用户的微信信息
      * @return array|null|static
      */
-    private static function getUserInfo($wxUserInfo)
+    private static function getUserInfo()
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
-
         if (!$userInfo) {
-
-            $userName = $wxUserInfo['nickName'] ?? 'wx_' . substr(str_shuffle(self::$openid), 0, 6);
-            $city = $wxUserInfo['city'] ? Db::table('district')->where('pinyin', strtolower($wxUserInfo['city']))->value('name') : '';
-            $province = $wxUserInfo['province'] ? Db::table('district')->where('pinyin', strtolower($wxUserInfo['province']))->value('name') : '';
-
             $saveData = [
-                'wx_openid'     => self::$openid,
-                'avatar'        => $wxUserInfo['avatarUrl'] ?? config('api.default_avatar'),
-                'user_name'     => $userName,
+                'wx_openid' => self::$openid,
+                'avatar'    => config('api.default_avatar'),
+                'user_name' => 'wx_' . substr(str_shuffle(self::$openid), 0, 6),
                 'group_id'      => 0,
-                'gender'        => $wxUserInfo['gender'] ?? 0,
-                'city'          => $city,
-                'province'      => $province,
+                'gender'        => 0,
                 'phone'         => '',
                 'wx_account'    => '',
                 'type'          => 3,
