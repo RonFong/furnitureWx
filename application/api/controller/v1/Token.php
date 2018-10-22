@@ -62,18 +62,14 @@ class Token
     {
         try {
             if (!Request::instance()->has('code','get')) {
-                exception('参数错误');
+                exception('code 参数不能为空');
             }
-            $userInfo = [];
-            if (Request::instance()->has('userInfo','get')) {
-                $userInfo = Request::instance()->param('userInfo');
-            }
-            $openid = (new Wechat())->getOpenid(['code' => Request::instance()->param('code')]);
+            $code = Request::instance()->param('code');
+            $openid = (new Wechat())->getOpenid(['code' => $code]);
             if (!$openid) {
                 exception('获取用户openid失败');
             }
-
-            $data = TokenServer::getToken($openid, $userInfo);
+            $data = TokenServer::getToken($openid);
             $token = $data['token'];
             unset($data['token']);
             $result = [
@@ -98,7 +94,7 @@ class Token
     {
         try {
             $user = User::get(input('id'));
-            $data = TokenServer::getToken($user->wx_openid, '');
+            $data = TokenServer::getToken($user->wx_openid);
             $token = $data->token;
             unset($data->token);
             $result = [
