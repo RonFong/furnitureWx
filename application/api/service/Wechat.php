@@ -27,20 +27,18 @@ class Wechat {
 
     /**
      * 根据code获取openid和session_key
-     * @param $data
+     * @param $jsCode
      * @return mixed
      */
-    public function getOpenid($data)
+    public function getOpenid($jsCode)
     {
-
-        $jsCode = $data['code'];
         $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
         $info = json_decode(curl_get($url));
+        dump($info);
+        die;
         if (!isset($info->openid)) {
             exception('openid获取失败:' . $info->errmsg);
         }
-
-        //Cache::set('session_key:'.$info->openid,$info->session_key);
         return $info->openid;
     }
 
