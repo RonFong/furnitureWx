@@ -27,7 +27,8 @@ class Token
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
-     *      "code":"*********"
+     *      "code":"*********",
+     *      "userInfo":{}
      * }
      *
      * @apiSuccessExample {json} 成功时的返回：
@@ -93,7 +94,7 @@ class Token
     {
         try {
             $user = User::get(input('id'));
-            $data = TokenServer::getToken($user->wx_openid);
+            $data = TokenServer::getToken($user->wx_openid, []);
             $token = $data['token'];
             unset($data['token']);
             $result = [
