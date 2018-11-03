@@ -66,6 +66,8 @@ class Token
             }
             $code = Request::instance()->param('code');
             $openid = (new Wechat())->getOpenid(['code' => $code]);
+            dump($openid);
+            die;
             if (!$openid) {
                 exception('获取用户openid失败');
             }
