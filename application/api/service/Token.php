@@ -65,7 +65,8 @@ class Token
                 'phone'         => '',
                 'wx_account'    => '',
                 'type'          => 3,
-                'state'         => 1
+                'state'         => 1,
+                'create_time'   => time()
             ];
             $id = Db::table('user')->insertGetId($saveData);
             if (!$id) {
