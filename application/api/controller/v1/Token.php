@@ -60,6 +60,8 @@ class Token
      */
     public function getToken()
     {
+        echo 3232323;
+        die;
         try {
             if (!Request::instance()->has('code','get')) {
                 exception('code 参数不能为空');
