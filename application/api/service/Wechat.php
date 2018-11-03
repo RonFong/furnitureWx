@@ -34,6 +34,7 @@ class Wechat {
     {
         $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$this->appid&secret=$this->appSecret&js_code=$jsCode&grant_type=authorization_code";
         $info = json_decode(curl_get($url));
+        dump($url);
         dump($info);
         die;
         if (!isset($info->openid)) {
