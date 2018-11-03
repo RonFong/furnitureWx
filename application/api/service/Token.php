@@ -40,6 +40,8 @@ class Token
         }
         self::$openid = $openid;
         $userInfo = self::getUserInfo();
+        dump($userInfo);
+        die;
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
