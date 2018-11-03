@@ -31,33 +31,37 @@ class Token
     /**
      * 获取 token 和用户信息
      * @param $openid
+     * @param $userInfo
      * @return Token|null
      */
-    public static function getToken($openid)
+    public static function getToken($openid, $userInfo)
     {
         if (!$openid) {
             exception('缺少参数：openid');
         }
         self::$openid = $openid;
-        $userInfo = self::getUserInfo();
+        $userInfo = self::getUserInfo($userInfo);
         $userInfo['token'] = self::createToken($userInfo['id']);
         return $userInfo;
     }
 
     /**
      * 此微信用户未注册，则注册，返回用户信息
+     * @param $wxUserInfo
      * @return array|null|static
      */
-    private static function getUserInfo()
+    private static function getUserInfo($wxUserInfo)
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
         if (!$userInfo) {
             $saveData = [
-                'wx_openid' => self::$openid,
-                'avatar'    => config('api.default_avatar'),
-                'user_name' => 'wx_' . substr(str_shuffle(self::$openid), 0, 6),
+                'wx_openid'     => self::$openid,
+                'avatar'        => $wxUserInfo->avatarUrl,
+                'user_name'     => $wxUserInfo->nickName,
                 'group_id'      => 0,
-                'gender'        => 0,
+                'gender'        => $wxUserInfo->gender,
+                'province'      => $wxUserInfo->province,
+                'city'          => $wxUserInfo->city,
                 'phone'         => '',
                 'wx_account'    => '',
                 'type'          => 3,
