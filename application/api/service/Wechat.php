@@ -37,7 +37,7 @@ class Wechat {
         if (!isset($info->openid)) {
             return ['state' => false, 'msg' => 'openid获取失败:' . $info->errmsg];
         }
-        return ['state' => true, 'data' => $info->openid];
+        return ['state' => true, 'openid' => $info->openid];
     }
 
     /**
