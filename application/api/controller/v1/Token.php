@@ -94,8 +94,8 @@ class Token
         try {
             $user = User::get(input('id'));
             $data = TokenServer::getToken($user->wx_openid);
-            $token = $data->token;
-            unset($data->token);
+            $token = $data['token'];
+            unset($data['token']);
             $result = [
                 'state' => 1,
                 'msg' => 'success',
