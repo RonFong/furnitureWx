@@ -52,6 +52,11 @@ abstract class Model extends CoreModel
         return user_info('id');
     }
 
+    public function setCreateTimeAttr()
+    {
+        return time();
+    }
+
     public function setUpdateByAttr()
     {
         return user_info('id');
