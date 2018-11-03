@@ -86,7 +86,7 @@ class ExceptionHandler extends Handle
             'time'      => date('Y-m-d H:i:s', time()),
             'ip'        => Request::instance()->ip(1),
             'params'    => json_encode($data['params']),
-            'user_id'   => user_info('id'),
+            'user_id'   => user_info('id') ?? 0,
             'msg'       => $data['msg'],
             'error_location' => $this->location
         ];
