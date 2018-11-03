@@ -64,10 +64,9 @@ class Token
             if (!Request::instance()->has('code','get')) {
                 exception('code 参数不能为空');
             }
-            $code = Request::instance()->param('code');
-            dump($code);
+            $openid = (new Wechat())->getOpenid(Request::instance()->param('code'));
+            dump($openid);
             die;
-            $openid = (new Wechat())->getOpenid(['code' => $code]);
             if (!$openid) {
                 exception('获取用户openid失败');
             }
