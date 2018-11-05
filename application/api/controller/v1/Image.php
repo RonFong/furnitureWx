@@ -53,8 +53,8 @@ class Image extends BaseController
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->imgPath = IMAGE_PATH . "/tmp/";
-        $this->viewImgPath = VIEW_IMAGE_PATH . "/tmp/";
+        $this->imgPath = IMAGE_PATH;
+        $this->viewImgPath = VIEW_IMAGE_PATH;
     }
 
 
