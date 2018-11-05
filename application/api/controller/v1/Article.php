@@ -120,8 +120,6 @@ class Article extends BaseController
      */
     public function create()
     {
-        print_r($this->request->param());
-        die;
         $this->currentValidate->goCheck('create');
         $result = (new ImageText())
             ->setMainModel($this->currentModel)//设置图文主模型
