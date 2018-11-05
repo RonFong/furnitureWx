@@ -20,7 +20,7 @@ define('ERROR_LOG_PATH', __DIR__ . '/../error_log/');
 
 //前端资源地址
 define('VIEW_STATIC_PATH', '/static');
-define('VIEW_IMAGE_PATH', VIEW_STATIC_PATH.'/img');
+define('VIEW_IMAGE_PATH', VIEW_STATIC_PATH.'/img/');
 define('VIEW_FILE_PATH', VIEW_STATIC_PATH.'/file');
 
 //后端资源地址
