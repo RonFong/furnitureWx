@@ -70,7 +70,7 @@ Route::group('api/:version', function () {
         Route::get('nearbyStore/:lat/:lng', 'api/:version.Site/getNearbyStore');
     });
     //保存临时图片
-    Route::post('image/temporary', 'api/:version.Image/saveTmpImg');
+    Route::post('image/upload', 'api/:version.Image/saveTmpImg');
     //圈子 文章
     Route::group('article', function () {
 
