@@ -51,7 +51,7 @@ class Image extends BaseController
             'height'    => 80
         ],
         'rectangle' => [
-            'width'     => 120,
+            'width'     => 100,
             'height'    => 72
         ]
 
