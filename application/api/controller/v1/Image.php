@@ -46,8 +46,15 @@ class Image extends BaseController
      * @var string
      */
     protected $thumbImgSize = [
-        'width'     => 150,
-        'height'    => 150
+        'square'    => [
+            'width'     => 80,
+            'height'    => 80
+        ],
+        'rectangle' => [
+            'width'     => 72,
+            'height'    => 120
+        ]
+
     ];
 
     public function __construct(Request $request = null)
@@ -59,11 +66,15 @@ class Image extends BaseController
 
 
     /**
-     * @api {post} /v1/image/temporary  临时存储图片 (base64格式)
+     * @api {post} /v1/image/upload  图片上传 (file / base64格式)
      * @apiGroup image
+     *
+     * @apiParam {file}  [img]  图片文件
+     * @apiParam {string}  [shape]  缩略图, 值： square （正方形）； rectangle （长方形）
      *
      * @apiParamExample  {string} 请求参数格式：
      * {
+     *      "shape":"square"
      *      "img":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDA********"
      * }
      *
@@ -75,6 +86,12 @@ class Image extends BaseController
     public function saveTmpImg()
     {
         try {
+            if (!$this->request->has('thumbShape')) {
+                exception('thumbShape 参数缺失：值为 square 或 rectangle');
+            }
+            $thumbWidth = $this->thumbImgSize[$this->request->param('thumbShape')]['width'];
+            $thumbHeight = $this->thumbImgSize[$this->request->param('thumbShape')]['height'];
+
             //生成图片名
             //base64格式上传
             if (array_key_exists('img', $this->data) && $this->data['img']) {
@@ -100,7 +117,7 @@ class Image extends BaseController
 
             //生成后缀为 $this->thumbImgSuffix 的缩略图
             $image = ThinkImage::open($this->imgPath . $imgFile);
-            if ($image->width() < $this->thumbImgSize['width'] || $image->height() < $this->thumbImgSize['height']) {
+            if ($image->width() < $thumbWidth || $image->height() < $thumbHeight) {
                 //原图尺寸小于预定缩略图，则固定尺寸缩放裁剪
                 $thumbType = ThinkImage::THUMB_FIXED;
             } else {
@@ -111,12 +128,12 @@ class Image extends BaseController
             $array = explode('.', $imgFile);
             $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
             $thumbImg = implode('', $array);
-            $image->thumb($this->thumbImgSize['width'], $this->thumbImgSize['height'], $thumbType)
+            $image->thumb($thumbWidth, $thumbHeight, $thumbType)
                 ->save($this->imgPath . $thumbImg);
 
             $this->result['data'] = [
-                'img'       => $this->viewImgPath . $imgFile,
-                'img_thumb' => $this->viewImgPath . $thumbImg
+                'img'       => Request::instance()->domain() . $this->viewImgPath . $imgFile,
+                'img_thumb' => Request::instance()->domain() . $this->viewImgPath . $thumbImg
             ];
         } catch (\Exception $e) {
             $this->response->error($e);
