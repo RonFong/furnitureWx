@@ -22,11 +22,13 @@ define('ERROR_LOG_PATH', __DIR__ . '/../error_log/');
 define('VIEW_STATIC_PATH', '/static');
 define('VIEW_IMAGE_PATH', VIEW_STATIC_PATH.'/img/');
 define('VIEW_FILE_PATH', VIEW_STATIC_PATH.'/file');
+define('VIEW_FONTS_PATH', VIEW_STATIC_PATH.'/fonts');
 
 //后端资源地址
 define('STATIC_PATH', PUBLIC_PATH . VIEW_STATIC_PATH);
 define('IMAGE_PATH', PUBLIC_PATH . VIEW_IMAGE_PATH);
 define('FILE_PATH', PUBLIC_PATH . VIEW_FILE_PATH);
+define('FONTS_PATH', PUBLIC_PATH . VIEW_FONTS_PATH);
 
 //用户默认头像
 define('DEFAULT_IMAGE', VIEW_IMAGE_PATH . '/user_icon/default.jpg');
