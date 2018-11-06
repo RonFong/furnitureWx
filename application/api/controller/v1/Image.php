@@ -117,6 +117,7 @@ class Image extends BaseController
 
             //生成后缀为 $this->thumbImgSuffix 的缩略图
             $image = ThinkImage::open($this->imgPath . $imgFile);
+
             if ($image->width() < $thumbWidth || $image->height() < $thumbHeight) {
                 //原图尺寸小于预定缩略图，则固定尺寸缩放裁剪
                 $thumbType = ThinkImage::THUMB_FIXED;
@@ -130,6 +131,9 @@ class Image extends BaseController
             $thumbImg = implode('', $array);
             $image->thumb($thumbWidth, $thumbHeight, $thumbType)
                 ->save($this->imgPath . $thumbImg);
+
+            //加水印
+//            (ThinkImage::open($this->imgPath . $imgFile))->text('abc', FONTS_PATH . '/fontawesome-webfont.ttf', 20, '#ffffff')->save($this->imgPath . $imgFile);
 
             $this->result['data'] = [
                 'img'       => Request::instance()->domain() . $this->viewImgPath . $imgFile,
