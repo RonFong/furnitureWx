@@ -69,7 +69,7 @@ Route::group('api/:version', function () {
         // 获取附近的店
         Route::get('nearbyStore/:lat/:lng', 'api/:version.Site/getNearbyStore');
     });
-    //保存临时图片
+    //上传图片
     Route::post('image/upload', 'api/:version.Image/saveTmpImg');
     //圈子 文章
     Route::group('article', function () {
@@ -199,13 +199,13 @@ Route::group('api/:version', function () {
     Route::group('homeContent', function () {
 
         //获取首页图文
-        Route::get('getHomeContent', 'api/:version.HomeContent/getHomeContent');
+        Route::get('details', 'api/:version.HomeContent/details');
         //获取首页图文item
         Route::get('getHomeContentItem', 'api/:version.HomeContent/getHomeContentItem');
         //发布首页图文
-        Route::post('addHomeContent', 'api/:version.HomeContent/addHomeContent');
-        //保存首页图文
-        Route::post('saveHomeContent', 'api/:version.HomeContent/saveHomeContent');
+        Route::post('create', 'api/:version.HomeContent/create');
+        //更新首页图文
+        Route::put('update', 'api/:version.HomeContent/update');
         //缓存文字
         Route::get('setCache', 'api/:version.HomeContent/setCache');
         //获取缓存文字
