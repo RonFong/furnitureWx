@@ -25,8 +25,8 @@ class HomeContent extends BaseController
     public function create()
     {
         $this->currentValidate->goCheck('create');
-        $result = $this->currentModel->createData($this->data);
-        if (!$result) {
+        $this->result['data'] = $this->currentModel->createData($this->data);
+        if (!$this->result['data']) {
             $this->response->error(Response::UNKNOWN_ERROR);
         }
         return json($this->result, 201);
