@@ -11,8 +11,7 @@ class HomeContent extends CoreHomeContent
     /**
      * 创建图文
      * @param $param
-     * @return bool
-     * @throws \app\lib\exception\BaseException
+     * @return array
      */
     public function createData($param)
     {
@@ -22,14 +21,16 @@ class HomeContent extends CoreHomeContent
             $param['group_type'] = user_info('type');
             $this->save($param);
             foreach ($param['content'] as $k => $v) {
-                $v['content_id'] = $this->id;
-                $v['sort'] = $k;
-                if (array_key_exists('style', $v) && !empty($v['style'])) {
-                    $v['style'] = json_encode($v['style']);
-                }
-                $itemResult = (new HomeContentItem())->save($v);
-                if (!$itemResult) {
-                    exception('内容块数据写入失败：'.json_encode($v));
+                if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
+                    $v['content_id'] = $this->id;
+                    $v['sort'] = $k;
+                    if (array_key_exists('style', $v) && !empty($v['style'])) {
+                        $v['style'] = json_encode($v['style']);
+                    }
+                    $itemResult = (new HomeContentItem())->save($v);
+                    if (!$itemResult) {
+                        exception('内容块数据写入失败：'.json_encode($v));
+                    }
                 }
             }
             Db::commit();
@@ -37,7 +38,7 @@ class HomeContent extends CoreHomeContent
             Db::rollback();
             (new BaseValidate())->error($e);
         }
-        return true;
+        return ['id' => $this->id];
     }
 
 
@@ -54,19 +55,25 @@ class HomeContent extends CoreHomeContent
             $this->save($param);
             $itemModel = new HomeContentItem();
             $itemIds = $itemModel->where('content_id', $param['id'])->column('id');
+            //id 存在，但内容为空的，删除
+            $updateIds = [];
             foreach ($param['content'] as $k => $v) {
-                if (empty($v['id'])) {
-                    unset($v['id']);
+                if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
+                    if (empty($v['id'])) {
+                        unset($v['id']);
+                    } else {
+                        array_push($updateIds, $v['id']);
+                    }
+                    $v['content_id'] = $param['id'];
+                    $v['sort'] = $k;
+                    if (array_key_exists('style', $v) && !empty($v['style'])) {
+                        $v['style'] = json_encode($v['style']);
+                    }
+                    (new HomeContentItem())->save($v);
                 }
-                $v['content_id'] = $param['id'];
-                $v['sort'] = $k;
-                if (array_key_exists('style', $v) && !empty($v['style'])) {
-                    $v['style'] = json_encode($v['style']);
-                }
-                (new HomeContentItem())->save($v);
             }
             //删除
-            $ids = array_diff($itemIds, array_column($param['content'], 'id'));
+            $ids = array_diff($itemIds, $updateIds);
             if ($ids) {
                 $itemModel->where('id', 'in', implode(',', $ids))->delete();
             }
