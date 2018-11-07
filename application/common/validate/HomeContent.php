@@ -1,6 +1,8 @@
 <?php
 namespace app\common\validate;
 
+use think\Db;
+
 /**
  * 首页图文
  * Class HomeContent
@@ -10,7 +12,7 @@ class HomeContent extends BaseValidate
 {
     protected $rule = [
         "id"            => 'require|number',
-        "content"       => 'require|contentCanNotEmpty'
+        "content"       => 'require|contentCanNotEmpty|isRepetition'
     ];
 
     protected $message = [
@@ -31,6 +33,17 @@ class HomeContent extends BaseValidate
     {
         if (empty($value)) {
             return '请填写图文内容';
+        }
+        return true;
+    }
+
+
+    protected function isRepetition($value, $rule, $data)
+    {
+        if (!array_key_exists('id', $data) || empty($data['id'])) {
+            if (Db::table('home_content')->where('group_id', user_info('group_id'))->find()) {
+                return '首页图文内容已存在';
+            }
         }
         return true;
     }
