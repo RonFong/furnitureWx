@@ -11,7 +11,7 @@ use think\Db;
 class HomeContent extends BaseValidate
 {
     protected $rule = [
-        "id"            => 'require|number',
+        "id"            => 'require|number|isExist',
         "content"       => 'require|contentCanNotEmpty|isRepetition'
     ];
 
@@ -44,6 +44,14 @@ class HomeContent extends BaseValidate
             if (Db::table('home_content')->where('group_id', user_info('group_id'))->find()) {
                 return '首页图文内容已存在';
             }
+        }
+        return true;
+    }
+
+    protected function isExist($value)
+    {
+        if (!Db::table('home_content')->where('id', $value)->find()) {
+            return '数据不存在,无法更新';
         }
         return true;
     }
