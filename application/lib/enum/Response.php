@@ -88,4 +88,7 @@ class Response
     //参数错误
     const PARAM_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '参数错误'];
 
+
+    const UNKNOWN_ERROR = ['code' => 400, 'errorCode' => 1000, 'msg' => '网络错误~'];
+
 }
