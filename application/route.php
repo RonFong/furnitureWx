@@ -55,9 +55,9 @@ Route::group('api/:version', function () {
     Route::group('sms', function () {
 
         //发送短信验证码
-        Route::get('getAuthCode/:phoneNumber', 'api/:version.Sms/getAuthCode');
+        Route::get('getAuthCode', 'api/:version.Sms/getAuthCode');
         //校验短信验证码
-        Route::get('checkAuthCode/:phoneNumber/:authCode', 'api/:version.Sms/checkAuthCode');
+        Route::get('checkAuthCode', 'api/:version.Sms/checkAuthCode');
     });
     // 地址信息
     Route::group('site', function () {
