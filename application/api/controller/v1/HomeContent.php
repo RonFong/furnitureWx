@@ -61,7 +61,7 @@ class HomeContent extends BaseController
         }
         $this->result['data'] = $this->currentModel->details();
         if (!$this->result['data']) {
-            $this->response->error(Response::UNKNOWN_ERROR);
+            return json(['state' => 0, 'msg' => '无数据'], 400);
         }
         return json($this->result, 200);
     }
