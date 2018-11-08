@@ -17,6 +17,7 @@ use app\api\service\Wechat;
 use app\api\service\Token as TokenServer;
 use app\common\validate\BaseValidate;
 use think\Request;
+use app\api\validate\Token as TokenValidate;
 
 class Token
 {
@@ -62,9 +63,8 @@ class Token
     public function getToken()
     {
         try {
-            if (!Request::instance()->has('code','get') || !Request::instance()->has('userInfo','get')) {
-                exception('参数缺失');
-            }
+            (new TokenValidate())->goCheck('getToken');
+
             $wxInfo = (new Wechat())->getOpenid(Request::instance()->param('code'));
             if (!$wxInfo['state']) {
                 exception($wxInfo['msg']);
@@ -93,7 +93,10 @@ class Token
     public function getTestToken()
     {
         try {
+            (new TokenValidate())->goCheck('getToken');
+
             $user = User::get(input('id'));
+
             $data = TokenServer::getToken($user->wx_openid, []);
             $token = $data['token'];
             unset($data['token']);
