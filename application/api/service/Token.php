@@ -85,7 +85,9 @@ class Token
             $locationData['id'] = $userInfo->id;
             $result = $userInfo->toArray();
         }
-        (new UserLocation())->save($locationData);
+        if (!empty($locationData['lat']) && !empty($locationData['lng'])) {
+            (new UserLocation())->save($locationData);
+        }
         return $result;
     }
 
