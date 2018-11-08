@@ -76,6 +76,7 @@ class Token
             ];
             $id = Db::table('user')->insertGetId($saveData);
             $locationData['id'] = $id;
+            $locationData['create_time'] = time();
             if (!$id) {
                 exception('注册失败');
             }
