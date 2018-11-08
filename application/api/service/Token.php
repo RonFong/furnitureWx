@@ -13,6 +13,7 @@ namespace app\api\service;
 
 
 use app\api\model\User;
+use app\common\model\UserLocation;
 use think\Cache;
 use think\Db;
 
@@ -48,11 +49,16 @@ class Token
     /**
      * 此微信用户未注册，则注册，返回用户信息
      * @param $wxUserInfo
-     * @return array|null|static
+     * @return array
      */
     private static function getUserInfo($wxUserInfo)
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
+        $locationData = [
+            'lng'           => $wxUserInfo->lng,
+            'lag'           => $wxUserInfo->lag,
+            'update_time'   => time()
+        ];
         if (!$userInfo) {
             $saveData = [
                 'wx_openid'     => self::$openid,
@@ -69,13 +75,18 @@ class Token
                 'create_time'   => time()
             ];
             $id = Db::table('user')->insertGetId($saveData);
+            $locationData['id'] = $id;
             if (!$id) {
                 exception('注册失败');
             }
             $saveData['id'] = $id;
-            return $saveData;
+            $result = $saveData;
+        } else {
+            $locationData['id'] = $userInfo->id;
+            $result = $userInfo->toArray();
         }
-        return $userInfo->toArray();
+        (new UserLocation())->save($locationData);
+        return $result;
     }
 
     /**
