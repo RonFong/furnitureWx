@@ -2,7 +2,6 @@
 
 namespace app\api\model;
 
-use app\api\service\Site;
 use app\common\model\Shop as CoreShop;
 use app\common\model\UserLocation;
 use think\Db;
@@ -48,6 +47,32 @@ class Shop extends CoreShop
             $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : round($v['distance'], 2) . '米';
         }
         return $list;
+    }
+
+    /**
+     * 商家首页信息
+     * @param $param
+     * @return null|static
+     * @throws \Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function homePageData($param)
+    {
+        $shopId = !empty($param['shopId']) ? $param['shopId'] : user_info('group_id');
+        $info = self::get($shopId);
+        if (!$info) {
+            exception('此商家不存在或信息异常');
+        }
+        $info->classify = Db::table('group_classify')
+            ->where(['group_id' => $shopId, 'group_type' => 2])
+            ->where('delete_time is null')
+            ->field('id, classify_name')
+            ->order('sort')
+            ->select();
+        $info->homeContent = (new HomeContent())->details();
+        return $info;
     }
 
 }
