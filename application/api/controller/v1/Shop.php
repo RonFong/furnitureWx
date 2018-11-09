@@ -64,4 +64,19 @@ class Shop extends BaseController
         }
         return json($this->result, 201);
     }
+
+    /**
+     * 获取附近的商家
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function nearby()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->nearby($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
 }
