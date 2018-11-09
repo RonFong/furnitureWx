@@ -131,7 +131,7 @@ Route::group('api/:version', function () {
         //获取附近的店
         Route::get('nearby', 'api/:version.Shop/nearby');
         // 门店信息
-        Route::get('info', 'api/:version.Shop/info');
+        Route::get('homePage', 'api/:version.Shop/homePage');
         // 编辑门店注册信息
         Route::get('editRegister','api/:version.Shop/editRegister');
     });
