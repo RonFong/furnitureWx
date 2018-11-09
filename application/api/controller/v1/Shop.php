@@ -79,4 +79,22 @@ class Shop extends BaseController
         }
         return json($this->result, 200);
     }
+
+    /**
+     * 商家首页信息
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function homePage()
+    {
+        try {
+            if (empty($this->data['shopId']) && user_info('type') != 2) {
+                exception('非商家用户，必传 shopId');
+            }
+            $this->result['data'] = $this->currentModel->homePageData($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
 }
