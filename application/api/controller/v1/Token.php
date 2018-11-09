@@ -93,11 +93,9 @@ class Token
     public function getTestToken()
     {
         try {
-            (new TokenValidate())->goCheck('getToken');
-
             $user = User::get(input('id'));
 
-            $data = TokenServer::getToken($user->wx_openid, []);
+            $data = TokenServer::getToken($user->wx_openid, json_decode('{"lng":114.035661,"lat":22.556334}'));
             $token = $data['token'];
             unset($data['token']);
             $result = [
