@@ -67,7 +67,7 @@ Route::group('api/:version', function () {
         // 获取地理位置
         Route::get('address/:lat/:lng', 'api/:version.Site/getAddress');
         // 获取附近的店
-        Route::get('nearbyStore/:lat/:lng', 'api/:version.Site/getNearbyStore');
+        Route::get('nearby/:lat/:lng', 'api/:version.Site/getNearbyStore');
     });
     //上传图片
     Route::post('image/upload', 'api/:version.Image/saveTmpImg');
@@ -126,9 +126,10 @@ Route::group('api/:version', function () {
     });
     // 门店
     Route::group('shop', function () {
-
-        // 入驻商家(完善信息)
+        // 入驻商家
         Route::post('create', 'api/:version.Shop/create');
+        //获取附近的店
+        Route::get('nearby', 'api/:version.Shop/nearby');
         // 门店信息
         Route::get('info', 'api/:version.Shop/info');
         // 编辑门店注册信息
