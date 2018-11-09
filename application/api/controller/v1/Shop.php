@@ -44,6 +44,8 @@ class Shop extends BaseController
         try {
             Db::startTrans();
             $this->data['admin_user'] = user_info('id');
+            $this->data['lat'] = sprintf("%.6f",$this->data['lat']);
+            $this->data['lng'] = sprintf("%.6f",$this->data['lng']);
             $result = $this->currentModel->save($this->data);
             if (!$result) {
                 $this->response->error(Response::UNKNOWN_ERROR);
