@@ -31,7 +31,7 @@ class Shop extends CoreShop
         $location = UserLocation::get(user_info('id'));
 
         $field = "s.id, s.shop_name, s.address, s.shop_img_thumb, s.distance";
-        $where = "`id` <> $currentShopId and `state` = 1 and `delete_time` is null";
+        $where = "`state` = 1 and `delete_time` is null and `id` <> $currentShopId";
         if ($shopName) {
             $where .= " and shop_name like '%$shopName%'";
         }
