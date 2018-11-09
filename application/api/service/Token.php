@@ -55,8 +55,8 @@ class Token
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
         $locationData = [
-            'lng'           => $wxUserInfo->lng,
-            'lag'           => $wxUserInfo->lag,
+            'lng'           => sprintf("%.6f", $wxUserInfo->lng),
+            'lat'           => sprintf("%.6f", $wxUserInfo->lat),
             'update_time'   => time()
         ];
         if (!$userInfo) {
