@@ -65,11 +65,12 @@ class Token
         try {
             (new TokenValidate())->goCheck('getToken');
 
-            $wxInfo = (new Wechat())->getOpenid(Request::instance()->param('code'));
+            $param = Request::instance()->param();
+            $wxInfo = (new Wechat())->getOpenid($param['code']);
             if (!$wxInfo['state']) {
                 exception($wxInfo['msg']);
             }
-            $data = TokenServer::getToken($wxInfo['openid'], json_decode(Request::instance()->param('userInfo')));
+            $data = TokenServer::getToken($wxInfo['openid'], $param['userInfo']);
             $token = $data['token'];
             unset($data['token']);
             $result = [
@@ -94,8 +95,7 @@ class Token
     {
         try {
             $user = User::get(input('id'));
-            $param = json_decode(json_encode(Request::instance()->param()));
-            $data = TokenServer::getToken($user->wx_openid, $param);
+            $data = TokenServer::getToken($user->wx_openid, Request::instance()->param());
             $token = $data['token'];
             unset($data['token']);
             $result = [
