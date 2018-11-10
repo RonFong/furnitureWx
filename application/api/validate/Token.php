@@ -17,7 +17,7 @@ use app\common\validate\BaseValidate;
 class Token extends BaseValidate
 {
     protected $rule = [
-        'code'      => 'require|string',
+        'code'      => 'require',
         'userInfo'  => 'require',
         'lat'       => 'require',
         'lng'       => 'require'
