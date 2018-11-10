@@ -18,24 +18,30 @@ class Token extends BaseValidate
 {
     protected $rule = [
         'code'      => 'require',
-        'userInfo'  => 'require',
-        'lat'       => 'require',
-        'lng'       => 'require'
+        'userInfo'  => 'require|location',
     ];
 
     protected $message = [
         'code.require'      => 'code can not empty',
         'userInfo.require'  => 'userInfo can not empty',
-        'lat.require'       => 'lat can not empty',
-        'lng.require'       => 'lng can not empty',
     ];
 
     protected $scene = [
         'getToken'  => [
             'code',
             'userInfo',
-            'lat',
-            'lng'
         ]
     ];
+
+
+    protected function location($value)
+    {
+        if (empty($value['lat'])) {
+            return 'lat can not empty';
+        }
+        if (empty($value['lng'])) {
+            return 'lng can not empty';
+        }
+        return true;
+    }
 }
