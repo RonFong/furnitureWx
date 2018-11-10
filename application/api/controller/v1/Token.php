@@ -70,7 +70,7 @@ class Token
             if (!$wxInfo['state']) {
                 exception($wxInfo['msg']);
             }
-            $data = TokenServer::getToken($wxInfo['openid'], $param['userInfo']);
+            $data = TokenServer::getToken($wxInfo['openid'], json_decode($param['userInfo'], true) ?? $param['userInfo']);
             $token = $data['token'];
             unset($data['token']);
             $result = [
