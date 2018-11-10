@@ -94,8 +94,8 @@ class Token
     {
         try {
             $user = User::get(input('id'));
-
-            $data = TokenServer::getToken($user->wx_openid, json_decode('{"lng":114.035661,"lat":22.556334}'));
+            $param = json_decode(json_encode(Request::instance()->param()));
+            $data = TokenServer::getToken($user->wx_openid, $param);
             $token = $data['token'];
             unset($data['token']);
             $result = [
