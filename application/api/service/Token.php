@@ -55,19 +55,19 @@ class Token
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
         $locationData = [
-            'lng'           => sprintf("%.6f", $wxUserInfo->lng),
-            'lat'           => sprintf("%.6f", $wxUserInfo->lat),
+            'lng'           => sprintf("%.6f", $wxUserInfo['lng']),
+            'lat'           => sprintf("%.6f", $wxUserInfo['lat']),
             'update_time'   => time()
         ];
         if (!$userInfo) {
             $saveData = [
                 'wx_openid'     => self::$openid,
-                'avatar'        => $wxUserInfo->avatarUrl,
-                'user_name'     => $wxUserInfo->nickName,
+                'avatar'        => $wxUserInfo['avatarUrl'],
+                'user_name'     => $wxUserInfo['nickName'],
                 'group_id'      => 0,
-                'gender'        => $wxUserInfo->gender,
-                'province'      => $wxUserInfo->province,
-                'city'          => $wxUserInfo->city,
+                'gender'        => $wxUserInfo['gender'],
+                'province'      => $wxUserInfo['province'],
+                'city'          => $wxUserInfo['city'],
                 'phone'         => '',
                 'wx_account'    => '',
                 'type'          => 3,
