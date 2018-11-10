@@ -18,7 +18,7 @@ class Token extends BaseValidate
 {
     protected $rule = [
         'code'      => 'require',
-        'userInfo'  => 'require|location',
+        'userInfo'  => 'require',
     ];
 
     protected $message = [
@@ -33,15 +33,4 @@ class Token extends BaseValidate
         ]
     ];
 
-
-    protected function location($value)
-    {
-        if (empty($value['lat'])) {
-            return 'lat can not empty';
-        }
-        if (empty($value['lng'])) {
-            return 'lng can not empty';
-        }
-        return true;
-    }
 }
