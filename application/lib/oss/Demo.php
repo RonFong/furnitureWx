@@ -19,10 +19,19 @@ class Demo
     }
 
     /**
-     * 上传
+     * 上传音频
      * @return bool
      */
-    public function upload()
+    public function uploadAudio()
+    {
+        return 'https://www.7qiaoban.cn/multimedia/xxxxxxxxxxxx.mp3';
+    }
+
+    /**
+     * 上传视频
+     * @return bool
+     */
+    public function uploadVideo()
     {
         return 'https://www.7qiaoban.cn/multimedia/xxxxxxxxxxxx.mp4';
     }
