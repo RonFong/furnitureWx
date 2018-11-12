@@ -243,6 +243,8 @@ Route::group('api/:version', function () {
         Route::get('index','api/:version.GoodsRetailPrice/getGoodsRetailPrice');
     });
 
-    //多媒体文件上传
-    Route::post('multimedia/upload', 'api/:version.Multimedia/upload');
+    //上传音频
+    Route::post('multimedia/uploadAudio', 'api/:version.Multimedia/uploadAudio');
+    //上传视频
+    Route::post('multimedia/uploadVideo', 'api/:version.Multimedia/uploadVideo');
 });
