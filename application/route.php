@@ -242,4 +242,7 @@ Route::group('api/:version', function () {
         // 获取零售价计算比例
         Route::get('index','api/:version.GoodsRetailPrice/getGoodsRetailPrice');
     });
+
+    //多媒体文件上传
+    Route::post('multimedia/upload', 'api/:version.Multimedia/upload');
 });
