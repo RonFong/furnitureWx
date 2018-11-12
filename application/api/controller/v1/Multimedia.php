@@ -32,12 +32,22 @@ class Multimedia extends BaseController
     }
 
     /**
-     * 上传
+     * 上传音频
      * @return \think\response\Json
      */
-    public function upload()
+    public function uploadAudio()
     {
-        $this->result['data'] = ['url' => $this->ossServer->upload()];
+        $this->result['data'] = ['url' => $this->ossServer->uploadAudio()];
+        return json($this->result, 200);
+    }
+
+    /**
+     * 上传视频
+     * @return \think\response\Json
+     */
+    public function uploadVideo()
+    {
+        $this->result['data'] = ['url' => $this->ossServer->uploadVideo()];
         return json($this->result, 200);
     }
 }
