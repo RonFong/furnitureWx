@@ -16,6 +16,7 @@ use \think\Route;
  */
 Route::group('api/:version', function () {
 
+
     //用户授权，注册 | 更新
     Route::post('user', 'api/:version.User/saveUser');
     //查找用户数据
@@ -24,6 +25,10 @@ Route::group('api/:version', function () {
     Route::put('user', 'api/:version.User/update');
     //删除用户数据
     Route::delete('user/:id', 'api/:version.User/delete');
+    //修改昵称
+    Route::put('user/changeName', 'api/:version.User/changeName');
+    //修改头像
+    Route::put('user/changeAvatar', 'api/:version.User/changeAvatar');
     //获取openid
     Route::get('getOpenid', 'api/:version.User/getOpenid');
     //获取token
@@ -40,16 +45,6 @@ Route::group('api/:version', function () {
         //根据音乐名或艺术家名模糊查找音乐
         Route::get('query', 'api/:version.Music/query');
 
-        /*
-         * 因百度音乐接口发生变更，以下接口已不可用
-         *
-        *获取推荐音乐
-        *Route::get('recommend/:page/:row', 'api/:version.Music/getRecommendList');
-        *查找音乐
-        *Route::get('search/:query', 'api/:version.Music/searchMusic');
-        *获取指定音乐地址
-        *Route::get('getLink/:id', 'api/:version.Music/getLink');
-        */
     });
     //短信
     Route::group('sms', function () {
@@ -124,7 +119,8 @@ Route::group('api/:version', function () {
         //回复评论
         Route::post('replyComment', 'api/:version.ArticleComment/replyComment');
     });
-    // 门店
+
+    // 商家门店
     Route::group('shop', function () {
         // 入驻商家
         Route::post('create', 'api/:version.Shop/create');
@@ -134,11 +130,14 @@ Route::group('api/:version', function () {
         Route::get('homePage', 'api/:version.Shop/homePage');
         // 编辑门店注册信息
         Route::get('editRegister','api/:version.Shop/editRegister');
+        // 发布商品
+        Route::post('createCommodity','api/:version.Shop/createCommodity');
     });
-    Route::group('category', function () {
 
+    Route::group('category', function () {
         Route::get('storeList', 'api/:version.StoreClassify/getStoreClassifyList');
     });
+
     // 用户产品分类
     Route::group('group_classify',function () {
         // 产品分类列表
@@ -224,14 +223,15 @@ Route::group('api/:version', function () {
         // 招商代理
         Route::get('attract','api/:version.Shop/getAttract');
     });
-    //推广
-    Route::group('userProposed', function () {
 
+    //推广
+    Route::group('user', function () {
         //保存推荐关系
         Route::post('proposed', 'api/:version.UserProposed/proposed');
         //获取推荐列表
         Route::get('proposedList', 'api/:version.UserProposed/proposedList');
     });
+
     //商家自定义商城商品零售价
     Route::group('goodsRetailPrice', function () {
 

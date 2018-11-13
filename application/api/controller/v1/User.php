@@ -15,6 +15,7 @@ use app\api\model\User as userModel;
 use app\api\service\Wechat;
 use app\lib\enum\Response;
 use think\Request;
+use app\api\validate\User as userValidate;
 
 class User extends BaseController
 {
@@ -26,7 +27,7 @@ class User extends BaseController
         //当前model
         $this->currentModel = new userModel();
         //当前validate
-        $this->currentValidate = validate('user');
+        $this->currentValidate = new userValidate();
     }
 
     /**
@@ -95,7 +96,6 @@ class User extends BaseController
      */
     public function delete()
     {
-
         $this->currentValidate->goCheck('delete');
         if ($this->currentModel->deleteUser($this->data)) {
             return json($this->result, 200);
@@ -116,5 +116,54 @@ class User extends BaseController
 
         return json($this->result, 200);
     }
+
+
+    /**
+     * 用户修改头像
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function changeAvatar()
+    {
+        $this->currentValidate->goCheck('changeAvatar');
+
+        try {
+            $data['id'] = user_info('id');
+            $data['avatar'] = $this->data['avatar'];
+            $result = $this->currentModel->save($data);
+            if (!$result) {
+                exception('未知错误');
+            }
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        $this->result['data'] = $this->data['avatar'];
+        return json($this->result, 201);
+    }
+
+
+    /**
+     * 用户修改昵称
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function changeName()
+    {
+        $this->currentValidate->goCheck('changeUserName');
+
+        try {
+            $data['id'] = user_info('id');
+            $data['user_name'] = $this->data['userName'];
+            $result = $this->currentModel->save($data);
+            if (!$result) {
+                exception('未知错误');
+            }
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        $this->result['data'] = $this->data['userName'];
+        return json($this->result, 201);
+    }
+
 
 }

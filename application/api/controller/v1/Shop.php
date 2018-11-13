@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\model\Shop as shopModel;
+use app\api\model\ShopCommodity;
 use app\common\validate\Shop as shopValidate;
 use app\lib\enum\Response;
 use app\api\model\User;
@@ -29,7 +30,7 @@ class Shop extends BaseController
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel    = new shopModel();
+        $this->currentModel = new shopModel();
         $this->currentValidate = new shopValidate();
     }
 
@@ -44,17 +45,17 @@ class Shop extends BaseController
         try {
             Db::startTrans();
             $this->data['admin_user'] = user_info('id');
-            $this->data['lat'] = sprintf("%.6f",$this->data['lat']);
-            $this->data['lng'] = sprintf("%.6f",$this->data['lng']);
+            $this->data['lat'] = sprintf("%.6f", $this->data['lat']);
+            $this->data['lng'] = sprintf("%.6f", $this->data['lng']);
             $result = $this->currentModel->save($this->data);
             if (!$result) {
                 $this->response->error(Response::UNKNOWN_ERROR);
             }
             $this->result['data'] = $this->currentModel;
             $userInfo = [
-                'id'        => user_info('id'),
-                'group_id'  => $this->currentModel->id,
-                'type'      => 2
+                'id' => user_info('id'),
+                'group_id' => $this->currentModel->id,
+                'type' => 2
             ];
             (new User())->save($userInfo);
             Db::commit();
@@ -96,5 +97,20 @@ class Shop extends BaseController
             $this->response->error($e);
         }
         return json($this->result, 200);
+    }
+
+
+    /**
+     * 发布商品
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function createCommodity()
+    {
+        $this->result['data'] = (new ShopCommodity())->createCommodity($this->data);
+        if (!$this->result['data']) {
+            $this->response->error(Response::UNKNOWN_ERROR);
+        }
+        return json($this->result, 201);
     }
 }
