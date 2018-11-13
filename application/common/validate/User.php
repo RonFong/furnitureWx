@@ -22,6 +22,7 @@ class User extends BaseValidate
         'type'              => 'require|in:1,2,3',          //用户类型
         'wx_account'        => 'unique:user',    //微信账号
         'wx_openid'         => 'require',     //微信唯一ID
+        'avatar'            => 'require',
     ];
 
     protected $message = [
@@ -37,6 +38,7 @@ class User extends BaseValidate
         'wx_openid.require'     => '用户微信Openid不能为空',
         'wx_account.unique'     => '此微信号已注册',
         'wx_openid.unique'      => '此opendid已注册',
+        'avatar.require'        => '头像地址不能为空',
     ];
 
     /**
@@ -70,6 +72,12 @@ class User extends BaseValidate
             'phone'         => 'isPhoneNo',
             'group_id'      => 'number|groupTypeExits',
             'group_type'    => 'in:1,2'
+        ],
+        'changeAvatar'  => [
+            'avatar'
+        ],
+        'changeUserName'  => [
+            'user_name'
         ],
     ];
 }
