@@ -16,10 +16,11 @@ class ShopCommodityItem extends Model
     /**
      * 文章内容转义
      * @param $value
-     * @return string
+     * @return string 
      */
     public function getTextAttr($value)
     {
         return htmlspecialchars_decode($value);
     }
+
 }
