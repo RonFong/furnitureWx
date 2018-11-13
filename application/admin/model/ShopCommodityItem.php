@@ -11,7 +11,7 @@ namespace app\admin\model;
 
 use app\common\model\Model;
 
-class ShopCommodityContent extends Model
+class ShopCommodityItem extends Model
 {
     /**
      * 文章内容转义
