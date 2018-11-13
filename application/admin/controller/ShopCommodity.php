@@ -10,7 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\ShopCommodity as CoreShopCommodity;
-use app\admin\model\ShopCommodityContent;
+use app\admin\model\ShopCommodityItem;
 use think\Db;
 use think\Request;
 
@@ -70,7 +70,7 @@ class ShopCommodity extends Base
             if (empty($data)) {
                 $this->error('信息不存在');
             }
-            $ShopCommodityContent = new ShopCommodityContent();
+            $ShopCommodityContent = new ShopCommodityItem();
             $content = $ShopCommodityContent->where('commodity_id', $param['id'])->order('sort')->select();
             $this->assign('content', $content);
 
