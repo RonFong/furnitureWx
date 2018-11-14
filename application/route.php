@@ -16,15 +16,6 @@ use \think\Route;
  */
 Route::group('api/:version', function () {
 
-
-    //用户授权，注册 | 更新
-//    Route::post('user', 'api/:version.User/saveUser');
-//    //查找用户数据
-//    Route::get('user', 'api/:version.User/select');
-//    //修改用户数据
-//    Route::put('user', 'api/:version.User/update');
-//    //删除用户数据
-//    Route::delete('user/:id', 'api/:version.User/delete');
     //修改昵称
     Route::put('user/changeName', 'api/:version.User/changeName');
     //修改头像
@@ -37,14 +28,12 @@ Route::group('api/:version', function () {
     Route::get('getTestToken', 'api/:version.Token/getTestToken');
     // 音乐
     Route::group('music', function () {
-
-    //获取音乐库音乐分类
-    Route::get('getCategoryList', 'api/:version.Music/getCategoryList');
-    //根据分类获取音乐列表
-    Route::get('getByCategory', 'api/:version.Music/getByCategory');
-    //根据音乐名或艺术家名模糊查找音乐
-    Route::get('query', 'api/:version.Music/query');
-
+        //获取音乐库音乐分类
+        Route::get('getCategoryList', 'api/:version.Music/getCategoryList');
+        //根据分类获取音乐列表
+        Route::get('getByCategory', 'api/:version.Music/getByCategory');
+        //根据音乐名或艺术家名模糊查找音乐
+        Route::get('query', 'api/:version.Music/query');
     });
     //短信
     Route::group('sms', function () {
@@ -53,16 +42,6 @@ Route::group('api/:version', function () {
         Route::get('getAuthCode', 'api/:version.Sms/getAuthCode');
         //校验短信验证码
         Route::get('checkAuthCode', 'api/:version.Sms/checkAuthCode');
-    });
-    // 地址信息
-    Route::group('site', function () {
-
-        // 获取省市区
-        Route::get('region/:parent_id/:level', 'api/:version.Site/getRegion');
-        // 获取地理位置
-        Route::get('address/:lat/:lng', 'api/:version.Site/getAddress');
-        // 获取附近的店
-        Route::get('nearby/:lat/:lng', 'api/:version.Site/getNearbyStore');
     });
     //上传图片
     Route::post('image/upload', 'api/:version.Image/saveTmpImg');
@@ -113,7 +92,6 @@ Route::group('api/:version', function () {
         Route::post('saveArticleContent', 'api/:version.Article/saveArticleContent');
     });
     Route::group('articleComment', function () {
-
         //评论文章
         Route::post('comment', 'api/:version.ArticleComment/comment');
         //回复评论
@@ -201,7 +179,6 @@ Route::group('api/:version', function () {
     });
     //首页图文
     Route::group('homeContent', function () {
-
         //获取首页图文
         Route::get('details', 'api/:version.HomeContent/details');
         //获取首页图文item
@@ -210,12 +187,6 @@ Route::group('api/:version', function () {
         Route::post('create', 'api/:version.HomeContent/create');
         //更新首页图文
         Route::put('update', 'api/:version.HomeContent/update');
-        //缓存文字
-        Route::get('setCache', 'api/:version.HomeContent/setCache');
-        //获取缓存文字
-        Route::get('getCache', 'api/:version.HomeContent/getCache');
-        // 获取商/厂首页图文
-        Route::get('getStoreHomeContent','api/:version.HomeContent/getStoreHomeContent');
     });
     //商城
     Route::group('store', function () {
