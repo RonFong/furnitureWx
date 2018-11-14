@@ -65,11 +65,11 @@ class Shop extends CoreShop
         if (!$info) {
             exception('此商家不存在或信息异常');
         }
-        $info->classify = Db::table('group_classify')
-            ->where(['group_id' => $shopId, 'group_type' => 2])
+        $info->classify = Db::table('shop_commodity')
+            ->where('shop_id', $shopId)
             ->where('delete_time is null')
             ->field('id, classify_name')
-            ->order('sort')
+            ->order('sort,create_time')
             ->select();
         $info->homeContent = (new HomeContent())->details();
         return $info;

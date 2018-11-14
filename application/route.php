@@ -132,6 +132,10 @@ Route::group('api/:version', function () {
         Route::get('editRegister','api/:version.Shop/editRegister');
         // 发布商品
         Route::post('createCommodity','api/:version.Shop/createCommodity');
+        // 查看商品详情
+        Route::get('commodityDetails','api/:version.Shop/commodityDetails');
+        // 删除商品
+        Route::delete('delCommodity','api/:version.Shop/delCommodity');
     });
 
     Route::group('category', function () {

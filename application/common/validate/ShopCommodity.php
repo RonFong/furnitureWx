@@ -17,9 +17,8 @@ class ShopCommodity extends BaseValidate
 {
     protected $rule = [
         "id"                => 'require|number|isExist',
-        "name"              => 'require',
-        "content"           => 'require|contentCanNotEmpty|isRepetition',
-        "classify_name"     => 'require'
+        "content"           => 'require',
+        "classify_name"     => 'require|isRepetition'
     ];
 
     protected $message = [
@@ -29,24 +28,15 @@ class ShopCommodity extends BaseValidate
     protected $scene = [
         'createCommodity'    => [
             'content',
-            'name',
             'classify_name',
         ],
         'updateCommodity' => [
             'id',
-            'name',
             'content',
-            'classify_id'
+            'classify_name'
         ]
     ];
 
-    protected function contentCanNotEmpty($value)
-    {
-        if (empty($value)) {
-            return '请填写商品内容';
-        }
-        return true;
-    }
 
     /**
      * @param $value
@@ -59,11 +49,17 @@ class ShopCommodity extends BaseValidate
      */
     protected function isRepetition($value, $rule, $data)
     {
-        if (!array_key_exists('id', $data) || empty($data['id'])) {
-            if (Db::table('shop_commodity')->where('group_id', user_info('group_id'))->find()) {
-                return '首商品内容已存在';
-            }
+        $commodity = Db::table('shop_commodity')
+            ->where(['shop_id' => user_info('group_id'), 'classify_name' => $data['classify_name']])
+            ->find();
+        if (empty($data['id']) && $commodity) {
+            return '此分类名已存在';
         }
+
+        if ($commodity && $data['id'] !== $commodity['id'] ) {
+            return '此分类名已存在';
+        }
+
         return true;
     }
 

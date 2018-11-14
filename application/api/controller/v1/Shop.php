@@ -13,6 +13,7 @@ namespace app\api\controller\v1;
 use app\api\controller\BaseController;
 use app\api\model\Shop as shopModel;
 use app\api\model\ShopCommodity;
+use app\api\model\ShopCommodityItem;
 use app\common\validate\Shop as shopValidate;
 use app\lib\enum\Response;
 use app\api\model\User;
@@ -107,10 +108,59 @@ class Shop extends BaseController
      */
     public function createCommodity()
     {
+        (new \app\common\validate\ShopCommodity())->goCheck('createCommodity');
         $this->result['data'] = (new ShopCommodity())->createCommodity($this->data);
         if (!$this->result['data']) {
             $this->response->error(Response::UNKNOWN_ERROR);
         }
         return json($this->result, 201);
+    }
+
+
+    /**
+     * 获取商品详情
+     * @param int id 商品id
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function commodityDetails()
+    {
+        try {
+            if (empty($this->data['commodity_id'])) {
+                exception('commodity_id 不能为空');
+            }
+            $this->result['data'] = (new ShopCommodity())->commodityDetails($this->data['commodity_id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+
+    }
+
+    /**
+     * 删除商品
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function delCommodity()
+    {
+        Db::startTrans();
+        try {
+            if (empty($this->data['commodity_id'])) {
+                exception('commodity_id 不能为空');
+            }
+            $delCommodity = (new ShopCommodity())->where('id', $this->data['commodity_id'])->delete();
+            $delCommodityItem = (new ShopCommodityItem())->where('commodity_id', $this->data['commodity_id'])->delete();
+            if (!$delCommodity || !$delCommodityItem) {
+                $this->result['state'] = 0;
+                $this->result['msg'] = '删除失败';
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+
     }
 }

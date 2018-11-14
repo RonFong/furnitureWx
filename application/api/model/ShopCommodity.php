@@ -18,7 +18,7 @@ class ShopCommodity extends CoreShopCommodity
 {
 
     /**
-     * 发布商品
+     * 发布|编辑商品
      * @param $param
      * @return array
      * @throws \app\lib\exception\BaseException
@@ -28,18 +28,9 @@ class ShopCommodity extends CoreShopCommodity
         try {
             Db::startTrans();
             $param['shop_id'] = user_info('group_id');
-            $classifyData = [
-                'group_id'      => user_info('group_id'),
-                'group_type'    => user_info('type'),
-                'classify_name' => trim($param['classify_name'])
-            ];
-            $classifyId = Db::table('group_classify')->where($classifyData)->value('id');
-            if (!$classifyId) {
-                $classifyData['create_time'] = time();
-                $classifyId = Db::table('group_classify')->insertGetId($classifyData);
+            if (!empty($param['id'])) {
+                $param['create_time'] = time();
             }
-            $param['classify_id'] = $classifyId;
-
             $this->save($param);
             foreach ($param['content'] as $k => $v) {
                 if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
@@ -60,6 +51,27 @@ class ShopCommodity extends CoreShopCommodity
             (new BaseValidate())->error($e);
         }
         return ['id' => $this->id];
+    }
+
+    /**
+     * 商品详情
+     * @param $id
+     * @return null|static
+     * @throws \think\exception\DbException
+     */
+    public function commodityDetails($id)
+    {
+        $data = self::get(function ($query) use ($id) {
+            $query->field('id, classify_name');
+        });
+        if ($data) {
+            $contentId = $id;
+            $data->content = ShopCommodityItem::all(function ($query) use ($contentId) {
+                $query->where('commodity_id', $contentId)
+                    ->order('sort');
+            });
+        }
+        return $data;
     }
 
 }

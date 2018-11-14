@@ -100,7 +100,6 @@ class HomeContent extends CoreHomeContent
             $contentId = $data['id'];
             $data->content = HomeContentItem::all(function ($query) use ($contentId) {
                 $query->where('content_id', $contentId)
-                    ->field('content_id', true)
                     ->order('sort');
             });
         }
