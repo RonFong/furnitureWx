@@ -18,13 +18,13 @@ Route::group('api/:version', function () {
 
 
     //用户授权，注册 | 更新
-    Route::post('user', 'api/:version.User/saveUser');
-    //查找用户数据
-    Route::get('user', 'api/:version.User/select');
-    //修改用户数据
-    Route::put('user', 'api/:version.User/update');
-    //删除用户数据
-    Route::delete('user/:id', 'api/:version.User/delete');
+//    Route::post('user', 'api/:version.User/saveUser');
+//    //查找用户数据
+//    Route::get('user', 'api/:version.User/select');
+//    //修改用户数据
+//    Route::put('user', 'api/:version.User/update');
+//    //删除用户数据
+//    Route::delete('user/:id', 'api/:version.User/delete');
     //修改昵称
     Route::put('user/changeName', 'api/:version.User/changeName');
     //修改头像
@@ -38,12 +38,12 @@ Route::group('api/:version', function () {
     // 音乐
     Route::group('music', function () {
 
-        //获取音乐库音乐分类
-        Route::get('getCategoryList', 'api/:version.Music/getCategoryList');
-        //根据分类获取音乐列表
-        Route::get('getByCategory', 'api/:version.Music/getByCategory');
-        //根据音乐名或艺术家名模糊查找音乐
-        Route::get('query', 'api/:version.Music/query');
+    //获取音乐库音乐分类
+    Route::get('getCategoryList', 'api/:version.Music/getCategoryList');
+    //根据分类获取音乐列表
+    Route::get('getByCategory', 'api/:version.Music/getByCategory');
+    //根据音乐名或艺术家名模糊查找音乐
+    Route::get('query', 'api/:version.Music/query');
 
     });
     //短信
