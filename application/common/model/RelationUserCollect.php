@@ -57,7 +57,10 @@ class RelationUserCollect extends Model
      * 关注我的
      * @param $page
      * @param $row
-     * @return false|\PDOStatement|string|\think\Collection
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function collectMe($page, $row)
     {
@@ -70,6 +73,8 @@ class RelationUserCollect extends Model
             ->order('a.create_time desc')
             ->page($page, $row)
             ->select();
+
+        $list['list'] = array_map(['self', 'isTogether'], $data);
         return $data;
     }
 }
