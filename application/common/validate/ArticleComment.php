@@ -24,7 +24,7 @@ class ArticleComment extends BaseValidate
     protected $rule = [
         'parent_id'         => 'number|pidCommentExist',
         'article_id'        => 'number|articleExist',
-        'content'           => 'require',
+        'content'           => 'require|min:1',
     ];
 
     protected $message = [
@@ -38,12 +38,21 @@ class ArticleComment extends BaseValidate
             'article_id',
             'content',
         ],
-        'replyComment'  => [
+        'reply'  => [
             'parent_id',
             'content',
         ],
+        'more'   => [
+            'article_id' => 'require|number|articleExist',
+            'page'
+        ],
     ];
 
+    /**
+     * @param $value
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
     protected function pidCommentExist($value)
     {
         $isExist = ArticleCommentModel::get($value);
@@ -53,6 +62,11 @@ class ArticleComment extends BaseValidate
         return true;
     }
 
+    /**
+     * @param $value
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
     protected function articleExist($value)
     {
         $isExist = Article::get($value);

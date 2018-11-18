@@ -15,7 +15,6 @@ use \think\Route;
  * @param :version string 版本号    v1 | v2
  */
 Route::group('api/:version', function () {
-
     //修改昵称
     Route::put('user/changeName', 'api/:version.User/changeName');
     //修改头像
@@ -37,7 +36,6 @@ Route::group('api/:version', function () {
     });
     //短信
     Route::group('sms', function () {
-
         //发送短信验证码
         Route::get('getAuthCode', 'api/:version.Sms/getAuthCode');
         //校验短信验证码
@@ -47,13 +45,6 @@ Route::group('api/:version', function () {
     Route::post('image/upload', 'api/:version.Image/saveTmpImg');
     //圈子 文章
     Route::group('article', function () {
-
-        //获取文章列表统一接口
-        Route::get('getArticleList', 'api/:version.Article/queryArticleList');
-
-        //获取文章列表统一接口(修改)
-        Route::get('queryArticle', 'api/:version.Article/queryArticle');
-
         //获取文章分类
         Route::get('classify', 'api/:version.Article/getClassify');
         //创建文章
@@ -63,39 +54,28 @@ Route::group('api/:version', function () {
         //删除文章
         Route::delete('delete', 'api/:version.Article/delete');
         //同城圈首页文章列表
-        Route::get('localList', 'api/:version.Article/localArticleList');
+        Route::get('list', 'api/:version.Article/list');
+        //按用户获取文章列表
+        Route::get('listGroupByUser', 'api/:version.Article/listGroupByUser');
         //增加文章的一个分享数
         Route::put('share', 'api/:version.Article/share');
         //获取文章详情
         Route::get('details', 'api/:version.Article/details');
-        //获取用户本人的文章列表
-        Route::get('ownList', 'api/:version.Article/getOwnArticleList');
-        //根据用户ID获取文章列表
-        Route::get('listByUserId', 'api/:version.Article/getArticleListByUserId');
-        //按分类获取文章列表
-        Route::get('listByClassify', 'api/:version.Article/getListByClassify');
         //我的收藏
         Route::get('myCollectArticle', 'api/:version.Article/myCollectArticle');
         //我关注的用户
         Route::get('myCollect', 'api/:version.Article/myCollect');
         //我的粉丝
         Route::get('collectMe', 'api/:version.Article/collectMe');
-        //获取文章更多评论
-        Route::get('moreComment', 'api/:version.Article/getMoreComment');
-        //缓存文字
-        Route::get('setCache', 'api/:version.Article/setCache');
-        //获取缓存文字
-        Route::get('getCache', 'api/:version.Article/getCache');
-        //获取文章部分详情（文字编辑）
-        Route::get('getArticleContent', 'api/:version.Article/getArticleContent');
-        //保存动态
-        Route::post('saveArticleContent', 'api/:version.Article/saveArticleContent');
+
     });
     Route::group('articleComment', function () {
         //评论文章
-        Route::post('comment', 'api/:version.ArticleComment/comment');
+        Route::post('publish', 'api/:version.ArticleComment/comment');
         //回复评论
-        Route::post('replyComment', 'api/:version.ArticleComment/replyComment');
+        Route::post('reply', 'api/:version.ArticleComment/reply');
+        //获取文章更多评论
+        Route::get('more', 'api/:version.ArticleComment/getMore');
     });
 
     // 商家门店
@@ -104,8 +84,10 @@ Route::group('api/:version', function () {
         Route::post('create', 'api/:version.Shop/create');
         //获取附近的店
         Route::get('nearby', 'api/:version.Shop/nearby');
-        // 门店信息
+        // 获取门店信息 & 首页图文
         Route::get('homePage', 'api/:version.Shop/homePage');
+        // 修改门店信息
+        Route::put('info', 'api/:version.Shop/info');
         // 编辑门店注册信息
         Route::get('editRegister','api/:version.Shop/editRegister');
         // 发布商品

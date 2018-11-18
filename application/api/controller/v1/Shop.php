@@ -68,6 +68,29 @@ class Shop extends BaseController
     }
 
     /**
+     * 更新门店信息
+     * @return array
+     * @throws \app\lib\exception\BaseException
+     */
+    public function info()
+    {
+        $this->currentValidate->goCheck('info');
+        try {
+            if (!empty($this->data['lat']) && !empty($this->data['lng'])) {
+                $this->data['lat'] = sprintf("%.6f", $this->data['lat']);
+                $this->data['lng'] = sprintf("%.6f", $this->data['lng']);
+            }
+            $result = $this->currentModel->save($this->data);
+            if (!$result) {
+                $this->response->error(Response::UNKNOWN_ERROR);
+            }
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 201);
+    }
+
+    /**
      * 获取附近的商家
      * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
@@ -155,6 +178,7 @@ class Shop extends BaseController
                 $this->result['state'] = 0;
                 $this->result['msg'] = '删除失败';
             }
+            Db::commit();
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();

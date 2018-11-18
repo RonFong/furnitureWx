@@ -75,9 +75,6 @@ class User extends BaseValidate
         ],
         'changeAvatar'  => [
             'avatar'
-        ],
-        'changeUserName'  => [
-            'user_name'
-        ],
+        ]
     ];
 }

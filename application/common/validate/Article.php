@@ -17,17 +17,17 @@ class Article extends BaseValidate
     protected $rule = [
         'id'                => 'require|number|egt:1',
         'classify_id'       => 'require|number',
-        'content'           => 'require|checkImageText',
+        'content'           => 'require',
         'page'              => 'checkPageAndRow',
         'user_id'           => 'require|number|egt:1',
         'article_id'        => 'require|number|egt:1',
-        'order'             => 'require',
-        'title'             => 'require|max:10',
+        'title'             => 'require',
+        'order_by'          => 'in:read_num,create_time,distance'     //人气、时间、距离
     ];
 
     protected $message = [
         'content.require'       => '图文内容不能为空',
-        'title.max'             => '标题过长',
+        'title.require'         => '请输入标题',
     ];
 
     protected $scene = [
@@ -47,9 +47,10 @@ class Article extends BaseValidate
         'delete'        => [
             'id'
         ],
-        'localArticleList' => [
+        'list' => [
+            'classify_id' => 'number',
             'page',
-            'order'
+            'order_by'
         ],
         'details'       => [
             'id'
@@ -59,10 +60,6 @@ class Article extends BaseValidate
         ],
         'getByUserId'   => [
             'user_id'
-        ],
-        'moreComment'   => [
-            'article_id',
-            'page'
         ],
         'listByClassify'    => [
             'classify_id',

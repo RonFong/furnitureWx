@@ -53,15 +53,16 @@ class Shop extends BaseValidate
             'province',
             'city',
             'district',
-            'town',
             'address',
             'shop_img',
             'shop_img_thumb',
             'lat',
             'lng'
-
         ],
-        'info' => []
+        //修改商家门店信息
+        'info' => [
+            'id' => 'require|canNotUpdateFields|canNotEmpty'
+        ]
     ];
 
 
@@ -78,6 +79,67 @@ class Shop extends BaseValidate
     {
         if (user_info('type') != 0) {
             return '当前用户已创建 厂/商 门店';
+        }
+        return true;
+    }
+
+    /**
+     * 不能被修改的字段信息
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|string
+     */
+    protected function canNotUpdateFields($value, $rule, $data)
+    {
+        $fields = [
+            'admin_user',
+            'state',
+            'vip_grade',
+            'license',
+            'audit_state',
+            'audit_remark',
+            'probation',
+            'category_id',
+            'create_time',
+            'update_time',
+            'create_by',
+            'update_by',
+            'delete_time'
+        ];
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $data)) {
+                return '所修改信息中不能包含以下字段: ' . implode(',', $fields);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 值不能为空的字段
+     * @param $value
+     * @param $rule
+     * @param $data
+     * @return bool|mixed
+     */
+    protected function canNotEmpty($value, $rule, $data)
+    {
+        $fields = [
+            'shop_name'         => '请输入门店名',
+            'shop_contact'      => '请输入门店联系人',
+            'shop_phone'        => '请输入门店联系电话',
+            'province'          => '请选择所在省',
+            'city'              => '请选择所在市',
+            'district'          => '请选择所在区县',
+            'address'           => '请填写详细地址',
+            'shop_img'          => '请上传门店照片'
+        ];
+        foreach ($fields as $k => $v) {
+            if (array_key_exists($k, $data)) {
+                if (empty($data[$k])) {
+                    return $v;
+                }
+            }
         }
         return true;
     }

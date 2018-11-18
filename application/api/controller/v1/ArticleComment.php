@@ -68,32 +68,15 @@ class ArticleComment extends BaseController
     }
 
     /**
-     * @api {delete} /v1/articleComment/replyComment  回复评论
-     * @apiGroup Article
+     * @api {delete} /v1/articleComment/reply  回复评论
      * @apiParam {number} parent_id 被回复的评论ID
      * @apiParam {string} content 回复内容
-     *
-     * @apiParamExample  {string} 请求参数格式：
-     * {
-     *      "parent_id":1,
-     *      "content":"挣了5美分"
-     * }
-     *
-     * @apiSuccessExample {json} 成功时的响应：
-     *  {
-     *      "state": 1,
-     *      "msg": "success",
-     *      "data": {
-     *          "user_name": "白左",
-     *          "content": "挣了5美分",
-     *          "create_time": "07-25 18:57",
-     *          "parent_user_name": "自干五"
-     *      }
-     *  }
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
      */
-    public function replyComment()
+    public function reply()
     {
-        $this->currentValidate->goCheck('replyComment');
+        $this->currentValidate->goCheck('reply');
         try {
             $result = $this->currentModel->saveData($this->data);
         } catch (\Exception $e) {
@@ -101,5 +84,23 @@ class ArticleComment extends BaseController
         }
         $this->result['data'] = $result;
         return json($this->result, 201);
+    }
+
+
+    /**
+     * 获取文章更多评论
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function getMore()
+    {
+        $this->currentValidate->goCheck('more');
+        try {
+            $this->result['data'] = $this->currentModel->getComments($this->data['article_id'], $this->page, $this->row);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+
+        return json($this->result, 200);
     }
 }

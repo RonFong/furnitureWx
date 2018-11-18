@@ -14,6 +14,7 @@ use app\api\controller\BaseController;
 use app\api\service\Relate as RelateServer;
 use app\lib\enum\Response;
 use app\api\model\User;
+use think\Db;
 use think\Request;
 
 class Relate extends BaseController

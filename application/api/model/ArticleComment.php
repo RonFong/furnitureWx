@@ -29,11 +29,11 @@ class ArticleComment extends CoreArticleComment
             $result = [
                 'user_name'   => user_info('user_name'),
                 'content'     => $data['content'],
-                'create_time' => date('m-d H:i', time()),
+                'create_time' => '刚刚'
             ];
             //所回复的评论的发布者
             if (array_key_exists('parent_id', $data)) {
-                $info                       = self::with('appendUserName')->where('id', $this->data['parent_id'])->find();
+                $info = self::with('appendUserName')->where('id', $this->data['parent_id'])->find();
                 $result['parent_user_name'] = $info->user_name;
             }
 
@@ -63,7 +63,7 @@ class ArticleComment extends CoreArticleComment
             'a.delete_time' => null,
             'b.state'       => 1,
             'b.delete_time' => null,
-            //            'c.delete_time' => null
+//            'c.delete_time' => null
         ];
         $comments = Db::table('article_comment')
             ->alias('a')
@@ -72,15 +72,16 @@ class ArticleComment extends CoreArticleComment
             ->where($map)
             ->field('a.id, b.id as user_id, b.user_name, b.avatar, a.content, count(c.id) as great_total, a.create_time')
             ->group('a.id')
-            ->order('a.create_time')
+            ->order('great_total desc, a.create_time')
             ->page($page, $row)
             ->select();
         $list     = [];
         foreach ($comments as $v) {
+            $v['create_time'] = timeFormatForHumans($v['create_time']);
             $v = $this->recursionComment($v);
+            $v['child_num'] = count($v['child']);
             array_push($list, $v);
         }
-
         return $list;
     }
 

@@ -28,7 +28,7 @@ class RelationUserCollect extends Model
     {
         $data = $this->alias('a')
             ->join('user b', 'a.other_user_id = b.id')
-            ->where(['a.user_id' => user_info('id'), 'a.delete_time' => null])
+            ->where('a.user_id', user_info('id'))
             ->field('b.id, b.user_name, b.avatar')
             ->group('a.other_user_id')
             ->order('a.create_time desc')
@@ -49,7 +49,7 @@ class RelationUserCollect extends Model
     private function isTogether($v)
     {
         $result = self::get(['user_id' => $v['id'], 'other_user_id' => user_info('id')]);
-        $v['is_together'] = empty($result) ? false : true;
+        $v['is_together'] = empty($result) ? 0 : 1;
         return $v;
     }
 
@@ -64,17 +64,17 @@ class RelationUserCollect extends Model
      */
     public function collectMe($page, $row)
     {
-        $data['total'] = self::where('user_id', user_info('id'))->count();
-        $data['list'] = $this->alias('a')
+        $data= $this->alias('a')
             ->join('user b', 'a.user_id = b.id')
-            ->where(['a.other_user_id' => user_info('id'), 'a.delete_time' => null])
+            ->where('a.other_user_id', user_info('id'))
             ->field('b.id, b.user_name, b.avatar')
             ->group('a.user_id')
             ->order('a.create_time desc')
             ->page($page, $row)
             ->select();
-
         $list['list'] = array_map(['self', 'isTogether'], $data);
+        $list['total'] = self::where('user_id', user_info('id'))->count();
+
         return $data;
     }
 }

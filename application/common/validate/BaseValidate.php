@@ -83,26 +83,6 @@ class BaseValidate extends Validate {
     }
 
     /**
-     * 图文内容
-     * @param $value  array   ['img' => '', 'sort' => 1, 'text' => '']
-     * @return mixed
-     */
-    protected function checkImageText($value)
-    {
-        if (!is_array($value))
-            return '图文内容格式错误';
-        foreach ($value as $item) {
-            if (!array_key_exists('sort', $item) || !is_numeric($item['sort']))
-                return 'sort 排序字段值不能为空或非数字';
-            if ((!array_key_exists('img', $item) || empty($item['img'])) &&
-                (!array_key_exists('text', $item) || empty($item['text'])))
-                return '文本内容块中图片和文字不能都为空';
-        }
-        return true;
-    }
-
-
-    /**
      * 百度AI文本审核
      * 批量审核当前 提交的文本内容
      * @param $value

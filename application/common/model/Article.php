@@ -29,6 +29,16 @@ class Article extends Model
         return $this->hasMany('ArticleComment', 'article_id', 'id');
     }
 
+    public function getClassifyNameAttr($value)
+    {
+        return Db::table('article_classify')->where('id', $value)->value('classify_name');
+    }
+
+    public function getCommentNumAttr($value)
+    {
+        return Db::name('article_comment')->where(['article_id' => $value, 'state' => 1, 'parent_id' => 0])->where('delete_time is null')->count();
+    }
+
 
     /**
      * 删除文章

@@ -11,26 +11,25 @@
 namespace app\api\model;
 
 use app\common\model\Article as CoreArticle;
-use app\common\model\RelationArticleCollect;
 use app\common\model\RelationUserCollect;
+use app\common\model\UserLocation;
 use app\common\validate\BaseValidate;
-use think\Cache;
 use think\Db;
 
 class Article extends CoreArticle
 {
 
     /**
-     * 在列表中，文字显示的字数长度
+     * 显示范围
      * @var int
      */
-    private $textLength = 150;
+    private $distance = 100;
 
     /**
-     * 在列表中，显示的图片张数
+     * 在列表中，显示的图片/视频张数
      * @var int
      */
-    private $imgNum = 3;
+    private $imgNum = 9;
 
     /**
      * 默认显示评论数
@@ -38,233 +37,226 @@ class Article extends CoreArticle
      */
     protected $commentRow = 10;
 
-    protected $page = 1;
-
-    protected $row = 10;
-
-    protected $order = [
-        0 => 'a.create_time desc',      //最新
-        1 => 'pageview desc',           //人气
-        2 => '',                        //最近
-        3 => 'comment_total desc',      //回复
-    ];
-
     /**
-     * 附近的用户
-     * @var array
-     */
-    protected $ids = [];
-
-    /**
-     * 设置页码和每页条目数
-     * @param $page
-     * @param $row
-     */
-    public function setPage($page, $row)
-    {
-
-        $this->page = $page;
-        $this->row  = $row;
-    }
-
-    /**
-     * 获取附近的用户
+     * 创建圈子文章
+     * @param $param
      * @return array
+     * @throws \app\lib\exception\BaseException
      */
-    protected function getNearbyUsers()
+    public function createData($param)
     {
-
-        //TODO 获取附近用户 [ids] 按距离排序，近的在前远的在后    (方法待完善)
-        $this->ids = [26];
+        try {
+            Db::startTrans();
+            $param['user_id'] = user_info('id');
+            $location = UserLocation::get(user_info('id'));
+            $param['lng'] = $location->lng;
+            $param['lat'] = $location->lat;
+            $this->save($param);
+            foreach ($param['content'] as $k => $v) {
+                if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
+                    $v['article_id'] = $this->id;
+                    $v['sort'] = $k;
+                    if (array_key_exists('style', $v) && !empty($v['style'])) {
+                        $v['style'] = json_encode($v['style']);
+                    }
+                    $itemResult = (new ArticleContent())->save($v);
+                    if (!$itemResult) {
+                        exception('内容块数据写入失败：'.json_encode($v));
+                    }
+                }
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            (new BaseValidate())->error($e);
+        }
+        return ['id' => $this->id];
     }
 
     /**
-     * 圈子  同城的 和已关注的用户的动态
-     * @param string $classifyId
-     * @param int $order
+     * 修改
+     * @param $param
+     * @return bool
+     * @throws \app\lib\exception\BaseException
+     */
+    public function updateData($param)
+    {
+        try {
+            Db::startTrans();
+            $this->save($param);
+            $itemModel = new ArticleContent();
+            $itemIds = $itemModel->where('article_id', $param['id'])->column('id');
+            //id 存在，但内容为空的，删除
+            $updateIds = [];
+            foreach ($param['content'] as $k => $v) {
+                if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
+                    if (empty($v['id'])) {
+                        unset($v['id']);
+                    } else {
+                        array_push($updateIds, $v['id']);
+                    }
+                    $v['content_id'] = $param['id'];
+                    $v['sort'] = $k;
+                    if (array_key_exists('style', $v) && !empty($v['style'])) {
+                        $v['style'] = json_encode($v['style']);
+                    }
+                    (new ArticleContent())->save($v);
+                }
+            }
+            //删除
+            $ids = array_diff($itemIds, $updateIds);
+            if ($ids) {
+                $itemModel->where('id', 'in', implode(',', $ids))->delete();
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            (new BaseValidate())->error($e);
+        }
+        return true;
+    }
+
+    /**
+     * 文章列表
+     * @param $param
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
+    public function list($param)
+    {
+        //TODO 是否显示已拉黑用户的文章动态？ 暂不处理!!!
+
+        $page = $param['page'] ?? 0;
+        $row = $param['row'] ?? 10;
+
+        $field = "s.id, s.user_id, s.title, s.classify_id, s.read_num , s.share_num, s.create_time, s.distance ";
+        $where = " `state` = 1 and `delete_time` is null ";
+        if (!empty($param['classify_id'])) {
+            $where .= "and classify_id = {$param['classify_id']} ";
+        }
+        if (!empty($param['keyword'])) {
+            $keyword = trim($param['keyword']);
+            $where .= " and title like '%$keyword%'";
+        }
+        if (!empty($param['user_id'])) {
+            $where .= " and user_id = {$param['user_id']}";
+        }
+
+        $order = 's.create_time DESC';
+        if (!empty($param['order_by'])) {
+            if ($param['order_by'] == 'distance') {
+                $order = "s.distance";
+            } else {
+                $order = "s.{$param['order_by']} DESC";
+            }
+        }
+        $location = UserLocation::get(user_info('id'));
+        $sql = "select {$field} from (
+                select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$location->lng}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$location->lat}-lat)/360),2)))) as distance 
+                from `article` 
+                where {$where}) as s 
+                where s.distance <= {$this->distance}
+                order by {$order} limit {$page}, {$row}";
+        $list = Db::query($sql);
+        foreach ($list as $k => $v) {
+            $list[$k]['classify_name'] = Db::table('article_classify')->where('id', $v['classify_id'])->value('classify_name');
+            unset($list[$k]['classify_id']);
+            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : round($v['distance'], 2) . '米';
+            $user = User::get($v['user_id']);
+            $list[$k]['user_name'] = $user->user_name;
+            $list[$k]['avatar'] = $user->avatar;
+            $list[$k]['collect_num'] = Db::table('relation_article_collect')->where('article_id', $v['id'])->count();
+            $list[$k]['great_num'] = Db::table('relation_article_great')->where('article_id', $v['id'])->count();
+            $list[$k]['comment_num'] = Db::table('article_comment')
+                ->where(['article_id' => $v['id'], 'parent_id' => 0, 'state' => 1])
+                ->where('delete_time is null')
+                ->count();
+            $list[$k]['create_time'] = timeFormatForHumans($v['create_time']);
+            $list[$k]['content'] = $this->getArticleContentOnList($v['id']);
+        }
+        return $list;
+    }
+
+    /**
+     * 获取文章在列表中索要显示的图片
+     * @param $articleId
      * @return array
+     * @throws \think\exception\DbException
      */
-    public function localArticleList($classifyId = '', $param)
+    private function getArticleContentOnList($articleId)
     {
-
-        $order = $param['order'];
-        $this->getNearbyUsers();
-        //已关注用户
-        $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
-        $ids                = array_merge($this->ids, $users);
-        $where['a.user_id'] = ['in', $ids];
-        if ($classifyId) {
-            $where['d.id'] = $classifyId;
+        $content = ArticleContent::all(function ($query) use ($articleId) {
+            $query->where('article_id', $articleId)
+                ->field('type, img, img_thumb, video')
+                ->order('sort');
+        });
+        $imgList = [];
+        $num = 0;
+        foreach ($content as $v) {
+            if ($num >= $this->imgNum) {
+                break;
+            }
+            if ($v['type'] != 1) {
+                array_push($imgList, $v);
+                $num ++;
+            }
         }
-        if (array_key_exists('keyword', $param)) {
-            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
-        }
-
-        return $this->executeSelect($where, $order);
+        return $imgList;
     }
 
+
     /**
-     * 根据用户id获取圈子文章
+     * 文章详情
      * @param $id
      * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
      */
-    public function getListByUserId($id, $param)
+    public function details($id)
     {
+       $data = self::get(function ($query) use ($id) {
+           $query->where('id', $id)
+               ->field('id, user_id, classify_id as classify_name, title, music, read_num, share_num, id as comment_num, create_time');
+       })->toArray();
 
-        $where = is_array($id) ? ['b.id' => ['in', $id]] : ['b.id' => $id];
-        if (array_key_exists('keyword', $param)) {
-            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
-        }
+       $user = User::get($data['user_id']);
+       $data['user_name'] = $user->user_name;
+       $data['avatar'] = $user->avatar;
+       $data['create_time'] = timeFormatForHumans(strtotime($data['create_time']));
 
-        return $this->executeSelect($where);
+       $data['content'] = ArticleContent::all(function ($query) use ($id) {
+           $query->where('article_id', $id)
+               ->where('delete_time is null')
+               ->field('delete_time', true)
+               ->order('sort');
+       });
+       $data['comment'] = (new ArticleComment())->getComments($id, 0, 5);
+       return $data;
     }
 
-    /**
-     * 我收藏的文章
-     * @return array
-     */
-    public function myCollectArticle()
-    {
-
-        $ids   = RelationArticleCollect::where('user_id', user_info('id'))->page($this->page, $this->row)->column('article_id');
-        $where = ['a.id' => ['in', $ids]];
-
-        return $this->executeSelect($where);
-    }
 
     /**
      * 我关注的用户
      * @return mixed
      */
-    public function myCollect()
+    public function myCollect($param)
     {
-
-        return (new RelationUserCollect())->myCollect($this->page, $this->row);
+        return (new RelationUserCollect())->myCollect($param['page'] ?? 1, $param['row'] ?? 10);
     }
 
     /**
      * 关注我的
-     * @return false|\PDOStatement|string|\think\Collection
-     */
-    public function collectMe()
-    {
-
-        return (new RelationUserCollect())->collectMe($this->page, $this->row);
-    }
-
-    /**
-     * 根据分类获取文章列表
-     * @param $classifyId
      * @param $param
-     * @return array
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getListByClassify($classifyId, $param)
+    public function collectMe($param)
     {
-
-        if (!array_key_exists('order', $param)) {
-            $param['order'] = 0;
-        }
-        if ($param['order'] == 2) {
-            $this->getNearbyUsers();
-        }
-        $where = ['a.classify_id' => $classifyId];
-        if (array_key_exists('keyword', $param)) {
-            $where['a.title'] = ['like', "%" . $param['keyword'] . "%"];
-        }
-
-        return $this->executeSelect($where, $param['order']);
+        return (new RelationUserCollect())->collectMe($param['page'] ?? 1, $param['row'] ?? 10);
     }
 
-    /**
-     * 组装模型
-     * @return object
-     */
-    private function recombination()
-    {
-
-        $map   = [
-            'a.state'       => 1,
-            'a.delete_time' => null,
-            'b.state'       => 1,
-            'b.delete_time' => null,
-            'c.delete_time' => null,
-            'd.state'       => 1,
-            'd.delete_time' => null,
-            //'e.delete_time'     => null
-        ];
-        $model = $this->alias('a')
-            ->join('user b', 'a.user_id = b.id')
-            ->join('article_classify d', 'a.classify_id = d.id')//分类
-            ->join('article_comment c', 'a.id = c.article_id', 'LEFT')//评论
-            ->join('relation_article_great e', 'a.id = e.article_id', 'LEFT')//点赞
-            ->where($map);
-
-        return $model;
-    }
-
-    /**
-     * 执行查询
-     * @param $where
-     * @param int $order
-     * @return array
-     * @throws \think\exception\DbException
-     */
-    private function executeSelect($where, $order = 0)
-    {
-
-        $orderWord = $order == 2 ? 0 : $order;
-        $orderBy   = $this->order[$orderWord];
-        $data      = $this->recombination()
-            ->where($where)
-            ->field("a.id, a.title, b.id as user_id, b.user_name, b.avatar, a.create_time, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
-            ->group('a.id, c.article_id, e.article_id')
-            //            ->page($this->page, $this->row)
-            ->order($orderBy)
-            ->select();
-        if ($order == 2) {
-            //按用户距离最近排序
-            $sort = [];
-            foreach ($data as $k => $v) {
-                $data[$k]['sort'] = array_search($v['user_id'], $this->ids);
-                $sort[$k]         = $data[$k]['sort'];
-            }
-            array_multisort($sort, SORT_ASC, $data);
-        }
-        $list = [];
-        foreach ($data as $v) {
-            if (array_key_exists('sort', $v)) {
-                unset($v['sort']);
-            }
-            $v['img'] = $this->getContentImages($v['id']);
-            array_push($list, $v);
-        }
-
-        return $list;
-    }
-
-    /**
-     * 获取 文章的第一个内容块的文字和 前三张图片
-     * @param $articleId
-     * @return array
-     * @throws \think\exception\DbException
-     */
-    private function getContentImages($articleId)
-    {
-
-        $contents = ArticleContent::all(['article_id' => $articleId]);
-        $imgs     = [];
-        foreach ($contents as $k => $v) {
-            if (count($imgs) < $this->imgNum) {
-                array_push($imgs, get_thumb_img($v->img));
-            }
-            if (count($imgs) == $this->imgNum) {
-                break;
-            }
-        }
-
-        return $imgs;
-    }
 
     /**
      * 分享数 + 1
@@ -274,102 +266,7 @@ class Article extends CoreArticle
      */
     public function share($id)
     {
-
-        return $this->where('id', $id)->setInc('share');
-    }
-
-    /**
-     * 根据id 获取详情
-     * @param $id
-     * @throws \think\exception\DbException
-     * @return array
-     */
-    public function details($id)
-    {
-
-        $data            = $this->recombination()
-            ->where('a.id', $id)
-            ->field("a.id, a.user_id as user_id, b.user_name, b.avatar, a.create_time,a.title, a.music, d.classify_name, a.pageview, count(e.id) as great_total, count(c.id) as comment_total")
-            ->group('e.id, c.id')
-            ->find();
-        $data['is_self'] = user_info('id') == $data['user_id'];
-        //文章内容
-        $data['content'] = ArticleContent::all(function ($query) use ($id) {
-
-            $query->where('article_id', $id)->field('img, text, sort')->order('sort');
-        });
-        //文章评论
-        $data['comments'] = (new ArticleComment())->getComments($id, 1, $this->commentRow);
-
-        return $data;
-    }
-
-    /**
-     * 根据id 获取部分详情 编辑时使用
-     * @param $id
-     * @throws \think\exception\DbException
-     * @return array
-     */
-    public function getArticleContent($data)
-    {
-
-        $articleId   = $data['articleId'];
-        $result      = [
-            'id'         => '',
-            'music'      => '',
-            'music_name' => '',
-            'items'      => [],
-        ];
-        $cacheData   = $result;
-        $contentData = Db::query("SELECT id,user_id,music,music_name FROM `article` WHERE id = {$articleId}");
-        if (!empty($contentData)) {
-            $contentItemData = Db::query("SELECT id,text,img FROM `article_content` WHERE article_id = {$articleId} ORDER BY sort DESC,id ASC");
-            $result          = $contentData[0];
-            $result['items'] = [];
-            if (!empty($contentItemData)) {
-                $result['items'] = $contentItemData;
-            }
-            $cacheData = [
-                'id'         => $contentData[0]['id'],
-                'music'      => $contentData[0]['music'],
-                'music_name' => $contentData[0]['music_name'],
-                'items'      => $result['items'],
-            ];
-        }
-        // 重置缓存
-        Cache::set('article_cache_' . $articleId, json_encode($cacheData));
-
-        return $result;
-    }
-
-    public function queryArticle($data)
-    {
-
-        $order      = $data['order'];
-        $classifyId = $data['classifyId'];
-        $keyword    = $data['keyword'];
-        $userId     = $data['userId'];
-        $selfUserId = $data['selfUserId'];
-        $isSelf     = $data['isSelf'];
-        $this->getNearbyUsers();
-        //已关注用户
-        $users              = RelationUserCollect::where('user_id', user_info('id'))->column('other_user_id');
-        $ids                = array_merge($this->ids, $users);
-        $where['a.user_id'] = ['in', $ids];
-        $where = [];
-        if (!empty($classifyId)) {
-            $where['d.id'] = $classifyId;
-        }
-        if (!empty($keyword)) {
-            $where['a.title'] = ['like', "%" . $keyword . "%"];
-        }
-        if (!empty($userId)) {
-            $where['b.id'] = is_array($userId) ? ['in', $userId] : $userId;
-        }
-        if (!empty($isSelf)) {
-            $where['b.id'] = $selfUserId;
-        }
-        return $this->executeSelect($where, $order);
+        return $this->where('id', $id)->setInc('share_num');
     }
 
 }
