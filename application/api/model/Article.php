@@ -231,6 +231,16 @@ class Article extends CoreArticle
                ->order('sort');
        });
        $data['comment'] = (new ArticleComment())->getComments($id, 0, 5);
+        //用户关注
+        if ($data['user_id'] == user_info('id')) {
+            //不能关注自己
+            $data['is_collect'] = -1;
+        } else {
+            $isCollect = Db::table('relation_user_collect')
+                ->where(['user_id' => user_info('id'), 'other_user_id' => $data['user_id']])
+                ->find();
+            $data['is_collect'] = $isCollect ? 1 : 0;
+        }
        return $data;
     }
 
