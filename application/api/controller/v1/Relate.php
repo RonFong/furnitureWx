@@ -384,6 +384,7 @@ class Relate extends BaseController
         } catch (\Exception $e) {
             $this->response->error($e);
         }
+
         return json($this->result, 200);
     }
 
