@@ -93,69 +93,23 @@ class Relate
      * @param array $param
      * @param int $page
      * @param null $row
-     * @return array
-     * @throws \app\lib\exception\BaseException
+     * @return array|false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getCollectList($param = [], $page = 1, $row = null)
     {
-        //关联数据
-        $data = [
-            'factory' => [
-                'name'  => '厂家',
-                'list'  => []
-            ],
-            'shop'  => [
-                'name'  => '经销商',
-                'list'  => []
-            ],
-            'goods' => [
-                'name'  => '商品',
-                'list'  => []
-            ],
-            'default'  => []
-        ];
-
-        if (array_key_exists('category', $param) && !array_key_exists($param['category'], $data)) {
-            (new BaseValidate())->error(Response::QUERY_ERROR);
-        } else if (!array_key_exists('category', $param) || !array_key_exists($param['category'], $data)) {
-            //查询出所有数据后，再分页
-            $sumPage = $page == 0 ? 1 : $page ;
-            $sumRow = $row;
-            $page = 1;
-            $row = null;
+        if ($param['category'] == 'factory') {
+            return $this->getFactory($page, $row);
         }
-
-        $map = ['a.user_id' => user_info('id')];
-
-        if (!array_key_exists('category', $param) || $param['category'] == 'factory') {
-            $model = Db::table('relation_factory_collect');
-            $data['factory']['list'] = $this->getFactory($model, $map, $page, $row);
+        if ($param['category'] == 'shop') {
+            return $this->getShop($page, $row);
         }
-
-        if (!array_key_exists('category', $param) || $param['category'] == 'shop') {
-            $model = Db::table('relation_shop_collect');
-            $data['factory']['list'] = $this->getShop($model, $map, $page, $row);
+        if ($param['category'] == 'goods') {
+            return $this->getGoods($page, $row);
         }
-
-        if (!array_key_exists('category', $param) || $param['category'] == 'goods') {
-            $model = Db::table('relation_goods_collect');
-            $data['goods']['list'] = $this->getGoods($model, $map, $page, $row);
-        }
-
-        //获取所有收藏，按时间排序
-        if (!array_key_exists('category', $param) || !array_key_exists($param['category'], $data)) {
-
-            $list = array_merge($data['goods']['list'], $data['shop']['list'], $data['factory']['list']);
-            $data['factory']['list'] = $data['shop']['list'] = $data['goods']['list'] = [];
-
-            $array = array_column($list, 'create_time');
-            array_multisort($array, SORT_DESC, $list);
-
-            //按分页，切割数组返回
-            $data['default'] = array_slice($list, $sumPage == 1 ? 0 : ($sumPage - 1) * $sumRow, $sumRow);
-        }
-
-        return $data;
+        return [];
     }
 
 
@@ -234,66 +188,68 @@ class Relate
 
     /**
      * 根据驱动表获取厂家数据
-     * @param $model
-     * @param $map
      * @param $page
      * @param $row
-     * @return mixed
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    protected function getFactory($model, $map, $page, $row)
+    protected function getFactory($page, $row)
     {
-        return $model
+        return Db::table('relation_factory_collect')
             ->alias('a')
             ->join('factory b', 'a.factory_id = b.id')
-            ->where($map)
-            ->field('b.id, b.factory_name as name, b.factory_img as img, b.state, ifnull(b.delete_time, 0) as deleted, 1 as type')
-            ->field("from_unixtime(a.create_time, '%Y-%m-%d') as create_time")
-            ->order('a.id desc')
+            ->where(['a.user_id' => user_info('id'), 'b.state' => 1])
+            ->where('b.delete_time is null')
+            ->field('b.id, b.factory_name, b.factory_img_thumb')
             ->page($page, $row)
+            ->order('a.create_time desc')
             ->select();
     }
 
     /**
-     * 根据驱动表获取商家数据
-     * @param $model
-     * @param $map
+     * 获取收藏的商家
      * @param $page
      * @param $row
-     * @return mixed
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    protected function getShop($model, $map, $page, $row)
+    protected function getShop($page, $row)
     {
-        return $model
+        return Db::table('relation_shop_collect')
             ->alias('a')
             ->join('shop b', 'a.shop_id = b.id')
-            ->where($map)
-            ->field('b.id, b.shop_name as name, b.shop_img as img, b.state, ifnull(b.delete_time, 0) as deleted, 2 as type')
-            ->field("from_unixtime(a.create_time, '%Y-%m-%d') as create_time")
-            ->order('a.id desc')
+            ->where(['a.user_id' => user_info('id'), 'b.state' => 1])
+            ->where('b.delete_time is null')
+            ->field('b.id, b.shop_name, b.shop_img_thumb')
             ->page($page, $row)
+            ->order('a.create_time desc')
             ->select();
     }
 
     /**
-     * 根据驱动表获取商品数据
-     * @param $model
-     * @param $map
+     * 获取收藏的商品
      * @param $page
      * @param $row
-     * @return mixed
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    protected function getGoods($model, $map, $page, $row)
+    protected function getGoods($page, $row)
     {
-        return $model
+        return Db::name('relation_goods_collect')
             ->alias('a')
             ->join('goods b', 'a.goods_id = b.id')
             ->join('goods_color c', 'a.goods_id = c.goods_id')
-            ->where($map)
-            ->field('b.id, b.goods_name as name, b.state, ifnull(b.delete_time, 0) as deleted, c.img as img, 3 as type')
-            ->field("from_unixtime(a.create_time, '%Y-%m-%d') as create_time")
+            ->where(['a.user_id' => user_info('id')])
+            ->field('b.id, b.goods_name as name, b.state, ifnull(b.delete_time, 0) as deleted, c.img as img')
             ->group('b.id')
-            ->order('a.id desc')
             ->page($page, $row)
+            ->order('a.create_time desc')
             ->select();
     }
 }
