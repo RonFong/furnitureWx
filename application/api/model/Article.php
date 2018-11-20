@@ -287,7 +287,7 @@ class Article extends CoreArticle
     {
         $param['ids'] = Db::table('relation_article_collect')
             ->where('user_id', user_info('id'))
-            ->page($param['page'] ?? 1, $param['row'] ?? 10)
+            ->page($param['page'] ?? 0, $param['row'] ?? 10)
             ->column('article_id');
         if ($param['ids']) {
             return $this->list($param);
