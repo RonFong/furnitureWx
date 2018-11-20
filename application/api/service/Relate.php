@@ -202,7 +202,7 @@ class Relate
             ->join('factory b', 'a.factory_id = b.id')
             ->where(['a.user_id' => user_info('id'), 'b.state' => 1])
             ->where('b.delete_time is null')
-            ->field('b.id, b.factory_name, b.factory_img_thumb')
+            ->field('b.id, b.factory_name as name, b.factory_img_thumb as img_thumb')
             ->page($page, $row)
             ->order('a.create_time desc')
             ->select();
@@ -224,7 +224,7 @@ class Relate
             ->join('shop b', 'a.shop_id = b.id')
             ->where(['a.user_id' => user_info('id'), 'b.state' => 1])
             ->where('b.delete_time is null')
-            ->field('b.id, b.shop_name, b.shop_img_thumb')
+            ->field('b.id, b.shop_name as name, b.shop_img_thumb as img_thumb')
             ->page($page, $row)
             ->order('a.create_time desc')
             ->select();
@@ -246,7 +246,7 @@ class Relate
             ->join('goods b', 'a.goods_id = b.id')
             ->join('goods_color c', 'a.goods_id = c.goods_id')
             ->where(['a.user_id' => user_info('id')])
-            ->field('b.id, b.goods_name, c.img_thumb')
+            ->field('b.id, b.goods_name as name, c.img_thumb')
             ->group('b.id')
             ->page($page, $row)
             ->order('a.create_time desc')
