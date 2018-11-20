@@ -380,11 +380,11 @@ class Relate extends BaseController
     public function getCollectList()
     {
         try {
-            $result = (new RelateServer())->getCollectList($this->data, $this->page, $this->row);
+            $this->result['data'] = (new RelateServer())->getCollectList($this->data, $this->page, $this->row);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
-        return json($result, 200);
+        return json($this->result, 200);
     }
 
 
