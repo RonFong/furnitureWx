@@ -246,7 +246,7 @@ class Relate
             ->join('goods b', 'a.goods_id = b.id')
             ->join('goods_color c', 'a.goods_id = c.goods_id')
             ->where(['a.user_id' => user_info('id')])
-            ->field('b.id, b.goods_name as name, b.state, ifnull(b.delete_time, 0) as deleted, c.img as img')
+            ->field('b.id, b.goods_name, c.img_thumb')
             ->group('b.id')
             ->page($page, $row)
             ->order('a.create_time desc')
