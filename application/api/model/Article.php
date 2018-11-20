@@ -233,7 +233,8 @@ class Article extends CoreArticle
        $data['comment'] = (new ArticleComment())->getComments($id, 0, 5);
        $data['is_collect'] = Db::table('relation_article_collect')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
         $data['is_great'] = Db::table('relation_article_great')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
-
+        $data['collect_count'] = Db::table('relation_article_collect')->where('article_id', $id)->count();
+        $data['great_count'] = Db::table('relation_article_great')->where('article_id', $id)->count();
         //用户关注
         if ($data['user_id'] == user_info('id')) {
             //不能关注自己
