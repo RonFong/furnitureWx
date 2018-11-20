@@ -77,6 +77,7 @@ class ArticleComment extends CoreArticleComment
             ->select();
         $list     = [];
         foreach ($comments as $v) {
+            $v['is_great'] = $this->isGreat($v['id']);
             $v['create_time'] = timeFormatForHumans($v['create_time']);
             $v = $this->recursionComment($v);
             $v['child_num'] = count($v['child']);
@@ -111,6 +112,7 @@ class ArticleComment extends CoreArticleComment
                 'user_name'            => $info->user_name,     //回复人昵称
                 'respondent_user_name' => '',                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
                 'reply_content'        => $info->content,
+                'is_great'             => $this->isGreat($info->id)
             ];
             if (!empty($v['child'])) {
                 $content['respondent_user_name'] = $reply['user_name'] ?? $reply['user_name'];
@@ -118,8 +120,18 @@ class ArticleComment extends CoreArticleComment
             array_push($v['child'], $content);
             $this->recursionComment($v, $info);
         }
-
         return $v;
+    }
+
+    /**
+     * 是否点赞评论
+     * @param $id
+     * @return int
+     */
+    private function isGreat($id)
+    {
+         $isGreat = Db::table('relation_comment_great')->where(['user_id' => user_info('id'), 'comment_id' => $id])->find();
+        return $isGreat ? 1 : 0;
     }
 
 
