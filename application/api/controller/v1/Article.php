@@ -292,9 +292,25 @@ class Article extends BaseController
      */
     public function myCollect()
     {
-
         try {
             $this->result['data'] = $this->currentModel->myCollect($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * 文章收藏列表
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function articleCollectList()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->articleCollectList($this->data);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
