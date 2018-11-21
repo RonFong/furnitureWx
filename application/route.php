@@ -84,10 +84,12 @@ Route::group('api/:version', function () {
         Route::post('create', 'api/:version.Shop/create');
         //获取附近的店
         Route::get('nearby', 'api/:version.Shop/nearby');
-        // 获取门店信息 & 首页图文
+        // 获取门店首页信息
         Route::get('homePage', 'api/:version.Shop/homePage');
+        // 获取门店信息 & 首页图文
+        Route::get('info', 'api/:version.Shop/shopInfo');
         // 修改门店信息
-        Route::put('info', 'api/:version.Shop/info');
+        Route::put('info', 'api/:version.Shop/updateInfo');
         // 编辑门店注册信息
         Route::get('editRegister','api/:version.Shop/editRegister');
         // 发布商品
