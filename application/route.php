@@ -61,8 +61,8 @@ Route::group('api/:version', function () {
         Route::put('share', 'api/:version.Article/share');
         //获取文章详情
         Route::get('details', 'api/:version.Article/details');
-        //我的收藏
-        Route::get('myCollectArticle', 'api/:version.Article/myCollectArticle');
+        //我收藏的文章列表
+        Route::get('articleCollectList', 'api/:version.Article/articleCollectList');
         //我关注的用户
         Route::get('myCollect', 'api/:version.Article/myCollect');
         //我的粉丝

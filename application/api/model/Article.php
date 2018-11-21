@@ -142,6 +142,11 @@ class Article extends CoreArticle
             $where .= " and user_id = {$param['user_id']}";
         }
 
+        if (!empty($param['ids'])) {
+            $ids = implode(',', $param['ids']);
+            $where .= " and id in ($ids) ";
+        }
+
         $order = 's.create_time DESC';
         if (!empty($param['order_by'])) {
             if ($param['order_by'] == 'distance') {
@@ -269,6 +274,25 @@ class Article extends CoreArticle
     public function collectMe($param)
     {
         return (new RelationUserCollect())->collectMe($param['page'] ?? 1, $param['row'] ?? 10);
+    }
+
+
+    /**
+     * 用户收藏的文章
+     * @param $param
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
+    public function articleCollectList($param)
+    {
+        $param['ids'] = Db::table('relation_article_collect')
+            ->where('user_id', user_info('id'))
+            ->page($param['page'] ?? 0, $param['row'] ?? 10)
+            ->column('article_id');
+        if ($param['ids']) {
+            return $this->list($param);
+        }
+        return [];
     }
 
 
