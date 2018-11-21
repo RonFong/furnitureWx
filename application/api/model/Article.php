@@ -178,8 +178,38 @@ class Article extends CoreArticle
                 ->count();
             $list[$k]['create_time'] = timeFormatForHumans($v['create_time']);
             $list[$k]['content'] = $this->getArticleContentOnList($v['id']);
+            $list[$k]['is_collect'] = $this->isCollect(user_info('id'), $v['id']);
+            $list[$k]['is_great'] = $this->isGreat(user_info('id'), $v['id']);
         }
         return $list;
+    }
+
+    /**
+     * 是否收藏文章
+     * @param $userId
+     * @param $articleId
+     * @return int
+     */
+    private function isCollect($userId, $articleId)
+    {
+        $result = Db::table('relation_article_collect')
+            ->where(['user_id' => $userId, 'article_id' => $articleId])
+            ->find();
+        return $result ? 1 : 0;
+    }
+
+    /**
+     * 是否点赞文章
+     * @param $userId
+     * @param $articleId
+     * @return int
+     */
+    private function isGreat($userId, $articleId)
+    {
+        $result = Db::table('relation_article_great')
+            ->where(['user_id' => $userId, 'article_id' => $articleId])
+            ->find();
+        return $result ? 1 : 0;
     }
 
     /**
