@@ -19,6 +19,8 @@ Route::group('api/:version', function () {
     Route::put('user/changeName', 'api/:version.User/changeName');
     //修改头像
     Route::put('user/changeAvatar', 'api/:version.User/changeAvatar');
+    //用户名片信息
+    Route::get('user/info', 'api/:version.User/info');
     //获取openid
     Route::get('getOpenid', 'api/:version.User/getOpenid');
     //获取token

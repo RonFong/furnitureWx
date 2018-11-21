@@ -36,8 +36,8 @@ class User extends BaseController
     public function getOpenid()
     {
 
-        $weChat               = new Wechat();
-        $openid               = $weChat->getOpenid(['code' => $_GET['code']]);
+        $weChat = new Wechat();
+        $openid = $weChat->getOpenid(['code' => $_GET['code']]);
         $this->result['data'] = ['openid' => $openid];
 
         return json($this->result, 200);
@@ -92,5 +92,23 @@ class User extends BaseController
         return json($this->result, 201);
     }
 
+
+    /**
+     * 用户名片
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function info()
+    {
+        try {
+            if (empty($this->data['user_id'])) {
+                exception('user_id 不能为空');
+            }
+            $this->result['data'] = $this->currentModel->info($this->data['user_id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
 
 }
