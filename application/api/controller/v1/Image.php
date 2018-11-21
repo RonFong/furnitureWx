@@ -47,12 +47,12 @@ class Image extends BaseController
      */
     protected $thumbImgSize = [
         'square'    => [
-            'width'     => 80,
-            'height'    => 80
+            'width'     => 150,
+            'height'    => 150
         ],
         'rectangle' => [
-            'width'     => 100,
-            'height'    => 75
+            'width'     => 180,
+            'height'    => 135
         ]
 
     ];
@@ -130,7 +130,7 @@ class Image extends BaseController
             $array[count($array) - 2] = $array[count($array) - 2] . '_thumb.';
             $thumbImg = implode('', $array);
             $image->thumb($thumbWidth, $thumbHeight, $thumbType)
-                ->save($this->imgPath . $thumbImg);
+                ->save($this->imgPath . $thumbImg, null, 90);
 
             //加水印
 //            (ThinkImage::open($this->imgPath . $imgFile))->text('abc', FONTS_PATH . '/fontawesome-webfont.ttf', 20, '#ffffff')->save($this->imgPath . $imgFile);
