@@ -91,9 +91,11 @@ class Relate extends BaseValidate
             'shop_id' => $data['shop_id']
         ]);
         if ($data['type'] == 'inc' && $isExist) {
-            return '请勿重复收藏';
+//            return '请勿重复收藏';
+            return config('system.msg_for_frequently');
         } elseif ($data['type'] == 'dec' && !$isExist) {
-            return '此商家未被收藏';
+//            return '此商家未被收藏';
+            return config('system.msg_for_frequently');
         }
         return true;
     }
@@ -112,9 +114,11 @@ class Relate extends BaseValidate
             'factory_id' => $data['factory_id']
         ]);
         if ($data['type'] == 'inc' && $isExist) {
-            return '请勿重复收藏';
+//            return '请勿重复收藏';
+            return config('system.msg_for_frequently');
         } elseif ($data['type'] == 'dec' && !$isExist) {
-            return '此厂家未被收藏';
+//            return '此厂家未被收藏';
+            return config('system.msg_for_frequently');
         }
         return true;
     }
@@ -133,9 +137,11 @@ class Relate extends BaseValidate
                 'article_id' => $data['article_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
-                return '请勿重复收藏';
+//                return '请勿重复收藏';
+                return config('system.msg_for_frequently');
             } elseif ($data['type'] == 'dec' && !$isExist) {
-                return '此文章未被收藏';
+//                return '此文章未被收藏';
+                return config('system.msg_for_frequently');
             }
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -183,9 +189,11 @@ class Relate extends BaseValidate
                 'comment_id' => $data['comment_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
-                return '请勿重复点赞';
+//                return '请勿重复点赞';
+                return config('system.msg_for_frequently');
             } elseif ($data['type'] == 'dec' && !$isExist) {
-                return '此文评论未被点赞';
+//                return '此文评论未被点赞';
+                return config('system.msg_for_frequently');
             }
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -208,9 +216,11 @@ class Relate extends BaseValidate
                 'goods_id' => $data['goods_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
-                return '请勿重复收藏';
+//                return '请勿重复收藏';
+                return config('system.msg_for_frequently');
             } elseif ($data['type'] == 'dec' && !$isExist) {
-                return '此商品未被收藏';
+//                return '此商品未被收藏';
+                return config('system.msg_for_frequently');
             }
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -235,9 +245,11 @@ class Relate extends BaseValidate
                 'other_user_id' => $data['other_user_id']
             ]);
             if ($data['type'] == 'inc' && $isExist) {
-                return '请勿重复关注';
+//                return '请勿重复关注';
+                return config('system.msg_for_frequently');
             } elseif ($data['type'] == 'dec' && !$isExist) {
-                return '此用户未被关注';
+//                return '此用户未被关注';
+                return config('system.msg_for_frequently');
             }
         } catch (\Exception $e) {
             return $e->getMessage();
