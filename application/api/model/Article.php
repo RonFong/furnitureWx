@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\api\model;
 
+use app\api\service\ArticleReadHistory;
 use app\common\model\Article as CoreArticle;
 use app\common\model\RelationUserCollect;
 use app\common\model\UserLocation;
@@ -245,28 +246,30 @@ class Article extends CoreArticle
      * @param $id
      * @return array
      * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
     public function details($id)
     {
-       $data = self::get(function ($query) use ($id) {
-           $query->where('id', $id)
-               ->field('id, user_id, classify_id as classify_name, title, music, read_num, share_num, id as comment_num, create_time');
-       })->toArray();
+        $data = self::get(function ($query) use ($id) {
+            $query->where('id', $id)
+                ->field('id, user_id, classify_id as classify_name, title, music, read_num, share_num, id as comment_num, create_time');
+        })->toArray();
 
-       $user = User::get($data['user_id']);
-       $data['user_name'] = $user->user_name;
-       $data['avatar'] = $user->avatar;
-       $data['create_time'] = timeFormatForHumans(strtotime($data['create_time']));
+        $user = User::get($data['user_id']);
+        $data['user_name'] = $user->user_name;
+        $data['avatar'] = $user->avatar;
+        $data['create_time'] = timeFormatForHumans(strtotime($data['create_time']));
 
-       $data['content'] = ArticleContent::all(function ($query) use ($id) {
-           $query->where('article_id', $id)
-               ->where('delete_time is null')
-               ->field('delete_time', true)
-               ->order('sort');
-       });
-       $data['comment'] = (new ArticleComment())->getComments($id, 0, 5);
-       $data['is_collect'] = Db::table('relation_article_collect')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
+        $data['content'] = ArticleContent::all(function ($query) use ($id) {
+            $query->where('article_id', $id)
+                ->where('delete_time is null')
+                ->field('delete_time', true)
+                ->order('sort');
+        });
+        $data['comment'] = (new ArticleComment())->getComments($id, 0, 5);
+        $data['is_collect'] = Db::table('relation_article_collect')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
         $data['is_great'] = Db::table('relation_article_great')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
         $data['collect_count'] = Db::table('relation_article_collect')->where('article_id', $id)->count();
         $data['great_count'] = Db::table('relation_article_great')->where('article_id', $id)->count();
@@ -280,6 +283,10 @@ class Article extends CoreArticle
                 ->find();
             $data['user_is_collect'] = $isCollect ? 1 : 0;
         }
+
+        //记录阅读历史 和 阅读数
+        ArticleReadHistory::record($id);
+
        return $data;
     }
 

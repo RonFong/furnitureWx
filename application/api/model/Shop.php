@@ -4,6 +4,7 @@ namespace app\api\model;
 
 use app\common\model\Shop as CoreShop;
 use app\common\model\UserLocation;
+use app\api\service\Popularity;
 use think\Db;
 
 class Shop extends CoreShop
@@ -82,6 +83,9 @@ class Shop extends CoreShop
                 ->find();
             $info->is_collect = $isCollect ? 1 : 0;
         }
+        //人气值
+        Popularity::increase($shopId, 2);
+
         return $info;
     }
 
