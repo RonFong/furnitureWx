@@ -68,11 +68,28 @@ class Shop extends BaseController
     }
 
     /**
+     * 获取商家信息 "我信息" -> "门店注册信息页"
+     * @return \think\response\Json
+     */
+    public function shopInfo()
+    {
+        try {
+            if (user_info('type') != 2) {
+                exception('非商家用户，无此数据');
+            }
+            $this->result['data'] = $this->currentModel->get(user_info('group_id'));
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
      * 更新门店信息
      * @return array
      * @throws \app\lib\exception\BaseException
      */
-    public function info()
+    public function updateInfo()
     {
         $this->currentValidate->goCheck('info');
         try {
