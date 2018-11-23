@@ -29,11 +29,17 @@ class Article extends Model
         return $this->hasMany('ArticleComment', 'article_id', 'id');
     }
 
-    public function getClassifyNameAttr($value)
+    /**
+     * 获取分类名称
+     * @param string $value
+     * @param string $data
+     * @return mixed
+     */
+    public function getClassifyNameAttr($value, $data)
     {
-        return Db::table('article_classify')->where('id', $value)->value('classify_name');
+        $value = isset($data['classify_id']) ? $data['classify_id'] : $value;
+        return Db::name('article_classify')->where('id', $value)->value('classify_name');
     }
-
     public function getCommentNumAttr($value)
     {
         return Db::name('article_comment')->where(['article_id' => $value, 'state' => 1, 'parent_id' => 0])->where('delete_time is null')->count();

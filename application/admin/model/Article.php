@@ -28,18 +28,6 @@ class Article extends CoreArticle
     }
 
     /**
-     * 获取分类名称
-     * @param string $value
-     * @param string $data
-     * @return mixed
-     */
-    public function getClassifyNameAttr($value, $data)
-    {
-        $value = isset($data['classify_id']) ? $data['classify_id'] : $value;
-        return Db::name('article_classify')->where('id', $value)->value('classify_name');
-    }
-
-    /**
      * 获取作者名称
      * @param string $value
      * @param string $data
