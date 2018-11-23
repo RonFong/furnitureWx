@@ -84,7 +84,7 @@ class ShopCommodity extends Base
         $this->assign('shopList', $shopList);
 
         //分类列表
-        $classifyList = Db::name('group_classify')->field('id,classify_name')->select();
+        $classifyList = Db::name('factory_classify')->field('id,classify_name')->select();
         $this->assign('classifyList', $classifyList);
 
         //音乐列表

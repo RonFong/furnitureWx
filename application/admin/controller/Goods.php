@@ -31,7 +31,7 @@ class Goods extends Base
         $web_type = !empty($param['web_type']) ? $param['web_type'] : '';
 
         //分类名称列表
-        $classifyList = Db::name('group_classify')->select();
+        $classifyList = Db::name('factory_classify')->select();
         $this->assign('classifyList', $classifyList);
 
         //页面类型：厂家/商城
@@ -100,7 +100,7 @@ class Goods extends Base
             $this->assign('data_coupon', $data_coupon);
         }
         //厂家分类名称列表
-        $classifyList = Db::name('group_classify')->select();
+        $classifyList = Db::name('factory_classify')->select();
         $this->assign('classifyList', $classifyList);
 
         //商品分类名称列表

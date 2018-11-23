@@ -38,7 +38,7 @@ class Goods extends CoreGoods
     public function getClassifyNameAttr($value, $data)
     {
         $value = isset($data['classify']) ? $data['classify'] : $value;
-        return Db::name('group_classify')->where('id', $value)->value('classify_name');
+        return Db::name('factory_classify')->where('id', $value)->value('classify_name');
     }
 
     /**

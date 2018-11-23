@@ -75,7 +75,7 @@ class HomeContent extends Base
 
         //分类名称列表
         $value_id = !empty($data['parent_id']) ? $data['parent_id'] : 0;
-        $classifyList = Db::name('group_classify')->select();
+        $classifyList = Db::name('factory_classify')->select();
         $classifyList = \Tree::get_option_tree($classifyList, $value_id, 'classify_name', 'id', 'parent_id');
         $this->assign('classifyList', $classifyList);
 
