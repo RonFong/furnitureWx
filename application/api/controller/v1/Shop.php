@@ -131,7 +131,7 @@ class Shop extends BaseController
     {
         try {
             if (empty($this->data['shopId']) && user_info('type') != 2) {
-                exception('非商家用户，必传 shopId');
+                exception('非商家用户');
             }
             $this->result['data'] = $this->currentModel->homePageData($this->data);
         } catch (\Exception $e) {
