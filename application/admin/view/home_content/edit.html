@@ -20,13 +20,13 @@
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label">商家名称：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="record" value="{$groupName|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">音乐：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <select name="music">
                             <option value="">请选择</option>
                             {volist name="$musicList" id="vo"}
@@ -37,14 +37,14 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">录音：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="record" value="{$data.record|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 {notempty name="content"}
                 <div class="layui-form-item">
                     <label class="layui-form-label">内容详情：</label>
-                    <div class="layui-input-block content">
+                    <div class="layui-input-inline content">
                         {volist name="$content" id="vo"}
                         <a href="{$vo.img}" target="_blank">
                             <img src="{$vo.img}" alt="图片">

@@ -7,7 +7,7 @@
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>分类名称：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="category_name" value="{$data.category_name|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
@@ -18,9 +18,12 @@
                         <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default=''" value="1"}checked{/eq}>
                     </div>
                 </div>
-            </div>
-            <div class="tpl-form-action">
-                <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">保存</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
