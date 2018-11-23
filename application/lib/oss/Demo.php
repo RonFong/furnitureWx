@@ -112,6 +112,10 @@ class Demo
      */
     public function delete($object = '')
     {
+        //去掉域名部分
+        if (strpos($object,'.com/') !==false) {
+            $object = substr($object,strpos($object,'.com/')+5);
+        }
         try {
             $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
             $ossClient->deleteObject($this->bucket, $object);

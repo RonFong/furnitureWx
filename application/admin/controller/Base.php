@@ -176,11 +176,11 @@ abstract class Base extends Controller
     public function deleteImg()
     {
         $param = $this->request->param();
-        if (empty($param['table_name']) || empty($param['field_name']) || empty($param['id']) || empty($param['img_url'])) {
+        if (empty($param['table_name']) || empty($param['field_name']) || empty($param['img_url'])) {
             $this->error("参数错误！");
         }
 
-        if (delete_file($param['img_url'])) {
+        if (delete_file($param['img_url']) && !empty($param['id'])) {
             $pk = Db::name($param['table_name'])->getPk();
             Db::name($param['table_name'])->where($pk, $param['id'])->update([$param['field_name']=>'']);
         }

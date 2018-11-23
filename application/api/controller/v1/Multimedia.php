@@ -71,18 +71,17 @@ class Multimedia extends BaseController
      */
     public function delete()
     {
-        if (empty($this->data['table_name']) || empty($this->data['field_name']) || empty($this->data['id']) || empty($this->data['url'])) {
-            $this->error("参数错误！");
+        if (empty($this->data['table_name']) || empty($this->data['field_name']) || empty($this->data['url'])) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = "参数错误！";
+            return json($this->result, 200);
         }
 
         $res = $this->ossServer->delete($this->data['url']);
-        if ($res === false) {
-            $this->result['state'] = 0;
-            $this->result['msg'] = $this->ossServer->getError();
-            return json($this->result, 200);
+        if ($res !== false && !empty($this->data['id'])) {
+            $pk = Db::name($this->data['table_name'])->getPk();
+            Db::name($this->data['table_name'])->where($pk, $this->data['id'])->update([$this->data['field_name']=>'']);
         }
-        $pk = Db::name($this->data['table_name'])->getPk();
-        Db::name($this->data['table_name'])->where($pk, $this->data['id'])->update([$this->data['field_name']=>'']);
         return json($this->result, 200);
 
     }
