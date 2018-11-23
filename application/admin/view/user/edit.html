@@ -74,7 +74,8 @@
         </div>
     </form>
     <div class="tpl-form-action">
-        <button class="layui-btn layui-btn-radius layui-btn-lg upload-test">视频上传测试</button>
+        <button class="layui-btn layui-btn-radius layui-btn-lg upload-test">上传视频</button>
+        <button class="layui-btn layui-btn-radius layui-btn-lg del-test">删除视频</button>
     </div>
 </div>
 
@@ -88,6 +89,11 @@
         //上传图片
         uploadImgAjax('.img-avatar', '{:url("uploadImg")}', 1024);//头像
         uploadImgAjax('.upload-test', 'http://ts-www.furn.cm/api/v1/multimedia/uploadAudio', 10240);//测试上传
+        $('.del-test').click(function () {
+            $.post('http://ts-www.furn.cm/api/v1/multimedia/delete', {}, function (res) {
+                console.log(res);
+            },'json');
+        });
 
         //监听提交
         form.on('submit(formSubmit)', function(data){

@@ -56,4 +56,20 @@ class Multimedia extends BaseController
         $this->result['data'] = ['url' => $this->ossServer->uploadVideo()];
         return json($this->result, 200);
     }
+
+    /**
+     * 删除文件
+     * @return \think\response\Json
+     */
+    public function delete()
+    {
+        $res = $this->ossServer->delete();
+        if ($res === false) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $this->ossServer->getError();
+            return json($this->result, 200);
+        }
+
+        return json($this->result, 200);
+    }
 }

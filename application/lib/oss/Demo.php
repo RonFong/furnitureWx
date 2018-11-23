@@ -70,9 +70,7 @@ class Demo
 
         try{
             $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
-
             $res = $ossClient->uploadFile($this->bucket, $object, $filePath);
-
         } catch(OssException $e) {
             $this->error = $e->getMessage();
             return false;
@@ -94,7 +92,14 @@ class Demo
      */
     public function delete()
     {
-
+        $object = "1542944401191.jpg";
+        try{
+            $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
+            $ossClient->deleteObject($this->bucket, $object);
+        } catch(OssException $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
         return true;
     }
 

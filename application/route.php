@@ -208,4 +208,6 @@ Route::group('api/:version', function () {
     Route::post('multimedia/uploadAudio', 'api/:version.Multimedia/uploadAudio');
     //上传视频
     Route::post('multimedia/uploadVideo', 'api/:version.Multimedia/uploadVideo');
+    //删除文件
+    Route::post('multimedia/delete', 'api/:version.Multimedia/delete');
 });
