@@ -11,7 +11,6 @@
 
 namespace app\api\controller\v1;
 
-
 use app\api\controller\BaseController;
 use app\lib\oss\Demo;
 use think\Request;
@@ -37,7 +36,14 @@ class Multimedia extends BaseController
      */
     public function uploadAudio()
     {
-        $this->result['data'] = ['url' => $this->ossServer->uploadAudio()];
+        $res = $this->ossServer->uploadAudio();
+        if ($res === false) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $this->ossServer->getError();
+            return json($this->result, 200);
+        }
+
+        $this->result['data'] = ['url' => $res];
         return json($this->result, 200);
     }
 

@@ -31,6 +31,10 @@ class ComposerStaticInit73f2152ced4bd4155798e78cc03b3bb4
         array (
             'Phinx\\' => 6,
         ),
+        'O' => 
+        array (
+            'OSS\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -67,6 +71,10 @@ class ComposerStaticInit73f2152ced4bd4155798e78cc03b3bb4
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
+        ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
         ),
     );
 

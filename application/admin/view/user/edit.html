@@ -1,7 +1,7 @@
 {extend name="common/index"}
 {block name="content"}
 <div class="layui-row">
-    <form id="editForm" class="layui-form tpl-form-label-long" action="">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="" enctype="multipart/form-data">
         <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
         <div class="layui-field-box">
             <div class="layui-main">
@@ -73,6 +73,9 @@
             </div>
         </div>
     </form>
+    <div class="tpl-form-action">
+        <button class="layui-btn layui-btn-radius layui-btn-lg upload-test">视频上传测试</button>
+    </div>
 </div>
 
 {/block}
@@ -84,6 +87,7 @@
 
         //上传图片
         uploadImgAjax('.img-avatar', '{:url("uploadImg")}', 1024);//头像
+        uploadImgAjax('.upload-test', 'http://ts-www.furn.cm/api/v1/multimedia/uploadAudio', 10240);//测试上传
 
         //监听提交
         form.on('submit(formSubmit)', function(data){

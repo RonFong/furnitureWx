@@ -170,7 +170,8 @@ function uploadImgAjax(element, url, size) {
             elem: element
             ,url: url
             ,size: size //限制文件大小，单位 KB
-            ,exts: "jpg|png|gif|bmp|jpeg"
+            // ,exts: "jpg|png|gif|bmp|jpeg"
+            ,accept: 'file' //允许上传的文件类型
             ,before: function(obj){
                 lay_load = layer.load(2, {time: 20*1000});
             }
