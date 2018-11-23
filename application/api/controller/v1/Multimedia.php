@@ -11,9 +11,9 @@
 
 namespace app\api\controller\v1;
 
-
 use app\api\controller\BaseController;
 use app\lib\oss\Demo;
+use think\Db;
 use think\Request;
 
 /**
@@ -37,7 +37,14 @@ class Multimedia extends BaseController
      */
     public function uploadAudio()
     {
-        $this->result['data'] = ['url' => $this->ossServer->uploadAudio()];
+        $res = $this->ossServer->uploadAudio();
+        if ($res === false) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $this->ossServer->getError();
+            return json($this->result, 200);
+        }
+
+        $this->result['data'] = ['url' => $res];
         return json($this->result, 200);
     }
 
@@ -47,7 +54,35 @@ class Multimedia extends BaseController
      */
     public function uploadVideo()
     {
-        $this->result['data'] = ['url' => $this->ossServer->uploadVideo()];
+        $res = $this->ossServer->uploadVideo();
+        if ($res === false) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $this->ossServer->getError();
+            return json($this->result, 200);
+        }
+
+        $this->result['data'] = ['url' => $res];
         return json($this->result, 200);
+    }
+
+    /**
+     * 删除文件
+     * @return \think\response\Json
+     */
+    public function delete()
+    {
+        if (empty($this->data['table_name']) || empty($this->data['field_name']) || empty($this->data['url'])) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = "参数错误！";
+            return json($this->result, 200);
+        }
+
+        $res = $this->ossServer->delete($this->data['url']);
+        if ($res !== false && !empty($this->data['id'])) {
+            $pk = Db::name($this->data['table_name'])->getPk();
+            Db::name($this->data['table_name'])->where($pk, $this->data['id'])->update([$this->data['field_name']=>'']);
+        }
+        return json($this->result, 200);
+
     }
 }

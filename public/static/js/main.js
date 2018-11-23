@@ -192,7 +192,7 @@ function uploadImgAjax(element, url, size) {
 
 /*删除图片*/
 function delImgAjax(element) {
-    var dom = $(element).closest('.layui-input-block');
+    var dom = $(element).closest('.layui-form-item');
     var field = dom.find('input[type="hidden"]');
 
     var data = {id:field.data("id"), table_name:field.data("table"), field_name:field.attr("name"), img_url:field.val()};
@@ -213,3 +213,50 @@ function delImgAjax(element) {
 $('.tools-bottom').on('click', function (e) {
     e.stopPropagation();
 });
+
+/*上传大文件*/
+function uploadBigFile(element, url, size) {
+    if (!size) {size = 512000;}
+    if (!url) {url = '/api/v1/multimedia/uploadAudio';}
+    var lay_load;
+    layui.use(['layer', 'upload'], function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: element
+            ,url: url
+            ,size: size //限制文件大小，单位 KB
+            ,accept: 'file' //允许上传的文件类型
+            ,before: function(obj){
+                lay_load = layer.load(2, {time: 20*1000});
+            }
+            ,done: function(res){
+                layer.close(lay_load);
+                if(res.state){
+                    var control = $(element).closest('.layui-form-item');
+                    $(control).find('input[type="text"]').val(res.data.url); //赋值上传
+                    layer.msg(res.msg);
+                } else {
+                    layer.alert(res.msg);
+                }
+            }
+        });
+    });
+}
+
+/*删除大文件*/
+function deleteBigFile(element) {
+    var dom = $(element).closest('.layui-form-item');
+    var field = dom.find('input[type="text"]');
+
+    var data = {id:field.data("id"), table_name:field.data("table"), field_name:field.attr("name"), url:field.val()};
+    layer.confirm('删除后无法恢复，确定继续吗？', function(index){
+        $.post('/api/v1/multimedia/delete', data, function (result) {
+            layer.close(index);
+            if (result.state) {
+                field.val('');
+            } else {
+                layer.alert(result.msg, {icon:2});
+            }
+        }, 'json');
+    });
+}

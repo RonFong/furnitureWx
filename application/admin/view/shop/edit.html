@@ -7,11 +7,11 @@
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>门头照：</label>
-                    <img src="{$data.shop_img}" height="200" alt="门头照">
+                    <img src="{$data.shop_img|default=''}" width="200" alt="门头照">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
-                    <img src="{$data.wx_code}" height="100" alt="微信二维码">
+                    <img src="{$data.wx_code|default=''}" width="100" alt="微信二维码">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <label class="layui-form-label">营业执照：</label>
-                <a href="{$data.license}" target="_blank"><img src="{$data.license}" height="300" alt="营业执照"></a>
+                <a href="{$data.license|default=''}" target="_blank"><img src="{$data.license|default=''}" width="300" alt="营业执照"></a>
             </div>
             </div>
             <div class="tpl-form-action">

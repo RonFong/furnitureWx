@@ -1,38 +1,38 @@
 {extend name="common/index"}
 {block name="content"}
 <div class="layui-row">
-    <form id="editForm" class="layui-form tpl-form-label-long" action="">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="" enctype="multipart/form-data">
         <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label">头像：</label>
-                    <div class="layui-input-block img-avatar" style="text-align: center;">
+                    <div class="layui-input-inline img-avatar" style="text-align: center;">
                         <input type="hidden" name="avatar" value="{$avatar}">
                         <img src="{$avatar}" class="tpl-img-avatar">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>帐号：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="user_name" value="{$data.user_name|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机号：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="phone" value="{$data.phone|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">微信号：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="wx_account" value="{$data.wx_account|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户类型：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <select name="type">
                             <option value="">请选择</option>
                             <option value="1" {eq name="data.type|default=''" value="1"}selected{/eq}>厂家用户</option>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">厂/商家名称：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <select name="group_id">
                             <option value="">请选择</option>
                             {volist name="groupList" id="vo"}
@@ -67,9 +67,12 @@
                         <input type="radio" name="status" value="0" title="冻结" {eq name="$data.status|default=1" value="0"}checked{/eq}>
                     </div>
                 </div>
-            </div>
-            <div class="tpl-form-action">
-                <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">保存</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
