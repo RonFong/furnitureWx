@@ -32,12 +32,9 @@ class FactoryClassify extends Base
     public function getDataList()
     {
         $param = $this->request->param();
-        $map = ['group_type' => 1];
+        $map = [];
         if (!empty($param['classify_name'])) {
             $map['classify_name'] = ['like', "%{$param['classify_name']}%"];
-        }
-        if (!empty($param['group_id'])) {
-            $map['group_id'] = $param['group_id'];
         }
 
         return $this->currentModel->where($map)->order('group_id desc')->layTable(['group_name']);
