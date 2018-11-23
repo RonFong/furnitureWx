@@ -12,14 +12,14 @@ namespace app\admin\controller;
 
 
 use think\Request;
-use app\admin\model\GroupClassify;
+use app\admin\model\FactoryClassify as FactoryClassifyModel;
 
 class FactoryClassify extends Base
 {
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new GroupClassify();
+        $this->currentModel = new FactoryClassifyModel();
     }
 
     public function index()
