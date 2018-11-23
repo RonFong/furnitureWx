@@ -34,7 +34,7 @@ class Demo
      * 存储空间名称
      * @var string
      */
-    private $bucket= "dlx-0";
+    private $bucket = "dlx-0";
 
     /**
      * 错误提示
@@ -43,6 +43,7 @@ class Demo
     private $error = '';
 
     private $request;
+
     /**
      * 构造函数
      * Demo constructor.
@@ -65,13 +66,13 @@ class Demo
         }
 
         $file_info = $file->getInfo();
-        $object = time(). rand(100, 999). strrchr($file_info['name'], '.');// 文件名称
+        $object = 'audio/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $filePath = $file_info['tmp_name'];//本地文件路径
 
-        try{
+        try {
             $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
             $res = $ossClient->uploadFile($this->bucket, $object, $filePath);
-        } catch(OssException $e) {
+        } catch (OssException $e) {
             $this->error = $e->getMessage();
             return false;
         }
@@ -84,19 +85,37 @@ class Demo
      */
     public function uploadVideo()
     {
-        return 'https://www.7qiaoban.cn/multimedia/xxxxxxxxxxxx.mp4';
+        $file = $this->request->file('file');
+        if (empty($file)) {
+            $this->error = '上传数据为空';
+            return false;
+        }
+
+        $file_info = $file->getInfo();
+        $object = 'video/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
+        $filePath = $file_info['tmp_name'];//本地文件路径
+
+        try {
+            $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
+            $res = $ossClient->uploadFile($this->bucket, $object, $filePath);
+        } catch (OssException $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
+        return $res['oss-request-url'] ?? '';
     }
 
     /**
      * 删除
+     * @param $object
+     * @return bool
      */
-    public function delete()
+    public function delete($object = '')
     {
-        $object = "1542944401191.jpg";
-        try{
+        try {
             $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
             $ossClient->deleteObject($this->bucket, $object);
-        } catch(OssException $e) {
+        } catch (OssException $e) {
             $this->error = $e->getMessage();
             return false;
         }

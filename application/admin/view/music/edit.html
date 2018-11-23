@@ -16,11 +16,11 @@
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label">图片：</label>
-                    <div class="layui-input-block image-url">
+                    <div class="layui-input-inline image-url">
                         <div class="layui-upload-drag">
                             <div class="image-text">
                                 <i class="layui-icon layui-icon-upload"></i>
-                                <p>点击上传，或将文件拖拽到此处</p>
+                                <p>点击上传</p>
                                 <p>&nbsp;</p>
                             </div>
                             <div class="image-preview">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">所属分类：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <select name="category_id">
                             <option value="">请选择</option>
                             {volist name="$categoryList" id="vo"}
@@ -48,25 +48,29 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>音乐名：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="name" value="{$data.name|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">艺术家名：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="author" value="{$data.author|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">音乐地址：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="link" value="{$data.link|default=''}" placeholder="请输入" class="layui-input">
+                    <div class="layui-input-inline">
+                        <input type="text" name="link" value="{$data.link|default=''}" placeholder="请输入" class="layui-input" data-id="{$data.id|default=''}" data-table="music">
+                    </div>
+                    <div class="layui-btn-group">
+                        <button type="button" class="layui-btn layui-btn-primary upload-audio"><i class="layui-icon layui-icon-upload"></i>上传音乐</button>
+                        <button type="button" class="layui-btn layui-btn-primary"  onclick="deleteBigFile(this);"><i class="layui-icon layui-icon-delete"></i>删除音乐</button>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">排序：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="text" name="sort" value="{$data.sort|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
@@ -77,9 +81,13 @@
                         <input type="radio" name="state" value="1" title="审核通过" {eq name="$data.state|default=''" value="1"}checked{/eq}>
                     </div>
                 </div>
-            </div>
-            <div class="tpl-form-action">
-                <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">保存</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </form>
@@ -94,6 +102,9 @@
 
         //上传图片
         uploadImgAjax('.image-url', '{:url("uploadImg")}', 4096);
+
+        //上传大文件
+        uploadBigFile('.upload-audio', '/api/v1/multimedia/uploadAudio');
 
         //监听提交
         form.on('submit(formSubmit)', function(data){
