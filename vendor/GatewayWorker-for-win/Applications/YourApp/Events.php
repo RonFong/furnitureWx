@@ -36,8 +36,8 @@ class Events
     {
         $result = [
             'state' => $state,
-            'msg'   => $msg,
-            'data'  => $data
+            'msg' => $msg,
+            'data' => $data
         ];
         return json_encode($result);
     }
@@ -66,47 +66,115 @@ class Events
      */
     public static function onMessage($client_id, $message)
     {
-//        try {
+        try {
             $msg = json_decode($message, true);
             if (!$msg) {
                 return;
             }
             switch ($msg['type']) {
                 case 'bind':
-                    $uid = $msg['userId'];
-                    //用户登录后初始化
-                    Gateway::bindUid($client_id, $uid);
-                    Gateway::sendToUid($uid, self::result([
-                        'type' => 'init',
-                        'data' => '11111111'
-                    ]));
-                    break;
-                    //管理员，加入管理员群组
-                    if (strpos($uid, 'admin') !== false) {
-                        Gateway::joinGroup($client_id, 'admin');
+                    if (empty($msg['userId'])) {
+                        Gateway::sendToClient($client_id, self::result([], 'bind: userId 不能为空', 0));
+                        return;
                     }
-                    //保存登录记录
-                    $messageList = self::init($uid);
-                    Gateway::sendToUid($uid, self::result([
-                        'type' => 'init',
-                        'data' => $messageList
-                    ]));
+                    $userId = $msg['userId'];
+
+                    //用户登录后初始化
+                    Gateway::bindUid($client_id, $userId);
+                    $_SESSION[$client_id] = $userId;
+
+                    if (strpos($userId, 'service') !== false || self::isServiceAccount($userId)) {
+                        //后台管理员 和 客服账号 加入客服群组
+                        Gateway::joinGroup($client_id, 'service');
+                    }
+
+                    //获取消息列表
+                    static::getMessageList($userId);
+
+                    // 向客服组发送用户登录消息
+                    $data = [
+                        'type' => 'userLogin',
+                        'data' => ['user_id' => $userId]
+                    ];
+                    Gateway::sendToGroup('service', self::result($data), $client_id);
                     break;
 
-                case 'toUser':
-                    //发送消息给好友
-                    $msg['data']['type'] = 'toUser';
+                case 'postMessage':
+                    //发送消息给用户
+                    $fromId = $_SESSION[$client_id];
+                    if (empty($msg['toId']) || empty($msg['message'])) {
+                        Gateway::sendToClient($client_id, self::result([], 'postMessage: toId 和 message 不能为空', 0));
+                        return;
+                    }
                     $data = [
-                        'type' => 'showMessage',
-                        'data' => $msg['data']
+                        'type' => 'receiveMessage',
+                        'from_id' => $fromId,
+                        'message' => $msg['message'],
                     ];
-                    Gateway::sendToUid($msg['toid'], self::result($data));
+
+                    $messageType = 1;
+                    //和客服相关的，都发到客服群
+                    if (self::isServiceAccount($msg['toId']) || self::isServiceAccount($fromId)) {
+                        //发到客服群组
+                        $data['toId'] = $msg['toId'];   //发给哪个客服的
+                        Gateway::sendToGroup('service', self::result($data), $client_id);
+                        $messageType = 2;
+                    }
+
+                    //发给一般用户
+                    if (!self::isServiceAccount($msg['toId'])) {
+                        Gateway::sendToUid($msg['toId'], self::result($data));
+                    }
+
+                    //获取更新后的消息列表
+                    static::getMessageList($msg['toId']);
+                    static::getMessageList($fromId);
+
+                    //保存消息
+                    self::saveMessage($fromId, $msg['toId'], $msg['message'], $messageType);
+                    break;
+
+                case 'messageBeenReadOne':
+                    //设置与某个用户的聊天消息为已读
+                    if (empty($msg['message_user_id'])) {
+                        Gateway::sendToClient($client_id, self::result([], 'messageBeenReadOne: message_user_id 不能为空', 0));
+                        return;
+                    }
+                    $userId = $_SESSION[$client_id];
+                    self::messageBeenRead($userId, $msg['message_user_id']);
+                    static::getMessageList($userId);
+                    break;
+
+                case 'messageBeenReadAll':
+                    //设置全部聊天消息为已读
+                    $userId = $_SESSION[$client_id];
+                    self::messageBeenRead($userId);
+                    static::getMessageList($userId);
+                    break;
+
+                case 'clearMessageOne':
+                    //清空与某个用户的聊天消息
+                    $userId = $_SESSION[$client_id];
+                    self::clearMessage($userId, $msg['message_user_id']);
+                    static::getMessageList($userId);
+                    break;
+
+                case 'clearMessageAll':
+                    //清空全部聊天消息
+                    $userId = $_SESSION[$client_id];
+                    self::clearMessage($userId);
+                    static::getMessageList($userId);
+                    break;
+
+                default:
+                    Gateway::sendToClient($client_id, self::result([], 'type 值错误', 0));
+                    return;
                     break;
             }
-            return;
-//        } catch (\Exception $e) {
-//            self::errorLog($e->getMessage());
-//        }
+        } catch (\Exception $e) {
+            self::errorLog($e->getMessage());
+        }
+        return;
     }
 
     /**
@@ -116,15 +184,15 @@ class Events
     public static function onClose($client_id)
     {
         try {
-            $uid = Gateway::getUidByClientId($client_id);
-            if (strpos($uid, 'admin') === false) {
-                self::log($uid, 0);
-                // 向管理组发送用户登出消息
+            $userId = $_SESSION[$client_id];
+            if (strpos($userId, 'service') === false) {
+                self::log($userId, 0);
+                // 向客服组发送用户登出消息
                 $data = [
-                    'type' => 'logout',
-                    'data' => ['user_id' => $uid]
+                    'type' => 'userLogout',
+                    'data' => ['user_id' => $userId]
                 ];
-                Gateway::sendToGroup('admin', self::result($data));
+                Gateway::sendToGroup('service', self::result($data));
             }
         } catch (\Exception $e) {
             self::errorLog($e->getMessage());
@@ -132,7 +200,7 @@ class Events
     }
 
     //用户登录后的消息统计
-    private static function init($userId)
+    private static function messageList($userId)
     {
         try {
             self::log($userId, 1);
@@ -158,7 +226,87 @@ class Events
     }
 
     /**
-     * 链接与断开  记录
+     * 保存消息到数据库
+     * @param $fromId
+     * @param $toId
+     * @param $message
+     * @param $type
+     */
+    private static function saveMessage($fromId, $toId, $message, $type)
+    {
+        $saveData = [
+            'from_id' => $fromId,
+            'to_id' => $toId,
+            'message' => $message,
+            'type' => $type,
+            'send_time' => time()
+        ];
+        self::$db->insert('websocket_message')->cols($saveData)->query();
+    }
+
+    /**
+     * 判断一个用户是否为客服账号
+     * @param $userId
+     * @return bool
+     */
+    private static function isServiceAccount($userId)
+    {
+        $user = self::$db->select('is_service_account')->from('user')->where("id={$userId}")->row();
+        return $user['is_service_account'] == 1 ? true : false;
+    }
+
+    /**
+     * 获取消息列表
+     * @param $userId
+     */
+    private static function getMessageList($userId)
+    {
+        $messageList = self::messageList($userId);
+        $messageList['type'] = 'messageList';
+        Gateway::sendToUid($userId, self::result($messageList));
+    }
+
+    /**
+     * 设置聊天消息为已读
+     * @param $fromId
+     * @param $toId
+     */
+    private static function messageBeenRead($toId, $fromId = 0)
+    {
+        if ($toId == 0) {
+            //  type <> 3 不可同时操作系统消息和用户消息
+            $map = "to_id = $toId and state = 1 and type <> 3";
+        } else {
+            $map = "to_id = $toId and from_id = $fromId state = 1";
+        }
+        self::$db->update('websocket_message')
+            ->where($map)
+            ->cols(['read' => 1, 'read_time' => time()])
+            ->query();
+    }
+
+    /**
+     * 清空聊天记录
+     * @param $fromId
+     * @param $toId
+     */
+    private static function clearMessage($toId, $fromId = 0)
+    {
+        if ($toId == 0) {
+            //   type <> 3  不可同时操作系统消息和用户消息
+            $map = "(from_id = $toId or to_id = $toId) and type <> 3";
+        } else {
+            $map = "(to_id = $fromId and from_id = $toId) or (to_id = $toId and from_id = $fromId)";
+        }
+        self::$db->update('websocket_message')
+            ->where($map)
+            ->cols(['to_clear' => 1])
+            ->query();
+    }
+
+
+    /**
+     * 登录登出 记录
      * @param $userId
      * @param $type
      */
@@ -169,10 +317,14 @@ class Events
             ->query();
     }
 
+    /**
+     * 系统错误
+     * @param $msg
+     */
     private static function errorLog($msg)
     {
         self::$db->insert('error_log')
-            ->cols(['url' => 'gatewaywork', 'msg' => $msg, 'time' => time()])
+            ->cols(['url' => 'gatewaywork', 'msg' => $msg, 'time' => date('Y-m-d H:i:s', time())])
             ->query();
     }
 
@@ -189,26 +341,27 @@ class Events
 
         if ($time >= 31104000) { // N年前
             $num = (int)($time / 31104000);
-            return $num.'年前';
+            return $num . '年前';
         }
         if ($time >= 2592000) { // N月前
             $num = (int)($time / 2592000);
-            return $num.'月前';
+            return $num . '月前';
         }
         if ($time >= 86400) { // N天前
             $num = (int)($time / 86400);
-            return $num.'天前';
+            return $num . '天前';
         }
         if ($time >= 3600) { // N小时前
             $num = (int)($time / 3600);
-            return $num.'小时前';
+            return $num . '小时前';
         }
         if ($time >= 60) { // N分钟前
             $num = (int)($time / 60);
-            return $num.'分钟前';
+            return $num . '分钟前';
         }
         if ($time >= 30) { // N分钟前
             return "刚才";
         }
-        return "刚刚";}
+        return "刚刚";
+    }
 }
