@@ -40,11 +40,9 @@ class Shop extends Base
         $map = $this->getDataListMap();
 
         return $this->currentModel
-            ->field(true)
-            ->field('admin_user as admin_user_name, state as state_des, audit_state as audit_state_des')
             ->where($map)
             ->order('id desc')
-            ->layTable();
+            ->layTable(['admin_user_name', 'state_des', 'audit_state_des', 'home_content_has', 'shop_commodity_count']);
     }
 
     private function getDataListMap()

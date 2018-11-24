@@ -10,23 +10,71 @@
 namespace app\admin\model;
 
 use app\common\model\Shop as CoreShop;
+use think\Db;
 
 class Shop extends CoreShop
 {
+    /**
+     * 获取管理员名称
+     * @param $value
+     * @param $data
+     * @return mixed|string
+     */
     public function getAdminUserNameAttr($value, $data)
     {
-        $user = User::get($value);
+        $id = $data['admin_user'] ?? $value;
+        $user = User::get($id);
         return $user->user_name ?? '';
     }
 
-    public function getStateDesAttr($value)
+    /**
+     * 获取状态中文名
+     * @param $value
+     * @param $data
+     * @return string
+     */
+    public function getStateDesAttr($value, $data)
     {
+        $value = $data['state'] ?? $value;
         return $value ? '启用' : '禁用';
     }
 
-    public function getAuditStateDesAttr($value)
+    /**
+     * 获取审核状态名称
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getAuditStateDesAttr($value, $data)
     {
-        $array = ['未审核', '通过', '不通过'];
-        return $array[$value];
+        $value = $data['audit_state'] ?? $value;
+        $item = ['未审核', '通过', '不通过'];
+        return $item[$value];
     }
+
+    /**
+     * 获取是否有首页图文
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getHomeContentHasAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        $count = Db::name('home_content')->where('group_type', 2)->where('group_id', $value)->count();
+        return $count > 0 ? '有' : '无';
+    }
+
+    /**
+     * 获取商品数量
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getShopCommodityCountAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        return Db::name('shop_commodity')->where('shop_id', $value)->where('state', 1)->count();
+    }
+
 }
