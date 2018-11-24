@@ -24,8 +24,6 @@ class FactoryClassify extends Base
 
     public function index()
     {
-        $groupId = $this->request->param('group_id') ?? '';
-        $this->assign('groupId', $groupId);
         return $this->fetch();
     }
 
@@ -37,7 +35,7 @@ class FactoryClassify extends Base
             $map['classify_name'] = ['like', "%{$param['classify_name']}%"];
         }
 
-        return $this->currentModel->where($map)->order('group_id desc')->layTable(['group_name']);
+        return $this->currentModel->where($map)->order('factory_id desc')->layTable();
     }
 
 }
