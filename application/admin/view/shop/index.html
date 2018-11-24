@@ -86,7 +86,9 @@
             ,cellMinWidth:50
             ,cols: [[
                 {type:'numbers', title:'序号', width:45}
-                ,{field:'shop_name', title:'商户号'}
+                ,{field:'shop_name', title:'商户号', templet: function (data) {
+                    return data.shop_name != '' ? '<a href="/admin/shop_commodity/index?shop_id='+data.id+'" target="_blank">'+data.shop_name+'</a>' : "";
+                }}
                 ,{field:'admin_user_name', title:'创建人'}
                 ,{field:'shop_contact', title:'门店联系人'}
                 ,{field:'shop_phone', title:'门店电话'}
