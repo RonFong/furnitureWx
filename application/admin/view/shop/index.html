@@ -76,6 +76,11 @@
     layui.use(['table'], function () {
         var table = layui.table;
 
+        var shop_name = $.getUrlParam('shop_name');
+        if ( shop_name !== undefined) {
+            $('#searchForm').find('input[name="shop_name"]').val(shop_name);
+        }
+
         //表格数据渲染
         tableIns = table.render({
             elem: '#listTable'
