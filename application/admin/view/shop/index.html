@@ -78,6 +78,7 @@
 
         var shop_name = $.getUrlParam('shop_name');
         if ( shop_name !== undefined) {
+            console.log(shop_name);
             $('#searchForm').find('input[name="shop_name"]').val(shop_name);
         }
 
