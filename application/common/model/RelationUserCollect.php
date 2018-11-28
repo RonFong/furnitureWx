@@ -77,4 +77,19 @@ class RelationUserCollect extends Model
 
         return $data;
     }
+
+
+    /**
+     * 是否关注某个用户
+     * @param $userId
+     * @return int
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function isCollect($userId)
+    {
+        $result = $this->where(['user_id' => user_info('id'), 'other_user_id' => $userId])->find();
+        return $result ? 1 : 0;
+    }
 }
