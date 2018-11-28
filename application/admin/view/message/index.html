@@ -48,8 +48,11 @@
             , laydate = layui.laydate;
 
         /*注册日期，执行一个laydate实例*/
-        laydate.render({elem: '#create_begin'});
-        laydate.render({elem: '#create_end'});
+        var lastM =new Date(new Date().setMonth(new Date().getMonth()-3));
+        $('#create_begin').val(lastM.toLocaleDateString());
+        $('#create_end').val(new Date().toLocaleDateString());
+        laydate.render({elem: '#create_begin', format: 'yyyy/MM/dd'});
+        laydate.render({elem: '#create_end', format: 'yyyy/MM/dd'});
 
         //表格数据渲染
         tableIns = table.render({
