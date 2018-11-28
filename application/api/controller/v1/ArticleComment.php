@@ -103,4 +103,23 @@ class ArticleComment extends BaseController
 
         return json($this->result, 200);
     }
+
+
+    /**
+     * 获取评论的所有回复
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function moreCommentReply()
+    {
+        $this->currentValidate->goCheck('moreCommentReply');
+        try {
+            $this->result['data'] = $this->currentModel->moreCommentReply($this->data['comment_id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+
+        return json($this->result, 200);
+    }
+
 }

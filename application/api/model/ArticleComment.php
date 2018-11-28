@@ -86,6 +86,20 @@ class ArticleComment extends CoreArticleComment
         return $list;
     }
 
+
+    /**
+     * 获取评论的所有回复
+     * @param $commentId
+     * @return mixed
+     */
+    public function moreCommentReply($commentId)
+    {
+        $v = [
+            'id'    => $commentId
+        ];
+        return $this->recursionComment($v);
+    }
+
     /**
      * 递归获取评论的回复
      * @param $v

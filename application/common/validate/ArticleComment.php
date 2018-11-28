@@ -25,6 +25,7 @@ class ArticleComment extends BaseValidate
         'parent_id'         => 'number|pidCommentExist',
         'article_id'        => 'number|articleExist',
         'content'           => 'require|min:1',
+        'comment_id'        => 'require|number'
     ];
 
     protected $message = [
@@ -46,6 +47,9 @@ class ArticleComment extends BaseValidate
             'article_id' => 'require|number|articleExist',
             'page'
         ],
+        'moreCommentReply'  => [
+            'comment_id'
+        ]
     ];
 
     /**

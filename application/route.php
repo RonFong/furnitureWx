@@ -78,6 +78,8 @@ Route::group('api/:version', function () {
         Route::post('reply', 'api/:version.ArticleComment/reply');
         //获取文章更多评论
         Route::get('more', 'api/:version.ArticleComment/getMore');
+        //获取评论的所有回复
+        Route::get('moreReply', 'api/:version.ArticleComment/moreCommentReply');
     });
 
     // 商家门店
