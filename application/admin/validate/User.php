@@ -12,5 +12,15 @@ use think\Validate;
 
 class User extends Validate
 {
+    public $rule = [
 
+    ];
+
+    public $message = [
+
+    ];
+
+    public $scene = [
+
+    ];
 }

@@ -1,26 +1,18 @@
 <?php
 // +----------------------------------------------------------------------
-// | Copyright (c) 2018-{2018} http://www.donglixia.net All rights reserved.
+// | Copyright (c) 2018-2018 http://www.donglixia.net All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: 十万马 <962863675@qq.com>
 // +----------------------------------------------------------------------
-// | DateTime: 2018/8/4 19:59
+// | DateTime: 2018-02-09 16:17
 // +----------------------------------------------------------------------
-namespace app\admin\validate;
 
-use think\Validate;
+namespace app\admin\model;
 
-class UserAdmin extends Validate
+use app\common\model\Model as CommonModel;
+
+class UserFaq extends CommonModel
 {
-    public $rule = [
 
-    ];
 
-    public $message = [
-
-    ];
-
-    public $scene = [
-
-    ];
 }

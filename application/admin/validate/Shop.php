@@ -12,5 +12,15 @@ use app\common\validate\Shop as CoreShop;
 
 class Shop extends CoreShop
 {
+    public $rule = [
 
+    ];
+
+    public $message = [
+
+    ];
+
+    public $scene = [
+
+    ];
 }

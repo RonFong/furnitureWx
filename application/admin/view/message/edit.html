@@ -1,0 +1,73 @@
+{extend name="common/index"}
+{block name="css"}
+<style>
+    #editForm .layui-input-block{
+        line-height: 38px;
+    }
+</style>
+{/block}
+
+{block name="content"}
+<div class="layui-row">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="">
+        <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
+        <div class="layui-field-box">
+            <div class="layui-main">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名：</label>
+                    <div class="layui-input-block">
+                        {$data.user_id|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请求地址：</label>
+                    <div class="layui-input-block">
+                        {$data.url|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请求参数：</label>
+                    <div class="layui-input-block">
+                        {$data.params|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">ip地址：</label>
+                    <div class="layui-input-block">
+                        {$data.ip|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">错误内容：</label>
+                    <div class="layui-input-block">
+                        {$data.msg|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">错误代码：</label>
+                    <div class="layui-input-block">
+                        {$data.error_location|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请求时间：</label>
+                    <div class="layui-input-block">
+                        {$data.time|default=''}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        {eq name="$data.state|default=0" value="1"}已读{/eq}
+                        {eq name="$data.state|default=0" value="0"}未读{/eq}
+                    </div>
+                </div>
+            </div>
+            <div class="tpl-form-action">
+                <a class="layui-btn" href="{:url('index')}">返回上一级</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{/block}

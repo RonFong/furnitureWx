@@ -10,7 +10,7 @@ namespace app\admin\validate;
 
 use think\Validate;
 
-class UserAdmin extends Validate
+class UserFaq extends Validate
 {
     public $rule = [
 
