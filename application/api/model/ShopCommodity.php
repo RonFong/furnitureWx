@@ -62,7 +62,7 @@ class ShopCommodity extends CoreShopCommodity
     public function commodityDetails($id)
     {
         $data = self::get(function ($query) use ($id) {
-            $query->field('id, classify_name');
+            $query->where('id', $id)->field('id, classify_name');
         });
         if ($data) {
             $contentId = $id;
