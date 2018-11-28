@@ -31,6 +31,9 @@ class User extends CoreUser
             ->where('id', $id)
             ->field('user_name, avatar, type, group_id')
             ->find();
+        if (!$user['main_user']) {
+            exception('此用户不存在');
+        }
         $user['secondary_user'] = [];
         if (user_info('type') == 2) {
             //商家用户
