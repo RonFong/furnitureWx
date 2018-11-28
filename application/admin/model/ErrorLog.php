@@ -23,4 +23,13 @@ class ErrorLog extends CommonModel
         return long2ip($value);
     }
 
+    /**
+     * 创建时间
+     * @param $value
+     * @return string
+     */
+    public function getTimeAttr($value)
+    {
+        return !empty($value) ? date('Y-m-d H:i:s', $value) : '';
+    }
 }
