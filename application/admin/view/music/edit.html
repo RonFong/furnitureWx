@@ -104,7 +104,7 @@
         uploadImgAjax('.image-url', '{:url("uploadImg")}', 4096);
 
         //上传大文件
-        uploadBigFile('.upload-audio', '/api/v1/multimedia/uploadAudio');
+        uploadBigFile('.upload-audio', '/admin/index/uploadOssFile');
 
         //监听提交
         form.on('submit(formSubmit)', function(data){

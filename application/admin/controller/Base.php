@@ -12,6 +12,7 @@ namespace app\admin\controller;
 use app\common\controller\Controller;
 use app\admin\model\Menu;
 use app\admin\model\UserAdmin;
+use app\lib\oss\Demo;
 use think\Loader;
 use think\Session;
 use think\Cookie;
@@ -185,6 +186,39 @@ abstract class Base extends Controller
             Db::name($param['table_name'])->where($pk, $param['id'])->update([$param['field_name']=>'']);
         }
         $this->success('操作成功');
+    }
+
+    /**
+     * 上传音频
+     */
+    public function uploadOssFile()
+    {
+        $ossServer = new Demo();
+        $res = $ossServer->uploadAudio();
+        if ($res === false) {
+            $this->error($ossServer->getError());
+        }
+
+        $this->success('操作成功！', null, ['url'=>$res]);
+    }
+
+    /**
+     * 删除阿里云oss文件
+     */
+    public function deleteOssFile()
+    {
+        $param = $this->request->param();//获取请求数据
+        if (empty($param['table_name']) || empty($param['field_name']) || empty($param['url'])) {
+            $this->error('参数错误！');
+        }
+
+        $ossServer = new Demo();
+        $res = $ossServer->delete($param['url']);
+        if ($res !== false && !empty($param['id'])) {
+            $pk = Db::name($param['table_name'])->getPk();
+            Db::name($param['table_name'])->where($pk, $param['id'])->update([$param['field_name']=>'']);
+        }
+        $this->success('操作成功！');
     }
 
     /**

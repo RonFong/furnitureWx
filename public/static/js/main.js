@@ -217,7 +217,7 @@ $('.tools-bottom').on('click', function (e) {
 /*上传大文件*/
 function uploadBigFile(element, url, size) {
     if (!size) {size = 512000;}
-    if (!url) {url = '/api/v1/multimedia/uploadAudio';}
+    if (!url) {url = '/admin/index/uploadOssFile';}
     var lay_load;
     layui.use(['layer', 'upload'], function () {
         var upload = layui.upload;
@@ -231,9 +231,9 @@ function uploadBigFile(element, url, size) {
             }
             ,done: function(res){
                 layer.close(lay_load);
-                if(res.state){
+                if(res.code){
                     var control = $(element).closest('.layui-form-item');
-                    $(control).find('input[type="text"]').val(res.data.url); //赋值上传
+                    control.find('input[type="text"]').val(res.data.url); //赋值上传
                     layer.msg(res.msg);
                 } else {
                     layer.alert(res.msg);
@@ -250,9 +250,9 @@ function deleteBigFile(element) {
 
     var data = {id:field.data("id"), table_name:field.data("table"), field_name:field.attr("name"), url:field.val()};
     layer.confirm('删除后无法恢复，确定继续吗？', function(index){
-        $.post('/api/v1/multimedia/delete', data, function (result) {
+        $.post('/admin/index/deleteOssFile', data, function (result) {
             layer.close(index);
-            if (result.state) {
+            if (result.code) {
                 field.val('');
             } else {
                 layer.alert(result.msg, {icon:2});
