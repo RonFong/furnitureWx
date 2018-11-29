@@ -12,7 +12,7 @@ namespace app\admin\controller;
 use app\common\controller\Controller;
 use app\admin\model\Menu;
 use app\admin\model\UserAdmin;
-use app\lib\oss\Demo;
+use app\lib\oss\Oss;
 use think\Loader;
 use think\Session;
 use think\Cookie;
@@ -193,7 +193,7 @@ abstract class Base extends Controller
      */
     public function uploadOssFile()
     {
-        $ossServer = new Demo();
+        $ossServer = new Oss();
         $res = $ossServer->uploadAudio();
         if ($res === false) {
             $this->error($ossServer->getError());
@@ -212,7 +212,7 @@ abstract class Base extends Controller
             $this->error('参数错误！');
         }
 
-        $ossServer = new Demo();
+        $ossServer = new Oss();
         $res = $ossServer->delete($param['url']);
         if ($res !== false && !empty($param['id'])) {
             $pk = Db::name($param['table_name'])->getPk();

@@ -15,26 +15,26 @@ use OSS\OssClient;
 use OSS\Core\OssException;
 use think\Request;
 
-class Demo
+class Oss
 {
     /**
      * 建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
      * @var string
      */
-    private $accessKeyId = "LTAIFFUNplwfZD27";
-    private $accessKeySecret = "XUtgBieD4jxsIByaIvdaI4LWfoU9Th";
+    private $accessKeyId = "LTAIAaYdblbcmeSY";
+    private $accessKeySecret = "gx0I7OkRGSxFgA9fKpbs00r8wkWTI1";
 
     /**
      * EndPoint（地域节点）
      * @var string
      */
-    private $endpoint = "http://oss-cn-beijing.aliyuncs.com";
+    private $endpoint = "http://oss-cn-shenzhen.aliyuncs.com";
 
     /**
      * 存储空间名称
      * @var string
      */
-    private $bucket = "dlx-0";
+    private $bucket = "api-multimedia";
 
     /**
      * 错误提示
@@ -46,7 +46,7 @@ class Demo
 
     /**
      * 构造函数
-     * Demo constructor.
+     * Oss constructor.
      */
     public function __construct()
     {

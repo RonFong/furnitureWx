@@ -12,7 +12,7 @@
 namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
-use app\lib\oss\Demo;
+use app\lib\oss\Oss;
 use think\Db;
 use think\Request;
 
@@ -28,7 +28,7 @@ class Multimedia extends BaseController
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->ossServer = new Demo();
+        $this->ossServer = new Oss();
     }
 
     /**
