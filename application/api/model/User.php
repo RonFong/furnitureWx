@@ -10,6 +10,7 @@
 
 namespace app\api\model;
 
+use app\common\model\RelationUserCollect;
 use app\common\model\User as CoreUser;
 use think\Db;
 
@@ -21,6 +22,7 @@ class User extends CoreUser
      * 名片信息
      * @param $id
      * @return mixed
+     * @throws \Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -34,6 +36,7 @@ class User extends CoreUser
         if (!$user['main_user']) {
             exception('此用户不存在');
         }
+        $user['main_user']['is_collect'] = (new RelationUserCollect())->isCollect($id);
         $user['secondary_user'] = [];
         if (user_info('type') == 2) {
             //商家用户
