@@ -101,6 +101,7 @@ class Article extends CoreArticle
                     if (array_key_exists('style', $v) && !empty($v['style'])) {
                         $v['style'] = json_encode($v['style']);
                     }
+                    $v['article_id'] = $param['id'];
                     (new ArticleContent())->save($v);
                 }
             }
