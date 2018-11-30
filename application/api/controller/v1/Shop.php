@@ -14,6 +14,7 @@ use app\api\controller\BaseController;
 use app\api\model\Shop as shopModel;
 use app\api\model\ShopCommodity;
 use app\api\model\ShopCommodityItem;
+use app\api\service\Popularity;
 use app\common\validate\Shop as shopValidate;
 use app\lib\enum\Response;
 use app\api\model\User;
@@ -134,6 +135,8 @@ class Shop extends BaseController
                 exception('非商家用户');
             }
             $this->result['data'] = $this->currentModel->homePageData($this->data);
+            //增加人气值
+            Popularity::increase($this->data['shopId'], 2);
         } catch (\Exception $e) {
             $this->response->error($e);
         }

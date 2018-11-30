@@ -45,6 +45,7 @@ class Shop extends CoreShop
 
         $list = Db::query($sql);
         foreach ($list as $k => $v) {
+            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => 2, 'object_id' => $v['id']])->value('SUM(value)');
             $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : round($v['distance'], 2) . '米';
         }
         return $list;
