@@ -36,7 +36,7 @@ class Article extends CoreArticle
      * 默认显示评论数
      * @var int
      */
-    protected $commentRow = 10;
+    protected $commentRow = 5;
 
     /**
      * 创建圈子文章
@@ -269,7 +269,7 @@ class Article extends CoreArticle
                 ->field('delete_time', true)
                 ->order('sort');
         });
-        $data['comment'] = (new ArticleComment())->getComments($id, 0, 5);
+        $data['comment'] = (new ArticleComment())->getComments($id, 0, $this->commentRow);
         $data['is_collect'] = Db::table('relation_article_collect')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
         $data['is_great'] = Db::table('relation_article_great')->where(['user_id' => user_info('id'), 'article_id' => $id])->find() ? 1 : 0;
         $data['collect_count'] = Db::table('relation_article_collect')->where('article_id', $id)->count();
