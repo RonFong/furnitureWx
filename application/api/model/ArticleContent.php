@@ -248,4 +248,11 @@ class ArticleContent extends CoreArticleContent
 
         return true;
     }
+
+    public function getStyleAttr($value)
+    {
+        if ($value) {
+            return json_decode($value);
+        }
+    }
 }
