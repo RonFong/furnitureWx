@@ -254,5 +254,6 @@ class ArticleContent extends CoreArticleContent
         if ($value) {
             return json_decode($value);
         }
+        return '';
     }
 }

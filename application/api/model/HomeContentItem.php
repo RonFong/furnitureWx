@@ -10,5 +10,6 @@ class HomeContentItem extends CoreHomeContentItem
         if ($value) {
             return json_decode($value);
         }
+        return '';
     }
 }
