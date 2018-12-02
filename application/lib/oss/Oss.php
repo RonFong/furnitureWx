@@ -21,7 +21,7 @@ class Oss
         'test'  => [
             'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
             'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
-            'endpoint'          => 'oss-cn-hangzhou-internal.aliyuncs.com',     //地域节点
+            'endpoint'          => 'oss-cn-hangzhou-internal.aliyuncs.com',     //地域节点  上传
             'bucket'            => 'test-api-multimedia'                        //存储空间名
         ],
         'online'    => [
@@ -79,7 +79,7 @@ class Oss
             $this->error = $e->getMessage();
             return false;
         }
-        return $res['oss-request-url'] ?? '';
+        return $res['oss-request-url'] ? str_replace('-internal', '', $res['oss-request-url']) : '';
     }
 
     /**
@@ -105,7 +105,7 @@ class Oss
             $this->error = $e->getMessage();
             return false;
         }
-        return $res['oss-request-url'] ?? '';
+        return $res['oss-request-url'] ? str_replace('-internal', '', $res['oss-request-url']) : '';
     }
 
     /**
