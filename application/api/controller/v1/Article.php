@@ -13,13 +13,8 @@ namespace app\api\controller\v1;
 use app\api\controller\BaseController;
 use app\api\model\Article as ArticleModel;
 use app\api\validate\Article as ArticleValidate;
-use app\api\service\ImageText;
 use app\common\model\ArticleClassify;
-use app\common\model\ArticleContent;
-use app\api\model\ArticleComment;
 use app\lib\enum\Response;
-use Carbon\Carbon;
-use think\Cache;
 use think\Request;
 
 /**
@@ -361,24 +356,5 @@ class Article extends BaseController
         return json($this->result, 200);
     }
 
-    public function setCache()
-    {
-
-        $setCacheData = [
-            'itemKey'    => $this->request->param('itemKey', ''),
-            'text'       => $this->request->param('text', false),
-            'img'        => $this->request->param('img', false),
-            'articleId'  => $this->request->param('articleId', ''),
-            'classifyId' => $this->request->param('classifyId', ''),
-            'music'      => $this->request->param('music', false),
-            'musicName'  => $this->request->param('musicName', false),
-            'title'      => $this->request->param('title', false),
-            'userId'     => user_info('id'),
-            'type'       => $this->request->param('type', 1),
-        ];
-        \app\api\model\ArticleContent::setCache($setCacheData);
-
-        return json($this->result);
-    }
 
 }
