@@ -122,7 +122,18 @@ class ArticleComment extends CoreArticleComment
                 }
             }
         }
-        return $data;
+        $result['comment'] = Db::table('article_comment')
+            ->alias('a')
+            ->join('user b', 'b.id = a.user_id')
+            ->join('relation_comment_great c', 'c.comment_id = a.id', 'LEFT')
+            ->where("a.id = $commentId")
+            ->field('a.id, b.id as user_id, b.user_name, b.avatar, a.content, count(c.id) as great_total, a.create_time')
+            ->group('a.id')
+            ->find();
+        $result['comment']['is_great'] = $this->isGreat($commentId);
+        $result['comment']['create_time'] = timeFormatForHumans($result['comment']['create_time']);
+        $result['reply'] = $data;
+        return $result;
     }
 
     /**
