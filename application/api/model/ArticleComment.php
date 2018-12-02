@@ -113,6 +113,7 @@ class ArticleComment extends CoreArticleComment
             foreach ($tempData as $k => $v) {
                 $child = $v['child'];
                 unset($v['child']);
+                $v['is_great'] = $this->isGreat($v['id']);
                 array_push($data, $v);
                 if ($child) {
                     foreach ($child as $vv) {
