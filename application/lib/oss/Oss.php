@@ -49,7 +49,7 @@ class Oss
     public function __construct()
     {
         $this->request = Request::instance();
-        if ($this->request->domain() == '99jjw.cn') {
+        if ($this->request->domain() == 'https://www.99jjw.cn') {
             $this->currentConfig = $this->config['online'];
         } else {
             $this->currentConfig = $this->config['test'];
