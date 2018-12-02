@@ -28,7 +28,7 @@ class Oss
      * EndPoint（地域节点）
      * @var string
      */
-    private $endpoint = "http://oss-cn-shenzhen-internal.aliyuncs.com";
+    private $endpoint = "http://api-multimedia.oss-cn-shenzhen-internal.aliyuncs.com";
 
     /**
      * 存储空间名称
