@@ -150,7 +150,7 @@ class ArticleComment extends CoreArticleComment
                 'user_id'              => $info['user_id'],       //回复人id
                 'user_name'            => $info['user_name'],     //回复人昵称
                 'respondent_user_name' => $reply['respondent_user_name'] ?? $v['user_name'],                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
-                'reply_content'        => $info['content'],
+                'content'              => $info['content'],
                 'is_great'             => $this->isGreat($info['id'])
             ];
             if (!empty($v['child'])) {
