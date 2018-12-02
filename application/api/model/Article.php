@@ -168,7 +168,7 @@ class Article extends CoreArticle
         foreach ($list as $k => $v) {
             $list[$k]['classify_name'] = Db::table('article_classify')->where('id', $v['classify_id'])->value('classify_name');
             unset($list[$k]['classify_id']);
-            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : round($v['distance'], 2) . '米';
+            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : (round($v['distance'], 2) == 0 ? '100米内' : round($v['distance'], 2) . '米');
             $user = User::get($v['user_id']);
             $list[$k]['user_name'] = $user->user_name;
             $list[$k]['avatar'] = $user->avatar;
