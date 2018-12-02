@@ -91,13 +91,40 @@ class ArticleComment extends CoreArticleComment
      * 获取评论的所有回复
      * @param $commentId
      * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function moreCommentReply($commentId)
     {
-        $v = [
-            'id'    => $commentId
-        ];
-        return $this->recursionComment($v);
+//        $v = [
+//            'id'    => $commentId
+//        ];
+        $child = self::with('appendUserName')
+            ->where(['parent_id' => $commentId, 'state' => 1])
+            ->field('parent_id, article_id, state, state_remark, create_by, create_time, update_by, update_time, delete_time', true)
+            ->select();
+        $data = [];
+        if ($child) {
+            $tempData = [];
+            foreach ($child as $v) {
+                $v = $v->toArray();
+                $v['respondent_user_name'] = '';  // 不是对回复的回复，回复人昵称值为空
+                $tempData[] = $this->recursionComment($v);
+            }
+            unset($v);
+            foreach ($tempData as $k => $v) {
+                $child = $v['child'];
+                unset($v['child']);
+                array_push($data, $v);
+                if ($child) {
+                    foreach ($child as $vv) {
+                        array_push($data, $vv);
+                    }
+                }
+            }
+        }
+        return $data;
     }
 
     /**
@@ -116,22 +143,24 @@ class ArticleComment extends CoreArticleComment
             $v['child']  = [];
             $reply['id'] = $v['id'];
         }
-        $info = self::with('appendUserName')
+        $info = (new self())->with('appendUserName')
             ->where(['parent_id' => $reply['id'], 'state' => 1])
             ->find();
+
         if ($info) {
             $content = [
-                'id'                   => $info->id,
-                'user_id'              => $info->user_id,       //回复人id
-                'user_name'            => $info->user_name,     //回复人昵称
-                'respondent_user_name' => '',                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
-                'reply_content'        => $info->content,
-                'is_great'             => $this->isGreat($info->id)
+                'id'                   => $info['id'],
+                'user_id'              => $info['user_id'],       //回复人id
+                'user_name'            => $info['user_name'],     //回复人昵称
+                'respondent_user_name' => $reply['respondent_user_name'] ?? $v['user_name'],                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
+                'reply_content'        => $info['content'],
+                'is_great'             => $this->isGreat($info['id'])
             ];
             if (!empty($v['child'])) {
-                $content['respondent_user_name'] = $reply['user_name'] ?? $reply['user_name'];
+                $content['respondent_user_name'] = $reply['user_name'] ? $reply['user_name'] : $v['user_name'];
             }
             array_push($v['child'], $content);
+
             $this->recursionComment($v, $info);
         }
         return $v;
