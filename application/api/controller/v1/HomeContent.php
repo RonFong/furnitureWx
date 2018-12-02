@@ -24,8 +24,12 @@ class HomeContent extends BaseController
      */
     public function create()
     {
+        try {
         $this->currentValidate->goCheck('create');
         $this->result['data'] = $this->currentModel->createData($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
         if (!$this->result['data']) {
             $this->response->error(Response::UNKNOWN_ERROR);
         }
@@ -39,8 +43,12 @@ class HomeContent extends BaseController
      */
     public function update()
     {
-        $this->currentValidate->goCheck('update');
-        $result = $this->currentModel->updateData($this->data);
+        try {
+            $this->currentValidate->goCheck('update');
+            $result = $this->currentModel->updateData($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
         if (!$result) {
             $this->response->error(Response::UNKNOWN_ERROR);
         }
