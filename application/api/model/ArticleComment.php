@@ -97,9 +97,6 @@ class ArticleComment extends CoreArticleComment
      */
     public function moreCommentReply($commentId)
     {
-//        $v = [
-//            'id'    => $commentId
-//        ];
         $child = self::with('appendUserName')
             ->where(['parent_id' => $commentId, 'state' => 1])
             ->field('parent_id, article_id, state, state_remark, create_by, create_time, update_by, update_time, delete_time', true)
