@@ -255,7 +255,7 @@ class Article extends CoreArticle
     {
         $data = self::get(function ($query) use ($id) {
             $query->where('id', $id)
-                ->field('id, user_id, classify_id as classify_name, title, music, read_num, share_num, id as comment_num, create_time');
+                ->field('id, user_id, classify_id as classify_name, title, music, music_name, read_num, share_num, id as comment_num, create_time');
         })->toArray();
 
         $user = User::get($data['user_id']);
