@@ -17,24 +17,22 @@ use think\Request;
 
 class Oss
 {
-    /**
-     * 建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
-     * @var string
-     */
-    private $accessKeyId = "LTAIAaYdblbcmeSY";
-    private $accessKeySecret = "gx0I7OkRGSxFgA9fKpbs00r8wkWTI1";
+    private $config = [
+        'test'  => [
+            'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
+            'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
+            'endpoint'          => 'oss-cn-hangzhou-internal.aliyuncs.com',     //地域节点
+            'bucket'            => 'test-api-multimedia'                        //存储空间名
+        ],
+        'online'    => [
+            'accessKeyId'       =>  'LTAIAaYdblbcmeSY',
+            'accessKeySecret'   => 'gx0I7OkRGSxFgA9fKpbs00r8wkWTI1',
+            'endpoint'          => 'oss-cn-shenzhen-internal.aliyuncs.com',
+            'bucket'            => 'api-multimedia'
+        ]
+    ];
 
-    /**
-     * EndPoint（地域节点）
-     * @var string
-     */
-    private $endpoint = "oss-cn-shenzhen.aliyuncs.com";
-
-    /**
-     * 存储空间名称
-     * @var string
-     */
-    private $bucket = "api-multimedia";
+    private $currentConfig = [];
 
     /**
      * 错误提示
@@ -51,6 +49,11 @@ class Oss
     public function __construct()
     {
         $this->request = Request::instance();
+        if ($this->request->domain() == '99jjw.cn') {
+            $this->currentConfig = $this->config['online'];
+        } else {
+            $this->currentConfig = $this->config['test'];
+        }
     }
 
     /**
@@ -70,8 +73,8 @@ class Oss
         $filePath = $file_info['tmp_name'];//本地文件路径
 
         try {
-            $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
-            $res = $ossClient->uploadFile($this->bucket, $object, $filePath);
+            $ossClient = new OssClient($this->currentConfig['accessKeyId'], $this->currentConfig['accessKeySecret'], $this->currentConfig['endpoint']);
+            $res = $ossClient->uploadFile($this->currentConfig['bucket'], $object, $filePath);
         } catch (OssException $e) {
             $this->error = $e->getMessage();
             return false;
@@ -96,8 +99,8 @@ class Oss
         $filePath = $file_info['tmp_name'];//本地文件路径
 
         try {
-            $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
-            $res = $ossClient->uploadFile($this->bucket, $object, $filePath);
+            $ossClient = new OssClient($this->currentConfig['accessKeyId'], $this->currentConfig['accessKeySecret'], $this->currentConfig['endpoint']);
+            $res = $ossClient->uploadFile($this->currentConfig['bucket'], $object, $filePath);
         } catch (OssException $e) {
             $this->error = $e->getMessage();
             return false;
@@ -117,7 +120,7 @@ class Oss
             $object = substr($object,strpos($object,'.com/')+5);
         }
         try {
-            $ossClient = new OssClient($this->accessKeyId, $this->accessKeySecret, $this->endpoint);
+            $ossClient = new OssClient($this->currentConfig['accessKeyId'], $this->currentConfig['accessKeySecret'], $this->currentConfig['endpoint']);
             $ossClient->deleteObject($this->bucket, $object);
         } catch (OssException $e) {
             $this->error = $e->getMessage();
