@@ -27,8 +27,9 @@ class Shop extends CoreShop
 
         $pageData = format_page($param['page'] ?? 0, $param['row'] ?? 10);
 
-        //如果当前用户为商家，则结果中不包含自己
-        $currentShopId = user_info('type') == 2 ? user_info('group_id') : 0;
+//        $currentShopId = user_info('type') == 2 ? user_info('group_id') : 0;   //如果当前用户为商家，则结果中不包含自己
+        $currentShopId = 0;
+
         $location = UserLocation::get(user_info('id'));
 
         $field = "s.id, s.shop_name, s.address, s.shop_img_thumb, s.distance";
