@@ -78,7 +78,7 @@ class ArticleComment extends CoreArticleComment
         $list     = [];
         foreach ($comments as $v) {
             $v['is_great'] = $this->isGreat($v['id']);
-            $v['create_time'] = timeFormatForHumans($v['create_time']);
+            $v['create_time'] = time_format_for_humans($v['create_time']);
             $v = $this->recursionComment($v);
             $v['child_num'] = count($v['child']);
             array_push($list, $v);
@@ -131,7 +131,7 @@ class ArticleComment extends CoreArticleComment
             ->group('a.id')
             ->find();
         $result['comment']['is_great'] = $this->isGreat($commentId);
-        $result['comment']['create_time'] = timeFormatForHumans($result['comment']['create_time']);
+        $result['comment']['create_time'] = time_format_for_humans($result['comment']['create_time']);
         $result['reply'] = $data;
         return $result;
     }
