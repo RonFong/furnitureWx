@@ -192,13 +192,15 @@ class Shop extends BaseController
             if (empty($this->data['commodity_id'])) {
                 exception('commodity_id 不能为空');
             }
+            if (!(new ShopCommodity())->where('id', $this->data['commodity_id'])->find()) {
+                exception('该商品不存在');
+            }
             $delCommodity = (new ShopCommodity())->where('id', $this->data['commodity_id'])->delete();
             $delCommodityItem = (new ShopCommodityItem())->where('commodity_id', $this->data['commodity_id'])->delete();
             if (!$delCommodity || !$delCommodityItem) {
                 $this->result['state'] = 0;
                 $this->result['msg'] = '删除失败';
             }
-            Db::commit();
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
