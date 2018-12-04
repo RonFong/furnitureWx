@@ -60,9 +60,7 @@ class Article extends Model
                 exception('此文章已被删除或不存在');
             //关联删除，无法应用软删除
             //非关联删除
-            $result = (new ArticleContent())::destroy(['article_id' => $id]);
-            if (!$result)
-                exception('删除失败');
+            (new ArticleContent())::destroy(['article_id' => $id]);
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
