@@ -47,8 +47,8 @@ class Shop extends CoreShop
 
         $list = Db::query($sql);
         foreach ($list as $k => $v) {
-            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => 2, 'object_id' => $v['id']])->value('SUM(value)');
-            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : (round($v['distance'], 2) == 0 ? '100米内' : round($v['distance'], 2) . '米');
+            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => 2, 'object_id' => $v['id']])->value('SUM(value)') ?? 0;
+            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
         }
         return $list;
     }
