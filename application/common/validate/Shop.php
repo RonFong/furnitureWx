@@ -77,7 +77,7 @@ class Shop extends BaseValidate
 
     protected function checkUserType($value)
     {
-        if (user_info('type') != 0) {
+        if (user_info('type') != 3) {
             return '当前用户已创建 厂/商 门店';
         }
         return true;
