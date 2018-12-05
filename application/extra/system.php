@@ -34,5 +34,5 @@ return [
     //    h	截图高度，如果指定为0则自动计算，如果w和h都为0则输出为原视频宽高	像素值：[0,视频高度]
     //    m	截图模式，不指定则为默认模式，根据时间精确截图，如果指定为fast则截取该时间点之前的最近的一个关键帧	枚举值：fast
     //    f	输出图片格式	枚举值：jpg、png
-    'video_snapshot'       => '?x-oss-process=video/snapshot,t_1000,f_jpg,w_400,h_300,m_fast'
+    'video_snapshot'       => '?x-oss-process=video/snapshot,t_1000,f_jpg,w_500,h_375,m_fast'
 ];
