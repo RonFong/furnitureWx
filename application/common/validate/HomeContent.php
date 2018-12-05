@@ -16,7 +16,7 @@ class HomeContent extends BaseValidate
     ];
 
     protected $message = [
-
+        "content.require"   => '请填写图文内容'
     ];
 
     protected $scene = [
