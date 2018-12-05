@@ -235,6 +235,7 @@ class Article extends CoreArticle
             }
             if ($v['type'] == 2 || $v['type'] == 3) {
                 $v['img_thumb'] = $v['type'] == 2 ? $v['img_thumb'] : $v['video_snapshot'];
+                $v['type'] = 2;
                 array_push($imgList, $v);
                 $num ++;
             }
