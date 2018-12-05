@@ -87,13 +87,17 @@ class HomeContent extends CoreHomeContent
 
     /**
      * 获取详情
+     * @param int $groupId
+     * @param int $groupType
      * @return null|static
      * @throws \think\exception\DbException
      */
-    public function details()
+    public function details($groupId = 0, $groupType = 0)
     {
-        $data = self::get(function ($query) {
-            $query->where(['group_id' => user_info('group_id'), 'group_type' => user_info('type')])
+        $groupId = $groupId ?: user_info('group_id');
+        $groupType = $groupType ?: user_info('type');
+        $data = self::get(function ($query) use($groupId, $groupType){
+            $query->where(['group_id' => $groupId, 'group_type' => $groupType])
                 ->field('id, music, music_name');
         });
         if ($data) {
