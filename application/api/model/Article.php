@@ -61,7 +61,7 @@ class Article extends CoreArticle
                         $v['style'] = json_encode($v['style']);
                     }
                     $itemResult = (new ArticleContent())->save($v);
-                    if (!$itemResult) {
+                    if (empty($v['id']) && !$itemResult) {
                         exception('内容块数据写入失败：'.json_encode($v));
                     }
                 }
