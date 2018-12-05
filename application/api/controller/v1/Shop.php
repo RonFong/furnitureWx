@@ -94,6 +94,13 @@ class Shop extends BaseController
     {
         $this->currentValidate->goCheck('info');
         try {
+            if (!empty($this->data['lat']) && !empty($this->data['lng']) || !empty($this->data['district'])) {
+                $shopInfo = $this->currentModel->get($this->data['id']);
+                if ($this->data['lat'] != $shopInfo->lat || $this->data['lng'] != $shopInfo->lng || $this->data['district'] != $shopInfo->district) {
+                    exception('需修改店址，请联系客服');
+                }
+            }
+
             if (!empty($this->data['lat']) && !empty($this->data['lng'])) {
                 $this->data['lat'] = sprintf("%.6f", $this->data['lat']);
                 $this->data['lng'] = sprintf("%.6f", $this->data['lng']);
