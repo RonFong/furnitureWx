@@ -16,4 +16,17 @@ use traits\model\SoftDelete;
 class ArticleContent extends Model
 {
     use SoftDelete;
+
+    /**
+     * 视频截帧
+     * @param $value
+     * @return string
+     */
+    public function getVideoSnapshotAttr($value)
+    {
+        if ($value) {
+            return $value . config('system.video_snapshot');
+        }
+        return '';
+    }
 }

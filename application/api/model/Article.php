@@ -224,7 +224,7 @@ class Article extends CoreArticle
     {
         $content = ArticleContent::all(function ($query) use ($articleId) {
             $query->where('article_id', $articleId)
-                ->field('type, img, img_thumb, video')
+                ->field('type, img_thumb, video as video_snapshot')
                 ->order('sort');
         });
         $imgList = [];
@@ -233,7 +233,8 @@ class Article extends CoreArticle
             if ($num >= $this->imgNum) {
                 break;
             }
-            if ($v['type'] != 1) {
+            if ($v['type'] == 2 || $v['type'] == 3) {
+                $v['img_thumb'] = $v['type'] == 2 ? $v['img_thumb'] : $v['video_snapshot'];
                 array_push($imgList, $v);
                 $num ++;
             }
@@ -266,6 +267,8 @@ class Article extends CoreArticle
         $data['content'] = ArticleContent::all(function ($query) use ($id) {
             $query->where('article_id', $id)
                 ->where('delete_time is null')
+                ->field(true)
+                ->field('video as video_snapshot')
                 ->field('delete_time', true)
                 ->order('sort');
         });
