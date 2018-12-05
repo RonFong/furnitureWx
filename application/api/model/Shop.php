@@ -75,7 +75,7 @@ class Shop extends CoreShop
             ->field('id, classify_name')
             ->order('sort,create_time')
             ->select();
-        $info->homeContent = (new HomeContent())->details();
+        $info->homeContent = (new HomeContent())->details($shopId, 2);
         //商家关注
         if ($shopId == user_info('group_id')) {
             //不能关注自己
