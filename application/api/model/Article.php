@@ -234,8 +234,8 @@ class Article extends CoreArticle
                 break;
             }
             if ($v['type'] == 2 || $v['type'] == 3) {
+                //文章列表中显示的图片
                 $v['img_thumb'] = $v['type'] == 2 ? $v['img_thumb'] : $v['video_snapshot'];
-                $v['type'] = 2;
                 array_push($imgList, $v);
                 $num ++;
             }
