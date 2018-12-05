@@ -423,7 +423,7 @@ if (!function_exists('get_parent_ids')) {
      * @param array $map
      * @return array
      */
-    function get_parent_ids($id, $table_name, &$map = [], $merge = true, &$res=[])
+    function get_parent_ids($id, $table_name, &$map = [], $merge = true, &$res = [])
     {
         $pk = Db::name($table_name)->getPk();//获取当前表主键
         $map[$pk] = $id;
@@ -431,7 +431,7 @@ if (!function_exists('get_parent_ids')) {
             $map['state'] = 1;//启用状态
         }
         $pid = Db::name($table_name)->where($map)->value('parent_id');
-        if (!empty($pid)){
+        if (!empty($pid)) {
             $res[] = $pid;
             get_parent_ids($pid, $table_name, $map, false, $res);
         }
@@ -439,14 +439,15 @@ if (!function_exists('get_parent_ids')) {
         if ($merge) array_push($res, $id);
         return $res;
     }
+}
 
-
+if (!function_exists('time_format_for_humans')) {
     /**
      * 计算几分钟前、几小时前、几天前、几月前、几年前。
      * @param $agoTime
      * @return string
      */
-    function timeFormatForHumans($agoTime)
+    function time_format_for_humans($agoTime)
     {
         $agoTime = (int)$agoTime;
 
@@ -454,8 +455,7 @@ if (!function_exists('get_parent_ids')) {
         $time = time() - $agoTime;
 
         if ($time >= 31104000) { // N年前
-            $num = (int)($time / 31104000);
-            return $num.'年前';
+            return date('Y-m-d', $time);
         }
         if ($time >= 2592000) { // N月前
             $num = (int)($time / 2592000);
@@ -478,5 +478,18 @@ if (!function_exists('get_parent_ids')) {
         }
         return "刚刚";
     }
+}
 
+if (!function_exists('format_page')) {
+    /**
+     * 原生sql格式化分页参数
+     * @param int $page
+     * @param int $row
+     * @return mixed
+     */
+    function format_page($page = 0, $row = 10) {
+        $pageData['page'] = $page < 2 ? 0 : ($page -1) * $row;
+        $pageData['row'] = $row;
+        return $pageData;
+    }
 }

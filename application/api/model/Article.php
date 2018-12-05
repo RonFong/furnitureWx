@@ -128,8 +128,8 @@ class Article extends CoreArticle
     {
         //TODO 是否显示已拉黑用户的文章动态？ 暂不处理!!!
 
-        $page = $param['page'] ?? 0;
-        $row = $param['row'] ?? 10;
+        $pageData = format_page($param['page'] ?? 0, $param['row'] ?? 10);
+
 
         $field = "s.id, s.user_id, s.title, s.classify_id, s.read_num , s.share_num, s.create_time, s.distance ";
         $where = " `state` = 1 and `delete_time` is null ";
@@ -163,7 +163,7 @@ class Article extends CoreArticle
                 from `article` 
                 where {$where}) as s 
                 where s.distance <= {$this->distance}
-                order by {$order} limit {$page}, {$row}";
+                order by {$order} limit {$pageData['page']}, {$pageData['row']}";
         $list = Db::query($sql);
         foreach ($list as $k => $v) {
             $list[$k]['classify_name'] = Db::table('article_classify')->where('id', $v['classify_id'])->value('classify_name');
@@ -178,7 +178,7 @@ class Article extends CoreArticle
                 ->where(['article_id' => $v['id'], 'parent_id' => 0, 'state' => 1])
                 ->where('delete_time is null')
                 ->count();
-            $list[$k]['create_time'] = timeFormatForHumans($v['create_time']);
+            $list[$k]['create_time'] = time_format_for_humans($v['create_time']);
             $list[$k]['content'] = $this->getArticleContentOnList($v['id']);
             $list[$k]['is_collect'] = $this->isCollect(user_info('id'), $v['id']);
             $list[$k]['is_great'] = $this->isGreat(user_info('id'), $v['id']);
@@ -261,7 +261,7 @@ class Article extends CoreArticle
         $user = User::get($data['user_id']);
         $data['user_name'] = $user->user_name;
         $data['avatar'] = $user->avatar;
-        $data['create_time'] = timeFormatForHumans(strtotime($data['create_time']));
+        $data['create_time'] = time_format_for_humans(strtotime($data['create_time']));
 
         $data['content'] = ArticleContent::all(function ($query) use ($id) {
             $query->where('article_id', $id)

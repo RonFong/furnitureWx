@@ -24,10 +24,12 @@ class Shop extends CoreShop
     public function nearby($param)
     {
         $shopName = $param['shopName'] ?? '';
-        $page = $param['page'] ?? 0;
-        $row = $param['row'] ?? 10;
-        //如果当前用户为商家，则结果中不包含自己
-        $currentShopId = user_info('type') == 2 ? user_info('group_id') : 0;
+
+        $pageData = format_page($param['page'] ?? 0, $param['row'] ?? 10);
+
+//        $currentShopId = user_info('type') == 2 ? user_info('group_id') : 0;   //如果当前用户为商家，则结果中不包含自己
+        $currentShopId = 0;
+
         $location = UserLocation::get(user_info('id'));
 
         $field = "s.id, s.shop_name, s.address, s.shop_img_thumb, s.distance";
@@ -41,12 +43,12 @@ class Shop extends CoreShop
                 from `shop` 
                 where {$where}) as s 
                 where s.distance <= {$this->distance}
-                order by s.distance asc limit {$page}, {$row}";
+                order by s.distance asc limit {$pageData['page']}, {$pageData['row']}";
 
         $list = Db::query($sql);
         foreach ($list as $k => $v) {
-            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => 2, 'object_id' => $v['id']])->value('SUM(value)');
-            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : (round($v['distance'], 2) == 0 ? '100米内' : round($v['distance'], 2) . '米');
+            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => 2, 'object_id' => $v['id']])->value('SUM(value)') ?? 0;
+            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
         }
         return $list;
     }
