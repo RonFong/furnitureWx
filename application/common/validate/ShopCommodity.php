@@ -22,7 +22,8 @@ class ShopCommodity extends BaseValidate
     ];
 
     protected $message = [
-
+        'content.require'       => '请填写内容',
+        'classify_name.require' => '请填写分类名'
     ];
 
     protected $scene = [
