@@ -32,8 +32,14 @@ class ShopCommodity extends CoreShopCommodity
                 $param['create_time'] = time();
             }
             $this->save($param);
+            $itemIds = (new ShopCommodityItem())->where('commodity_id', $param['id'])->column('id');
+            //id 存在，但内容为空的，删除
+            $updateIds = [];
             foreach ($param['content'] as $k => $v) {
                 if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
+                    if (!empty($v['id'])) {
+                        array_push($updateIds, $v['id']);
+                    }
                     $v['commodity_id'] = $this->id;
                     $v['sort'] = $k;
                     if (array_key_exists('style', $v) && !empty($v['style'])) {
@@ -44,6 +50,11 @@ class ShopCommodity extends CoreShopCommodity
                         exception('内容块数据写入失败：'.json_encode($v));
                     }
                 }
+            }
+            //删除
+            $ids = array_diff($itemIds, $updateIds);
+            if ($ids) {
+                (new ShopCommodityItem())->where('id', 'in', implode(',', $ids))->delete();
             }
             Db::commit();
         } catch (\Exception $e) {
