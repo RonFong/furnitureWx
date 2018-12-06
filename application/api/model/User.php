@@ -58,8 +58,6 @@ class User extends CoreUser
             //负责人信息
             if ($group['wx_account'] && $group['phone']) {
                 $user['secondary_user'] = [
-                    'group_type'        => 2,
-                    'shop_name'         => $group['shop_name'],
                     'phone'             => $group['phone'],
                     'wx_account'        => $group['wx_account'],
                     'qr_code_img'       => $group['license_code'],
