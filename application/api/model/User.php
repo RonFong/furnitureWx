@@ -56,14 +56,16 @@ class User extends CoreUser
             $user['main_user'] += $main;
 
             //负责人信息
-            $user['secondary_user'] = [
-                'group_type'        => 2,
-                'shop_name'         => $group['shop_name'],
-                'phone'             => $group['phone'],
-                'wx_account'        => $group['wx_account'],
-                'qr_code_img'       => $group['license_code'],
-                'qr_code_img_thumb' => $group['license_code']
-            ];
+            if ($group['wx_account'] && $group['phone']) {
+                $user['secondary_user'] = [
+                    'group_type'        => 2,
+                    'shop_name'         => $group['shop_name'],
+                    'phone'             => $group['phone'],
+                    'wx_account'        => $group['wx_account'],
+                    'qr_code_img'       => $group['license_code'],
+                    'qr_code_img_thumb' => $group['license_code']
+                ];
+            }
         }
         if (user_info('type') == 1) {
             //厂家用户
