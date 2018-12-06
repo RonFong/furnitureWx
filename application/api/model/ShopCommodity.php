@@ -28,11 +28,12 @@ class ShopCommodity extends CoreShopCommodity
         try {
             Db::startTrans();
             $param['shop_id'] = user_info('group_id');
+            $itemIds = [];
             if (!empty($param['id'])) {
                 $param['create_time'] = time();
+                $itemIds = (new ShopCommodityItem())->where('commodity_id', $param['id'])->column('id');
             }
             $this->save($param);
-            $itemIds = (new ShopCommodityItem())->where('commodity_id', $param['id'])->column('id');
             //id 存在，但内容为空的，删除
             $updateIds = [];
             foreach ($param['content'] as $k => $v) {
