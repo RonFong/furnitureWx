@@ -79,8 +79,8 @@ class ArticleComment extends CoreArticleComment
         foreach ($comments as $v) {
             $comment = $this->moreCommentReply($v['id']);
             $v = $comment['comment'];
-            $v['child'] = $comment['reply'];
-            $v['child_num'] = count($v['child']);
+            $v['child'] = array_slice($comment['reply'], 0, 3);
+            $v['child_num'] = count($comment['reply']);
             array_push($list, $v);
         }
         return $list;
