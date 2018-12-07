@@ -15,7 +15,7 @@ class User extends BaseValidate
 {
     protected $rule = [
         'id'                => 'require',            //用户ID
-        'user_name'         => 'require',                   //昵称
+        'user_name'         => 'require|length:1,6',                   //昵称
         'group_id'          => 'require|number|groupTypeExits',            //所属厂/商主体
         'group_type'        => 'require|in:1,2',            //所属主体类型
         'phone'             => 'require|isPhoneNo|unique:user',         //手机号
@@ -29,6 +29,7 @@ class User extends BaseValidate
         'id.require'            => '用户ID不能为空',
         'id.number'             => '用户ID错误',
         'user_name.require'     => '用户名不能为空',
+        'user_name.length'      => '昵称过长',
         'group_id.require'      => '用户所属厂/商ID不能为空',
         'phone.require'         => '手机号不能为空',
         'phone.unique'          => '手机号已被绑定账号',
