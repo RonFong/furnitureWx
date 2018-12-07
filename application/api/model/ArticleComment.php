@@ -77,9 +77,9 @@ class ArticleComment extends CoreArticleComment
             ->select();
         $list     = [];
         foreach ($comments as $v) {
-            $v['is_great'] = $this->isGreat($v['id']);
-            $v['create_time'] = time_format_for_humans($v['create_time']);
-            $v = $this->recursionComment($v);
+            $comment = $this->moreCommentReply($v['id']);
+            $v = $comment['comment'];
+            $v['child'] = $comment['reply'];
             $v['child_num'] = count($v['child']);
             array_push($list, $v);
         }
