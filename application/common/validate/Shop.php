@@ -6,7 +6,7 @@ class Shop extends BaseValidate
 {
     protected $rule = [
         'id'                => 'require',                   // 用户ID
-        'shop_name'         => 'require|checkShopWx|checkUserType',       // 门店名称
+        'shop_name'         => 'require|length:1,8|checkShopWx|checkUserType',       // 门店名称
         'shop_contact'      => 'require',                   // 门店联系人
         'shop_phone'        => 'require|isPhoneNo',         // 门店电话
         'province'          => 'require',            // 省
@@ -29,6 +29,7 @@ class Shop extends BaseValidate
         'shop_name.require'     => '请填写门店名称',
         'shop_contact.require'  => '请填写联系人',
         'shop_phone.require'    => '请填写电话',
+        'shop_name.length'      => '店名过长',
         'province'              => '请填写门店地区',
         'city'                  => '市不能为空',
         'district'              => '区/县不能为空',
