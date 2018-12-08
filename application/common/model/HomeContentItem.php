@@ -17,4 +17,17 @@ class HomeContentItem extends Model
         }
         return '';
     }
+
+    /**
+     * 高度自适应
+     * @param $value
+     * @return string
+     */
+    public function getVideoSnapshotAutoAttr($value)
+    {
+        if ($value) {
+            return $value . config('system.video_snapshot_auto');
+        }
+        return '';
+    }
 }

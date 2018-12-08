@@ -105,7 +105,7 @@ class HomeContent extends CoreHomeContent
             $data->content = HomeContentItem::all(function ($query) use ($contentId) {
                 $query->where('content_id', $contentId)
                     ->field(true)
-                    ->field('video as video_snapshot')
+                    ->field('video as video_snapshot, video as video_snapshot_auto')
                     ->order('sort');
             });
         }

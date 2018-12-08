@@ -269,7 +269,7 @@ class Article extends CoreArticle
             $query->where('article_id', $id)
                 ->where('delete_time is null')
                 ->field(true)
-                ->field('video as video_snapshot')
+                ->field('video as video_snapshot, video as video_snapshot_auto')
                 ->field('delete_time', true)
                 ->order('sort');
         });

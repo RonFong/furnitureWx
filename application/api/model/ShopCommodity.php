@@ -80,6 +80,8 @@ class ShopCommodity extends CoreShopCommodity
             $contentId = $id;
             $data->content = ShopCommodityItem::all(function ($query) use ($contentId) {
                 $query->where('commodity_id', $contentId)
+                    ->field(true)
+                    ->field('video as video_snapshot, video as video_snapshot_auto')
                     ->order('sort');
             });
         }
