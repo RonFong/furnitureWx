@@ -30,6 +30,7 @@ class ArticleReadHistory
         if ($articleUserId != user_info('id')) {
             $beforeReadTime = Db::table('article_read_history')
                 ->where(['user_id' => user_info('id'), 'article_id' => $articleId])
+                ->order('create_time desc')
                 ->value('create_time') ?: 0;
             //同一用户记录阅读数的间隔时间
             if ((time() - $beforeReadTime) > config('system.read_interval_time')) {

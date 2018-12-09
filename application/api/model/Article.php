@@ -144,6 +144,12 @@ class Article extends CoreArticle
             $where .= " and user_id = {$param['user_id']}";
         }
 
+        if (!empty($param['is_draft'])) {
+            $where .= " and is_draft = {$param['is_draft']}";
+        } else {
+            $where .= " and is_draft = 0";
+        }
+
         if (!empty($param['ids'])) {
             $ids = implode(',', $param['ids']);
             $where .= " and id in ($ids) ";
@@ -247,19 +253,24 @@ class Article extends CoreArticle
     /**
      * 文章详情
      * @param $id
-     * @return array
+     * @return array|null|static
+     * @throws \Exception
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function details($id)
     {
         $data = self::get(function ($query) use ($id) {
             $query->where('id', $id)
-                ->field('id, user_id, classify_id as classify_name, title, music, music_name, read_num, share_num, id as comment_num, create_time');
-        })->toArray();
-
+                ->field('id, user_id, is_draft, classify_id as classify_name, title, music, music_name, read_num, share_num, id as comment_num, create_time');
+        });
+        if (!$data) {
+            exception('文章不存在');
+        }
+        $data = $data->toArray();
         $user = User::get($data['user_id']);
         $data['user_name'] = $user->user_name;
         $data['avatar'] = $user->avatar;

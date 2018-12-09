@@ -22,6 +22,7 @@ class Article extends BaseValidate
         'user_id'           => 'require|number|egt:1',
         'article_id'        => 'require|number|egt:1',
         'title'             => 'require',
+        'is_draft'          => 'in:0,1',
         'order_by'          => 'in:read_num,create_time,distance'     //人气、时间、距离
     ];
 
@@ -36,13 +37,15 @@ class Article extends BaseValidate
             'title',
             'classify_id',
             'content',
-            'title'
+            'title',
+            'is_draft'
         ],
         'update'        => [
             'id',
             'classify_id',
             'content',
-            'title'
+            'title',
+            'is_draft'
         ],
         'delete'        => [
             'id'
@@ -50,7 +53,8 @@ class Article extends BaseValidate
         'list' => [
             'classify_id' => 'number',
             'page',
-            'order_by'
+            'order_by',
+            'is_draft'
         ],
         'details'       => [
             'id'
