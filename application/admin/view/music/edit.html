@@ -77,8 +77,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="state" value="0" title="未审核" {eq name="$data.state|default=''" value="0"}checked{/eq}>
-                        <input type="radio" name="state" value="1" title="审核通过" {eq name="$data.state|default=''" value="1"}checked{/eq}>
+                        <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default=1" value="1"}checked{/eq}>
+                        <input type="radio" name="state" value="0" title="禁用" {eq name="$data.state|default=1" value="0"}checked{/eq}>
                     </div>
                 </div>
                 <div class="layui-form-item">
