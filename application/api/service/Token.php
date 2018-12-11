@@ -57,7 +57,7 @@ class Token
         $locationData = [
             'lng'           => sprintf("%.6f", $wxUserInfo['lng']),
             'lat'           => sprintf("%.6f", $wxUserInfo['lat']),
-            'update_time'   => time()
+            'create_time'   => time()
         ];
         if (!$userInfo) {
             $saveData = [
@@ -75,14 +75,14 @@ class Token
                 'create_time'   => time()
             ];
             $id = Db::table('user')->insertGetId($saveData);
-            $locationData['id'] = $id;
+            $locationData['user_id'] = $id;
             if (!$id) {
                 exception('注册失败');
             }
             $saveData['id'] = $id;
             $result = $saveData;
         } else {
-            $locationData['id'] = $userInfo->id;
+            $locationData['user_id'] = $userInfo->id;
             $result = $userInfo->toArray();
         }
         if (!empty($locationData['lat']) && !empty($locationData['lng'])) {
