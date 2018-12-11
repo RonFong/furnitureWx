@@ -84,6 +84,14 @@ class Article extends CoreArticle
     {
         try {
             Db::startTrans();
+            if (isset($param['is_draft']) && $param['is_draft'] == 0) {
+                //将文章草稿发布，经纬度改为当前位置
+                $article = self::get($param['id']);
+                if ($article->is_draft == 2) {
+                    $param['lat'] = user_info('lat');
+                    $param['lng'] = user_info('lng');
+                }
+            }
             $this->save($param);
             $itemModel = new ArticleContent();
             $itemIds = $itemModel->where('article_id', $param['id'])->column('id');
