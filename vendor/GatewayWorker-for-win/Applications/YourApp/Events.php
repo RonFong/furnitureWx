@@ -203,13 +203,15 @@ class Events
         try {
             self::log($userId, 1);
             //与当前用户相关的消息， 过滤：用户已清除、后台已删除、后台已屏蔽的消息
-            $messageList = self::$db->query("SELECT `from_id`, `to_id`, `message`, `type`, `read`, `send_time`, count(`from_id` + `to_id`) as `count` FROM (SELECT * FROM `websocket_message` WHERE ((`to_id` = $userId AND `to_clear` = 0) OR (`from_id` = $userId AND `from_clear` = 0)) AND `state` = 1 AND `delete_time` IS NULL ORDER BY `send_time` DESC limit 999999) as msg GROUP BY (`from_id` + `to_id`) ORDER BY `read` DESC, `type` DESC, `send_time` DESC");
+            $messageList = self::$db->query("SELECT `from_id`, `to_id`, `message`, `type`, `read`, `send_time` FROM (SELECT * FROM `websocket_message` WHERE ((`to_id` = $userId AND `to_clear` = 0) OR (`from_id` = $userId AND `from_clear` = 0)) AND `state` = 1 AND `delete_time` IS NULL ORDER BY `send_time` DESC limit 999999) as msg GROUP BY (`from_id` + `to_id`) ORDER BY `read` DESC, `type` DESC, `send_time` DESC");
             if (!empty($messageList)) {
                 $data['new_message_total'] = count($messageList) - array_sum(array_column($messageList, 'read'));
                 foreach ($messageList as $k => $v) {
                     $id = $v['from_id'] !== $userId ? $v['from_id'] : $v['to_id'];
-                    $user = self::$db->select('user_name,avatar')->from('user')->where("id={$id}")->row();
-                    $messageList[$k]['to_id'] = $id;
+                    $user = self::$db->select('id,user_name,avatar')->from('user')->where("id={$id}")->row();
+                    $userMessage = self::$db->query("SELECT count(`id`) as num FROM `websocket_message` WHERE from_id = $id and to_id = $userId and `read` = 0 and state = 1 and delete_time is null");
+                    $messageList[$k]['count'] = $userMessage[0]['num'];   //未读消息数
+                    $messageList[$k]['user_id'] = $user['id'];
                     $messageList[$k]['user_name'] = $user['user_name'];
                     $messageList[$k]['avatar'] = $user['avatar'];
                     $messageList[$k]['send_time'] = self::timeFormatForHumans($v['send_time']);
