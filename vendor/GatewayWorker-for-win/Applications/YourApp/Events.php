@@ -125,13 +125,11 @@ class Events
                     if (!self::isServiceAccount($msg['toId'])) {
                         Gateway::sendToUid($msg['toId'], self::result($data));
                     }
-
+                    //保存消息
+                    self::saveMessage($fromId, $msg['toId'], $msg['message'], $messageType);
                     //获取更新后的消息列表
                     static::getMessageList($msg['toId']);
                     static::getMessageList($fromId);
-
-                    //保存消息
-                    self::saveMessage($fromId, $msg['toId'], $msg['message'], $messageType);
                     break;
 
                 case 'messageBeenReadOne':
@@ -211,6 +209,7 @@ class Events
                 foreach ($messageList as $k => $v) {
                     $id = $v['from_id'] != $userId ?: $v['to_id'];
                     $user = self::$db->select('user_name,avatar')->from('user')->where("id={$id}")->row();
+                    $messageList[$k]['to_id'] = $id;
                     $messageList[$k]['user_name'] = $user['user_name'];
                     $messageList[$k]['avatar'] = $user['avatar'];
                     $messageList[$k]['send_time'] = self::timeFormatForHumans($v['send_time']);
@@ -273,11 +272,11 @@ class Events
      */
     private static function messageBeenRead($toId, $fromId = 0)
     {
-        if ($toId == 0) {
+        if ($fromId == 0) {
             //  type <> 3 不可同时操作系统消息和用户消息
             $map = "to_id = $toId and state = 1 and type <> 3";
         } else {
-            $map = "to_id = $toId and from_id = $fromId state = 1";
+            $map = "to_id = $toId and from_id = $fromId and state = 1";
         }
         self::$db->update('websocket_message')
             ->where($map)
@@ -287,21 +286,19 @@ class Events
 
     /**
      * 清空聊天记录
-     * @param $fromId
-     * @param $toId
+     * @param $currentUser
+     * @param int $otherUser
      */
-    private static function clearMessage($toId, $fromId = 0)
+    private static function clearMessage($currentUser, $otherUser = 0)
     {
-        if ($toId == 0) {
+        if ($otherUser == 0) {
             //   type <> 3  不可同时操作系统消息和用户消息
-            $map = "(from_id = $toId or to_id = $toId) and type <> 3";
+            self::$db->update('websocket_message')->where("from_id = $currentUser and type <> 3")->cols(['from_clear' => 1])->query();
+            self::$db->update('websocket_message')->where("to_id = $currentUser and type <> 3")->cols(['to_clear' => 1])->query();
         } else {
-            $map = "(to_id = $fromId and from_id = $toId) or (to_id = $toId and from_id = $fromId)";
+            self::$db->update('websocket_message')->where("from_id = $currentUser and to_id = $otherUser")->cols(['from_clear' => 1])->query();
+            self::$db->update('websocket_message')->where("to_id = $currentUser and from_id = $otherUser")->cols(['to_clear' => 1])->query();
         }
-        self::$db->update('websocket_message')
-            ->where($map)
-            ->cols(['to_clear' => 1])
-            ->query();
     }
 
 
@@ -340,8 +337,7 @@ class Events
         $time = time() - $agoTime;
 
         if ($time >= 31104000) { // N年前
-            $num = (int)($time / 31104000);
-            return $num . '年前';
+            return date('Y-m-d', $time);
         }
         if ($time >= 2592000) { // N月前
             $num = (int)($time / 2592000);
@@ -349,7 +345,7 @@ class Events
         }
         if ($time >= 86400) { // N天前
             $num = (int)($time / 86400);
-            return $num . '天前';
+            return $num . '天前 ' . date('H:s', $time);
         }
         if ($time >= 3600) { // N小时前
             $num = (int)($time / 3600);
