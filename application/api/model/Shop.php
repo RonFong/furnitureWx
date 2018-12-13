@@ -13,7 +13,7 @@ class Shop extends CoreShop
      * 范围 （公里）
      * @var int
      */
-    protected $distance = 100;
+    protected $distance = 10000;
 
     /**
      * 获取附近的商家
