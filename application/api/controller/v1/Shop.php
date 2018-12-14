@@ -15,6 +15,7 @@ use app\api\model\Shop as shopModel;
 use app\api\model\ShopCommodity;
 use app\api\model\ShopCommodityItem;
 use app\api\service\Popularity;
+use app\api\service\WXACodeUnlimit;
 use app\common\validate\Shop as shopValidate;
 use app\lib\enum\Response;
 use app\api\model\User;
@@ -60,6 +61,14 @@ class Shop extends BaseController
                 'type' => 2
             ];
             (new User())->save($userInfo);
+
+            //门店首页小程序码    (小程序环境要求： 已发布)
+//            $img = WXACodeUnlimit::create('pages/store/store', $this->currentModel->id);
+//            $saveRqCode['id'] = $this->currentModel->id;
+//            $saveRqCode['qr_code_img'] = $img;
+//            $saveRqCode['qr_code_img_thumb'] = $img;
+//            $this->currentModel->save($saveRqCode);
+
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
