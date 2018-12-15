@@ -78,7 +78,6 @@
 
         var shop_name = $.getUrlParam('shop_name');
         if ( shop_name !== undefined) {
-            console.log(shop_name);
             $('#searchForm').find('input[name="shop_name"]').val(shop_name);
         }
 
@@ -99,6 +98,9 @@
                 ,{field:'shop_contact', title:'门店联系人'}
                 ,{field:'shop_phone', title:'门店电话'}
                 ,{field:'shop_wx', title:'门店微信号'}
+                ,{field:'address', title:'门店地址', templet: function (data) {
+                    return data.address != '' ? '<a href="javascript:;" lay-event="show-map">'+data.address+'</a>' : "";
+                }}
                 ,{field:'home_content_has', title:'首页图文'}
                 ,{field:'shop_commodity_count', title:'商品数量'}
                 ,{field:'audit_state_des', title:'审核状态'}
@@ -124,6 +126,12 @@
                 });
             } else if (obj.event === 'edit') {
                 window.open('edit?id='+data.id);
+            } else if (obj.event === 'show-map') {
+                var modal = layer.open({
+                    type: 2
+                    , title: '详细地址'
+                    , content: 'bMap'
+                });
             }
         });
     });

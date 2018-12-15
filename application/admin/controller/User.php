@@ -13,6 +13,7 @@ use app\admin\model\User as CoreUser;
 use Carbon\Carbon;
 use think\Db;
 use think\Request;
+use think\Session;
 
 class User extends Base
 {
@@ -140,5 +141,31 @@ class User extends Base
         }
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
+
+
+    /**
+     * 修改密码
+     */
+    public function changePassword()
+    {
+        $param = $this->request->param();
+
+        if (empty($param['password'])) {
+            $this->error('新密码不能为空');
+        }
+
+        if ($param['password'] != $param['confirm']) {
+            $this->error('两次输入的密码不一致');
+        }
+
+        //保存数据
+        $res = $this->currentModel->save($param);
+        if ($res === false) {
+            $this->error($this->currentModel->getError());
+        }
+
+        $this->success('保存成功!');
+    }
+
 }
 
