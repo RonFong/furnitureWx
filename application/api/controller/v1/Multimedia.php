@@ -32,12 +32,30 @@ class Multimedia extends BaseController
     }
 
     /**
+     * 上传图片
+     * @return \think\response\Json
+     */
+    public function uploadImg()
+    {
+        $type = $this->request->param('type', 'default');
+        $res = $this->ossServer->image($type);
+        if ($res === false) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = $this->ossServer->getError();
+            return json($this->result, 200);
+        }
+
+        $this->result['data'] = ['url' => $res];
+        return json($this->result, 200);
+    }
+
+    /**
      * 上传音频
      * @return \think\response\Json
      */
     public function uploadAudio()
     {
-        $res = $this->ossServer->uploadAudio();
+        $res = $this->ossServer->audio();
         if ($res === false) {
             $this->result['state'] = 0;
             $this->result['msg'] = $this->ossServer->getError();
@@ -54,7 +72,7 @@ class Multimedia extends BaseController
      */
     public function uploadVideo()
     {
-        $res = $this->ossServer->uploadVideo();
+        $res = $this->ossServer->video();
         if ($res === false) {
             $this->result['state'] = 0;
             $this->result['msg'] = $this->ossServer->getError();
