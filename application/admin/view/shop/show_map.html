@@ -12,7 +12,7 @@
       font-family: "微软雅黑";
     }
   </style>
-  <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=rm8q8G1xMDSKPvU2fKr6wHyiKmsyZbFG"></script>-->
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=rm8q8G1xMDSKPvU2fKr6wHyiKmsyZbFG"></script>
   <title>地址解析</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
 </body>
 </html>
 <script type="text/javascript">
-    var address = {$address|default="''"}
+    var address = {$address|default="''"};
     // 百度地图API功能
     var map = new BMap.Map("allmap");            // 创建Map实例
     map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
