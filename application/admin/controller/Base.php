@@ -189,12 +189,27 @@ abstract class Base extends Controller
     }
 
     /**
+     * 上传图片
+     */
+    public function uploadImgOss()
+    {
+        $type = $this->request->param('type', 'default');
+        $ossServer = new Oss();
+        $res = $ossServer->image($type);
+        if ($res === false) {
+            $this->error($ossServer->getError());
+        }
+
+        $this->success('操作成功！', null, ['url'=>$res]);
+    }
+
+    /**
      * 上传音频
      */
-    public function uploadOssFile()
+    public function uploadAudioOss()
     {
         $ossServer = new Oss();
-        $res = $ossServer->uploadAudio();
+        $res = $ossServer->audio();
         if ($res === false) {
             $this->error($ossServer->getError());
         }

@@ -217,7 +217,7 @@ $('.tools-bottom').on('click', function (e) {
 /*上传大文件*/
 function uploadBigFile(element, url, size) {
     if (!size) {size = 512000;}
-    if (!url) {url = '/admin/index/uploadOssFile';}
+    if (!url) {url = '/admin/index/uploadImgOss';}
     var lay_load;
     layui.use(['layer', 'upload'], function () {
         var upload = layui.upload;
