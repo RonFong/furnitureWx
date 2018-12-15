@@ -149,7 +149,8 @@ class Oss
         $this->file_path = $file_info['tmp_name'];//本地文件路径
 
 
-        return $this->simpleUpload();
+//        return $this->simpleUpload();
+        return $this->multiUpload();
     }
 
     /**
@@ -216,7 +217,7 @@ class Oss
             $this->error = $e->getMessage();
             return false;
         }
-
+var_dump($res);
         return $res['oss-request-url'] ? str_replace('-internal', '', $res['oss-request-url']) : '';
     }
 
