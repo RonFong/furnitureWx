@@ -151,9 +151,15 @@ class Shop extends Base
         return Db::name('district')->where('parent_id', $pid)->field('id,name,code')->select();
     }
 
-    public function bMap()
+    /**
+     * 显示门店位置（地图）
+     * @param string $address
+     * @return mixed
+     */
+    public function showMap($address = '')
     {
-        return $this->fetch();
+//        $this->assign('address', $address);
+        return $this->fetch('show_map');
     }
 }
 
