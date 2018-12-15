@@ -13,6 +13,6 @@ class Index extends Controller
 
     public function test()
     {
-        return $this->test();
+        return $this->fetch();
     }
 }
