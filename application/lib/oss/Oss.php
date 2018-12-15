@@ -47,10 +47,10 @@ class Oss
     const crop_1080 = '?x-oss-process=image/crop,x_0,y_0,w_1080,h_607,g_center';
 
     /**
-     * 居中裁剪，宽408*306（4:3）
+     * 居中裁剪，宽480*360（4:3）
      * @var string
      */
-    const crop_408 = '?x-oss-process=image/crop,x_0,y_0,w_408,h_306,g_center';
+    const crop_480 = '?x-oss-process=image/crop,x_0,y_0,w_480,h_360,g_center';
 
     /**
      * 缩放，宽500*375（4:3）
@@ -115,9 +115,8 @@ class Oss
         $file_info = $file->getInfo();
         $this->file_name = 'audio/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $this->file_path = $file_info['tmp_name'];//本地文件路径
-
-        return $this->simpleUpload();
-//        return $this->multiUpload();
+//        return $this->simpleUpload();
+        return $this->multiUpload();
     }
 
     /**

@@ -6,8 +6,21 @@
         <div class="layui-field-box">
             <div class="layui-main">
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>门头照：</label>
-                    <img src="{$data.shop_img|default=''}" width="200" alt="门头照">
+                    <label class="layui-form-label">门头照：</label>
+                    <div class="layui-input-inline upload-shop-img">
+                        <img src="{$data.shop_img|default='/static/img/holder.jpg'}" width="200" alt="门头照">
+                        <input type="hidden" name="shop_img" value="{$data.shop_img|default=''}" data-id="{$data.id|default=''}" data-table="shop">
+                    </div>
+                    <div class="layui-input-inline">
+                        <div class="layui-btn-container">
+                            <a href="{$data.shop_img|default='/static/img/holder.jpg'}" target="_blank" class="layui-btn layui-btn-primary layui-btn-sm">
+                                <i class="layui-icon layui-icon-search"></i>查看大图
+                            </a>
+                            <a class="layui-btn layui-btn-primary layui-btn-sm image-delete" onclick="deleteBigFile(this);">
+                                <i class="layui-icon layui-icon-delete"></i>删除图片
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
@@ -141,6 +154,9 @@
 <script type="text/javascript">
     layui.use(['form'], function () {
         var form = layui.form;
+
+        //上传门头照，限制大小4M
+        uploadFileOss('.upload-shop-img', '{:url("uploadImgOss")}', 4096, 'images');
 
         //监听省市区三级联动
         form.on('select(region)', function (data) {

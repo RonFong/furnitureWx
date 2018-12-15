@@ -11,6 +11,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Shop as CoreShop;
 use app\common\model\StoreClassify;
+use app\lib\oss\Oss;
 use think\Db;
 use think\Request;
 
@@ -125,6 +126,10 @@ class Shop extends Base
         }
 
         try {
+            if (!empty($param['shop_img'])) {
+                $param['shop_img'] = $param['shop_img'].Oss::crop_1080;
+                $param['shop_img_thumb'] = $param['shop_img'].Oss::crop_480;
+            }
             //保存数据
             $this->currentModel->save($param);
         } catch (\Exception $e) {
