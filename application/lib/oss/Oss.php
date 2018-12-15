@@ -116,8 +116,8 @@ class Oss
         $this->file_name = 'audio/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $this->file_path = $file_info['tmp_name'];//本地文件路径
 
-        //        return $this->simpleUpload();
-        return $this->multiUpload();
+        return $this->simpleUpload();
+//        return $this->multiUpload();
     }
 
     /**
