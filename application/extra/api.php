@@ -43,4 +43,25 @@ return [
     //用户默认头像
     'default_avatar'        => '/static/img/user_icon/default.jpg',
 
+    //阿里云存储
+    'oss'                   => [
+        'local'  => [
+            'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
+            'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
+            'endpoint'          => 'oss-cn-hangzhou.aliyuncs.com',              //地域节点  上传
+            'bucket'            => 'test-api-multimedia'                        //存储空间名
+        ],'test'  => [
+            'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
+            'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
+            'endpoint'          => 'oss-cn-hangzhou-internal.aliyuncs.com',     //地域节点  上传
+            'bucket'            => 'test-api-multimedia'                        //存储空间名
+        ],
+        'online'    => [
+            'accessKeyId'       =>  'LTAIAaYdblbcmeSY',
+            'accessKeySecret'   => 'gx0I7OkRGSxFgA9fKpbs00r8wkWTI1',
+            'endpoint'          => 'oss-cn-shenzhen-internal.aliyuncs.com',
+            'bucket'            => 'api-multimedia'
+        ]
+    ]
+
 ];

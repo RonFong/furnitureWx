@@ -18,26 +18,6 @@ use think\Request;
 
 class Oss
 {
-    private $config = [
-        'local'  => [
-            'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
-            'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
-            'endpoint'          => 'oss-cn-hangzhou.aliyuncs.com',     //地域节点  上传
-            'bucket'            => 'test-api-multimedia'                        //存储空间名
-        ],'test'  => [
-            'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
-            'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
-            'endpoint'          => 'oss-cn-hangzhou-internal.aliyuncs.com',     //地域节点  上传
-            'bucket'            => 'test-api-multimedia'                        //存储空间名
-        ],
-        'online'    => [
-            'accessKeyId'       =>  'LTAIAaYdblbcmeSY',
-            'accessKeySecret'   => 'gx0I7OkRGSxFgA9fKpbs00r8wkWTI1',
-            'endpoint'          => 'oss-cn-shenzhen-internal.aliyuncs.com',
-            'bucket'            => 'api-multimedia'
-        ]
-    ];
-
     private $currentConfig = [];
 
     /**
@@ -91,12 +71,13 @@ class Oss
     public function __construct()
     {
         $this->request = Request::instance();
-        if ($this->request->domain() == 'https://www.99jjw.cn') {
-            $this->currentConfig = $this->config['online'];
+        $config = config('api.oss');
+        if ($this->request->domain() == 'https://www.86jj.cn') {
+            $this->currentConfig = $config['online'];
         } elseif ($this->request->domain() == 'https://www.7qiaoban.cn') {
-            $this->currentConfig = $this->config['test'];
+            $this->currentConfig = $config['test'];
         } else {
-            $this->currentConfig = $this->config['local'];
+            $this->currentConfig = $config['local'];
         }
     }
 
@@ -108,7 +89,7 @@ class Oss
     {
         $file = $this->request->file('file');
         if (empty($file)) {
-            $this->error = '上传数据为空';
+            $this->error = '请选择要上传的音频';
             return false;
         }
 
@@ -127,7 +108,7 @@ class Oss
     {
         $file = $this->request->file('file');
         if (empty($file)) {
-            $this->error = '上传数据为空';
+            $this->error = '请选择要上传的视频';
             return false;
         }
 
@@ -148,7 +129,7 @@ class Oss
     {
         $file = $this->request->file('file');
         if (empty($file)) {
-            $this->error = '上传数据为空';
+            $this->error = '请选择要上传的图片';
             return false;
         }
 
