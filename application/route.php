@@ -43,8 +43,6 @@ Route::group('api/:version', function () {
         //校验短信验证码
         Route::get('checkAuthCode', 'api/:version.Sms/checkAuthCode');
     });
-    //上传图片
-    Route::post('image/upload', 'api/:version.Image/saveTmpImg');
     //圈子 文章
     Route::group('article', function () {
         //获取文章分类
@@ -212,4 +210,8 @@ Route::group('api/:version', function () {
     Route::post('multimedia/uploadVideo', 'api/:version.Multimedia/uploadVideo');
     //删除文件
     Route::post('multimedia/delete', 'api/:version.Multimedia/delete');
+    //上传图片到OSS
+    Route::post('image/uploadToOss', 'api/:version.Multimedia/uploadImg');
+    //上传图片到服务器
+    Route::post('image/upload', 'api/:version.Image/saveTmpImg');
 });
