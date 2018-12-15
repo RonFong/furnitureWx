@@ -9,26 +9,21 @@
  * @param arg_val 参数值
  * @returns {string} URL链接
  */
-function setUrl(url,arg,arg_val)
-{
-    var pattern=arg+'=([^&]*)';
-    var replaceText=arg+'='+arg_val;
+function setUrl(url, arg, arg_val) {
+    var pattern = arg + '=([^&]*)';
+    var replaceText = arg + '=' + arg_val;
     var result = "";
-    if(url.match(pattern))
-    {
-        var tmp='/('+ arg+'=)([^&]*)/gi';
-        tmp = url.replace(eval(tmp),replaceText);
+    if (url.match(pattern)) {
+        var tmp = '/(' + arg + '=)([^&]*)/gi';
+        tmp = url.replace(eval(tmp), replaceText);
         result = tmp;
     }
-    else
-    {
-        if(url.match('[\?]'))
-        {
-            result =  url+'&'+replaceText;
+    else {
+        if (url.match('[\?]')) {
+            result = url + '&' + replaceText;
         }
-        else
-        {
-            result =  url+'?'+replaceText;
+        else {
+            result = url + '?' + replaceText;
         }
     }
     return result;
@@ -62,7 +57,9 @@ function getFormJson(form) {
  * @param curr 当前页码
  */
 function reloadTable(form, curr) {
-    if (!curr) {curr = 1;}
+    if (!curr) {
+        curr = 1;
+    }
 
     var where = {};
     var arr = $(form).serializeArray();
@@ -72,7 +69,7 @@ function reloadTable(form, curr) {
     // history.pushState({}, '', window.location.origin+window.location.pathname);//去除链接参数
     tableIns.reload({
         where: where
-        ,page:{
+        , page: {
             curr: curr //重新从第 curr 页开始
         }
     });
@@ -119,11 +116,11 @@ function changePwd(id, title, url) {
 
 /*更改排序*/
 function changeSort(id, type, url) {
-    $.post(url, {id:id, type:type}, function (result) {
+    $.post(url, {id: id, type: type}, function (result) {
         if (result.code) {
             reloadTable('#searchForm');
         } else {
-            layer.alert(result.msg, {icon:2});
+            layer.alert(result.msg, {icon: 2});
         }
     }, 'json');
 }
@@ -145,10 +142,12 @@ function ajaxDelete(id, url) {
 
 //选中数据，更改状态
 function setState(ids, state, field_name, url) {
-    if (!field_name) {field_name = 'state';}//状态字段名
+    if (!field_name) {
+        field_name = 'state';
+    }//状态字段名
 
     layer.confirm('确定更新状态吗？', function (index) {
-        $.post(url, {id:ids, state:state, field_name:field_name}, function (result) {
+        $.post(url, {id: ids, state: state, field_name: field_name}, function (result) {
             if (result.code) {
                 reloadTable('#searchForm');//重新加载数据表格
                 layer.msg(result.msg, {time: 1000});
@@ -161,25 +160,29 @@ function setState(ids, state, field_name, url) {
 
 /*上传图片*/
 function uploadImgAjax(element, url, size) {
-    if (!size) {size = 2048;}
-    if (!url) {url = '/admin/system/uploadimg.html';}
+    if (!size) {
+        size = 2048;
+    }
+    if (!url) {
+        url = '/admin/system/uploadimg.html';
+    }
     var lay_load;
     layui.use(['layer', 'upload'], function () {
         var upload = layui.upload;
         upload.render({
             elem: element
-            ,url: url
-            ,size: size //限制文件大小，单位 KB
-            ,exts: "jpg|png|gif|bmp|jpeg"
-            ,before: function(obj){
-                lay_load = layer.load(2, {time: 20*1000});
+            , url: url
+            , size: size //限制文件大小，单位 KB
+            , exts: "jpg|png|gif|bmp|jpeg"
+            , before: function (obj) {
+                lay_load = layer.load(2, {time: 20 * 1000});
             }
-            ,done: function(res){
+            , done: function (res) {
                 layer.close(lay_load);
-                if(res.code){
+                if (res.code) {
                     var control = $(element);
-                    $(control).find('.image-text').css('display','none'); //隐藏文字
-                    $(control).find('.image-preview').css('display','block'); //显示图片
+                    $(control).find('.image-text').css('display', 'none'); //隐藏文字
+                    $(control).find('.image-preview').css('display', 'block'); //显示图片
                     $(control).find('img').attr('src', res.data); //图片链接
                     $(control).find('input[type="hidden"]').val(res.data); //赋值上传
                 } else {
@@ -195,8 +198,13 @@ function delImgAjax(element) {
     var dom = $(element).closest('.layui-form-item');
     var field = dom.find('input[type="hidden"]');
 
-    var data = {id:field.data("id"), table_name:field.data("table"), field_name:field.attr("name"), img_url:field.val()};
-    layer.confirm('删除后无法恢复，确定继续吗？', function(index){
+    var data = {
+        id: field.data("id"),
+        table_name: field.data("table"),
+        field_name: field.attr("name"),
+        img_url: field.val()
+    };
+    layer.confirm('删除后无法恢复，确定继续吗？', function (index) {
         $.post('deleteImg', data, function (result) {
             layer.close(index);
             if (result.code) {
@@ -204,7 +212,7 @@ function delImgAjax(element) {
                 dom.find('.image-preview').css('display', 'none');
                 dom.find('input[type="hidden"]').val('');
             } else {
-                layer.alert(result.msg, {icon:2});
+                layer.alert(result.msg, {icon: 2});
             }
         }, 'json');
     });
@@ -215,23 +223,30 @@ $('.tools-bottom').on('click', function (e) {
 });
 
 /*上传大文件*/
-function uploadBigFile(element, url, size) {
-    if (!size) {size = 512000;}
-    if (!url) {url = '/admin/index/uploadImgOss';}
+function uploadBigFile(element, url, size, accept) {
+    if (!size) {
+        size = 512000;
+    }
+    if (!url) {
+        url = '/admin/index/uploadImgOss';
+    }
+    if (!accept) {
+        accept = 'file';
+    }
     var lay_load;
     layui.use(['layer', 'upload'], function () {
         var upload = layui.upload;
         upload.render({
             elem: element
-            ,url: url
-            ,size: size //限制文件大小，单位 KB
-            ,accept: 'file' //允许上传的文件类型
-            ,before: function(obj){
-                lay_load = layer.load(2, {time: 20*1000});
+            , url: url
+            , size: size //限制文件大小，单位 KB
+            , accept: accept //允许上传的文件类型
+            , before: function (obj) {
+                lay_load = layer.load(2, {time: 20 * 1000});
             }
-            ,done: function(res){
+            , done: function (res) {
                 layer.close(lay_load);
-                if(res.code){
+                if (res.code) {
                     var control = $(element).closest('.layui-form-item');
                     control.find('input[type="text"]').val(res.data.url); //赋值上传
                     layer.msg(res.msg);
@@ -248,14 +263,19 @@ function deleteBigFile(element) {
     var dom = $(element).closest('.layui-form-item');
     var field = dom.find('input[type="text"]');
 
-    var data = {id:field.data("id"), table_name:field.data("table"), field_name:field.attr("name"), url:field.val()};
-    layer.confirm('删除后无法恢复，确定继续吗？', function(index){
+    var data = {
+        id: field.data("id"),
+        table_name: field.data("table"),
+        field_name: field.attr("name"),
+        url: field.val()
+    };
+    layer.confirm('删除后无法恢复，确定继续吗？', function (index) {
         $.post('/admin/index/deleteOssFile', data, function (result) {
             layer.close(index);
             if (result.code) {
                 field.val('');
             } else {
-                layer.alert(result.msg, {icon:2});
+                layer.alert(result.msg, {icon: 2});
             }
         }, 'json');
     });
@@ -265,6 +285,7 @@ function deleteBigFile(element) {
     $.getUrlParam = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if (r != null) return decodeURI(r[2]); return null;
+        if (r != null) return decodeURI(r[2]);
+        return null;
     }
 })(jQuery);

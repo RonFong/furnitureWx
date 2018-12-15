@@ -19,7 +19,12 @@ use think\Request;
 class Oss
 {
     private $config = [
-        'test'  => [
+        'local'  => [
+            'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
+            'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
+            'endpoint'          => 'oss-cn-hangzhou.aliyuncs.com',     //地域节点  上传
+            'bucket'            => 'test-api-multimedia'                        //存储空间名
+        ],'test'  => [
             'accessKeyId'       =>  'LTAI0ZISMkC8V3QE',
             'accessKeySecret'   => '80mxDCVBzNwXhbvzFQE5CiZIX8uF7j',
             'endpoint'          => 'oss-cn-hangzhou-internal.aliyuncs.com',     //地域节点  上传
@@ -88,8 +93,10 @@ class Oss
         $this->request = Request::instance();
         if ($this->request->domain() == 'https://www.99jjw.cn') {
             $this->currentConfig = $this->config['online'];
-        } else {
+        } elseif ($this->request->domain() == 'https://www.7qiaoban.cn') {
             $this->currentConfig = $this->config['test'];
+        } else {
+            $this->currentConfig = $this->config['local'];
         }
     }
 
@@ -109,7 +116,8 @@ class Oss
         $this->file_name = 'audio/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $this->file_path = $file_info['tmp_name'];//本地文件路径
 
-        return $this->simpleUpload();
+        //        return $this->simpleUpload();
+        return $this->multiUpload();
     }
 
     /**
@@ -128,7 +136,8 @@ class Oss
         $this->file_name = 'video/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $this->file_path = $file_info['tmp_name'];//本地文件路径
 
-        return $this->simpleUpload();
+//        return $this->simpleUpload();
+        return $this->multiUpload();
     }
 
     /**
@@ -149,8 +158,7 @@ class Oss
         $this->file_path = $file_info['tmp_name'];//本地文件路径
 
 
-//        return $this->simpleUpload();
-        return $this->multiUpload();
+        return $this->simpleUpload();
     }
 
     /**
@@ -176,48 +184,12 @@ class Oss
     {
         try {
             $ossClient = new OssClient($this->currentConfig['accessKeyId'], $this->currentConfig['accessKeySecret'], $this->currentConfig['endpoint']);
-            //初始化一个分片上传事件，获取uploadId。
-            $uploadId = $ossClient->initiateMultipartUpload($this->currentConfig['bucket'], $this->file_name);
-            //上传分片
-            $partSize = 5 * 1024 * 1024;//单个分片大小，默认5M
-            $uploadFileSize = filesize($this->file_path);
-            $pieces = $ossClient->generateMultiuploadParts($uploadFileSize, $partSize);
-            $responseUploadPart = array();
-            $uploadPosition = 0;
-            $isCheckMd5 = true;
-            foreach ($pieces as $i => $piece) {
-                $fromPos = $uploadPosition + (integer)$piece[$ossClient::OSS_SEEK_TO];
-                $toPos = (integer)$piece[$ossClient::OSS_LENGTH] + $fromPos - 1;
-                $upOptions = array(
-                    $ossClient::OSS_FILE_UPLOAD => $this->file_path,
-                    $ossClient::OSS_PART_NUM => ($i + 1),
-                    $ossClient::OSS_SEEK_TO => $fromPos,
-                    $ossClient::OSS_LENGTH => $toPos - $fromPos + 1,
-                    $ossClient::OSS_CHECK_MD5 => $isCheckMd5,
-                );
-                // MD5校验。
-                if ($isCheckMd5) {
-                    $contentMd5 = OssUtil::getMd5SumForFile($this->file_path, $fromPos, $toPos);
-                    $upOptions[$ossClient::OSS_CONTENT_MD5] = $contentMd5;
-                }
-                $responseUploadPart[] = $ossClient->uploadPart($this->currentConfig['bucket'], $this->file_name, $uploadId, $upOptions);
-            }
-            // $uploadParts是由每个分片的ETag和分片号（PartNumber）组成的数组。
-            $uploadParts = array();
-            foreach ($responseUploadPart as $i => $eTag) {
-                $uploadParts[] = array(
-                    'PartNumber' => ($i + 1),
-                    'ETag' => $eTag,
-                );
-            }
-
-            //完成上传，OSS将把这些分片组合成一个完整的文件。
-            $res = $ossClient->completeMultipartUpload($this->currentConfig['bucket'], $this->file_name, $uploadId, $uploadParts);
+            $res = $ossClient->multiuploadFile($this->currentConfig['bucket'], $this->file_name, $this->file_path);
         } catch (OssException $e) {
             $this->error = $e->getMessage();
             return false;
         }
-var_dump($res);
+
         return $res['oss-request-url'] ? str_replace('-internal', '', $res['oss-request-url']) : '';
     }
 
