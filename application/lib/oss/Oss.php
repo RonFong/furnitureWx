@@ -41,28 +41,28 @@ class Oss
     private $currentConfig = [];
 
     /**
-     * 居中裁剪，宽1080*607（16:9）
+     * 先缩放：宽1080，再裁剪：高607（16:9）
      * @var string
      */
-    const crop_1080 = '?x-oss-process=image/crop,x_0,y_0,w_1080,h_607,g_center';
-
-    /**
-     * 居中裁剪，宽480*360（4:3）
-     * @var string
-     */
-    const crop_480 = '?x-oss-process=image/crop,x_0,y_0,w_480,h_360,g_center';
-
-    /**
-     * 缩放，宽500*375（4:3）
-     * @var string
-     */
-    const resize_500 = '?x-oss-process=image/resize,m_fixed,h_375,w_500';
+    const resize_1080 = '?x-oss-process=image/resize,w_1080/crop,h_607,g_center';
 
     /**
      * 缩放，宽1000 高auto
      * @var string
      */
-    const resize_1000 = '?x-oss-process=image/resize,w_1000';
+    const resize_1000 = '?x-oss-process=image/resize,m_lfit,w_1000';
+
+    /**
+     * 先缩放：宽500，再裁剪：高375（4:3）
+     * @var string
+     */
+    const resize_500 = '?x-oss-process=image/resize,w_500/crop,h_375,g_center';
+
+    /**
+     * 先缩放：宽480，再裁剪：高360（4:3）
+     * @var string
+     */
+    const resize_480 = '?x-oss-process=image/resize,w_480/crop,h_360,g_center';
 
     /**
      * 文件名称
