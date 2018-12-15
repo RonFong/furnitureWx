@@ -158,7 +158,7 @@ class Shop extends Base
      */
     public function showMap($address = '')
     {
-//        $this->assign('address', $address);
+        $this->assign('address', $address);
         return $this->fetch('show_map');
     }
 }
