@@ -151,7 +151,7 @@ class Shop extends Base
         return Db::name('district')->where('parent_id', $pid)->field('id,name,code')->select();
     }
 
-    public function area()
+    public function bMap()
     {
         return $this->fetch();
     }
