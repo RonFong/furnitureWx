@@ -139,7 +139,6 @@ class Shop extends Base
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
 
-
     /**
      * 根据pid 获取下拉列表，省市区三级联动
      * @param $pid
@@ -150,6 +149,11 @@ class Shop extends Base
     {
         $pid = !empty($pid) ? $pid : 0;
         return Db::name('district')->where('parent_id', $pid)->field('id,name,code')->select();
+    }
+
+    public function area()
+    {
+        return $this->fetch();
     }
 }
 
