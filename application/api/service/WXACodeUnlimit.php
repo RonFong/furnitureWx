@@ -28,12 +28,10 @@ class WXACodeUnlimit
      * 请求参数
      * @var int
      */
-    private $width = 150;
-
     private $param = [
-        'width'     => 150,
-        'page'      => '',
-        'scene'     => []
+        'width'     => 150,                 //图片尺寸
+        'page'      => 'pages/storeDetail/storeDetail',  //页面地址
+        'scene'     => '1'      //门店ID
     ];
 
 
