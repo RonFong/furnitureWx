@@ -248,10 +248,14 @@ function uploadFileOss(element, url, size, accept) {
                 layer.close(lay_load);
                 if (res.code) {
                     var control = $(element).closest('.layui-form-item');
-                    control.find('.image-text').css('display', 'none'); //隐藏文字
-                    control.find('.image-preview').css('display', 'block'); //显示图片
-                    control.find('img').attr('src', res.data.url); //图片链接
-                    control.find('input[type="hidden"]').val(res.data.url); //赋值上传
+                    if (control.find('.image-text').length) {
+                        control.find('.image-text').css('display', 'none'); //隐藏文字
+                        control.find('.image-preview').css('display', 'block'); //显示图片
+                        control.find('img').attr('src', res.data.url); //图片链接
+                        control.find('input[type="hidden"]').val(res.data.url); //赋值上传
+                    } else {
+                        control.find('input[type="text"]').val(res.data.url); //赋值上传
+                    }
                     layer.msg(res.msg);
                 } else {
                     layer.alert(res.msg);
