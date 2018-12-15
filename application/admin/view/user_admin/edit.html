@@ -74,7 +74,7 @@
         var form = layui.form;
         
         //上传图片
-        uploadImgAjax('.img-avatar', '{:url("uploadImg")}', 1024);//头像
+        uploadFileOss('.img-avatar', '{:url("uploadImg")}', 1024);//头像
 
         //监听提交
         form.on('submit(formSubmit)', function(data){

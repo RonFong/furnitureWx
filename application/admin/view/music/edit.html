@@ -101,10 +101,10 @@
         var form = layui.form;
 
         //上传图片，限制大小4M
-        uploadImgAjax('.image-url', '{:url("uploadImgOss")}', 4096, 'images');
+        uploadFileOss('.image-url', '{:url("uploadImgOss")}', 4096, 'images');
 
         //上传大文件，限制大小10M
-        uploadBigFile('.upload-audio', '{:url("uploadAudioOss")}', 10485760, 'audio');
+        uploadFileOss('.upload-audio', '{:url("uploadAudioOss")}', 10485760, 'audio');
 
         //监听提交
         form.on('submit(formSubmit)', function(data){

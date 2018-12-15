@@ -200,7 +200,7 @@ abstract class Base extends Controller
             $this->error($ossServer->getError());
         }
 
-        $this->success('操作成功！', $res);
+        $this->success('操作成功！', null, ['url'=>$res]);
     }
 
     /**

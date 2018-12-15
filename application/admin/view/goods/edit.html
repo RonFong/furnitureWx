@@ -335,7 +335,7 @@
 
     //上传图片
     $('.img-num').each(function (key) {
-        uploadImgAjax('.color-img-'+key, '{:url("uploadImg")}', 4096);//头像
+        uploadFileOss('.color-img-'+key, '{:url("uploadImg")}', 4096);//头像
     });
 
     function addColorList(element) {
@@ -357,7 +357,7 @@
             '</td>';
         _html +=    '</tr>';
         $(element).closest('table').find('tbody').append(_html);
-        uploadImgAjax('.color-img-'+row, '{:url("uploadImg")}', 4096);//头像
+        uploadFileOss('.color-img-'+row, '{:url("uploadImg")}', 4096);//头像
     }
 
     function delColorRow(element, id) {

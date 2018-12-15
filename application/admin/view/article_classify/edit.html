@@ -76,7 +76,7 @@
         var form = layui.form;
 
         //上传图片
-        uploadImgAjax('.image-url', '{:url("uploadImg")}', 4096);
+        uploadFileOss('.image-url', '{:url("uploadImg")}', 4096);
 
         //监听提交
         form.on('submit(formSubmit)', function(data){
