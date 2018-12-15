@@ -71,12 +71,13 @@ class Oss
     public function __construct()
     {
         $this->request = Request::instance();
+        $config = config('api.oss');
         if ($this->request->domain() == 'https://www.86jj.cn') {
-            $this->currentConfig = config('api.oss.online');
+            $this->currentConfig = $config['online'];
         } elseif ($this->request->domain() == 'https://www.7qiaoban.cn') {
-            $this->currentConfig = config('api.oss.test');
+            $this->currentConfig = $config['test'];
         } else {
-            $this->currentConfig = config('api.oss.local');
+            $this->currentConfig = $config['local'];
         }
     }
 
