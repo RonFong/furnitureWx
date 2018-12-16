@@ -64,7 +64,7 @@ class Shop extends BaseController
 
             if (Request::instance()->domain() == 'www.86jj.cn') {
                 //门店首页小程序码    (小程序环境要求： 已发布)
-                $img = WXACodeUnlimit::create('pages/store/store', $this->currentModel->id);
+                $img = WXACodeUnlimit::create('pages/storeDetail/storeDetail', $this->currentModel->id);
                 $saveRqCode['id'] = $this->currentModel->id;
                 $saveRqCode['qr_code_img'] = $img;
                 $saveRqCode['qr_code_img_thumb'] = $img;
