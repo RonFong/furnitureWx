@@ -238,7 +238,7 @@ class Article extends CoreArticle
     {
         $content = ArticleContent::all(function ($query) use ($articleId) {
             $query->where('article_id', $articleId)
-                ->field('type, img_thumb, video as video_snapshot')
+                ->field('type, img_thumb_small, video as video_snapshot')
                 ->order('sort');
         });
         $imgList = [];
@@ -249,7 +249,7 @@ class Article extends CoreArticle
             }
             if ($v['type'] == 2 || $v['type'] == 3) {
                 //文章列表中显示的图片
-                $v['img_thumb'] = $v['type'] == 2 ? $v['img_thumb'] : $v['video_snapshot'];
+                $v['img_thumb_small'] = $v['type'] == 2 ? $v['img_thumb_small'] : $v['video_snapshot'];
                 array_push($imgList, $v);
                 $num ++;
             }
@@ -288,7 +288,7 @@ class Article extends CoreArticle
             $query->where('article_id', $id)
                 ->where('delete_time is null')
                 ->field(true)
-                ->field('video as video_snapshot, video as video_snapshot_auto')
+                ->field('video as video_snapshot, img_thumb_large video as video_snapshot_auto')
                 ->field('delete_time', true)
                 ->order('sort');
         });
