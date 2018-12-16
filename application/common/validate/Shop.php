@@ -54,7 +54,6 @@ class Shop extends BaseValidate
             'province',
             'city',
             'district',
-            'address',
             'shop_img',
             'shop_img_thumb',
             'lat',
