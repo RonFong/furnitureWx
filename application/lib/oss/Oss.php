@@ -11,6 +11,7 @@
 
 namespace app\lib\oss;
 
+use app\common\validate\BaseValidate;
 use OSS\OssClient;
 use OSS\Core\OssException;
 use OSS\Core\OssUtil;
@@ -102,31 +103,39 @@ class Oss
     /**
      * 上传图片
      * @param $type
-     * @return bool|mixed|string
+     * @return array|bool
+     * @throws \app\lib\exception\BaseException
      */
     public function image($type)
     {
-        $file = $this->request->file('file');
-        if (empty($file)) {
-            $this->error = '请选择要上传的图片';
-            return false;
+        try {
+            $file = $this->request->file('file');
+            if (empty($file)) {
+                $this->error = '请选择要上传的图片';
+                return false;
+            }
+
+            $imgInfo = Image::open($this->request->file('file'));
+
+            //计算缩略图宽高
+            $smallSize = $this->calculateImgThumbSize($imgInfo, $type, 'small');
+            $largeSize = $this->calculateImgThumbSize($imgInfo, $type, 'large');
+
+            $file_info = $file->getInfo();
+            $this->file_name = 'image/' .$type. '/'. date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
+            $this->file_path = $file_info['tmp_name'];//本地文件路径
+            $imgPath = $this->simpleUpload();
+            if (!$imgPath) {
+                exception('图片上传失败');
+            }
+            return [
+                'img'               =>  $imgPath,
+                'img_thumb_small'   => $smallSize == false ? $imgPath :  $imgPath . $smallSize,
+                'img_thumb_large'   => $largeSize == false ? $imgPath : $imgPath . $largeSize
+            ];
+        } catch (\Exception $e) {
+            (new BaseValidate())->error($e);
         }
-
-        $imgInfo = Image::open($this->request->file('file'));
-
-        //计算缩略图宽高
-        $smallSize = $this->calculateImgThumbSize($imgInfo, $type, 'small');
-        $largeSize = $this->calculateImgThumbSize($imgInfo, $type, 'large');
-
-        $file_info = $file->getInfo();
-        $this->file_name = 'image/' .$type. '/'. date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
-        $this->file_path = $file_info['tmp_name'];//本地文件路径
-
-        return [
-            'img'               =>  $this->simpleUpload(),
-            'img_thumb_small'   => $smallSize == false ? $this->simpleUpload() :  $this->simpleUpload() . $smallSize,
-            'img_thumb_large'   => $largeSize == false ? $this->simpleUpload() : $this->simpleUpload() . $largeSize
-        ];
     }
 
     /**
@@ -197,6 +206,7 @@ class Oss
     private function calculateImgThumbSize($imgInfo, $type, $size)
     {
         $sizeConfig = config('image')[$type];
+
         $width = $imgInfo->width();
         $height = $imgInfo->height();
 
