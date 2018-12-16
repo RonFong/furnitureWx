@@ -18,9 +18,7 @@ class Shop extends BaseValidate
         'category_child_id' => 'require',                   // 经营类别(子类)
         'shop_wx'           => 'require',               //微信号
         'lat'               => 'require',               //经纬度
-        'lng'               => 'require',
-        'shop_img_thumb'    => 'require',
-
+        'lng'               => 'require'
     ];
 
     protected $message = [
@@ -55,7 +53,6 @@ class Shop extends BaseValidate
             'city',
             'district',
             'shop_img',
-            'shop_img_thumb',
             'lat',
             'lng'
         ],
