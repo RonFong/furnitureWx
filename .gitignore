@@ -8,3 +8,5 @@ LICENSE.txt
 /vendor/topthink/
 /vendor/composer/
 /vendor/autoload.php
+/application/extra/api.php
+/application/extra/wx.php
