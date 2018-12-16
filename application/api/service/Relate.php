@@ -224,7 +224,7 @@ class Relate
             ->join('shop b', 'a.shop_id = b.id')
             ->where(['a.user_id' => user_info('id'), 'b.state' => 1])
             ->where('b.delete_time is null')
-            ->field('b.id, b.shop_name as name, b.shop_img_thumb as img_thumb, shop_img as img')
+            ->field('b.id, b.shop_name as name, b.img_thumb_small as img_thumb, shop_img as img')
             ->page($page, $row)
             ->order('a.create_time desc')
             ->select();
