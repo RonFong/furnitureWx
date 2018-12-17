@@ -226,23 +226,16 @@ class Oss
             $resizeSize = "w_$w";
             $cropSize = "h_$h";
 
-            //取宽高值中与相对设定尺寸较小的边来作为缩放基数
+         //取宽高中相对设定尺寸较小的边来作为缩放基数
         } elseif ($width / $wValue <= $height / $hValue) {
-            if ($width < $wValue) {
-                $w = $width;        //小于标准宽度，不对宽度进行缩放
-            } else {
-                $w = $wValue;    //大于标准宽度，则缩放至标准宽度
-            }
+            //小于标准宽度，不对宽度进行缩放； 大于标准宽度，则缩放至标准宽度
+            $w = $width < $wValue ? $width : $wValue;
             $resizeSize = "w_$w";
             $h = round($w / $wRatio * $hRatio);
             $cropSize = "h_$h";
 
         } else {
-            if ($height < $hValue) {
-                $h = $height;
-            } else {
-                $h = $hValue;
-            }
+            $h = $height < $hValue ? $height : $hValue;
             $resizeSize = "h_$h";
             $w = round($h / $hRatio * $wRatio);
             $cropSize = "w_$w";
