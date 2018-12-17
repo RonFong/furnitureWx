@@ -39,6 +39,29 @@ class Article extends CoreArticle
     protected $commentRow = 5;
 
     /**
+     * 用户经纬度信息
+     * @var array
+     */
+    protected $location = [];
+
+    /**
+     * 获取用户当前经纬度
+     * @param $query
+     * @return mixed
+     */
+    protected function getLocation($query)
+    {
+        if (!$this->location) {
+            $location = (new UserLocation())->where(['user_id' => user_info('id')])->order('id desc')->find();
+            if (!$location) {
+                (new BaseValidate())->error(['code' => 0, 'msg' => '位置信息错误', 'errorCode' => 999]);
+            }
+            $this->location = $location;
+        }
+        return $this->location[$query];
+    }
+
+    /**
      * 创建圈子文章
      * @param $param
      * @return array
@@ -49,9 +72,8 @@ class Article extends CoreArticle
         try {
             Db::startTrans();
             $param['user_id'] = user_info('id');
-            $location = UserLocation::get(user_info('id'));
-            $param['lng'] = $location->lng;
-            $param['lat'] = $location->lat;
+            $param['lng'] = $this->getLocation('lng');
+            $param['lat'] = $this->getLocation('lat');
             $this->save($param);
             foreach ($param['content'] as $k => $v) {
                 if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
@@ -171,9 +193,8 @@ class Article extends CoreArticle
                 $order = "s.{$param['order_by']} DESC";
             }
         }
-        $location = (new UserLocation())->where(['user_id' => user_info('id')])->order('id desc')->find();
         $sql = "select {$field} from (
-                select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$location['lng']}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$location['lat']}-lat)/360),2)))) as distance 
+                select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$this->getLocation('lng')}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$this->getLocation('lat')}-lat)/360),2)))) as distance 
                 from `article` 
                 where {$where}) as s 
                 where s.distance <= {$this->distance}
