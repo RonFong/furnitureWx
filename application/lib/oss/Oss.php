@@ -206,40 +206,38 @@ class Oss
     private function calculateImgThumbSize($imgInfo, $type, $size)
     {
         $sizeConfig = config('image')[$type];
+        $wRatio = $sizeConfig[$size]['w']['ratio'];
+        $wValue = $sizeConfig[$size]['w']['value'];
+        $hRatio = $sizeConfig[$size]['h']['ratio'];
+        $hValue = $sizeConfig[$size]['h']['value'];
 
         $width = $imgInfo->width();
         $height = $imgInfo->height();
 
-        if ($sizeConfig[$size]['w']['ratio'] == 0) {
-            // 等比缩放
-            if ($width <= $sizeConfig[$size]['w']['value']) {
+        // 等比缩放
+        if ($wRatio == 0) {
+            if ($width <= $wValue) {
                 //原图小于等于所设尺寸，直接使用原图，不生成缩略图
                 return false;
             } else {
-                $w = $sizeConfig[$size]['w']['value'];
+                $w = $wValue;
                 $h = round($w / $width * $height);
             }
             $resizeSize = "w_$w";
             $cropSize = "h_$h";
 
-        } elseif ($width <= $height) {
-            //取宽高值中较小的值来作为缩放基数
-            if ($width < $sizeConfig[$size]['w']['value']) {
-                $w = $width;        //小于标准宽度，不对宽度进行缩放
-            } else {
-                $w = $sizeConfig[$size]['w']['value'];    //大于标准宽度，则缩放至标准宽度
-            }
+         //取宽高中相对设定尺寸较小的边来作为缩放基数
+        } elseif ($width / $wValue <= $height / $hValue) {
+            //小于标准宽度，不对宽度进行缩放； 大于标准宽度，则缩放至标准宽度
+            $w = $width < $wValue ? $width : $wValue;
             $resizeSize = "w_$w";
-            $h = round($w / $sizeConfig[$size]['w']['ratio'] * $sizeConfig[$size]['h']['ratio']);
+            $h = round($w / $wRatio * $hRatio);
             $cropSize = "h_$h";
+
         } else {
-            if ($height < $sizeConfig[$size]['h']['value']) {
-                $h = $height;
-            } else {
-                $h = $sizeConfig[$size]['h']['value'];
-            }
+            $h = $height < $hValue ? $height : $hValue;
             $resizeSize = "h_$h";
-            $w = round($h / $sizeConfig[$size]['h']['ratio'] * $sizeConfig[$size]['w']['ratio']);
+            $w = round($h / $hRatio * $wRatio);
             $cropSize = "w_$w";
         }
         return $this->setImgSize($resizeSize, $cropSize);
