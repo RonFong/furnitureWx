@@ -10,5 +10,17 @@
 // +----------------------------------------------------------------------
 
 return [
+    //公众号 AppID
+    'gzh_app_id'            => '',
+    //公众号 AppSecret
+    'gzh_app_secret'        => '',
 
+    //小程序 AppID
+    'xcx_app_id'            => '',
+    //小程序 AppSecret
+    'xcx_app_secret'        => '',
+
+    //SMS
+    'sms_app_id'            => '',
+    'sms_app_key'           => '',
 ];
