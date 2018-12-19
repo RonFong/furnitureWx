@@ -4,9 +4,9 @@ thinkphp/
 doc/
 /runtime/
 LICENSE.txt
-/log/
-/vendor/topthink/
-/vendor/composer/
-/vendor/autoload.php
-/application/extra/api.php
-/application/extra/wx.php
+log/
+vendor/topthink/
+vendor/composer/
+vendor/autoload.php
+application/extra/api.php
+application/extra/wx.php
