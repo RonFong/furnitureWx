@@ -24,7 +24,7 @@ class ArticleComment extends BaseValidate
     protected $rule = [
         'parent_id'         => 'number|pidCommentExist',
         'article_id'        => 'number|articleExist',
-        'content'           => 'require|min:1',
+        'content'           => 'require|min:1|canNotEmpty',
         'comment_id'        => 'require|number'
     ];
 
@@ -76,6 +76,14 @@ class ArticleComment extends BaseValidate
         $isExist = Article::get($value);
         if (!$isExist) {
             return '此文章不存在';
+        }
+        return true;
+    }
+
+    protected function canNotEmpty($value)
+    {
+        if (trim($value) == '') {
+            return '请输入评论内容';
         }
         return true;
     }
