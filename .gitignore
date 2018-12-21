@@ -2,12 +2,12 @@
 *.log
 thinkphp/
 doc/
-/runtime/
+runtime/
 LICENSE.txt
 
-/log/
-/vendor/topthink/
-/vendor/composer/
-/vendor/autoload.php
+log/
+vendor/topthink/
+vendor/composer/
+vendor/autoload.php
 application/extra/api.php
 application/extra/wx.php
