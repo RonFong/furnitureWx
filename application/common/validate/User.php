@@ -58,6 +58,7 @@ class User extends BaseValidate
         //更新用户信息
         'update'    => [
             'id',
+            'user_name' => 'length:1,6',
             'phone' =>  'isPhoneNo|unique:user',
             'type'  => 'in:1,2,3',
             'state' => 'in:0,1',
