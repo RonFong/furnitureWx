@@ -89,11 +89,13 @@ class User extends BaseController
             if (!$result) {
                 exception('未知错误');
             }
+            $this->result['data'] = $this->data['userName'];
+            return json($this->result, 201);
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 999);
         }
-        $this->result['data'] = $this->data['userName'];
-        return json($this->result, 201);
     }
 
 
