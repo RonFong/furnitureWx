@@ -48,8 +48,8 @@ class User extends BaseValidate
     protected $scene = [
         //新用户授权小程序获取账号信息 （用户注册）
         'create'   => [
-            'user_name',
-            //'type'          => 'require|in:3',      //规则覆盖
+//            'user_name',
+            //'type'          => 'require|in:3',
             //'wx_account'    => 'unique:user',
             'wx_openid',
         ],
@@ -76,7 +76,10 @@ class User extends BaseValidate
         ],
         'changeAvatar'  => [
             'avatar'
-        ]
+        ],
+        'changeName'    => [
+            'user_name'
+        ],
     ];
 
 
