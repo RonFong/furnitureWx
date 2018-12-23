@@ -88,9 +88,9 @@ class User extends BaseValidate
      * @param $value
      * @return bool|string
      */
-    protected function checkLength($value)
+    protected function checkLength($value, $role, $data)
     {
-        $strlen = strlen(trim($value));
+        $strlen = strlen(trim($data['userName']));
         if ($strlen < 1) {
             return '请输入昵称';
         }
