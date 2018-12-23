@@ -76,9 +76,7 @@ class User extends BaseController
     public function changeName()
     {
         try {
-            if (empty($this->data['userName'])) {
-                exception('userName 不能为空');
-            }
+            $this->currentValidate->goCheck('changeName');
             $data['id'] = user_info('id');
             $data['user_name'] = $this->data['userName'];
             $result = $this->currentModel->save($data);
