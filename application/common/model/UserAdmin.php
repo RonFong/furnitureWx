@@ -47,7 +47,7 @@ class UserAdmin extends Model
             }
         }
 
-        $res['image'] = !empty($res['image']) ? Request::instance()->domain().$res['image'] : '';//头像完整路径
+        $res['image'] = strpos($res['image'], 'http') === false ? Request::instance()->domain().$res['image'] : $res['image'];//头像完整路径
         $res['role_name'] = Db::table('role')->where('id', $res['role_id'])->value('role_name');//角色名称
         unset($res['password']);
         return $res;

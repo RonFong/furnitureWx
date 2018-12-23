@@ -49,8 +49,8 @@
 
 <script type="text/html" id="operating">
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
     </div>
 </script>
 {/block}
@@ -67,14 +67,27 @@
             ,page: true
             ,limit: table_limit
             ,limits: table_limits
-            ,cellMinWidth:50
             ,cols: [[
                 {type:'numbers', title:'序号', width:45}
                 ,{field:'user_name', title:'帐号'}
                 ,{field:'phone', title:'手机号'}
-                ,{field:'type_text', title:'用户类型'}
-                ,{field:'gender_text', title:'性别'}
-                ,{field:'state_text', title:'状态'}
+                ,{title:'用户类型', align:'center', templet: function (data) {
+                    var _html = '';
+                    if (data.type === 1) {
+                        _html = '<span class="layui-badge layui-bg-blue">厂家用户</span>';
+                    } else if (data.type === 2) {
+                        _html = '<span class="layui-badge layui-bg-orange">商家用户</span>';
+                    } else {
+                        _html = '<span class="layui-badge layui-bg-gray">普通用户</span>';
+                    }
+                    return _html;
+                }}
+                ,{title:'性别', align:'center', templet: function (data) {
+                    return data.gender === 1 ? '<span class="layui-badge layui-bg-orange">男</span>' : '<span class="layui-badge">女</span>';
+                }}
+                ,{title:'状态', align:'center', templet: function (data) {
+                    return data.state === 1 ? '<span class="layui-badge layui-bg-blue">启用</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
+                }}
                 ,{title:'操作', toolbar: '#operating', align:'center'}
             ]]
             ,where: getFormJson('#searchForm')

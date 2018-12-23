@@ -76,8 +76,12 @@ class User extends BaseController
     public function changeName()
     {
         try {
-            if (empty($this->data['userName'])) {
-                exception('userName 不能为空');
+            $strlen = mb_strlen(trim($this->data['userName']));
+            if ($strlen < 1) {
+                exception('请输入昵称');
+            }
+            if ($strlen > 7) {
+                exception('昵称不能超过7个字');
             }
             $data['id'] = user_info('id');
             $data['user_name'] = $this->data['userName'];
@@ -85,11 +89,13 @@ class User extends BaseController
             if (!$result) {
                 exception('未知错误');
             }
+            $this->result['data'] = $this->data['userName'];
+            return json($this->result, 201);
         } catch (\Exception $e) {
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            return json($this->result, 999);
         }
-        $this->result['data'] = $this->data['userName'];
-        return json($this->result, 201);
     }
 
 

@@ -65,8 +65,8 @@
 
 <script type="text/html" id="operating">
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
     </div>
 </script>
 {/block}
@@ -88,7 +88,6 @@
             ,page: true
             ,limit: table_limit
             ,limits: table_limits
-            ,cellMinWidth:50
             ,cols: [[
                 {type:'numbers', title:'序号', width:45}
                 ,{field:'shop_name', title:'商户号', templet: function (data) {
@@ -104,7 +103,9 @@
                 ,{field:'home_content_has', title:'首页图文'}
                 ,{field:'shop_commodity_count', title:'商品数量'}
                 ,{field:'audit_state_des', title:'审核状态'}
-                ,{field:'state_des', title:'启用状态'}
+                ,{title:'状态', align:'center', templet: function (data) {
+                    return data.state === 1 ? '<span class="layui-badge layui-bg-blue">启用</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
+                }}
                 ,{title:'操作', toolbar: '#operating', align:'center'}
             ]]
             ,where: getFormJson('#searchForm')
