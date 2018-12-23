@@ -76,7 +76,7 @@ class User extends BaseController
     public function changeName()
     {
         try {
-            $strlen = strlen(trim($this->data['userName']));
+            $strlen = mb_strlen(trim($this->data['userName']));
             if ($strlen < 1) {
                 exception('请输入昵称');
             }
