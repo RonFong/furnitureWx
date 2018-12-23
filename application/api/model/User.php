@@ -38,7 +38,7 @@ class User extends CoreUser
         }
         $user['main_user']['is_collect'] = (new RelationUserCollect())->isCollect($id);
         $user['secondary_user'] = [];
-        if (user_info('type') == 2) {
+        if ($user['main_user']['type'] == 2) {
             //商家用户
             $group = Db::table('shop')
                 ->where('id', $user['main_user']['group_id'])
@@ -65,7 +65,7 @@ class User extends CoreUser
                 ];
             }
         }
-        if (user_info('type') == 1) {
+        if ($user['main_user']['type'] == 1) {
             //厂家用户
             $group = Db::table('factory')
                 ->where('id', $user['main_user']['group_id'])
