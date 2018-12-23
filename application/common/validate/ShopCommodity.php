@@ -18,12 +18,12 @@ class ShopCommodity extends BaseValidate
     protected $rule = [
         "id"                => 'require|number|isExist',
         "content"           => 'require',
-        "classify_name"     => 'require|isRepetition'
+        "classify_name"     => 'require|isRepetition|checkLength'
     ];
 
     protected $message = [
         'content.require'       => '请填写内容',
-        'classify_name.require' => '请填写分类名'
+        'classify_name.require' => '请填写分类名',
     ];
 
     protected $scene = [
@@ -75,6 +75,23 @@ class ShopCommodity extends BaseValidate
     {
         if (!Db::table('shop_commodity')->where('id', $value)->find()) {
             return '数据不存在,无法更新';
+        }
+        return true;
+    }
+
+    /**
+     * 校验分类名长度
+     * @param $value
+     * @return bool|string
+     */
+    protected function checkLength($value)
+    {
+        $strlen = strlen(trim($value));
+        if ($strlen < 1) {
+            return '请输入分类名';
+        }
+        if ($strlen > 5) {
+            return '分类名不能超过5个字';
         }
         return true;
     }
