@@ -16,6 +16,7 @@ class User extends BaseValidate
     protected $rule = [
         'id'                => 'require',            //用户ID
         'user_name'         => 'require|checkLength',                   //昵称
+        'userName'          => 'checkLength',
         'group_id'          => 'require|number|groupTypeExits',            //所属厂/商主体
         'group_type'        => 'require|in:1,2',            //所属主体类型
         'phone'             => 'require|isPhoneNo|unique:user',         //手机号
@@ -78,7 +79,7 @@ class User extends BaseValidate
             'avatar'
         ],
         'changeName'    => [
-            'user_name' => 'checkLength'
+            'userName' => 'checkLength'
         ],
     ];
 
@@ -90,7 +91,7 @@ class User extends BaseValidate
      */
     protected function checkLength($value, $role, $data)
     {
-        $strlen = strlen(trim($data['userName']));
+        $strlen = isset($data['userName']) ? strlen(trim($data['userName'])) : strlen(trim($data['user_name']));
         if ($strlen < 1) {
             return '请输入昵称';
         }
