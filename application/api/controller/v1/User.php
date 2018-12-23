@@ -76,7 +76,13 @@ class User extends BaseController
     public function changeName()
     {
         try {
-            $this->currentValidate->goCheck('changeName');
+            $strlen = strlen(trim($this->data['userName']));
+            if ($strlen < 1) {
+                exception('请输入昵称');
+            }
+            if ($strlen > 7) {
+                exception('昵称不能超过7个字');
+            }
             $data['id'] = user_info('id');
             $data['user_name'] = $this->data['userName'];
             $result = $this->currentModel->save($data);
