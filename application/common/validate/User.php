@@ -15,8 +15,7 @@ class User extends BaseValidate
 {
     protected $rule = [
         'id'                => 'require',            //用户ID
-        'user_name'         => 'require|checkLength',                   //昵称
-        'userName'          => 'checkLength',
+        'user_name'         => 'require',                   //昵称
         'group_id'          => 'require|number|groupTypeExits',            //所属厂/商主体
         'group_type'        => 'require|in:1,2',            //所属主体类型
         'phone'             => 'require|isPhoneNo|unique:user',         //手机号
@@ -77,27 +76,8 @@ class User extends BaseValidate
         ],
         'changeAvatar'  => [
             'avatar'
-        ],
-        'changeName'    => [
-            'userName' => 'checkLength'
-        ],
+        ]
     ];
 
 
-    /**
-     * 校验昵称长度
-     * @param $value
-     * @return bool|string
-     */
-    protected function checkLength($value, $role, $data)
-    {
-        $strlen = isset($data['userName']) ? strlen(trim($data['userName'])) : strlen(trim($data['user_name']));
-        if ($strlen < 1) {
-            return '请输入昵称';
-        }
-        if ($strlen > 7) {
-            return '昵称不能超过7个字';
-        }
-        return true;
-    }
 }
