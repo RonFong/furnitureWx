@@ -75,9 +75,8 @@ class Oss
         $file_info = $file->getInfo();
         $this->file_name = 'audio/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $this->file_path = $file_info['tmp_name'];//本地文件路径
-
-        return $this->simpleUpload();
-//        return $this->multiUpload();
+        //若大于5M，则采用分片式上传
+        return $file_info['size'] > 5242880 ? $this->multiUpload() : $this->simpleUpload();
     }
 
     /**
@@ -96,8 +95,8 @@ class Oss
         $this->file_name = 'video/' . date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
         $this->file_path = $file_info['tmp_name'];//本地文件路径
 
-//        return $this->simpleUpload();
-        return $this->multiUpload();
+        //若大于5M，则采用分片式上传
+        return $file_info['size'] > 5242880 ? $this->multiUpload() : $this->simpleUpload();
     }
 
     /**

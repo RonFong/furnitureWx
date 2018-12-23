@@ -126,10 +126,6 @@ class Shop extends Base
         }
 
         try {
-            if (!empty($param['shop_img'])) {
-                $param['shop_img'] = $param['shop_img'].Oss::resize_1080;
-                $param['shop_img_thumb'] = $param['shop_img'].Oss::resize_480;
-            }
             //保存数据
             $this->currentModel->save($param);
         } catch (\Exception $e) {
