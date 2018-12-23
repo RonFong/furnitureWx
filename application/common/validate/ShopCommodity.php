@@ -86,7 +86,7 @@ class ShopCommodity extends BaseValidate
      */
     protected function checkLength($value)
     {
-        $strlen = strlen(trim($value));
+        $strlen = mb_strlen(trim($value));
         if ($strlen < 1) {
             return '请输入分类名';
         }
