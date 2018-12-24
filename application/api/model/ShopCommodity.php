@@ -36,6 +36,9 @@ class ShopCommodity extends CoreShopCommodity
             $this->save($param);
             //id 存在，但内容为空的，删除
             $updateIds = [];
+            if (empty($param['content'])) {
+                exception('内容不能为空');
+            }
             foreach ($param['content'] as $k => $v) {
                 if (!empty($v['text']) || !empty($v['img']) || !empty($v['video'])) {
                     if (!empty($v['id'])) {
