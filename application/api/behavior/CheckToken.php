@@ -41,8 +41,9 @@ class CheckToken
                     $logData = [
                         'user_id' => $userId,
                         'ip'      => Request::instance()->ip(1) ?? 0,
+                        'method'  => Request::instance()->method(),
                         'url'     => Request::instance()->pathinfo(),
-                        'params'   => json_encode($param) ?? $param,
+                        'params'  => json_encode($param) ?? $param,
                         'time'    => date('Y-m-d H:i:s', time())
                     ];
                     (new ApiLog())->save($logData);
