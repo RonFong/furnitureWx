@@ -54,6 +54,7 @@ class User extends CoreUser
             ->where('id', $id)
             ->field('user_name, avatar, type, group_id')
             ->find();
+        $user['main_user']['user_name'] = $this->getUserNameAttr($user['main_user']['user_name']);
         if (!$user['main_user']) {
             exception('此用户不存在');
         }
