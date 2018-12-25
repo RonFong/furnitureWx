@@ -18,6 +18,27 @@ use think\Db;
 class User extends CoreUser
 {
 
+
+    public function getUserNameAttr($value)
+    {
+        if (mb_strwidth($value) > 16) {
+            $l = 0;
+            $str = '';
+            foreach ($value as $v) {
+                if (preg_match('/^[\x{4e00}-\x{9fa5}]+$/u', $v) > 0) {
+                    $l += 2;
+                } else {
+                    $l ++;
+                }
+                if ($l >= 16) {
+                    return $str . '···';
+                }
+                $str .= $v;
+            }
+        }
+        return $value;
+    }
+
     /**
      * 名片信息
      * @param $id
