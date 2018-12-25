@@ -21,16 +21,22 @@ class User extends CoreUser
 
     public function getUserNameAttr($value)
     {
+        return $this->formatUserName($value);
+    }
+
+    protected function formatUserName($value)
+    {
         if (mb_strwidth($value) > 16) {
             $l = 0;
             $str = '';
-            foreach ($value as $v) {
+            for ($i = 0; $i < strlen($value); $i++) {
+                $v = substr($value, $i, 1);
                 if (preg_match('/^[\x{4e00}-\x{9fa5}]+$/u', $v) > 0) {
                     $l += 2;
                 } else {
-                    $l ++;
+                    $l++;
                 }
-                if ($l >= 16) {
+                if (mb_strwidth($str) >= 16) {
                     return $str . '···';
                 }
                 $str .= $v;
@@ -54,7 +60,7 @@ class User extends CoreUser
             ->where('id', $id)
             ->field('user_name, avatar, type, group_id')
             ->find();
-        $user['main_user']['user_name'] = $this->getUserNameAttr($user['main_user']['user_name']);
+        $user['main_user']['user_name'] = $this->formatUserName($user['main_user']['user_name']);
         if (!$user['main_user']) {
             exception('此用户不存在');
         }
@@ -67,11 +73,11 @@ class User extends CoreUser
                 ->field('shop_name, shop_phone, shop_wx, qr_code_img, qr_code_img_thumb, user_name, phone, wx_account, license_code')
                 ->find();
             $main = [
-                'group_type'        => 2,
-                'shop_name'         => $group['shop_name'],
-                'phone'             => $group['shop_phone'],
-                'wx_account'        => $group['shop_wx'],
-                'qr_code_img'       => $group['qr_code_img'],
+                'group_type' => 2,
+                'shop_name' => $group['shop_name'],
+                'phone' => $group['shop_phone'],
+                'wx_account' => $group['shop_wx'],
+                'qr_code_img' => $group['qr_code_img'],
                 'qr_code_img_thumb' => $group['qr_code_img_thumb']
             ];
             //联系人信息
@@ -80,9 +86,9 @@ class User extends CoreUser
             //负责人信息
             if ($group['wx_account'] && $group['phone']) {
                 $user['secondary_user'] = [
-                    'phone'             => $group['phone'],
-                    'wx_account'        => $group['wx_account'],
-                    'qr_code_img'       => $group['license_code'],
+                    'phone' => $group['phone'],
+                    'wx_account' => $group['wx_account'],
+                    'qr_code_img' => $group['license_code'],
                     'qr_code_img_thumb' => $group['license_code']
                 ];
             }
@@ -94,11 +100,11 @@ class User extends CoreUser
                 ->field('factory_name, factory_phone, factory_wx, qr_code_img, qr_code_img_thumb, user_name, phone, wx_account, license_code')
                 ->find();
             $main = [
-                'group_type'        => 1,
-                'factory_name'      => $group['factory_name'],
-                'phone'             => $group['factory_phone'],
-                'wx_account'        => $group['factory_wx'],
-                'qr_code_img'       => $group['qr_code_img'],
+                'group_type' => 1,
+                'factory_name' => $group['factory_name'],
+                'phone' => $group['factory_phone'],
+                'wx_account' => $group['factory_wx'],
+                'qr_code_img' => $group['qr_code_img'],
                 'qr_code_img_thumb' => $group['qr_code_img_thumb']
             ];
             //联系人信息
@@ -106,11 +112,11 @@ class User extends CoreUser
 
             //负责人信息
             $user['secondary_user'] = [
-                'group_type'        => 1,
-                'factory_name'      => $group['factory_name'],
-                'phone'             => $group['phone'],
-                'wx_account'        => $group['wx_account'],
-                'qr_code_img'       => $group['license_code'],
+                'group_type' => 1,
+                'factory_name' => $group['factory_name'],
+                'phone' => $group['phone'],
+                'wx_account' => $group['wx_account'],
+                'qr_code_img' => $group['license_code'],
                 'qr_code_img_thumb' => $group['license_code']
             ];
         }
