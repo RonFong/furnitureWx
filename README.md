@@ -25,8 +25,12 @@
 - 百度AI内容审核
 - 其他。。。
 
-#### 小程序 
+#### 小程序源码 
 - https://gitee.com/null_761_8497/99
+
+#### 原型图
+- `商家模块` https://free.modao.cc/app/APhWsnHt6e1DUP893uEsBowcsIrJum9
+- `圈子模块` https://free.modao.cc/app/QplWLJZOCxGg0Ea6bp69YbPfG9TYZy0
 
 #### 思维导图 
 - https://www.processon.com/view/link/5b618eaee4b067df59f57dc0
