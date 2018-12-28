@@ -43,11 +43,9 @@ class MusicCategory extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['category_name'])) {
             $map['category_name'] = ['like', '%' . $param['category_name'] . '%'];//分类名称
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

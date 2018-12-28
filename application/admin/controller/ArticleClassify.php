@@ -37,11 +37,9 @@ class ArticleClassify extends Base
     public function getDataList()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['classify_name'])) {
             $map['classify_name'] = ['like', '%' . $param['classify_name'] . '%'];//分类名称
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
 
         $count = $this->currentModel->where($map)->count();
