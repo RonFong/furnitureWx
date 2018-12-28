@@ -1,16 +1,6 @@
 {extend name="common/index"}
 {block name="css"}
 <style>
-    {notempty name="data.img"}
-    .image-url .layui-upload-drag .image-text {
-        display: none;
-    }
-    {else/}
-    .image-url .layui-upload-drag .image-preview {
-        display: none;
-    }
-    {/notempty}
-
     .layui-input-block .layui-table input {
         width: 100%;
         height: 25px;
@@ -335,7 +325,7 @@
 
     //上传图片
     $('.img-num').each(function (key) {
-        uploadFileOss('.color-img-'+key, '{:url("uploadImg")}', 4096);//头像
+        uploadImgOss('.color-img-'+key, '{:url("uploadImgOss")}', 4096, 'images');//头像
     });
 
     function addColorList(element) {

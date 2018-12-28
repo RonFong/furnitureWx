@@ -41,7 +41,6 @@ class User extends CoreUser
         return isset($item[$value]) ? $item[$value] : '';
     }
 
-
     /**
      * 获取用户状态
      * @param $value
@@ -53,6 +52,25 @@ class User extends CoreUser
         $item = ['0'=>'冻结', '1'=>'启用'];
         $value = isset($data['state']) ? $data['state'] : 0;
         return isset($item[$value]) ? $item[$value] : '';
+    }
+
+    /**
+     * 非普通用户的手机号从他所属的 shop|factory表中读取
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getPhoneOtherAttr($value, $data)
+    {
+        $res = $data['phone'] ?? $value;
+        if (isset($data['type'])) {
+            if ($data['type'] == 1) {
+                $res = Db::name('factory')->where('id', $data['group_id'])->value('factory_phone');
+            } elseif ($data['type'] == 2) {
+                $res = Db::name('shop')->where('id', $data['group_id'])->value('shop_phone');
+            }
+        }
+        return $res;
     }
 
     /**

@@ -9,17 +9,39 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Menu as CoreMenu;
+use think\Db;
 use think\Request;
 
 class Index extends Base
 {
-    public function __construct(Request $request = null)
+    public function index()
     {
-        parent::__construct($request);
-        $this->currentModel = new CoreMenu();//实例化当前模型
-    }
+        $map = [];
+        //文章数
+        $article = [];
+        $article['count'] = Db::name('article')->where($map)->count();
+        $article['count_month'] = Db::name('article')->where('create_time', '>=', strtotime(date('Y-m-01')))->where($map)->count();
+        $this->assign('article', $article);
 
+        //厂家数
+        $factory = [];
+        $factory['count'] = Db::name('factory')->where($map)->count();
+        $factory['count_month'] = Db::name('factory')->where('create_time', '>=', strtotime(date('Y-m-01')))->where($map)->count();
+        $this->assign('factory', $factory);
+
+        //商家数
+        $shop = [];
+        $shop['count'] = Db::name('shop')->count();
+        $shop['count_month'] = Db::name('shop')->where('create_time', '>=', strtotime(date('Y-m-01')))->count();
+        $this->assign('shop', $shop);
+
+        //产品数
+        $goods = [];
+        $goods['count'] = Db::name('goods')->where($map)->count();
+        $goods['count_month'] = Db::name('goods')->where('create_time', '>=', strtotime(date('Y-m-01')))->where($map)->count();
+        $this->assign('goods', $goods);
+        return $this->fetch();
+    }
 
 
 }

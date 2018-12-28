@@ -8,22 +8,24 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">门头照：</label>
                     <div class="layui-input-inline upload-shop-img">
-                        <img src="{$data.shop_img|default='/static/img/holder.jpg'}" width="200" alt="门头照">
-                        <input type="hidden" name="shop_img" value="{$data.shop_img|default=''}" data-id="{$data.id|default=''}" data-table="shop">
+                        <img src="{$data.shop_img|default='/static/img/holder.jpg'}" width="200" height="100" alt="门头照">
+                        <input type="hidden" name="shop_img" value="{$data.shop_img|default=''}" data-id="{$data.id|default=''}" data-table="shop" class="img_origin">
+                        <input type="hidden" name="img_thumb_small" value="{$data.img_thumb_small|default=''}" class="img_thumb_small">
+                        <input type="hidden" name="img_thumb_large" value="{$data.img_thumb_large|default=''}" class="img_thumb_large">
                     </div>
                     <div class="layui-input-inline">
                         <div class="layui-btn-container">
                             <a href="{$data.shop_img|default='/static/img/holder.jpg'}" target="_blank" class="layui-btn layui-btn-primary layui-btn-sm">
                                 <i class="layui-icon layui-icon-search"></i>查看大图
                             </a>
-                            <a class="layui-btn layui-btn-primary layui-btn-sm image-delete" onclick="deleteBigFile(this);">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm image-delete" onclick="deleteImgOss(this);">
                                 <i class="layui-icon layui-icon-delete"></i>删除图片
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>小程序二维码：</label>
+                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
                     <img src="{$data.wx_code|default=''}" width="100" alt="微信二维码">
                 </div>
                 <div class="layui-form-item">
@@ -126,9 +128,9 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">审核状态：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="audit_state" value="0" title="未审核" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
-                        <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default=''" value="1"}checked{/eq}>
-                        <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="0" title="未审核" {eq name="$data.audit_state|default='0'" value="0"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default='0'" value="2"}checked{/eq}>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -156,7 +158,7 @@
         var form = layui.form;
 
         //上传门头照，限制大小4M
-        uploadFileOss('.upload-shop-img', '{:url("uploadImgOss")}', 4096, 'images');
+        uploadImgOss('.upload-shop-img', '{:url("uploadImgOss")}', 4096, 'images');
 
         //监听省市区三级联动
         form.on('select(region)', function (data) {
