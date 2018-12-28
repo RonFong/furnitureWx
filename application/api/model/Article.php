@@ -207,6 +207,7 @@ class Article extends CoreArticle
             $user = User::get($v['user_id']);
             $list[$k]['user_name'] = $user->user_name;
             $list[$k]['avatar'] = $user->avatar;
+            $list[$k]['title'] = $this->emojiDecode($v['title']);
             $list[$k]['collect_num'] = Db::table('relation_article_collect')->where('article_id', $v['id'])->count();
             $list[$k]['great_num'] = Db::table('relation_article_great')->where('article_id', $v['id'])->count();
             $list[$k]['comment_num'] = Db::table('article_comment')
