@@ -41,7 +41,7 @@ class ShopCommodity extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable(['shop_name', 'classify_name']);
+        return $this->currentModel->where($map)->order('id desc')->layTable(['shop_name']);
     }
 
     private function getDataListMap()
