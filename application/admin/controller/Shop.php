@@ -45,7 +45,7 @@ class Shop extends Base
             ->where($map)
             ->order('shop.id desc')
             ->field('shop.id,shop.admin_user,shop.shop_name,user.user_name,user.create_time,user.create_time,
-            shop.shop_contact,shop.shop_phone,shop.shop_wx,shop.address,shop.audit_state,shop.state')
+            shop.shop_contact,shop.shop_phone,shop.shop_wx,shop.address,shop.audit_state,shop.state,shop.lat,shop.lng')
             ->layTable(['audit_state_des', 'home_content_has', 'shop_commodity_count', 'last_login_time', 'all_login_times', 'all_login_times_month']);
         return $list;
     }
@@ -150,12 +150,16 @@ class Shop extends Base
 
     /**
      * 显示门店位置（地图）
-     * @param string $address
+     * @param string $lat
+     * @param string $lng
      * @return mixed
      */
-    public function showMap($address = '')
+    public function showMap($lat, $lng)
     {
-        $this->assign('address', json_encode($address));
+        $data = [];
+        $data['lat'] = $lat;
+        $data['lng'] = $lng;
+        $this->assign('data', json_encode($data));
         return $this->fetch('show_map');
     }
 }
