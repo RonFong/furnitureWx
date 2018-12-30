@@ -45,7 +45,7 @@
                     {notempty name="vo.child"}
                         <li class="layui-nav-item {eq name='vo.is_extend' value='1'} layui-nav-itemed {/eq}
                         {eq name='vo.id' value='$menuCurrent.pid_display'}layui-nav-itemed{/eq}">
-                            <a href="javascript:;"><i class="layui-icon layui-icon-list"> </i>{$vo.menu_name}</a>
+                            <a href="javascript:;"><i class="layui-icon layui-icon-read"> </i>{$vo.menu_name}</a>
                             <dl class="layui-nav-child">
                             {volist name="vo.child" id="ch"}
                                 <dd {eq name='ch.id' value='$menuCurrent.id_display'}class="layui-this"{/eq}>

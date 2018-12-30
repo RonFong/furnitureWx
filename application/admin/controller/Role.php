@@ -37,11 +37,9 @@ class Role extends Base
     public function getDataList()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['role_name'])) {
             $map['role_name'] = ['like', '%'.$param['role_name'].'%'];//角色名称
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
 
         return $this->currentModel->where($map)->order('sort_num')->layTable();

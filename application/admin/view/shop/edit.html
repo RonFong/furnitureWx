@@ -128,9 +128,9 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">审核状态：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="audit_state" value="0" title="未审核" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
-                        <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default=''" value="1"}checked{/eq}>
-                        <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default=''" value="0"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="0" title="未审核" {eq name="$data.audit_state|default='0'" value="0"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="1" title="审核通过" {eq name="$data.audit_state|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default='0'" value="2"}checked{/eq}>
                     </div>
                 </div>
                 <div class="layui-form-item">

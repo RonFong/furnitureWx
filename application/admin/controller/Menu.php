@@ -38,6 +38,7 @@ class Menu extends Base
     public function getDataList()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['pid'])) {
             $map['pid'] = $param['pid'];
         }
@@ -46,9 +47,6 @@ class Menu extends Base
         }
         if (!empty($param['url'])) {
             $map['url'] = ['like', '%'.$param['url'].'%'];
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         $count = $this->currentModel->where($map)->count();
         $list = $this->currentModel->where($map)

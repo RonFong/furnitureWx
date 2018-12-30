@@ -50,12 +50,13 @@ class User extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable(['type_text', 'gender_text', 'state_text']);
+        return $this->currentModel->where($map)->order('id desc')->layTable(['type_text', 'gender_text', 'state_text', 'phone_other']);
     }
 
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['user_name'])) {
             $map['user_name'] = ['like', '%' . $param['user_name'] . '%'];//帐号
         }
@@ -64,9 +65,6 @@ class User extends Base
         }
         if (!empty($param['type'])) {
             $map['type'] = ['like', '%' . $param['type'] . '%'];//类型
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

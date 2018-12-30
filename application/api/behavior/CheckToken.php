@@ -12,6 +12,7 @@
 namespace app\api\behavior;
 
 
+use app\common\model\ApiLog;
 use think\Request;
 use think\Cache;
 use think\Session;
@@ -34,6 +35,19 @@ class CheckToken
                 Session::set('user_info', $userInfo->toArray());
                 //刷新token缓存时间
                 Cache::set($token, $userInfo->id, config('api.token_valid_time'));
+                //非查询操作，记录到日志
+                if (!Request::instance()->isGet()) {
+                    $param = Request::instance()->param();
+                    $logData = [
+                        'user_id' => $userId,
+                        'ip'      => Request::instance()->ip(1) ?? 0,
+                        'method'  => Request::instance()->method(),
+                        'url'     => Request::instance()->pathinfo(),
+                        'params'  => json_encode($param) ?? $param,
+                        'time'    => date('Y-m-d H:i:s', time())
+                    ];
+                    (new ApiLog())->save($logData);
+                }
             } else {
                 exception('userToken不能为空');
             }

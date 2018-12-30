@@ -214,4 +214,69 @@ abstract class Model extends CoreModel
     {
         return $this->name;
     }
+
+
+    /**
+     * Emoji原形转换为String
+     * @param string $content
+     * @return string
+     */
+    public function emojiEncode($content)
+    {
+        return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function ($str) {
+            return addslashes($str[0]);
+        }, json_encode($content)));
+    }
+
+    /**
+     * Emoji字符串转换为原形
+     * @param string $content
+     * @return string
+     */
+    public function emojiDecode($content)
+    {
+        return json_decode(preg_replace_callback('/\\\\\\\\/i', function () {
+            return '\\';
+        }, json_encode($content)));
+    }
+
+    /**
+     * Emoji 表情符
+     * @param $value
+     * @return string
+     */
+    public function getContentAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setContentAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
+
+    /**
+     * Emoji 表情符
+     * @param $value
+     * @return string
+     */
+    public function getTextAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setTextAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
+
+    public function getTitleAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setTitleAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
 }

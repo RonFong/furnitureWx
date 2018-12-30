@@ -42,4 +42,13 @@ class ArticleContent extends Model
         }
         return '';
     }
+
+    public function getStyleAttr($value)
+    {
+        if ($value) {
+            return json_decode($value);
+        }
+        return '';
+    }
+
 }

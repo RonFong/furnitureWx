@@ -49,7 +49,7 @@ class Shop extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
-
+        $map = [];
         if (!empty($param['shop_name'])) {
             $map['shop_name'] = ['like', '%' . $param['shop_name'] . '%'];//商户名
         }
@@ -64,9 +64,6 @@ class Shop extends Base
         }
         if ($param['audit_state'] !== '') {
             $map['audit_state'] = $param['audit_state'];
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

@@ -47,11 +47,9 @@ class ShopCommodity extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['shop_id'])) {
             $map['shop_id'] = $param['shop_id'];//商户id
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }
