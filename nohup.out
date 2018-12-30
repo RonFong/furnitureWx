@@ -1,0 +1,56 @@
+Usage: php yourfile <command> [mode]
+Commands: 
+start		Start worker in DEBUG mode.
+		Use mode -d to start in DAEMON mode.
+stop		Stop worker.
+		Use mode -g to stop gracefully.
+restart		Restart workers.
+		Use mode -d to start in DAEMON mode.
+		Use mode -g to stop gracefully.
+reload		Reload codes.
+		Use mode -g to reload gracefully.
+status		Get worker status.
+		Use mode -d to show live status.
+connections	Get worker connections.
+Usage: php yourfile <command> [mode]
+Commands: 
+start		Start worker in DEBUG mode.
+		Use mode -d to start in DAEMON mode.
+stop		Stop worker.
+		Use mode -g to stop gracefully.
+restart		Restart workers.
+		Use mode -d to start in DAEMON mode.
+		Use mode -g to stop gracefully.
+reload		Reload codes.
+		Use mode -g to reload gracefully.
+status		Get worker status.
+		Use mode -d to show live status.
+connections	Get worker connections.
+Usage: php yourfile <command> [mode]
+Commands: 
+start		Start worker in DEBUG mode.
+		Use mode -d to start in DAEMON mode.
+stop		Stop worker.
+		Use mode -g to stop gracefully.
+restart		Restart workers.
+		Use mode -d to start in DAEMON mode.
+		Use mode -g to stop gracefully.
+reload		Reload codes.
+		Use mode -g to reload gracefully.
+status		Get worker status.
+		Use mode -d to show live status.
+connections	Get worker connections.
+Usage: php yourfile <command> [mode]
+Commands: 
+start		Start worker in DEBUG mode.
+		Use mode -d to start in DAEMON mode.
+stop		Stop worker.
+		Use mode -g to stop gracefully.
+restart		Restart workers.
+		Use mode -d to start in DAEMON mode.
+		Use mode -g to stop gracefully.
+reload		Reload codes.
+		Use mode -g to reload gracefully.
+status		Get worker status.
+		Use mode -d to show live status.
+connections	Get worker connections.
