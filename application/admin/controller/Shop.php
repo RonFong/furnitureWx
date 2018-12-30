@@ -40,10 +40,14 @@ class Shop extends Base
     {
         $map = $this->getDataListMap();
 
-        return $this->currentModel
+        $list = $this->currentModel
+            ->join('__USER__', 'shop.admin_user=user.id')
             ->where($map)
-            ->order('id desc')
-            ->layTable(['admin_user_name', 'state_des', 'audit_state_des', 'home_content_has', 'shop_commodity_count']);
+            ->order('shop.id desc')
+            ->field('shop.id,shop.admin_user,shop.shop_name,user.user_name,user.create_time,user.create_time,
+            shop.shop_contact,shop.shop_phone,shop.shop_wx,shop.address,shop.audit_state,shop.state')
+            ->layTable(['audit_state_des', 'home_content_has', 'shop_commodity_count', 'last_login_time', 'all_login_times', 'all_login_times_month']);
+        return $list;
     }
 
     private function getDataListMap()

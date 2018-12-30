@@ -50,7 +50,10 @@ class User extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable(['type_text', 'gender_text', 'state_text', 'phone_other']);
+        $list = $this->currentModel->where($map)->order('id desc')
+            ->field('id,user_name,type,gender,state,phone,group_id,create_time')
+            ->layTable(['phone_other', 'last_login_time', 'all_login_times', 'all_login_times_month']);
+        return $list;
     }
 
     private function getDataListMap()
