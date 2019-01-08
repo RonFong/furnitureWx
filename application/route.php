@@ -214,4 +214,7 @@ Route::group('api/:version', function () {
     Route::post('image/uploadToOss', 'api/:version.Multimedia/uploadImg');
     //上传图片到服务器
     Route::post('image/upload', 'api/:version.Image/saveTmpImg');
+
+    //获取当前用户与某用户的聊天消息
+    Route::get('message/logWithUser', 'api/:version.Message/logWithUser');
 });
