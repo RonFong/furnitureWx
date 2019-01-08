@@ -158,72 +158,12 @@ function setState(ids, state, field_name, url) {
     });
 }
 
-/*上传图片*/
-function uploadImgAjax(element, url, size) {
-    if (!size) {
-        size = 2048;
-    }
-    if (!url) {
-        url = '/admin/system/uploadimg.html';
-    }
-    var lay_load;
-    layui.use(['layer', 'upload'], function () {
-        var upload = layui.upload;
-        upload.render({
-            elem: element
-            , url: url
-            , size: size //限制文件大小，单位 KB
-            , exts: "jpg|png|gif|bmp|jpeg"
-            , before: function (obj) {
-                lay_load = layer.load(2, {time: 20 * 1000});
-            }
-            , done: function (res) {
-                layer.close(lay_load);
-                if (res.code) {
-                    var control = $(element);
-                    $(control).find('.image-text').css('display', 'none'); //隐藏文字
-                    $(control).find('.image-preview').css('display', 'block'); //显示图片
-                    $(control).find('img').attr('src', res.data); //图片链接
-                    $(control).find('input[type="hidden"]').val(res.data); //赋值上传
-                } else {
-                    layer.alert(res.msg);
-                }
-            }
-        });
-    });
-}
-
-/*删除图片*/
-function delImgAjax(element) {
-    var dom = $(element).closest('.layui-form-item');
-    var field = dom.find('input[type="hidden"]');
-
-    var data = {
-        id: field.data("id"),
-        table_name: field.data("table"),
-        field_name: field.attr("name"),
-        img_url: field.val()
-    };
-    layer.confirm('删除后无法恢复，确定继续吗？', function (index) {
-        $.post('deleteImg', data, function (result) {
-            layer.close(index);
-            if (result.code) {
-                dom.find('.image-text').css('display', 'block');
-                dom.find('.image-preview').css('display', 'none');
-                dom.find('input[type="hidden"]').val('');
-            } else {
-                layer.alert(result.msg, {icon: 2});
-            }
-        }, 'json');
-    });
-}
-
 $('.tools-bottom').on('click', function (e) {
     e.stopPropagation();
 });
 
-/*上传大文件*/
-function uploadFileOss(element, url, size, accept) {
+/*上传图片*/
+function uploadImgOss(element, url, size, accept) {
     if (!size) {
         size = 512000;
     }
@@ -248,18 +188,85 @@ function uploadFileOss(element, url, size, accept) {
                 layer.close(lay_load);
                 if (res.code) {
                     var control = $(element).closest('.layui-form-item');
+                    var control_input = control.find('input[type="hidden"]');
+                    if (control_input.length === 1) {
+                        control_input.val(res.data.url.img); //赋值上传
+                    } else {
+                        control.find('.img_origin').val(res.data.url.img); //赋值上传
+                        control.find('.img_thumb_small').val(res.data.url.img_thumb_small); //赋值上传
+                        control.find('.img_thumb_large').val(res.data.url.img_thumb_large); //赋值上传
+                    }
                     if (control.find('img').length) {
-                        control.find('.image-text').css('display', 'none'); //隐藏文字
-                        control.find('.image-preview').css('display', 'block'); //显示图片
-                        control.find('img').attr('src', res.data.url); //图片链接
-                        control.find('input[type="hidden"]').val(res.data.url); //赋值上传
+                        control.find('img').attr('src', res.data.url.img_thumb_small); //预览图片
                     }
                     if (control.find('a').length) {
-                        control.find('a').attr('href', res.data.url); //赋值上传
+                        control.find('a').attr('href', res.data.url.img); //查看大图
                     }
-                    if (control.find('input[type="text"]').length) {
-                        control.find('input[type="text"]').val(res.data.url); //赋值上传
-                    }
+                    layer.msg(res.msg);
+                } else {
+                    layer.alert(res.msg);
+                }
+            }
+        });
+    });
+}
+
+
+/*删除图片*/
+function deleteImgOss(element) {
+    var dom = $(element).closest('.layui-form-item');
+    var field = dom.find('input[type="hidden"]');
+    if (field.length > 1) {
+        field = dom.find('.img_origin');
+    }
+
+    var data = {
+        id: field.data("id") || 0,
+        table_name: field.data("table") || '',
+        field_name: field.attr("name") || '',
+        url: field.val() || ''
+    };
+    layer.confirm('删除后无法恢复，确定继续吗？', function (index) {
+        $.post('/admin/index/deleteOssFile', data, function (result) {
+            layer.close(index);
+            if (result.code) {
+                dom.find('img').attr('src', '');
+                field.val('');
+                layer.msg(result.msg);
+            } else {
+                layer.alert(result.msg, {icon: 2});
+            }
+        }, 'json');
+    });
+}
+
+/*上传大文件*/
+function uploadFileOss(element, url, size, accept) {
+    if (!size) {
+        size = 512000;
+    }
+    if (!url) {
+        url = '/admin/index/uploadAudioOss';
+    }
+    if (!accept) {
+        accept = 'file';
+    }
+    var lay_load;
+    layui.use(['layer', 'upload'], function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: element
+            , url: url
+            , size: size //限制文件大小，单位 KB
+            , accept: accept //允许上传的文件类型
+            , before: function (obj) {
+                lay_load = layer.load(2, {time: 20 * 1000});
+            }
+            , done: function (res) {
+                layer.close(lay_load);
+                if (res.code) {
+                    var control = $(element).closest('.layui-form-item');
+                    control.find('input[type="text"]').val(res.data.url); //赋值上传
                     layer.msg(res.msg);
                 } else {
                     layer.alert(res.msg);
@@ -275,10 +282,10 @@ function deleteFileOss(element) {
     var field = dom.find('input[type="text"]');
 
     var data = {
-        id: field.data("id"),
-        table_name: field.data("table"),
-        field_name: field.attr("name"),
-        url: field.val()
+        id: field.data("id") || 0,
+        table_name: field.data("table") || '',
+        field_name: field.attr("name") || '',
+        url: field.val() || ''
     };
     layer.confirm('删除后无法恢复，确定继续吗？', function (index) {
         $.post('/admin/index/deleteOssFile', data, function (result) {

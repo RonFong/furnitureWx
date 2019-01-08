@@ -50,6 +50,7 @@ class Article extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['classify_id'])) {
             $map['classify_id'] = $param['classify_id'];//分类名称
         }
@@ -58,9 +59,6 @@ class Article extends Base
         }
         if (isset($param['state']) && $param['state'] !== '') {
             $map['state'] = $param['state'];//状态
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

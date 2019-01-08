@@ -43,13 +43,11 @@ class UserFaq extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['title'])) {
             $map['title'] = ['like', '%' . $param['title'] . '%'];//标题
         }
 
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
-        }
         return $map;
     }
 

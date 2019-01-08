@@ -44,6 +44,7 @@ class Factory extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['factory_name'])) {
             $map['factory_name'] = ['like', '%' . $param['factory_name'] . '%'];//厂家名
         }
@@ -52,9 +53,6 @@ class Factory extends Base
         }
         if (!empty($param['factory_contact'])) {
             $map['factory_contact'] = ['like', '%' . $param['factory_contact'] . '%'];//联系人
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

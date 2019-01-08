@@ -1,13 +1,4 @@
 {extend name="common/index"}
-{block name="css"}
-<style>
-    {notempty name="data.classify_img"}
-    .image-url .image-text {display: none;}/*隐藏文字*/
-    {else/}
-    .image-url .image-preview {display: none;}/*隐藏图片*/
-    {/notempty}
-</style>
-{/block}
 {block name="content"}
 <div class="layui-row">
     <form id="editForm" class="layui-form tpl-form-label-long" action="">

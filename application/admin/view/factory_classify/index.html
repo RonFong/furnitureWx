@@ -37,7 +37,7 @@
 
 <script type="text/html" id="operating">
     <div class="layui-btn-group">
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
     </div>
 </script>
 {/block}
@@ -54,7 +54,6 @@
             ,page: true
             ,limit: table_limit
             ,limits: table_limits
-            ,cellMinWidth:50
             ,cols: [[
                 {type:'numbers', title:'序号', width:45}
                 ,{field:'group_name', title:'厂家名'}

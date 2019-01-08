@@ -1,33 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>添加标记</title>
+  <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script>
   <style type="text/css">
-    body, html, #allmap {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      margin: 0;
-      font-family: "微软雅黑";
+    *{
+      margin:0px;
+      padding:0px;
+    }
+    body, button, input, select, textarea {
+      font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+    }
+    #info{
+      width:603px;
+      padding-top:3px;
+      overflow:hidden;
+    }
+    .btn{
+      width:112px;
+    }
+    #container{
+      min-width:600px;
+      min-height:767px;
     }
   </style>
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=rm8q8G1xMDSKPvU2fKr6wHyiKmsyZbFG"></script>
-  <title>地址解析</title>
+  <script>
+      var init = function() {
+          var data = {$data|default="''"};
+          var center = new qq.maps.LatLng(data.lat, data.lng);
+          var map = new qq.maps.Map(document.getElementById('container'),{
+              center: center,
+              zoom: 13
+          });
+          //创建marker
+          var marker = new qq.maps.Marker({
+              position: center,
+              map: map
+          });
+
+      }
+  </script>
 </head>
-<body>
-  <div id="allmap"></div>
-  <div id="r-result"></div>
+<body onload="init()">
+<div id="container"></div>
 </body>
 </html>
-<script type="text/javascript">
-    var address = {$address|default="''"};
-    // 百度地图API功能
-    var map = new BMap.Map("allmap");            // 创建Map实例
-    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
-    var local = new BMap.LocalSearch(map, {
-        renderOptions: {map: map, panel: "r-result"}
-    });
-    local.search(address);
-
-</script>

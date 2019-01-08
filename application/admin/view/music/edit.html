@@ -1,13 +1,4 @@
 {extend name="common/index"}
-{block name="css"}
-<style>
-    {notempty name="data.img"}
-    .image-url .image-text {display: none;}/*隐藏文字*/
-    {else/}
-    .image-url .image-preview {display: none;}/*隐藏图片*/
-    {/notempty}
-</style>
-{/block}
 {block name="content"}
 <div class="layui-row">
     <form id="editForm" class="layui-form tpl-form-label-long" action="">
@@ -16,22 +7,18 @@
             <div class="layui-main">
                 <div class="layui-form-item">
                     <label class="layui-form-label">图片：</label>
-                    <div class="layui-input-inline image-url">
-                        <div class="layui-upload-drag">
-                            <div class="image-text">
-                                <i class="layui-icon layui-icon-upload"></i>
-                                <p>点击上传</p>
-                                <p>&nbsp;</p>
-                            </div>
-                            <div class="image-preview">
-                                <input type="hidden" name="img" value="{$data.img|default=''}" data-id="{$data.id|default=''}" data-table="music">
-                                <img src="{$data.img|default=''}" alt="图片">
-                                <div class="tools tools-bottom">
-                                    <a href="javascript:void(0);" onclick="delImgAjax(this);">
-                                        <i class="layui-icon layui-icon-delete"></i>
-                                    </a>
-                                </div>
-                            </div>
+                    <div class="layui-input-inline upload-img">
+                        <img src="{$data.img|default='/static/img/holder.jpg'}" width="200" height="100" alt="图片">
+                        <input type="hidden" name="img" value="{$data.img|default=''}" data-id="{$data.id|default=''}" data-table="music">
+                    </div>
+                    <div class="layui-input-inline">
+                        <div class="layui-btn-container">
+                            <a href="{$data.img|default='/static/img/holder.jpg'}" target="_blank" class="layui-btn layui-btn-primary layui-btn-sm">
+                                <i class="layui-icon layui-icon-search"></i>查看大图
+                            </a>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm image-delete" onclick="deleteImgOss(this);">
+                                <i class="layui-icon layui-icon-delete"></i>删除图片
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -101,7 +88,7 @@
         var form = layui.form;
 
         //上传图片，限制大小4M
-        uploadFileOss('.image-url', '{:url("uploadImgOss")}', 4096, 'images');
+        uploadImgOss('.upload-img', '{:url("uploadImgOss")}', 4096, 'images');
 
         //上传大文件，限制大小10M
         uploadFileOss('.upload-audio', '{:url("uploadAudioOss")}', 10485760, 'audio');

@@ -496,3 +496,6 @@ html {
     font-size: 24px;
     color: #FF5722;
 }
+
+/*更改排序*/
+.layui-table-body .layui-btn .layui-icon-up, .layui-table-body .layui-btn .layui-icon-down{margin: 0 auto;}

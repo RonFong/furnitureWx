@@ -53,6 +53,45 @@ class Shop extends CoreShop
     }
 
     /**
+     * 商店创始人最后一次登录时间
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getLastLoginTimeAttr($value, $data)
+    {
+        $value = $data['admin_user'] ?? $value;
+        $res = !empty($value) ? Db::name('user_location')->where('user_id', $value)->order('id desc')->value('create_time') : '';
+        return !empty($res) ? date('Y-m-d', $res) : '';
+    }
+
+    /**
+     * 商店员工总登录次数
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getAllLoginTimesAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        $user_ids = Db::name('user')->where('type', 2)->where('group_id', $value)->column('id');
+        return Db::name('user_location')->whereIn('user_id', $user_ids)->count();
+    }
+
+    /**
+     * 商店员工本月登录次数
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getAllLoginTimesMonthAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        $user_ids = Db::name('user')->where('type', 2)->where('group_id', $value)->column('id');
+        return Db::name('user_location')->whereIn('user_id', $user_ids)->where('create_time', '>', mktime(0,0,0,date('m'),1,date('Y')))->count();
+    }
+
+    /**
      * 获取是否有首页图文
      * @param $value
      * @param $data
