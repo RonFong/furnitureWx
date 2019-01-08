@@ -200,13 +200,14 @@ class Article extends CoreArticle
                 where s.distance <= {$this->distance}
                 order by {$order} limit {$pageData['page']}, {$pageData['row']}";
         $list = Db::query($sql);
+
         foreach ($list as $k => $v) {
             $list[$k]['classify_name'] = Db::table('article_classify')->where('id', $v['classify_id'])->value('classify_name');
             unset($list[$k]['classify_id']);
             $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
-            $user = User::get($v['user_id']);
-            $list[$k]['user_name'] = $user->user_name;
-            $list[$k]['avatar'] = $user->avatar;
+            $user = Db::table('user')->where('id', $v['user_id'])->find();
+            $list[$k]['user_name'] = $user['user_name'];
+            $list[$k]['avatar'] = $user['avatar'];
             $list[$k]['title'] = $this->emojiDecode($v['title']);
             $list[$k]['collect_num'] = Db::table('relation_article_collect')->where('article_id', $v['id'])->count();
             $list[$k]['great_num'] = Db::table('relation_article_great')->where('article_id', $v['id'])->count();
