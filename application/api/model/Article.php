@@ -309,7 +309,6 @@ class Article extends CoreArticle
 
         $data['content'] = ArticleContent::all(function ($query) use ($id) {
             $query->where('article_id', $id)
-                ->where('delete_time', 'is null')
                 ->field(true)
                 ->field('video as video_snapshot, video as video_snapshot_auto')
                 ->field('delete_time', true)
