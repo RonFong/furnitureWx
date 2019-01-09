@@ -63,7 +63,7 @@ class Token
             $saveData = [
                 'wx_openid'     => self::$openid,
                 'avatar'        => $wxUserInfo['avatarUrl'],
-                'user_name'     => $wxUserInfo['nickName'],
+                'user_name'     => str_replace(' ', '', $wxUserInfo['nickName']),
                 'group_id'      => 0,
                 'gender'        => $wxUserInfo['gender'],
                 'province'      => $wxUserInfo['province'],
