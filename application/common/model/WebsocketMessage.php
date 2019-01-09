@@ -38,7 +38,7 @@ class WebsocketMessage extends Model
                 $query->whereOr(['w.from_id' => $fromId, 'w.to_id' => $toId]);
             })
             ->order('w.id desc')
-            ->field('f_u.user_name as from_user_name, f_u.avatar as from_avatar, t_u.user_name as to_user_name, t_u.avatar as to_avatar, w.message, w.read as is_read, send_time as time')
+            ->field('f_u.id as from_id, f_u.user_name as from_user_name, f_u.avatar as from_avatar, t_u.id as to_id, t_u.user_name as to_user_name, t_u.avatar as to_avatar, w.message, w.read as is_read, send_time as time')
             ->page($page, $row)
             ->select();
         return $list;
