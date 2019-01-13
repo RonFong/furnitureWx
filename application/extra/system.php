@@ -23,7 +23,7 @@ return [
     'msg_for_frequently' => '点太快了，别急',
 
     //个人贡献人气值增长间隔时间   1 小时
-    'popularity_time'   => 3600,
+    'popularity_time'   => 0,
 
     //个人贡献文章阅读量值增长间隔时间   1 小时
     'read_interval_time'   => 3600,
