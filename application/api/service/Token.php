@@ -63,7 +63,7 @@ class Token
             $saveData = [
                 'wx_openid'     => self::$openid,
                 'avatar'        => $wxUserInfo['avatarUrl'],
-                'user_name'     => $wxUserInfo['nickName'],
+                'user_name'     => self::emojiEncode($wxUserInfo['nickName']),
                 'group_id'      => 0,
                 'gender'        => $wxUserInfo['gender'],
                 'province'      => $wxUserInfo['province'],
@@ -104,6 +104,19 @@ class Token
             exception('token缓存失败');
         }
         return $token;
+    }
+
+
+    /**
+     * Emoji原形转换为String
+     * @param string $content
+     * @return string
+     */
+    private static function emojiEncode($content)
+    {
+        return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function ($str) {
+            return addslashes($str[0]);
+        }, json_encode($content)));
     }
 
 }
