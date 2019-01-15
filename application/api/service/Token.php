@@ -112,7 +112,7 @@ class Token
      * @param string $content
      * @return string
      */
-    private static function emojiEncode($content)
+    public static function emojiEncode($content)
     {
         return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function ($str) {
             return addslashes($str[0]);
