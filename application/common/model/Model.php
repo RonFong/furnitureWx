@@ -279,4 +279,14 @@ abstract class Model extends CoreModel
     {
         return $this->emojiEncode($value);
     }
+
+    public function getUserNameAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setUserNameAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
 }
