@@ -67,6 +67,7 @@ class ExceptionHandler extends Handle
             'params'        => $params
         ];
         if ($this->code == 500) {
+            $result['msg'] = $e->msg;
             $this->recordErrorLog($result);
             if (!config('app_debug')) {
                 $result['msg'] = $this->systemMsg;
