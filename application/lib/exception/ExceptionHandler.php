@@ -67,8 +67,7 @@ class ExceptionHandler extends Handle
             'params'        => $params
         ];
         if ($this->code == 500) {
-            $result['msg'] = $e->msg;
-            $this->recordErrorLog($result);
+            $this->recordErrorLog($result, $e->msg);
             if (!config('app_debug')) {
                 $result['msg'] = $this->systemMsg;
             }
@@ -80,7 +79,7 @@ class ExceptionHandler extends Handle
      * 写入错误日志表
      * @param $data
      */
-    private function recordErrorLog($data)
+    private function recordErrorLog($data, $msg = '')
     {
         $logData = [
             'url'       => $data['request_url'],
@@ -88,7 +87,7 @@ class ExceptionHandler extends Handle
             'ip'        => Request::instance()->ip(1),
             'params'    => is_array($data['params']) ? json_encode($data['params']) : $data['params'],
             'user_id'   => user_info('id') ?? 0,
-            'msg'       => $data['msg'],
+            'msg'       => $msg ?? $data['msg'],
             'error_location' => $this->location
         ];
         Db::table('error_log')->insert($logData);
