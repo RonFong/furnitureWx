@@ -209,7 +209,7 @@ class Article extends CoreArticle
             $list[$k]['user_name'] = $user['user_name'];
             $list[$k]['avatar'] = $user['avatar'];
             //2019-01-16 去除标题，改为第一段内容文字
-            $content = Db::table('relation_content')->where(['article_id' => $v['id'], 'type' => 1])->value('text');
+            $content = Db::table('article_content')->where(['article_id' => $v['id'], 'type' => 1])->value('text');
             $list[$k]['title'] = $this->emojiDecode($content);
             $list[$k]['collect_num'] = Db::table('relation_article_collect')->where('article_id', $v['id'])->count();
             $list[$k]['great_num'] = Db::table('relation_article_great')->where('article_id', $v['id'])->count();
