@@ -24,7 +24,7 @@ class ExceptionHandler extends Handle
     private $msg;
     private $errorCode;
     private $location = '';
-    private $systemMsg = '请稍后再试~';
+    private $systemMsg = '网络错误，请稍后再试';
 
     /**
      * 重写框架Handle父类方法
@@ -67,7 +67,6 @@ class ExceptionHandler extends Handle
             'params'        => $params
         ];
         if ($this->code == 500) {
-            $result['msg'] = '网络错误，请稍后再试';
             $this->recordErrorLog($result, $e->msg);
             if (!config('app_debug')) {
                 $result['msg'] = $this->systemMsg;
