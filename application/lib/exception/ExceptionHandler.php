@@ -78,6 +78,7 @@ class ExceptionHandler extends Handle
     /**
      * 写入错误日志表
      * @param $data
+     * @param string $msg
      */
     private function recordErrorLog($data, $msg = '')
     {
@@ -87,7 +88,7 @@ class ExceptionHandler extends Handle
             'ip'        => Request::instance()->ip(1),
             'params'    => is_array($data['params']) ? json_encode($data['params']) : $data['params'],
             'user_id'   => user_info('id') ?? 0,
-            'msg'       => $msg ?? $data['msg'],
+            'msg'       => $msg ? $msg : $data['msg'],
             'error_location' => $this->location
         ];
         Db::table('error_log')->insert($logData);
