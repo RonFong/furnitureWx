@@ -67,6 +67,7 @@ class ExceptionHandler extends Handle
             'params'        => $params
         ];
         if ($this->code == 500) {
+            $result['msg'] = '网络错误，请稍后再试';
             $this->recordErrorLog($result, $e->msg);
             if (!config('app_debug')) {
                 $result['msg'] = $this->systemMsg;
