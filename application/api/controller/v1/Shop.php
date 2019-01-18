@@ -151,7 +151,7 @@ class Shop extends BaseController
             if (!isset($this->data['shopId']) && user_info('type') !== 2) {
                 exception('非商家用户');
             }
-            $shopId = $this->data['id'] ?? user_info('group_id');
+            $shopId = $this->data['shopId'] ?? user_info('group_id');
             $this->result['data'] = $this->currentModel->homePageData($shopId);
             //增加人气值
             Popularity::increase($shopId, 2);
