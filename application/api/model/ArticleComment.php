@@ -75,9 +75,13 @@ class ArticleComment extends CoreArticleComment
             ->order('great_total desc, a.create_time')
             ->page($page, $row)
             ->select();
+
         $list     = [];
         foreach ($comments as $v) {
             $comment = $this->moreCommentReply($v['id']);
+            if (!$comments) {
+                continue;
+            }
             $v = $comment['comment'];
             $v['content'] = $this->emojiDecode($v['content']);
             $v['child'] = array_slice($comment['reply'], 0, 3);
@@ -98,15 +102,17 @@ class ArticleComment extends CoreArticleComment
      */
     public function moreCommentReply($commentId)
     {
-        $child = self::with('appendUserName')
-            ->where(['parent_id' => $commentId, 'state' => 1])
-            ->field('parent_id, article_id, state, state_remark, create_by, create_time, update_by, update_time, delete_time', true)
+        $child = Db::table('article_comment')
+            ->alias('a')
+            ->join('user b', 'a.user_id = b.id')
+            ->where(['a.parent_id' => $commentId, 'a.state' => 1])
+            ->where('a.delete_time is null')
+            ->field('a.id, a.content, b.user_name')
             ->select();
         $data = [];
         if ($child) {
             $tempData = [];
             foreach ($child as $v) {
-                $v = $v->toArray();
                 $v['respondent_user_name'] = '';  // 不是对回复的回复，回复人昵称值为空
                 $tempData[] = $this->recursionComment($v);
             }
@@ -153,8 +159,10 @@ class ArticleComment extends CoreArticleComment
             $v['child']  = [];
             $reply['id'] = $v['id'];
         }
-        $info = (new self())->with('appendUserName')
+        $info = (new self())
             ->where(['parent_id' => $reply['id'], 'state' => 1])
+            ->field(true)
+            ->field('user_id as user_name')
             ->find();
 
         if ($info) {
