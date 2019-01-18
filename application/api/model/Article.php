@@ -45,6 +45,12 @@ class Article extends CoreArticle
     protected $location = [];
 
     /**
+     * 在列表中显示的字数
+     * @var int
+     */
+    protected $showWordNum = 60;
+
+    /**
      * 获取用户当前经纬度
      * @param $query
      * @return mixed
@@ -210,7 +216,7 @@ class Article extends CoreArticle
             $list[$k]['avatar'] = $user['avatar'];
             //2019-01-16 去除标题，改为第一段内容文字
             $content = Db::table('article_content')->where(['article_id' => $v['id'], 'type' => 1])->value('text');
-            $content = $content ? (mb_strlen($content) <= 40 ? $content : mb_substr($content, 0, 40) . '...') : '';
+            $content = $content ? (mb_strlen($content) <= $this->showWordNum ? $content : mb_substr($content, 0, $this->showWordNum) . '...') : '';
             $list[$k]['title'] = $this->emojiDecode($content);
             $list[$k]['collect_num'] = Db::table('relation_article_collect')->where('article_id', $v['id'])->count();
             $list[$k]['great_num'] = Db::table('relation_article_great')->where('article_id', $v['id'])->count();
