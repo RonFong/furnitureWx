@@ -55,16 +55,15 @@ class Shop extends CoreShop
 
     /**
      * 商家首页信息
-     * @param $param
+     * @param $shopId
      * @return null|static
      * @throws \Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function homePageData($param)
+    public function homePageData($shopId)
     {
-        $shopId = !empty($param['shopId']) ? $param['shopId'] : user_info('group_id');
         $info = self::get($shopId);
         if (!$info) {
             exception('此商家不存在或信息异常');
