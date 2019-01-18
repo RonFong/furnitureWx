@@ -25,15 +25,19 @@ class ArticleComment extends CoreArticleComment
     {
 
         $data['user_id'] = user_info('id');
+        $data['content'] = $this->emojiEncode($data['content']);
         if ($this->save($data)) {
             $result = [
                 'user_name'   => user_info('user_name'),
-                'content'     => $data['content'],
+                'content'     => $this->emojiDecode($data['content']),
                 'create_time' => '刚刚'
             ];
             //所回复的评论的发布者
             if (array_key_exists('parent_id', $data)) {
-                $info = self::with('appendUserName')->where('id', $this->data['parent_id'])->find();
+                $info = $this->where('id', $this->data['parent_id'])
+                    ->field(true)
+                    ->field('user_id as user_name')
+                    ->find();
                 $result['parent_user_name'] = $info->user_name;
             }
 
@@ -124,6 +128,7 @@ class ArticleComment extends CoreArticleComment
                 array_push($data, $v);
                 if ($child) {
                     foreach ($child as $vv) {
+                        $vv['content'] = $this->emojiDecode($vv['content']);
                         array_push($data, $vv);
                     }
                 }
@@ -137,6 +142,7 @@ class ArticleComment extends CoreArticleComment
             ->field('a.id, b.id as user_id, b.user_name, b.avatar, a.content, count(c.id) as great_total, a.create_time')
             ->group('a.id')
             ->find();
+        $result['comment']['content'] = $this->emojiDecode($result['comment']['content']);
         $result['comment']['is_great'] = $this->isGreat($commentId);
         $result['comment']['create_time'] = time_format_for_humans($result['comment']['create_time']);
         $result['reply'] = $data;
@@ -171,7 +177,7 @@ class ArticleComment extends CoreArticleComment
                 'user_id'              => $info['user_id'],       //回复人id
                 'user_name'            => $info['user_name'],     //回复人昵称
                 'respondent_user_name' => $reply['respondent_user_name'] ?? $v['user_name'],                   //被回复人昵称  （如果当前为该评论的第一条回复，则被回复人为空）
-                'content'              => $info['content'],
+                'content'              => $this->emojiDecode($info['content']),
                 'is_great'             => $this->isGreat($info['id'])
             ];
             if (!empty($v['child'])) {
