@@ -12,14 +12,29 @@
         <div class="layui-col-sm6 layui-col-md3">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    厂家数
+                    文章数
                     <span class="layui-badge layui-bg-blue layuiadmin-badge">总</span>
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
-                    <p class="layuiadmin-big-font">{$active.read_num|default=0}</p>
+                    <p class="layuiadmin-big-font">{$article.count|default=0}</p>
                     <p>
-                        厂家数
-                        <span class="layuiadmin-span-color">{$active.read_num|default=0} <i class="layui-inline layui-icon layui-icon-read"></i></span>
+                        本月新增
+                        <span class="layuiadmin-span-color">{$article.count_month|default=0} <i class="layui-inline layui-icon layui-icon-read"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    厂家数
+                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">{$factory.count|default=0}</p>
+                    <p>
+                        本月新增
+                        <span class="layuiadmin-span-color">{$factory.count_month|default=0} <i class="layui-inline layui-icon layui-icon-form"></i></span>
                     </p>
                 </div>
             </div>
@@ -31,10 +46,10 @@
                     <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
-                    <p class="layuiadmin-big-font">{$article.count|default=0}</p>
+                    <p class="layuiadmin-big-font">{$shop.count|default=0}</p>
                     <p>
                         本月新增
-                        <span class="layuiadmin-span-color">{$article.count_month|default=0} <i class="layui-inline layui-icon layui-icon-form"></i></span>
+                        <span class="layuiadmin-span-color">{$shop.count_month|default=0} <i class="layui-inline layui-icon layui-icon-form"></i></span>
                     </p>
                 </div>
             </div>
@@ -51,22 +66,6 @@
                     <p>
                         本月新增
                         <span class="layuiadmin-span-color">{$goods.count_month|default=0} <i class="layui-inline layui-icon layui-icon-diamond"></i></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-sm6 layui-col-md3">
-            <div class="layui-card">
-                <div class="layui-card-header">
-                    用户数
-                    <span class="layui-badge layui-bg-orange layuiadmin-badge">总</span>
-                </div>
-                <div class="layui-card-body layuiadmin-card-list">
-
-                    <p class="layuiadmin-big-font">{$user.count|default=0}</p>
-                    <p>
-                        本月新增
-                        <span class="layuiadmin-span-color">{$user.count_month|default=0} <i class="layui-inline layui-icon layui-icon-user"></i></span>
                     </p>
                 </div>
             </div>

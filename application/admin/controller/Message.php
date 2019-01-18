@@ -47,9 +47,6 @@ class Message extends Base
         if (!empty($param['create_begin']) && !empty($param['create_end'])) {
             $map['time'] = ['between', [strtotime($param['create_begin']. ' 00:00:00'), strtotime($param['create_end']. ' 23:59:59')]];//删除时间
         }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
-        }
         return $map;
     }
 

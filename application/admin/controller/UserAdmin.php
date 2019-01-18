@@ -43,13 +43,11 @@ class UserAdmin extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['real_name'])) {
             $map['account'] = ['like', '%' . $param['account'] . '%'];//真实姓名
         }
 
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
-        }
         return $map;
     }
 

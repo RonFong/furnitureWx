@@ -24,7 +24,7 @@ class ExceptionHandler extends Handle
     private $msg;
     private $errorCode;
     private $location = '';
-    private $systemMsg = '请稍后再试~';
+    private $systemMsg = '网络错误，请稍后再试';
 
     /**
      * 重写框架Handle父类方法
@@ -67,7 +67,7 @@ class ExceptionHandler extends Handle
             'params'        => $params
         ];
         if ($this->code == 500) {
-            $this->recordErrorLog($result);
+            $this->recordErrorLog($result, $e->msg);
             if (!config('app_debug')) {
                 $result['msg'] = $this->systemMsg;
             }
@@ -78,16 +78,17 @@ class ExceptionHandler extends Handle
     /**
      * 写入错误日志表
      * @param $data
+     * @param string $msg
      */
-    private function recordErrorLog($data)
+    private function recordErrorLog($data, $msg = '')
     {
         $logData = [
             'url'       => $data['request_url'],
             'time'      => date('Y-m-d H:i:s', time()),
             'ip'        => Request::instance()->ip(1),
-            'params'    => json_encode($data['params']),
+            'params'    => is_array($data['params']) ? json_encode($data['params']) : $data['params'],
             'user_id'   => user_info('id') ?? 0,
-            'msg'       => $data['msg'],
+            'msg'       => $msg ? $msg : $data['msg'],
             'error_location' => $this->location
         ];
         Db::table('error_log')->insert($logData);

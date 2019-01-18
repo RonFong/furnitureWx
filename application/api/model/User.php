@@ -24,6 +24,11 @@ class User extends CoreUser
         return $this->formatUserName($value);
     }
 
+    /**
+     * 切割出 字符串的  8 个汉字的长度， 2 个字符 = 1 个汉字长度
+     * @param $value
+     * @return string
+     */
     protected function formatUserName($value)
     {
         if (mb_strwidth($value) > 16) {
@@ -36,7 +41,7 @@ class User extends CoreUser
                 } else {
                     $l++;
                 }
-                if (mb_strwidth($str) >= 16) {
+                if (mb_strwidth($str) > 16) {
                     return $str . '···';
                 }
                 $str .= $v;

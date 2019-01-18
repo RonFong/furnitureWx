@@ -26,7 +26,8 @@ return [
     'popularity_time'   => 0,
 
     //个人贡献文章阅读量值增长间隔时间   1 小时
-    'read_interval_time'   => 3600,
+//    'read_interval_time'   => 3600,
+    'read_interval_time'   => 0,
 
     //视频截帧
     //    t	截图时间	单位ms，[0,视频时长]

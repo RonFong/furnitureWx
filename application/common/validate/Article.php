@@ -21,30 +21,25 @@ class Article extends BaseValidate
         'page'              => 'checkPageAndRow',
         'user_id'           => 'require|number|egt:1',
         'article_id'        => 'require|number|egt:1',
-        'title'             => 'require',
         'is_draft'          => 'in:0,1',
         'order_by'          => 'in:read_num,create_time,distance'     //人气、时间、距离
     ];
 
     protected $message = [
         'content.require'       => '图文内容不能为空',
-        'title.require'         => '请输入标题',
     ];
 
     protected $scene = [
         'create'        => [
             'id'        => 'idCantExist',
-            'title',
             'classify_id',
             'content',
-            'title',
             'is_draft'
         ],
         'update'        => [
             'id',
             'classify_id',
             'content',
-            'title',
             'is_draft'
         ],
         'delete'        => [

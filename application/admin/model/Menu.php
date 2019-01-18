@@ -150,7 +150,6 @@ class Menu extends CoreMenu
     public function getMenuListOption($value = 0)
     {
         $map = [];
-        $map['display'] = 1;
         if (user_info('id') != 1) {
             $auth = model('UserRole')->whereIn('role_id', user_info('role_id'))->column('auth');
             $map['id'] = ['in', implode(',', $auth)];

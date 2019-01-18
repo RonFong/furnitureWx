@@ -55,6 +55,7 @@ class Goods extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['factory_id'])) {
             $map['factory_id'] = $param['factory_id'];//厂家ID
         }
@@ -66,9 +67,6 @@ class Goods extends Base
         }
         if (!empty($param['web_type'])) {
             $map['audit_state'] = $param['web_type']=="factory" ? ['<>', 3] : 3;//产品显示规则：厂家（未通过审核），商城（通过审核）
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

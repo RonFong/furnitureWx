@@ -14,5 +14,11 @@ use think\Db;
 
 class ArticleContent extends CoreArticleContent
 {
-
+    public function getStyleAttr($value)
+    {
+        if ($value) {
+            return json_decode($value);
+        }
+        return '';
+    }
 }

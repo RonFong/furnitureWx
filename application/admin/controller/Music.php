@@ -45,6 +45,7 @@ class Music extends Base
     private function getDataListMap()
     {
         $param = $this->request->param();
+        $map = [];
         if (!empty($param['category_id'])) {
             $map['category_id'] = $param['category_id'];//分类名称
         }
@@ -56,9 +57,6 @@ class Music extends Base
         }
         if (isset($param['state']) && $param['state'] !== '') {
             $map['state'] = $param['state'];//状态
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }

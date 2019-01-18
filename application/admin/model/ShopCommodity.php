@@ -26,16 +26,4 @@ class ShopCommodity extends Model
         return Db::name('shop')->where('id', $value)->value('shop_name');
     }
 
-    /**
-     * 获取分类名
-     * @param $value
-     * @param $data
-     * @return mixed
-     */
-    public function getClassifyNameAttr($value, $data)
-    {
-        $value = isset($data['classify_id']) ? $data['classify_id'] : $value;
-        return Db::name('factory_classify')->where('id', $value)->value('classify_name');
-    }
-
 }

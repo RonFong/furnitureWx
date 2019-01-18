@@ -1,15 +1,6 @@
 {extend name="common/index"}
 {block name="css"}
 <style>
-    {notempty name="data.img"}
-    .image-url .layui-upload-drag .image-text {
-        display: none;
-    }
-    {else/}
-    .image-url .layui-upload-drag .image-preview {
-        display: none;
-    }
-    {/notempty}
     .content {
         max-width: 350px;
     }
@@ -70,7 +61,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">阅读数：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="pageview" value="{$data.pageview|default=''}" placeholder="请输入" class="layui-input">
+                        <input type="text" name="read_num" value="{$data.read_num|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">

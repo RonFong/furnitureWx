@@ -78,6 +78,9 @@
                         <a href="{$vo.img}" target="_blank">
                             <img src="{$vo.img}" alt="图片">
                         </a>
+                        {notempty name="vo.record"}
+                         <audio src="{$vo.record}" controls="controls"></audio>
+                        {/notempty}
                         <div class="content-text">{$vo.text}</div>
                         {/volist}
                     </div>

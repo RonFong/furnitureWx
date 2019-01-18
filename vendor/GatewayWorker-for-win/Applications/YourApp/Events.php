@@ -106,10 +106,13 @@ class Events
                         Gateway::sendToClient($client_id, self::result([], 'postMessage: toId 和 message 不能为空', 0));
                         return;
                     }
+                    $usrInfo = self::userInfo($fromId);
                     $data = [
-                        'type' => 'receiveMessage',
-                        'from_id' => $fromId,
-                        'message' => $msg['message'],
+                        'type'      => 'receiveMessage',
+                        'from_id'   => $fromId,
+                        'user_name' => $usrInfo['user_name'],
+                        'avatar'    => $usrInfo['avatar'],
+                        'message'   => $msg['message'],
                     ];
 
                     $messageType = 1;
@@ -195,6 +198,20 @@ class Events
         } catch (\Exception $e) {
             self::errorLog($e->getMessage());
         }
+    }
+
+    /**
+     * 获取用户信息
+     * @param $userId
+     * @return array
+     */
+    private static function userInfo($userId)
+    {
+        $userInfo = self::$db->select('user_name,avatar')->from('user')->where("id={$userId}")->row();
+        return [
+            'user_name'     => $userInfo['user_name'],
+            'avatar'        => $userInfo['avatar']
+        ];
     }
 
     //用户登录后的消息统计

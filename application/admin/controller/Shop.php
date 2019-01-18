@@ -40,16 +40,20 @@ class Shop extends Base
     {
         $map = $this->getDataListMap();
 
-        return $this->currentModel
+        $list = $this->currentModel
+            ->join('__USER__', 'shop.admin_user=user.id')
             ->where($map)
-            ->order('id desc')
-            ->layTable(['admin_user_name', 'state_des', 'audit_state_des', 'home_content_has', 'shop_commodity_count']);
+            ->order('shop.id desc')
+            ->field('shop.id,shop.admin_user,shop.shop_name,user.user_name,user.create_time,user.create_time,
+            shop.shop_contact,shop.shop_phone,shop.shop_wx,shop.address,shop.audit_state,shop.state,shop.lat,shop.lng')
+            ->layTable(['audit_state_des', 'home_content_has', 'shop_commodity_count', 'last_login_time', 'all_login_times', 'all_login_times_month']);
+        return $list;
     }
 
     private function getDataListMap()
     {
         $param = $this->request->param();
-
+        $map = [];
         if (!empty($param['shop_name'])) {
             $map['shop_name'] = ['like', '%' . $param['shop_name'] . '%'];//商户名
         }
@@ -64,9 +68,6 @@ class Shop extends Base
         }
         if ($param['audit_state'] !== '') {
             $map['audit_state'] = $param['audit_state'];
-        }
-        if (empty($map)) {
-            $map[] = ['exp', '1=1'];
         }
         return $map;
     }
@@ -126,10 +127,6 @@ class Shop extends Base
         }
 
         try {
-            if (!empty($param['shop_img'])) {
-                $param['shop_img'] = $param['shop_img'].Oss::resize_1080;
-                $param['shop_img_thumb'] = $param['shop_img'].Oss::resize_480;
-            }
             //保存数据
             $this->currentModel->save($param);
         } catch (\Exception $e) {
@@ -153,12 +150,16 @@ class Shop extends Base
 
     /**
      * 显示门店位置（地图）
-     * @param string $address
+     * @param string $lat
+     * @param string $lng
      * @return mixed
      */
-    public function showMap($address = '')
+    public function showMap($lat, $lng)
     {
-        $this->assign('address', json_encode($address));
+        $data = [];
+        $data['lat'] = $lat;
+        $data['lng'] = $lng;
+        $this->assign('data', json_encode($data));
         return $this->fetch('show_map');
     }
 }

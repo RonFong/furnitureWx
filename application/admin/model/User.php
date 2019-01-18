@@ -41,7 +41,6 @@ class User extends CoreUser
         return isset($item[$value]) ? $item[$value] : '';
     }
 
-
     /**
      * 获取用户状态
      * @param $value
@@ -53,6 +52,61 @@ class User extends CoreUser
         $item = ['0'=>'冻结', '1'=>'启用'];
         $value = isset($data['state']) ? $data['state'] : 0;
         return isset($item[$value]) ? $item[$value] : '';
+    }
+    /**
+     * 最后一次登录时间
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getLastLoginTimeAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        $res = !empty($value) ? Db::name('user_location')->where('user_id', $value)->order('id desc')->value('create_time') : '';
+        return !empty($res) ? date('Y-m-d', $res) : '';
+    }
+
+    /**
+     * 总登录次数
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getAllLoginTimesAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        return Db::name('user_location')->whereIn('user_id', $value)->count();
+    }
+
+    /**
+     * 本月登录次数
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getAllLoginTimesMonthAttr($value, $data)
+    {
+        $value = $data['id'] ?? $value;
+        return Db::name('user_location')->whereIn('user_id', $value)->where('create_time', '>', mktime(0,0,0,date('m'),1,date('Y')))->count();
+    }
+
+    /**
+     * 非普通用户的手机号从他所属的 shop|factory表中读取
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getPhoneOtherAttr($value, $data)
+    {
+        $res = $data['phone'] ?? $value;
+        if (isset($data['type'])) {
+            if ($data['type'] == 1) {
+                $res = Db::name('factory')->where('id', $data['group_id'])->value('factory_phone');
+            } elseif ($data['type'] == 2) {
+                $res = Db::name('shop')->where('id', $data['group_id'])->value('shop_phone');
+            }
+        }
+        return $res;
     }
 
     /**

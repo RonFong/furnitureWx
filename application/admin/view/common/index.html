@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>99家 后台</title>
     <link rel="stylesheet" href="__STATIC__/plugin/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_578787_q4uqu10rf8k.css">
     <link rel="stylesheet" href="__STATIC__/css/main.css">
     {block name="css"}{/block}
 
@@ -46,7 +45,7 @@
                     {notempty name="vo.child"}
                         <li class="layui-nav-item {eq name='vo.is_extend' value='1'} layui-nav-itemed {/eq}
                         {eq name='vo.id' value='$menuCurrent.pid_display'}layui-nav-itemed{/eq}">
-                            <a href="javascript:;"><i class="iconfont icon-liebiao1"> </i>{$vo.menu_name}</a>
+                            <a href="javascript:;"><i class="layui-icon layui-icon-read"> </i>{$vo.menu_name}</a>
                             <dl class="layui-nav-child">
                             {volist name="vo.child" id="ch"}
                                 <dd {eq name='ch.id' value='$menuCurrent.id_display'}class="layui-this"{/eq}>
@@ -114,7 +113,7 @@
 <script type="text/javascript">
     //定义全局变量
     var tableIns;//实例化后的table容器
-    var table_limit = {$table_limit|default='30'};//当前每页显示数量
+    var table_limit = {$table_limit|default='15'};//当前每页显示数量
     var table_limits = [10,15,30,50,100,200];//每页显示数量“下拉框”
 
     $(function(){
