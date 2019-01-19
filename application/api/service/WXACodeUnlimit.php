@@ -95,9 +95,6 @@ class WXACodeUnlimit
         $accessToken = $this->getAccessToken();
         $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={$accessToken}";
         $res = curl_post($url, $param);
-        if ($e = json_encode($res)) {
-            exception($e->errmsg);
-        }
         $base64_image = "data:image/jpeg;base64," . base64_encode($res);
         return $base64_image;
     }
