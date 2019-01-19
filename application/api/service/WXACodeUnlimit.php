@@ -94,15 +94,8 @@ class WXACodeUnlimit
     {
         $accessToken = $this->getAccessToken();
         $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={$accessToken}";
-//        $res = curl_post($url, $param);
-        $param = [
-            'page'      => 'pages/storeDetail/storeDetail',
-            'scene'     =>  1
-        ];
         $res = curl_post($url, $param);
-        var_dump($res);
-        die;
-        if ($e = json_decode($res)) {
+        if ($e = json_encode($res)) {
             exception($e->errmsg);
         }
         $base64_image = "data:image/jpeg;base64," . base64_encode($res);
