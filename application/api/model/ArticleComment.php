@@ -21,6 +21,21 @@ use think\Db;
 class ArticleComment extends CoreArticleComment
 {
 
+    /**
+     * Emoji 表情符
+     * @param $value
+     * @return string
+     */
+    public function getContentAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setContentAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
+
     public function saveData($data)
     {
 

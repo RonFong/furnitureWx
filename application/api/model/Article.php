@@ -50,6 +50,17 @@ class Article extends CoreArticle
      */
     protected $showWordNum = 60;
 
+
+    public function getTitleAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setTitleAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
+
     /**
      * 获取用户当前经纬度
      * @param $query

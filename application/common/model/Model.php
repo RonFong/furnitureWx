@@ -240,53 +240,11 @@ abstract class Model extends CoreModel
         }, json_encode($content)));
     }
 
-    /**
-     * Emoji 表情符
-     * @param $value
-     * @return string
-     */
-    public function getContentAttr($value, $data)
-    {
-        return $this->emojiDecode($value);
-    }
 
-    public function setContentAttr($value, $data)
-    {
-        return $this->emojiEncode($value);
-    }
 
-    /**
-     * Emoji 表情符
-     * @param $value
-     * @return string
-     */
-    public function getTextAttr($value, $data)
-    {
-        return $this->emojiDecode($value);
-    }
 
-    public function setTextAttr($value, $data)
-    {
-        return $this->emojiEncode($value);
-    }
 
-    public function getTitleAttr($value, $data)
-    {
-        return $this->emojiDecode($value);
-    }
 
-    public function setTitleAttr($value, $data)
-    {
-        return $this->emojiEncode($value);
-    }
 
-    public function getUserNameAttr($value, $data)
-    {
-        return $this->emojiDecode($value);
-    }
 
-    public function setUserNameAttr($value, $data)
-    {
-        return $this->emojiEncode($value);
-    }
 }

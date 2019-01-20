@@ -18,10 +18,14 @@ use think\Db;
 class User extends CoreUser
 {
 
-
     public function getUserNameAttr($value)
     {
-        return $this->formatUserName($value);
+        $this->formatUserName($value);
+    }
+
+    public function setUserNameAttr($value)
+    {
+        return $this->emojiEncode($value);
     }
 
     /**
