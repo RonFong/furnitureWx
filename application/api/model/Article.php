@@ -223,7 +223,7 @@ class Article extends CoreArticle
             unset($list[$k]['classify_id']);
             $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
             $user = Db::table('user')->where('id', $v['user_id'])->find();
-            $list[$k]['user_name'] = $user['user_name'];
+            $list[$k]['user_name'] = $this->emojiDecode($user['user_name']);
             $list[$k]['avatar'] = $user['avatar'];
             //2019-01-16 去除标题，改为第一段内容文字
             $content = Db::table('article_content')->where(['article_id' => $v['id'], 'type' => 1])->value('text');
