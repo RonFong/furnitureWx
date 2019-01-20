@@ -160,10 +160,12 @@ class Shop extends BaseController
      */
     public function homePage()
     {
+        if (!isset($this->data['shopId']) && user_info('type') !== 2) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = '非商家用户';
+            return json($this->result, 403);
+        }
         try {
-            if (!isset($this->data['shopId']) && user_info('type') !== 2) {
-                exception('非商家用户');
-            }
             $shopId = $this->data['shopId'] ?? user_info('group_id');
             $this->result['data'] = $this->currentModel->homePageData($shopId);
             //增加人气值
