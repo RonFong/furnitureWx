@@ -31,7 +31,8 @@ class User extends CoreUser
      */
     protected function formatUserName($value)
     {
-        return $value ? (mb_strlen($value) <= 20 ? $value : mb_substr($value, 0, 20) . '...') : '';
+        $name = $value ? (mb_strlen($value) <= 30 ? $value : mb_substr($value, 0, 30) . '...') : '';
+        return $this->emojiDecode($name);
     }
 
     /**
