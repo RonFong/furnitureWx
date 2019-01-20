@@ -64,7 +64,7 @@ class Shop extends BaseController
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
-            $this->result['code'] = 0;
+            $this->result['state'] = 0;
             $this->result['msg'] = $e->getMessage();
             Db::table('error_log')->insert([
                 'url' => Request::instance()->param(),
