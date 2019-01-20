@@ -31,23 +31,7 @@ class User extends CoreUser
      */
     protected function formatUserName($value)
     {
-        if (mb_strwidth($value) > 16) {
-            $l = 0;
-            $str = '';
-            for ($i = 0; $i < strlen($value); $i++) {
-                $v = substr($value, $i, 1);
-                if (preg_match('/^[\x{4e00}-\x{9fa5}]+$/u', $v) > 0) {
-                    $l += 2;
-                } else {
-                    $l++;
-                }
-                if (mb_strwidth($str) > 16) {
-                    return $str . '···';
-                }
-                $str .= $v;
-            }
-        }
-        return $value;
+        return $value ? (mb_strlen($value) <= 16 ? $value : mb_substr($value, 0, 16) . '...') : '';
     }
 
     /**
