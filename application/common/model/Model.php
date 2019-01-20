@@ -260,32 +260,32 @@ abstract class Model extends CoreModel
      * @param $value
      * @return string
      */
-    public function getTextAttr($value)
+    public function getTextAttr($value, $data)
     {
         return $this->emojiDecode($value);
     }
 
-    public function setTextAttr($value)
+    public function setTextAttr($value, $data)
     {
         return $this->emojiEncode($value);
     }
 
-    public function getTitleAttr($value)
+    public function getTitleAttr($value, $data)
     {
         return $this->emojiDecode($value);
     }
 
-    public function setTitleAttr($value)
+    public function setTitleAttr($value, $data)
     {
         return $this->emojiEncode($value);
     }
 
-    public function getUserNameAttr($value)
+    public function getUserNameAttr($value, $data)
     {
         return $this->emojiDecode($value);
     }
 
-    public function setUserNameAttr($value)
+    public function setUserNameAttr($value, $data)
     {
         return $this->emojiEncode($value);
     }
