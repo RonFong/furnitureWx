@@ -61,26 +61,24 @@ class Shop extends BaseController
                 'type' => 2
             ];
             (new User())->save($userInfo);
-
-            try {
-                //门店首页小程序码    (小程序环境要求： 已发布)
-                $img = WXACodeUnlimit::create('pages/storeDetail/storeDetail', $this->currentModel->id);
-                $saveRqCode['id'] = $this->currentModel->id;
-                $saveRqCode['qr_code_img'] = $img;
-                $saveRqCode['qr_code_img_thumb'] = $img;
-                $this->currentModel->save($saveRqCode);
-            } catch (\Exception $ex) {
-                Db::table('error_log')->insert([
-                    'url' => Request::instance()->param(),
-                    'params' => json_encode($this->data),
-                    'msg' => '门店首页小程序码生成失败：' . $ex->getMessage()
-                ]);
-            }
-
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
             $this->response->error($e);
+        }
+        try {
+            //门店首页小程序码    (小程序环境要求： 已发布)
+            $img = WXACodeUnlimit::create('pages/storeDetail/storeDetail', $this->currentModel->id);
+            $saveRqCode['id'] = $this->currentModel->id;
+            $saveRqCode['qr_code_img'] = $img;
+            $saveRqCode['qr_code_img_thumb'] = $img;
+            $this->currentModel->save($saveRqCode);
+        } catch (\Exception $ex) {
+            Db::table('error_log')->insert([
+                'url' => Request::instance()->param(),
+                'params' => json_encode($this->data),
+                'msg' => '门店首页小程序码生成失败：' . $ex->getMessage()
+            ]);
         }
         return json($this->result, 201);
     }
