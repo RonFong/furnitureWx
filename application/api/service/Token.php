@@ -28,6 +28,8 @@ class Token
 
     protected static $userInfo;
 
+    protected static $defaultAvatar = 'http://api-multimedia.oss-cn-shenzhen.aliyuncs.com/image/default/2019-01-20/1547964763903.jpg?x-oss-process=image/resize,m_lfit,w_400/crop,x_0,y_0,h_400,g_center';
+
 
     /**
      * 获取 token 和用户信息
@@ -62,7 +64,7 @@ class Token
         if (!$userInfo) {
             $saveData = [
                 'wx_openid'     => self::$openid,
-                'avatar'        => $wxUserInfo['avatarUrl'],
+                'avatar'        => $wxUserInfo['avatarUrl'] ?? self::$defaultAvatar,
                 'user_name'     => self::emojiEncode($wxUserInfo['nickName']),
                 'group_id'      => 0,
                 'gender'        => $wxUserInfo['gender'],
