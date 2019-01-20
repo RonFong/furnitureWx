@@ -62,7 +62,7 @@ class Shop extends CoreShop
     {
         $value = $data['admin_user'] ?? $value;
         $res = !empty($value) ? Db::name('user_location')->where('user_id', $value)->order('id desc')->value('create_time') : '';
-        return !empty($res) ? date('Y-m-d', $res) : '';
+        return !empty($res) ? date('Y-m-d H:i:s', $res) : '';
     }
 
     /**
