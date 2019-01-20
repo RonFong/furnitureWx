@@ -84,7 +84,7 @@ class User extends BaseController
                 exception('昵称不能超过7个字');
             }
             $data['id'] = user_info('id');
-            $data['user_name'] = $this->currentModel->emojiEncode($this->data['userName']);
+            $data['user_name'] = $this->data['userName'];
             $result = $this->currentModel->save($data);
             if (!$result) {
                 exception('未知错误');
