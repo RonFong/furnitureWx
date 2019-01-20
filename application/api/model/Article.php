@@ -323,7 +323,7 @@ class Article extends CoreArticle
         }
         $data = $data->toArray();
         $user = Db::table('user')->where('id', $data['user_id'])->find();
-        $data['user_name'] = $user['user_name'];
+        $data['user_name'] = $this->emojiDecode($user['user_name']);
         $data['avatar'] = $user['avatar'];
         $data['create_time'] = time_format_for_humans(strtotime($data['create_time']));
 
