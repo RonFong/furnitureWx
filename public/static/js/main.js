@@ -266,7 +266,8 @@ function uploadFileOss(element, url, size, accept) {
                 layer.close(lay_load);
                 if (res.code) {
                     var control = $(element).closest('.layui-form-item');
-                    control.find('input[type="text"]').val(res.data.url); //赋值上传
+                    control.find('img').attr('src', res.data.url); //预览图片
+                    control.find('input[type="hidden"]').val(res.data.url); //赋值上传
                     layer.msg(res.msg);
                 } else {
                     layer.alert(res.msg);
