@@ -82,7 +82,7 @@ class WXACodeUnlimit
             $accessToken = curl_get($url);
             Cache::set('applet_access', $accessToken, 7200);
         }
-        return (json_decode($accessToken))->access_token;
+        return is_array($accessToken) ? $accessToken['access_token'] : (json_decode($accessToken))->access_token;
     }
 
     /**

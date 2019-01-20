@@ -18,10 +18,14 @@ use think\Db;
 class User extends CoreUser
 {
 
-
     public function getUserNameAttr($value)
     {
-        return $this->formatUserName($value);
+        $this->formatUserName($value);
+    }
+
+    public function setUserNameAttr($value)
+    {
+        return $this->emojiEncode($value);
     }
 
     /**
@@ -31,23 +35,8 @@ class User extends CoreUser
      */
     protected function formatUserName($value)
     {
-        if (mb_strwidth($value) > 16) {
-            $l = 0;
-            $str = '';
-            for ($i = 0; $i < strlen($value); $i++) {
-                $v = substr($value, $i, 1);
-                if (preg_match('/^[\x{4e00}-\x{9fa5}]+$/u', $v) > 0) {
-                    $l += 2;
-                } else {
-                    $l++;
-                }
-                if (mb_strwidth($str) > 16) {
-                    return $str . '···';
-                }
-                $str .= $v;
-            }
-        }
-        return $value;
+        $name = $value ? (mb_strlen($value) <= 30 ? $value : mb_substr($value, 0, 30) . '...') : '';
+        return $this->emojiDecode($name);
     }
 
     /**

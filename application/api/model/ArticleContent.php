@@ -21,4 +21,19 @@ class ArticleContent extends CoreArticleContent
         }
         return '';
     }
+
+    /**
+     * Emoji 表情符
+     * @param $value
+     * @return string
+     */
+    public function getTextAttr($value)
+    {
+        return $this->emojiDecode($value);
+    }
+
+    public function setTextAttr($value)
+    {
+        return $this->emojiEncode($value);
+    }
 }

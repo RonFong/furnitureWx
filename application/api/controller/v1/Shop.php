@@ -61,19 +61,32 @@ class Shop extends BaseController
                 'type' => 2
             ];
             (new User())->save($userInfo);
-
-                //门店首页小程序码    (小程序环境要求： 已发布)
-                $img = WXACodeUnlimit::create('pages/storeDetail/storeDetail', $this->currentModel->id);
-                $saveRqCode['id'] = $this->currentModel->id;
-                $saveRqCode['qr_code_img'] = $img;
-                $saveRqCode['qr_code_img_thumb'] = $img;
-                $this->currentModel->save($saveRqCode);
-            
-
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
-            $this->response->error($e);
+            $this->result['state'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            Db::table('error_log')->insert([
+                'url' => Request::instance()->param(),
+                'params' => json_encode($this->data),
+                'msg' => '门店注册失败：' . $e->getMessage()
+            ]);
+            return json($this->result, 500);
+//            $this->response->error($e);
+        }
+        try {
+            //门店首页小程序码    (小程序环境要求： 已发布)
+            $img = WXACodeUnlimit::create('pages/storeDetail/storeDetail', $this->currentModel->id);
+            $saveRqCode['id'] = $this->currentModel->id;
+            $saveRqCode['qr_code_img'] = $img;
+            $saveRqCode['qr_code_img_thumb'] = $img;
+            $this->currentModel->save($saveRqCode);
+        } catch (\Exception $ex) {
+            Db::table('error_log')->insert([
+                'url' => Request::instance()->param(),
+                'params' => json_encode($this->data),
+                'msg' => '门店首页小程序码生成失败：' . $ex->getMessage()
+            ]);
         }
         return json($this->result, 201);
     }
@@ -147,10 +160,12 @@ class Shop extends BaseController
      */
     public function homePage()
     {
+        if (!isset($this->data['shopId']) && user_info('type') !== 2) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = '非商家用户';
+            return json($this->result, 403);
+        }
         try {
-            if (!isset($this->data['shopId']) && user_info('type') !== 2) {
-                exception('非商家用户');
-            }
             $shopId = $this->data['shopId'] ?? user_info('group_id');
             $this->result['data'] = $this->currentModel->homePageData($shopId);
             //增加人气值
