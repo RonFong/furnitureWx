@@ -31,7 +31,7 @@ class User extends CoreUser
      */
     protected function formatUserName($value)
     {
-        return $value ? (mb_strlen($value) <= 16 ? $value : mb_substr($value, 0, 16) . '...') : '';
+        return $value ? (mb_strlen($value) <= 20 ? $value : mb_substr($value, 0, 20) . '...') : '';
     }
 
     /**
