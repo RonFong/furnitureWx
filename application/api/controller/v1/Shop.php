@@ -64,7 +64,15 @@ class Shop extends BaseController
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
-            $this->response->error($e);
+            $this->result['code'] = 0;
+            $this->result['msg'] = $e->getMessage();
+            Db::table('error_log')->insert([
+                'url' => Request::instance()->param(),
+                'params' => json_encode($this->data),
+                'msg' => '门店注册失败：' . $e->getMessage()
+            ]);
+            return json($this->result, 500);
+//            $this->response->error($e);
         }
         try {
             //门店首页小程序码    (小程序环境要求： 已发布)
