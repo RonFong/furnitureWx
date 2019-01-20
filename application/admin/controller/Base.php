@@ -165,7 +165,7 @@ abstract class Base extends Controller
                 $this->error($file->getError());
             } else {
                 $image = VIEW_STATIC_PATH . '/img/temp/' . $info->getSaveName();
-                return json(['code'=>1, 'msg'=>'上传成功', 'data'=>$image], 200, ['Content-Type'=>'text/html']);
+                return json(['code'=>1, 'msg'=>'上传成功', 'data'=>['url'=>$image]], 200, ['Content-Type'=>'text/html']);
 //                $this->success('上传成功', null, $image);
             }
         }
