@@ -18,12 +18,12 @@ class HomeContentItem extends CoreHomeContentItem
      * @param $value
      * @return string
      */
-    public function getContentAttr($value)
+    public function getTextAttr($value)
     {
         return $this->emojiDecode($value);
     }
 
-    public function setContentAttr($value)
+    public function setTextAttr($value)
     {
         return $this->emojiEncode($value);
     }

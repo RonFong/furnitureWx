@@ -51,19 +51,6 @@ class ArticleContent extends Model
         return '';
     }
 
-    /**
-     * Emoji 表情符
-     * @param $value
-     * @return string
-     */
-    public function getContentAttr($value)
-    {
-        return $this->emojiDecode($value);
-    }
 
-    public function setContentAttr($value)
-    {
-        return $this->emojiEncode($value);
-    }
 
 }
