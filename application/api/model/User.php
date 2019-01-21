@@ -20,7 +20,7 @@ class User extends CoreUser
 
     public function getUserNameAttr($value)
     {
-        $this->formatUserName($value);
+        return $this->formatUserName($value);
     }
 
     public function setUserNameAttr($value)

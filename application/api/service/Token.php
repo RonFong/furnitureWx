@@ -121,4 +121,16 @@ class Token
         }, json_encode($content)));
     }
 
+    /**
+     * Emoji字符串转换为原形
+     * @param string $content
+     * @return string
+     */
+    public static function emojiDecode($content)
+    {
+        return json_decode(preg_replace_callback('/\\\\\\\\/i', function () {
+            return '\\';
+        }, json_encode($content)));
+    }
+
 }
