@@ -36,4 +36,6 @@ class ArticleContent extends CoreArticleContent
     {
         return $this->emojiEncode($value);
     }
+
+
 }
