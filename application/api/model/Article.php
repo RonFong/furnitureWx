@@ -24,7 +24,7 @@ class Article extends CoreArticle
      * 显示范围 (公里)
      * @var int
      */
-    private $distance = 10000;
+    private $distance = 100;
 
     /**
      * 在列表中，显示的图片/视频张数
