@@ -50,9 +50,11 @@ Route::group('api/:version', function () {
         //创建文章
         Route::post('create', 'api/:version.Article/create');
         //更新文章
-        Route::put('update', 'api/:version.Article/update');
+        Route::put('draft', 'api/:version.Article/draft');
         //删除文章
         Route::delete('delete', 'api/:version.Article/delete');
+        //更新文章
+        Route::put('update', 'api/:version.Article/update');
         //同城圈首页文章列表
         Route::get('list', 'api/:version.Article/list');
         //按用户获取文章列表
