@@ -369,6 +369,7 @@ class Article extends BaseController
                 'id' => $this->data['id'],
                 'is_draft' => $this->data['is_draft']
             ]);
+            return json($this->result, 200);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
