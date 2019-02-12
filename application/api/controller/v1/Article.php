@@ -356,5 +356,21 @@ class Article extends BaseController
         return json($this->result, 200);
     }
 
-
+    /**
+     * 保存或发布草稿
+     */
+    public function draft()
+    {
+        try {
+            if (empty($this->data['id']) || empty($this->data['is_draft'])) {
+                exception('id或is_draft不能为空');
+            }
+            $this->result['data'] = $this->currentModel->save([
+                'id' => $this->data['id'],
+                'is_draft' => $this->data['is_draft']
+            ]);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+    }
 }
