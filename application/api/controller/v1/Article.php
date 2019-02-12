@@ -362,6 +362,8 @@ class Article extends BaseController
     public function draft()
     {
         try {
+            dump($this->data);
+            die;
             if (empty($this->data['id']) || empty($this->data['is_draft'])) {
                 exception('id或is_draft不能为空');
             }
