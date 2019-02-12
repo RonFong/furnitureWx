@@ -362,9 +362,7 @@ class Article extends BaseController
     public function draft()
     {
         try {
-            dump($this->data);
-            die;
-            if (empty($this->data['id']) || empty($this->data['is_draft'])) {
+            if (!array_key_exists('id', $this->data) || !array_key_exists('is_draft', $this->data)) {
                 exception('id或is_draft不能为空');
             }
             $this->result['data'] = $this->currentModel->save([
