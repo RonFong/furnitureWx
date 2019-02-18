@@ -61,6 +61,15 @@ class Article extends CoreArticle
         return $this->emojiEncode($value);
     }
 
+    public function __construct($data = [])
+    {
+        parent::__construct($data);
+        //客服账号不限制距离
+        if (user_info('is_service_account')) {
+            $this->distance = 10000;
+        }
+    }
+
     /**
      * 获取用户当前经纬度
      * @param $query

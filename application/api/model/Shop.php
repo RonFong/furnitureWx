@@ -15,6 +15,15 @@ class Shop extends CoreShop
      */
     protected $distance = 100;
 
+    public function __construct($data = [])
+    {
+        parent::__construct($data);
+        //客服账号不限制距离
+        if (user_info('is_service_account')) {
+            $this->distance = 10000;
+        }
+    }
+
     /**
      * 获取附近的商家
      * @param array $param
