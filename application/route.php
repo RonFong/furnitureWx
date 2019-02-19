@@ -150,20 +150,10 @@ Route::group('api/:version', function () {
         //获取用户的黑名单
         Route::get('blackList', 'api/:version.Relate/getBlackList');
     });
-    //工厂
+    //厂家
     Route::group('factory', function () {
-
-        Route::post('register', 'api/:version.Factory/register');
-        //获取所有工厂
-        Route::get('factoryList', 'api/:version.Factory/getFactoryList');
-        //获取工厂产品
-        Route::get('factoryProduct', 'api/:version.Factory/getFactoryProduct');
-        //获取工厂产品详情
-        Route::get('factoryProductDetail/:product_id', 'api/:version.Factory/factoryProductDetail');
-        //获取工厂详情
-        Route::get('getFactoryInfo', 'api/:version.Factory/getFactoryInfo');
-        //编辑工厂信息
-        Route::post('editFactoryInfo', 'api/:version.Factory/editFactoryInfo');
+        //创建厂家门店
+        Route::post('create', 'api/:version.Factory/create');
     });
     //首页图文
     Route::group('homeContent', function () {
