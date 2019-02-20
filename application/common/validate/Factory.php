@@ -19,9 +19,10 @@ class Factory extends BaseValidate
     protected $rule = [
         'id'                => 'require|number',
         'admin_user'        => 'require|number',
+        'factory_name'      => 'require|length:2,20',
         'sales_contact'     => 'require|length:2,5',
         'sales_wx'          => 'require',
-        'sales_phone'       => 'require|number|length:11',
+        'sales_phone'       => 'require|length:11|isPhoneNo',
         'sales_province'    => 'require',
         'sales_city'        => 'require',
         'sales_district'    => 'require',
@@ -31,7 +32,7 @@ class Factory extends BaseValidate
         'license_img'       => 'require',
         'factory_wx'        => 'require',
         'factory_contact'   => 'require|length:2,5',
-        'factory_phone'     => 'require|number|length:11',
+        'factory_phone'     => 'length:11|isPhoneNo',
         'factory_province'  => 'require',
         'factory_city'      => 'require',
         'factory_district'  => 'require',
@@ -43,11 +44,12 @@ class Factory extends BaseValidate
     ];
 
     protected $message = [
+        'factory_name.require'      => '请填写厂家名称',
+        'factory_name.length'       => '厂家名称需在2~20个字内',
         'sales_contact.require'     => '请填写门店联系人姓名',
         'sales_contact.length'      => '请填写正确的门店联系人姓名',
         'sales_wx.require'          => '请填写门店联系人微信号',
         'sales_phone.require'       => '请填写门店联系人电话',
-        'sales_phone.number'        => '请填写正确的门店联系人电话',
         'sales_phone.length'        => '请填写正确的门店联系人电话',
         'sales_province.require'    => '请填写门店所在省',
         'sales_city.require'        => '请填写门店所在市',
@@ -59,7 +61,6 @@ class Factory extends BaseValidate
         'factory_wx.require'        => '请输入负责人微信号',
         'factory_contact.length'    => '请填写正确的负责人姓名',
         'factory_phone.require'     => '请填写负责人电话',
-        'factory_phone.number'      => '请填写正确的负责人电话',
         'factory_phone.length'      => '请填写正确的负责人电话',
         'factory_province.require'  => '请填写工厂所在省',
         'factory_city.require'      => '请填写工厂所在市',
@@ -73,9 +74,9 @@ class Factory extends BaseValidate
 
     protected $scene = [
         'create'    => [
-            'admin_user'    => 'require|number|isGroupUser',
+            'factory_name',
             'sales_contact',
-            'sales_wx',
+            'sales_wx'      => 'require|isGroupUser',
             'sales_phone',
             'sales_province',
             'sales_city',
@@ -83,6 +84,7 @@ class Factory extends BaseValidate
             'address',
             'lat',
             'lng',
+            'factory_phone'
         ],
     ];
 
@@ -94,7 +96,7 @@ class Factory extends BaseValidate
     protected function isGroupUser($value)
     {
         if (user_info('type') != 3) {
-            return '用户已有所属门店';
+            return '非普通用户，不可注册';
         }
         return true;
     }

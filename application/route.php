@@ -154,6 +154,12 @@ Route::group('api/:version', function () {
     Route::group('factory', function () {
         //创建厂家门店
         Route::post('create', 'api/:version.Factory/create');
+        //新建分类
+        Route::post('classify', 'api/:version.FactoryProductClassify/create');
+        //新建分类
+        Route::post('classify', 'api/:version.FactoryProductClassify/create');
+        //修改分类名或排序
+        Route::put('classify', 'api/:version.FactoryProductClassify/edit');
     });
     //首页图文
     Route::group('homeContent', function () {

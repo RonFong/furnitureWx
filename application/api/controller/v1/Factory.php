@@ -39,7 +39,7 @@ class Factory extends BaseController
     {
         $this->currentValidate->goCheck('create');
         try {
-            $this->currentModel->createFactory($this->data);
+            $this->result['data']['id'] = $this->currentModel->createFactory($this->data);
             return json($this->result, 201);
         } catch (\Exception $e) {
             $this->currentValidate->error($e);

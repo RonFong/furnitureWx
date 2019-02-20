@@ -8,16 +8,17 @@
 // +----------------------------------------------------------------------
 
 
-namespace app\common\model;
-use traits\model\SoftDelete;
+namespace app\api\model;
 
+
+use app\common\model\FactoryProductClassify as CoreFactoryProductClassify;
 
 /**
- * 厂家产品
+ * 厂家产品分分类
  * Class FactoryProductClassify
- * @package app\common\model
+ * @package app\api\model
  */
-class FactoryProductClassify extends Model
+class FactoryProductClassify extends CoreFactoryProductClassify
 {
-    use SoftDelete;
+
 }
