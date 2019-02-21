@@ -50,7 +50,7 @@ class Factory extends CoreFactory
      * @param $factoryId
      * @return bool
      */
-    public function createQrCodeImg($factoryId)
+    protected function createQrCodeImg($factoryId)
     {
         try {
             $img = WXACodeUnlimit::create('pages/factoryDetail/factoryDetail', $factoryId);
@@ -66,5 +66,11 @@ class Factory extends CoreFactory
             return false;
         }
         return true;
+    }
+
+
+    public function supplementInfo($saveData)
+    {
+
     }
 }

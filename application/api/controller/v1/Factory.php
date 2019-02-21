@@ -45,4 +45,23 @@ class Factory extends BaseController
             $this->currentValidate->error($e);
         }
     }
+
+
+    /**
+     * 填写工厂信息
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function supplementInfo()
+    {
+        $this->currentValidate->goCheck('supplementInfo');
+        try {
+            $this->currentModel->supplementInfo($this->data);
+            return json($this->result, 201);
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+
+    }
+
 }
