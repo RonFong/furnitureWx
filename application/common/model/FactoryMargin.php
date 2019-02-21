@@ -10,7 +10,11 @@
 
 namespace app\common\model;
 
-
+/**
+ * 厂家保证金
+ * Class FactoryMargin
+ * @package app\common\model
+ */
 class FactoryMargin extends Model
 {
 
