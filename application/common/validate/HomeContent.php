@@ -41,7 +41,7 @@ class HomeContent extends BaseValidate
     protected function isRepetition($value, $rule, $data)
     {
         if (!array_key_exists('id', $data) || empty($data['id'])) {
-            if (Db::table('home_content')->where('group_id', user_info('group_id'))->find()) {
+            if (Db::table('home_content')->where(['group_id' => user_info('group_id'), 'type' => user_info('type')])->find()) {
                 return '首页图文内容已存在';
             }
         }
