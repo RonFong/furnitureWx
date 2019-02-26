@@ -94,8 +94,6 @@ class Shop extends CoreShop
                 ->find();
             $info->is_collect = $isCollect ? 1 : 0;
         }
-        //人气值
-        Popularity::increase($shopId, 2);
 
         return $info;
     }
