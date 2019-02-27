@@ -62,4 +62,26 @@ class FactoryProductClassify extends BaseController
             $this->currentValidate->error($e);
         }
     }
+
+    /**
+     * 获取分类
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function getList()
+    {
+        try {
+            if (!array_key_exists('factory_id', $this->data)) {
+                exception('factory_id 不能为空');
+            }
+            $this->result['data'] = $this->currentModel
+                ->where('factory_id', $this->data['factory_id'])
+                ->field('id, classify_name, sort')
+                ->order('sort')
+                ->select();
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 200);
+    }
 }

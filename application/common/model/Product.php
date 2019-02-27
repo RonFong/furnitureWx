@@ -4,14 +4,16 @@
 // +----------------------------------------------------------------------
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
-// | CreateTime: 2018/8/16 
+// | CreateTime: 2019/2/27 
 // +----------------------------------------------------------------------
 
 
 namespace app\common\model;
 
 
-class GoodsColor extends Model
-{
+use traits\model\SoftDelete;
 
+class Product extends Model
+{
+    use SoftDelete;
 }
