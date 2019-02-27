@@ -160,6 +160,8 @@ Route::group('api/:version', function () {
         Route::post('classify', 'api/:version.FactoryProductClassify/create');
         //修改分类名或排序
         Route::put('classify', 'api/:version.FactoryProductClassify/edit');
+        //首页信息
+        Route::get('homePage', 'api/:version.Factory/homePage');
     });
     //首页图文
     Route::group('homeContent', function () {

@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\service\Popularity;
 use think\Request;
 use app\api\model\Factory as FactoryModel;
 use app\common\validate\Factory as FactoryValidate;
@@ -61,7 +62,29 @@ class Factory extends BaseController
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
         }
+    }
 
+    /**
+     * 门店首页数据
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function homePage()
+    {
+        if (!isset($this->data['factoryId']) && user_info('type') !== 1) {
+            $this->result['state'] = 0;
+            $this->result['msg'] = '非厂家用户';
+            return json($this->result, 403);
+        }
+        try {
+            $factoryId = $this->data['factoryId'] ?? user_info('group_id');
+            $this->result['data'] = $this->currentModel->homePageData($factoryId);
+            //增加人气值
+            Popularity::increase($factoryId, 1);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
     }
 
 }

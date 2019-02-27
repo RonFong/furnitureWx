@@ -68,9 +68,44 @@ class Factory extends CoreFactory
         return true;
     }
 
-
+    /**
+     * 保存工厂信息
+     * @param $saveData
+     * @return false|int
+     */
     public function supplementInfo($saveData)
     {
+        $result = $this->where('id', user_info('group_id'))->save($saveData);
+        return $result;
+    }
 
+    /**
+     * 门店首页信息
+     * @param $factoryId
+     * @return null|static
+     * @throws \Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function homePageData($factoryId)
+    {
+        $info = self::get($factoryId);
+        if (!$info) {
+            exception('此厂家不存在或信息异常');
+        }
+        $info->margin = Db::table('factory_margin')->where('factory_id', $factoryId)->field('margin_fee, year, diamond_num')->find();
+        $info->homeContent = (new HomeContent())->details($factoryId, 2);
+        //厂家关注
+        if ($factoryId == user_info('group_id')) {
+            //不能关注自己
+            $info->is_collect = -1;
+        } else {
+            $isCollect = Db::table('relation_factory_collect')
+                ->where(['user_id' => user_info('id'), 'factory_id' => $factoryId])
+                ->find();
+            $info->is_collect = $isCollect ? 1 : 0;
+        }
+        return $info;
     }
 }
