@@ -156,13 +156,23 @@ Route::group('api/:version', function () {
         Route::post('create', 'api/:version.Factory/create');
         //新建分类
         Route::post('classify', 'api/:version.FactoryProductClassify/create');
-        //新建分类
-        Route::post('classify', 'api/:version.FactoryProductClassify/create');
         //修改分类名或排序
         Route::put('classify', 'api/:version.FactoryProductClassify/edit');
         //首页信息
         Route::get('homePage', 'api/:version.Factory/homePage');
+        //获取分类
+        Route::get('classifyList', 'api/:version.FactoryProductClassify/getList');
     });
+
+    //厂家产品
+    Route::group('product', function () {
+        //发布产品
+        Route::post('create', 'api/:version.product/create');
+        //修改产品信息
+        Route::put('update', 'api/:version.product/update');
+    });
+
+
     //首页图文
     Route::group('homeContent', function () {
         //获取首页图文
