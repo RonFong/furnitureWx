@@ -233,5 +233,8 @@ Route::group('api/:version', function () {
 // log
 Route::get('api/log', function () {
     $logs = \think\Db::table('api_log')->order('id desc')->limit(0, 30)->select();
+    foreach ($logs as $k => $v) {
+        $logs[$k]['params'] = json_decode($v['params']);
+    }
     return json_encode($logs);
 });
