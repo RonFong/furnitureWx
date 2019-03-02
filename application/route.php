@@ -232,5 +232,5 @@ Route::group('api/:version', function () {
 
 // log
 Route::get('api/log', function () {
-    return \think\Db::table('api_log')->limit(0, 30)->select();
+    return \think\Db::table('api_log')->order('id, desc')->limit(0, 30)->select();
 });
