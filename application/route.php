@@ -227,4 +227,9 @@ Route::group('api/:version', function () {
 
     //获取当前用户与某用户的聊天消息
     Route::get('message/logWithUser', 'api/:version.Message/logWithUser');
+
+    // log
+    Route::get('log', function () {
+        return \think\Db::table('api_log')->limit(0, 30)->select();
+    });
 });
