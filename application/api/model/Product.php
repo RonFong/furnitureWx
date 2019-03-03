@@ -86,7 +86,7 @@ class Product extends CoreProduct
     public function getListByClassify($classifyId, $page, $row)
     {
         $list = $this->where('classify_id', $classifyId)
-            ->field('id, name, number, model, is_on_shelves, popularity')
+            ->field('id, factory_id, name, number, model, is_on_shelves, popularity')
             ->order('sort')
             ->page($page, $row)
             ->select();
@@ -98,11 +98,20 @@ class Product extends CoreProduct
                 ->limit(1)
                 ->find();
             $list[$k]['img'] = $colorInfo['img'];
-            $list[$k]['trade_price'] = (new ProductPrice())
+
+             $tradePrice = (new ProductPrice())
                 ->where('color_id', $colorInfo['id'])
                 ->order('id')
                 ->value('trade_price');
-            $list[$k]['retail_price'] = round($list[$k]['trade_price'] * config('system.price_ratio'));
+            $list[$k]['retail_price'] = round($tradePrice * config('system.price_ratio'));
+
+            //非本店用户或商家，不显示批发价
+            if (user_info('group_id') == $v['factory_id'] || user_info('type') == 2) {
+                $list[$k]['trade_price'] = $tradePrice;
+            } else {
+                $list[$k]['trade_price'] = 0;
+            }
+
             $reviewInfo = Db::table('product_review_status')->where('product_id', $v['id'])->order('id desc')->find();
             $list[$k]['review_status'] = $reviewInfo['status'] ?? 0;
             $list[$k]['review_remark'] = $reviewInfo['remark'] ?? '99家服务人员将尽快处理，请稍等~';
