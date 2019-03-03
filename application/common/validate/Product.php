@@ -86,6 +86,9 @@ class Product extends BaseValidate
             'product_id',
             'sort_action',
         ],
+        'info'  => [
+            'product_id'    => 'require'
+        ],
     ];
 
     /**
