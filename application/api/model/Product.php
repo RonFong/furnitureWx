@@ -106,11 +106,7 @@ class Product extends CoreProduct
             $list[$k]['retail_price'] = round($tradePrice * config('system.price_ratio'));
 
             //非本店用户或商家，不显示批发价
-            if (user_info('group_id') == $v['factory_id'] || user_info('type') == 2) {
-                $list[$k]['trade_price'] = $tradePrice;
-            } else {
-                $list[$k]['trade_price'] = 0;
-            }
+            $list[$k]['trade_price'] = $this->isShowPrice($v['factory_id']) ? $tradePrice : 0;
 
             $reviewInfo = Db::table('product_review_status')->where('product_id', $v['id'])->order('id desc')->find();
             $list[$k]['review_status'] = $reviewInfo['status'] ?? 0;
@@ -118,6 +114,7 @@ class Product extends CoreProduct
         }
         return $list;
     }
+
 
     /**
      * 产品删除
@@ -206,5 +203,19 @@ class Product extends CoreProduct
         $count = $this->where('factory_id', user_info('group_id'))->whereTime('create_time', 'today')->count();
         $id = user_info('group_id') >= 10 ? user_info('group_id') : '0' . user_info('group_id');
         return $id . date('ymd', time()) . sprintf("%02d",$count);
+    }
+
+    /**
+     * 是否显示批发价
+     * @param $factoryId
+     * @return bool
+     */
+    protected function isShowPrice($factoryId)
+    {
+        //非本店用户或商家，不显示批发价
+        if (user_info('group_id') == $factoryId || user_info('type') == 2) {
+            return true;
+        }
+        return false;
     }
 }
