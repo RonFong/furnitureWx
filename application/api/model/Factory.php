@@ -95,7 +95,7 @@ class Factory extends CoreFactory
             exception('此厂家不存在或信息异常');
         }
         $info->margin = Db::table('factory_margin')->where('factory_id', $factoryId)->field('margin_fee, year, diamond_num')->find();
-        $info->classify = (new FactoryProductClassify())->where('factory_id', $factoryId)->order('sort')->field('id, classify_name')->select();
+        $info->classify = (new FactoryProductClassify())->where('factory_id', $factoryId)->order('sort')->field('id, classify_name, sort')->select();
         $info->homeContent = (new HomeContent())->details($factoryId, 2);
         //厂家关注
         if ($factoryId == user_info('group_id')) {
