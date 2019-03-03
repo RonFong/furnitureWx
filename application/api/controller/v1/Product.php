@@ -58,7 +58,8 @@ class Product extends BaseController
      */
     public function retailPriceRatio()
     {
-        return config('system.price_ratio');
+        $this->result['data']['ratio'] = config('system.price_ratio');
+        return json($this->result, 200);
     }
 
     /**
