@@ -171,6 +171,8 @@ Route::group('api/:version', function () {
         //修改产品信息
         Route::put('update', 'api/:version.product/update');
         //产品零售价计算比例
+        Route::get('getListByClassify', 'api/:version.product/getListByClassify');
+        //产品零售价计算比例
         Route::get('retailPriceRatio', 'api/:version.product/retailPriceRatio');
     });
 
