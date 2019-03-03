@@ -20,5 +20,20 @@ use app\common\model\FactoryProductClassify as CoreFactoryProductClassify;
  */
 class FactoryProductClassify extends CoreFactoryProductClassify
 {
-
+    /**
+     * 删除分类
+     * @param $id
+     * @return bool|int|string
+     * @throws \think\exception\DbException
+     */
+    public function del($id)
+    {
+        $productCount = (new Product())->where('classify_id', $id)->count();
+        if ($productCount > 0) {
+            return $productCount;
+        }
+        $classify = self::get($id);
+        $classify->delete();
+        return true;
+    }
 }
