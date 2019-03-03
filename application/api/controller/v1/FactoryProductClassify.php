@@ -84,4 +84,25 @@ class FactoryProductClassify extends BaseController
         }
         return json($this->result, 200);
     }
+
+    /**
+     * 删除分类
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function delClassify()
+    {
+        try {
+            if (!array_key_exists('classify_id', $this->data)) {
+                exception('classify_id 不能为空');
+            }
+            $result = $this->currentModel->del($this->data['classify_id']);
+            if ($result !== true) {
+                exception("此分类下有{$result}个产品，不能删除!");
+            }
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 201);
+    }
 }
