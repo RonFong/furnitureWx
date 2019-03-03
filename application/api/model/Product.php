@@ -117,6 +117,41 @@ class Product extends CoreProduct
 
 
     /**
+     * 产品详情
+     * @param $id
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function info($id)
+    {
+        $info = $this->where('id', $id)
+            ->field('id, factory_id, name, number, model, texture, style, function, size, discounts, details')
+            ->find()
+            ->toArray();
+        $info['details'] = json_decode($info['details']);
+
+        $info['colors'] = (new ProductColor())->where('product_id', $id)->field('id, color, img')->order('sort')->select();
+        $isShowPrice = $this->isShowPrice($info['factory_id']);
+        foreach ($info['colors'] as $k => $v) {
+            $prices = (new ProductPrice())->where('color_id', $v->id)->field("configure, trade_price")->select();
+            foreach ($prices as $kk => $vv) {
+                $prices[$kk]->retail_price = round($vv->trade_price * config('system.price_ratio'));
+                if (!$isShowPrice) {
+                    $prices[$kk]->retail_price = 0;
+                }
+            }
+            $info['colors'][$k]->prices = $prices;
+            unset($info['colors'][$k]->id);
+        }
+        unset($info['colors'][$k]->id);
+        return $info;
+    }
+
+
+    /**
      * 产品删除
      * @param $id
      * @return bool|string

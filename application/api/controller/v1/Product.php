@@ -63,6 +63,22 @@ class Product extends BaseController
     }
 
     /**
+     * 产品详情
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function info()
+    {
+        $this->currentValidate->goCheck('info');
+        try {
+            $this->result['data'] = $this->currentModel->info($this->data['product_id']);
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
      * 获取零售价计算比例
      * @return mixed
      */
@@ -123,6 +139,11 @@ class Product extends BaseController
         return json($this->result, 201);
     }
 
+    /**
+     * 更改产品排序
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
     public function sort()
     {
         $this->currentValidate->goCheck('sort');
