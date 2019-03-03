@@ -12,6 +12,8 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\common\model\ProductReviewStatus;
+use think\Db;
 use think\Request;
 use app\api\model\Product as ProductModel;
 use app\common\validate\Product as ProductValidate;
@@ -32,23 +34,39 @@ class Product extends BaseController
 
     /**
      * 发布产品
+     * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
+     * @throws \think\exception\DbException
      */
     public function create()
     {
         $this->currentValidate->goCheck('create');
         $this->result['data']['id'] = $this->currentModel->saveData($this->data);
+        //写入审核进度
+        (new ProductReviewStatus())->save([
+            'product_id'    => $this->result['data']['id'],
+            'status'        => 0,
+            'remark'        => '99家服务人员将尽快处理，请稍等~'
+        ]);
         return json($this->result, 200);
     }
 
     /**
      * 修改产品信息
+     * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
+     * @throws \think\exception\DbException
      */
     public function update()
     {
         $this->currentValidate->goCheck('update');
         $this->result['data']['id'] = $this->currentModel->saveData($this->data);
+        //写入审核进度
+        (new ProductReviewStatus())->save([
+            'product_id'    => $this->result['data']['id'],
+            'status'        => 0,
+            'remark'        => '99家服务人员将尽快处理，请稍等~'
+        ]);
         return json($this->result, 200);
     }
 
@@ -69,11 +87,9 @@ class Product extends BaseController
      */
     public function getListByClassify()
     {
+        $this->currentValidate->goCheck('getListByClassify');
         try {
-            if (!array_key_exists('classify_id', $this->data)) {
-                exception('classify_id 不能为空');
-            }
-            $this->result['data']['list'] = $this->currentModel->getListByClassify($this->data['classify_id']);
+            $this->result['data']['list'] = $this->currentModel->getListByClassify($this->data['classify_id'], $this->data['page'], $this->data['row']);
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
         }
