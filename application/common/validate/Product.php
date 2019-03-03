@@ -11,6 +11,8 @@
 namespace app\common\validate;
 
 
+use think\Db;
+
 class Product extends BaseValidate
 {
     protected $rule = [
@@ -26,6 +28,7 @@ class Product extends BaseValidate
         'details'           => 'require|checkDetails',
         'page'              => 'require|number',
         'row'               => 'require|number',
+        'product_id'        => 'require|isAdminUser',
     ];
 
 
@@ -69,6 +72,9 @@ class Product extends BaseValidate
             'classify_id',
             'page',
             'row'
+        ],
+        'delProduct'        => [
+            'product_id'
         ],
     ];
 
@@ -115,6 +121,23 @@ class Product extends BaseValidate
             if (!in_array($v['type'], ['text', 'img'])) {
                 return json_encode($v) . 'type 值不正确';
             }
+        }
+        return true;
+    }
+
+    /**
+     * 删除校验
+     * @param $value
+     * @return bool|string
+     */
+    protected function isAdminUser($value)
+    {
+        $factoryId = Db::table('product')->where('id', $value)->value('factory_id');
+        if (!$factoryId) {
+            return '此产品不存在';
+        }
+        if (user_info('group_id') != $factoryId) {
+            return '非本厂家用户，不可删除产品';
         }
         return true;
     }
