@@ -51,4 +51,31 @@ class Product extends BaseController
         $this->result['data']['id'] = $this->currentModel->saveData($this->data);
         return json($this->result, 200);
     }
+
+    /**
+     * 获取零售价计算比例
+     * @return mixed
+     */
+    public function retailPriceRatio()
+    {
+        return config('system.price_ratio');
+    }
+
+    /**
+     * 按分类获取产品列表
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function getListByClassify()
+    {
+        try {
+            if (!array_key_exists('classify_id', $this->data)) {
+                exception('classify_id 不能为空');
+            }
+            $this->result['data']['list'] = $this->currentModel->getListByClassify($this->data['classify_id']);
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 200);
+    }
 }
