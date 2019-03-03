@@ -24,6 +24,8 @@ class Product extends BaseValidate
         'size'              => 'require',
         'colors'            => 'require|checkColor',
         'details'           => 'require|checkDetails',
+        'page'              => 'require|number',
+        'row'               => 'require|number',
     ];
 
 
@@ -62,6 +64,11 @@ class Product extends BaseValidate
             'size',
             'colors',
             'details',
+        ],
+        'getListByClassify'     => [
+            'classify_id',
+            'page',
+            'row'
         ],
     ];
 
