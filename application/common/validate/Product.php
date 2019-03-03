@@ -12,6 +12,7 @@ namespace app\common\validate;
 
 
 use think\Db;
+use app\common\model\FactoryProductClassify;
 
 class Product extends BaseValidate
 {
@@ -29,6 +30,7 @@ class Product extends BaseValidate
         'page'              => 'require|number',
         'row'               => 'require|number',
         'product_id'        => 'require|isAdminUser',
+        'sort_action'       => 'require|in:inc,dec'
     ];
 
 
@@ -75,6 +77,14 @@ class Product extends BaseValidate
         ],
         'delProduct'        => [
             'product_id'
+        ],
+        'changeClassify'    => [
+            'classify_id'   => 'require|classifyExist',
+            'product_id',
+        ],
+        'sort'              => [
+            'product_id',
+            'sort_action',
         ],
     ];
 
@@ -138,6 +148,23 @@ class Product extends BaseValidate
         }
         if (user_info('group_id') != $factoryId) {
             return '非本厂家用户，不可删除产品';
+        }
+        return true;
+    }
+
+    /**
+     * 判断分类是否存在
+     * @param $value
+     * @return bool|string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function classifyExist($value)
+    {
+        $classify = (new FactoryProductClassify())->where('factory_id', user_info('group_id'))->where('id', $value)->find();
+        if (!$classify) {
+            return '此分类不存在';
         }
         return true;
     }

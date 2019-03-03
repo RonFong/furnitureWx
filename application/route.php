@@ -176,6 +176,14 @@ Route::group('api/:version', function () {
         Route::get('retailPriceRatio', 'api/:version.product/retailPriceRatio');
         //删除产品分类
         Route::delete('classify', 'api/:version.FactoryProductClassify/delClassify');
+        //删除产品
+        Route::delete('/', 'api/:version.product/delProduct');
+        //产品移动到其他分类
+        Route::put('changeClassify', 'api/:version.product/changeClassify');
+        //产品移动到其他分类
+        Route::put('changeClassify', 'api/:version.product/changeClassify');
+        //更改产品排序
+        Route::put('sort', 'api/:version.product/sort');
     });
 
 

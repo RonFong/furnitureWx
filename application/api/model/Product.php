@@ -15,6 +15,7 @@ use app\common\model\ProductColor;
 use app\common\model\ProductPrice;
 use app\common\validate\BaseValidate;
 use think\Db;
+use think\Request;
 
 
 class Product extends CoreProduct
@@ -34,6 +35,14 @@ class Product extends CoreProduct
             $saveData['factory_id'] = user_info('group_id');
             $saveData['number'] = $this->createGoodsNumber();
             $saveData['details'] = json_encode($saveData['details']);
+            //获取排序号
+            if (Request::instance()->method() == 'POST') {
+                $sort = $this->where(['factory_id' => user_info('group_id'), 'classify_id' => $saveData['classify_id']])
+                    ->order('sort desc')
+                    ->limit(1)
+                    ->value('sort') ?? 0;
+                $saveData['sort'] = $sort + 1;
+            }
             $this->save($saveData);
 
             if (!empty($saveData['id'])) {
@@ -99,6 +108,69 @@ class Product extends CoreProduct
             $list[$k]['review_remark'] = $reviewInfo['remark'] ?? '99家服务人员将尽快处理，请稍等~';
         }
         return $list;
+    }
+
+    /**
+     * 产品删除
+     * @param $id
+     * @return bool|string
+     */
+    public function del($id)
+    {
+        Db::startTrans();
+        try {
+            self::destroy($id);
+            $colorIds = (new ProductColor())->where(['product_id' => $id])->column('id');
+            ProductColor::destroy(['product_id' => $id]);
+            ProductPrice::destroy(function ($query) use ($colorIds) {
+               $query->where('color_id', 'in', $colorIds);
+            });
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            return $e->getMessage();
+        }
+        return true;
+    }
+
+
+    /**
+     * 跟换产品分类
+     * @param $id
+     * @param $classifyId
+     * @return bool
+     */
+    public function changeClassify($id, $classifyId)
+    {
+        $this->where('id', $id)->update(['classify_id' => $classifyId]);
+        return true;
+    }
+
+
+    /**
+     * 更改产品排序
+     * @param $id
+     * @param $sortAction
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function sort($id, $sortAction)
+    {
+        $product = $this->get($id);
+        $model = $this->where(['factory_id' => user_info('group_id'), 'classify_id' => $product->classify_id])->limit(1);
+        if ($sortAction == 'inc') {
+            $changeProduct = $model->where('sort', '<', $product->sort)->order('sort desc')->find();
+        } else {
+            $changeProduct = $model->where('sort', '>', $product->sort)->order('sort')->find();
+        }
+        if ($changeProduct) {
+            list($product->sort, $changeProduct->sort) = [$changeProduct->sort, $product->sort];
+            $product->save();
+            $changeProduct->save();
+        }
+        return true;
     }
 
 

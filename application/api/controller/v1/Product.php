@@ -13,7 +13,6 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\common\model\ProductReviewStatus;
-use think\Db;
 use think\Request;
 use app\api\model\Product as ProductModel;
 use app\common\validate\Product as ProductValidate;
@@ -43,11 +42,8 @@ class Product extends BaseController
         $this->currentValidate->goCheck('create');
         $this->result['data']['id'] = $this->currentModel->saveData($this->data);
         //写入审核进度
-        (new ProductReviewStatus())->save([
-            'product_id'    => $this->result['data']['id'],
-            'status'        => 0,
-            'remark'        => '99家服务人员将尽快处理，请稍等~'
-        ]);
+        (new ProductReviewStatus())->write($this->result['data']['id'], 0);
+
         return json($this->result, 200);
     }
 
@@ -62,11 +58,7 @@ class Product extends BaseController
         $this->currentValidate->goCheck('update');
         $this->result['data']['id'] = $this->currentModel->saveData($this->data);
         //写入审核进度
-        (new ProductReviewStatus())->save([
-            'product_id'    => $this->result['data']['id'],
-            'status'        => 0,
-            'remark'        => '99家服务人员将尽快处理，请稍等~'
-        ]);
+        (new ProductReviewStatus())->write($this->result['data']['id'], 0);
         return json($this->result, 200);
     }
 
@@ -94,5 +86,51 @@ class Product extends BaseController
             $this->currentValidate->error($e);
         }
         return json($this->result, 200);
+    }
+
+    /**
+     * 删除产品
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function delProduct()
+    {
+        $this->currentValidate->goCheck('delProduct');
+        try {
+            $result = $this->currentModel->del($this->data['product_id']);
+            if ($result !== true) {
+                exception($result);
+            }
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
+     * 产品移动到其他分类
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function changeClassify()
+    {
+        $this->currentValidate->goCheck('changeClassify');
+        try {
+            $this->currentModel->changeClassify($this->data['product_id'], $this->data['classify_id']);
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 201);
+    }
+
+    public function sort()
+    {
+        $this->currentValidate->goCheck('sort');
+        try {
+            $this->currentModel->sort($this->data['product_id'], $this->data['sort_action']);
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+        return json($this->result, 201);
     }
 }

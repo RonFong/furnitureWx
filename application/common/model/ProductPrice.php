@@ -11,7 +11,9 @@
 namespace app\common\model;
 
 
+use traits\model\SoftDelete;
+
 class ProductPrice extends Model
 {
-
+    use SoftDelete;
 }
