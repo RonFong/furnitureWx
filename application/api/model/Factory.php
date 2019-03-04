@@ -21,21 +21,23 @@ class Factory extends CoreFactory
 {
 
     /**
-     * 创建厂家
+     * 保存厂家信息
      * @param $saveData
      * @return $this|bool
      * @throws \app\lib\exception\BaseException
      */
-    public function createFactory($saveData)
+    public function saveInfo($saveData)
     {
         try {
             Db::startTrans();
             $saveData['admin_user'] = user_info('id');
             $result = $this->save($saveData);
-            if ($result) {
-                (new User())->where('id', user_info('id'))->update(['type' => 1, 'group_id' => $this->id]);
+            if (!array_key_exists('id', $saveData)) {
+                if ($result) {
+                    (new User())->where('id', user_info('id'))->update(['type' => 1, 'group_id' => $this->id]);
+                }
+                $this->createQrCodeImg($this->id);
             }
-            $this->createQrCodeImg($this->id);
             Db::commit();
             return $this->id;
         } catch (\Exception $e) {

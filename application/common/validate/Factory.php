@@ -12,7 +12,6 @@
 namespace app\common\validate;
 
 
-use think\Db;
 
 class Factory extends BaseValidate
 {
@@ -99,6 +98,10 @@ class Factory extends BaseValidate
             'deliver_district',
             'license_img'
         ],
+        'update'    => [
+            'id' => 'require|number|isAdminUser',
+
+        ],
     ];
 
     /**
@@ -110,6 +113,22 @@ class Factory extends BaseValidate
     {
         if (user_info('type') != 3) {
             return '非普通用户，不可注册';
+        }
+        return true;
+    }
+
+
+    /**
+     * 是否是门店店主
+     * @param $value
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
+    protected function isAdminUser($value)
+    {
+        $info = \app\common\model\Factory::get($value);
+        if ($info->admin_user != user_info('id')) {
+            return '非本店用户，无权操作';
         }
         return true;
     }

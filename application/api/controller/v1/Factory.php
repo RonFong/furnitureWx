@@ -40,7 +40,22 @@ class Factory extends BaseController
     {
         $this->currentValidate->goCheck('create');
         try {
-            $this->result['data']['id'] = $this->currentModel->createFactory($this->data);
+            $this->result['data']['id'] = $this->currentModel->saveInfo($this->data);
+            return json($this->result, 201);
+        } catch (\Exception $e) {
+            $this->currentValidate->error($e);
+        }
+    }
+
+    /**
+     * 更改厂家信息厂家
+     * @throws \app\lib\exception\BaseException
+     */
+    public function update()
+    {
+        $this->currentValidate->goCheck('update');
+        try {
+            $this->result['data']['id'] = $this->currentModel->saveInfo($this->data);
             return json($this->result, 201);
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
