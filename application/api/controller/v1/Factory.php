@@ -114,7 +114,6 @@ class Factory extends BaseController
             }
             $this->result['data'] = $this->currentModel
                 ->where('id', $this->data['factory_id'])
-                ->field('create_by, create_time, update_by, update_time, delete_time', true)
                 ->find();
         } catch (\Exception $e) {
             $this->response->error($e);
