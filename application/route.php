@@ -156,6 +156,8 @@ Route::group('api/:version', function () {
         Route::post('create', 'api/:version.Factory/create');
         //修改厂家信息
         Route::put('update', 'api/:version.Factory/update');
+        //获取厂家信息
+        Route::get('info', 'api/:version.Factory/info');
         //新建分类
         Route::post('classify', 'api/:version.FactoryProductClassify/create');
         //修改分类名或排序
