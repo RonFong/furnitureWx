@@ -102,4 +102,24 @@ class Factory extends BaseController
         return json($this->result, 200);
     }
 
+    /**
+     * 获取厂家信息
+     * @return \think\response\Json
+     */
+    public function info()
+    {
+        try {
+            if (!array_key_exists('factory_id', $this->data)) {
+                exception('factory_id 不能为空');
+            }
+            $this->result['data'] = $this->currentModel
+                ->where('id', $this->data['factory_id'])
+                ->field('create_by, create_time, update_by, update_time, delete_time', true)
+                ->find();
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
 }
