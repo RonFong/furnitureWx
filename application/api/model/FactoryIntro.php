@@ -98,4 +98,24 @@ class FactoryIntro extends CoreFactoryIntro
         }
         return true;
     }
+
+    /**
+     * 获取简介详情
+     * @param $factoryId
+     * @return array|false|static[]
+     */
+    public function introInfo($factoryId)
+    {
+        $isExist = self::get($factoryId);
+        if (!$isExist) {
+            return [];
+        }
+        return FactoryIntroContent::all(function ($query) use ($factoryId) {
+            $query->where('factory_id', $factoryId)
+                ->field(true)
+                ->field('video as video_snapshot, video as video_snapshot_auto')
+                ->field('delete_time', true)
+                ->order('sort');
+        });
+    }
 }

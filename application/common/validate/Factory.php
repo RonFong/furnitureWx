@@ -39,6 +39,7 @@ class Factory extends BaseValidate
         'deliver_city'      => 'require',
         'deliver_district'  => 'require',
         'license_img'       => 'require',
+        'factory_id'        => 'require',
 
 
     ];
@@ -68,7 +69,7 @@ class Factory extends BaseValidate
         'deliver_province.require'  => '请填写发货地址省',
         'deliver_city.require'      => '请填写发货地址市',
         'deliver_district.require'  => '请填写发货区地址县',
-        'license_img'               => '请上传营业执照'
+        'license_img'               => '请上传营业执照',
     ];
 
 
@@ -101,6 +102,9 @@ class Factory extends BaseValidate
         'update'    => [
             'id' => 'require|number|isAdminUser',
 
+        ],
+        'contactInfo'     => [
+            'factory_id'
         ],
     ];
 

@@ -17,6 +17,7 @@ use app\api\service\Popularity;
 use think\Request;
 use app\api\model\Factory as FactoryModel;
 use app\common\validate\Factory as FactoryValidate;
+use app\common\validate\FactoryIntro as FactoryIntroValidate;
 
 /**
  * 厂家
@@ -129,7 +130,7 @@ class Factory extends BaseController
      */
     public function createIntro()
     {
-        (new \app\common\validate\FactoryIntro())->goCheck('createIntro');
+        (new FactoryIntroValidate())->goCheck('createIntro');
         try {
             (new FactoryIntro())->createData($this->data);
         } catch (\Exception $e) {
@@ -144,13 +145,44 @@ class Factory extends BaseController
      */
     public function updateIntro()
     {
-        (new \app\common\validate\FactoryIntro())->goCheck('updateIntro');
-//        try {
+        (new FactoryIntroValidate())->goCheck('updateIntro');
+        try {
             (new FactoryIntro())->updateData($this->data);
-//        } catch (\Exception $e) {
-//            $this->response->error($e);
-//        }
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
         return json($this->result, 201);
+    }
+
+    /**
+     * 获取厂家简介
+     * @return \think\response\Json
+     */
+    public function introInfo()
+    {
+        (new FactoryIntroValidate())->goCheck('introInfo');
+        try {
+            $this->result['data'] = (new FactoryIntro())->introInfo($this->data['factory_id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * 获取联系信息
+     * @return \think\response\Json
+     */
+    public function contactInfo()
+    {
+        $this->currentValidate->goCheck('contactInfo');
+        try {
+            $this->result['data'] = $this->currentModel->contactInfo($this->data['factory_id']);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
     }
 
 }

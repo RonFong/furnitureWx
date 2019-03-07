@@ -34,6 +34,9 @@ class FactoryIntro extends BaseValidate
             'factory_id'    => 'require',
             'content',
         ],
+        'introInfo'     => [
+            'factory_id'
+        ],
     ];
 
     /**

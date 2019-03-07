@@ -170,6 +170,10 @@ Route::group('api/:version', function () {
         Route::post('intro', 'api/:version.Factory/createIntro');
         //修改简介
         Route::put('intro', 'api/:version.Factory/updateIntro');
+        //获取简介详情
+        Route::get('intro', 'api/:version.Factory/introInfo');
+        //获取联系信息
+        Route::get('contactInfo', 'api/:version.Factory/contactInfo');
     });
 
     //厂家产品
