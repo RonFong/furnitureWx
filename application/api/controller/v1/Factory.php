@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\model\FactoryIntro;
 use app\api\service\Popularity;
 use think\Request;
 use app\api\model\Factory as FactoryModel;
@@ -119,6 +120,37 @@ class Factory extends BaseController
             $this->response->error($e);
         }
         return json($this->result, 200);
+    }
+
+
+    /**
+     * 写入简介
+     * @return \think\response\Json
+     */
+    public function createIntro()
+    {
+        (new \app\common\validate\FactoryIntro())->goCheck('createIntro');
+        try {
+            (new FactoryIntro())->createData($this->data);
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 201);
+    }
+
+    /**
+     * 写入简介
+     * @return \think\response\Json
+     */
+    public function updateIntro()
+    {
+        (new \app\common\validate\FactoryIntro())->goCheck('updateIntro');
+//        try {
+            (new FactoryIntro())->updateData($this->data);
+//        } catch (\Exception $e) {
+//            $this->response->error($e);
+//        }
+        return json($this->result, 201);
     }
 
 }

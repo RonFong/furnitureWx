@@ -166,6 +166,10 @@ Route::group('api/:version', function () {
         Route::get('homePage', 'api/:version.Factory/homePage');
         //获取分类
         Route::get('classifyList', 'api/:version.FactoryProductClassify/getList');
+        //添加简介
+        Route::post('intro', 'api/:version.Factory/createIntro');
+        //修改简介
+        Route::put('intro', 'api/:version.Factory/updateIntro');
     });
 
     //厂家产品
