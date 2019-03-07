@@ -83,20 +83,20 @@ class Events
                     Gateway::bindUid($client_id, $userId);
                     $_SESSION[$client_id] = $userId;
 
-                    if (strpos($userId, 'service') !== false || self::isServiceAccount($userId)) {
-                        //后台管理员 和 客服账号 加入客服群组
-                        Gateway::joinGroup($client_id, 'service');
-                    }
+//                    if (strpos($userId, 'service') !== false || self::isServiceAccount($userId)) {
+//                        //后台管理员 和 客服账号 加入客服群组
+//                        Gateway::joinGroup($client_id, 'service');
+//                    }
 
                     //获取消息列表
                     static::getMessageList($userId);
 
                     // 向客服组发送用户登录消息
-                    $data = [
-                        'type' => 'userLogin',
-                        'data' => ['user_id' => $userId]
-                    ];
-                    Gateway::sendToGroup('service', self::result($data), $client_id);
+//                    $data = [
+//                        'type' => 'userLogin',
+//                        'data' => ['user_id' => $userId]
+//                    ];
+//                    Gateway::sendToGroup('service', self::result($data), $client_id);
                     break;
 
                 case 'postMessage':
