@@ -117,17 +117,17 @@ class Events
 
                     $messageType = 1;
                     //和客服相关的，都发到客服群
-                    if (self::isServiceAccount($msg['toId']) || self::isServiceAccount($fromId)) {
-                        //发到客服群组
-                        $data['toId'] = $msg['toId'];   //发给哪个客服的
-                        Gateway::sendToGroup('service', self::result($data), $client_id);
-                        $messageType = 2;
-                    }
+//                    if (self::isServiceAccount($msg['toId']) || self::isServiceAccount($fromId)) {
+//                        //发到客服群组
+//                        $data['toId'] = $msg['toId'];   //发给哪个客服的
+//                        Gateway::sendToGroup('service', self::result($data), $client_id);
+//                        $messageType = 2;
+//                    }
 
                     //发给一般用户
-                    if (!self::isServiceAccount($msg['toId'])) {
+//                    if (!self::isServiceAccount($msg['toId'])) {
                         Gateway::sendToUid($msg['toId'], self::result($data));
-                    }
+//                    }
                     //保存消息
                     self::saveMessage($fromId, $msg['toId'], $msg['message'], $messageType);
                     //获取更新后的消息列表
