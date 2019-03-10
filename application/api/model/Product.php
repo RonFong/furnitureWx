@@ -56,7 +56,7 @@ class Product extends CoreProduct
                     'img'           => $color['img'],
                     'sort'          => $k
                 ]);
-                foreach ($color['price'] as $price) {
+                foreach ($color['prices'] as $price) {
                     Db::table('product_price')->insert([
                         'color_id'      => $colorId,
                         'configure'     => $price['configure'],

@@ -105,7 +105,7 @@ class Product extends BaseValidate
             if (!is_array($v)) {
                 return 'colors数据中子元素格式不正确';
             }
-            if (empty($v['color']) || empty($v['img']) || empty($v['price'])) {
+            if (empty($v['color']) || empty($v['img']) || empty($v['prices'])) {
                 return json_encode($v) . '中不能有空值';
             }
             foreach ($v['price'] as $vv) {
