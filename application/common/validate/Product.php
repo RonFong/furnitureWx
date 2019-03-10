@@ -108,7 +108,7 @@ class Product extends BaseValidate
             if (empty($v['color']) || empty($v['img']) || empty($v['prices'])) {
                 return json_encode($v) . '中不能有空值';
             }
-            foreach ($v['price'] as $vv) {
+            foreach ($v['prices'] as $vv) {
                 if (empty($vv['configure']) || empty($vv['trade_price'])) {
                     return json_encode($vv) . '中不能有空值';
                 }
