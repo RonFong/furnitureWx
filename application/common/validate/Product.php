@@ -30,7 +30,8 @@ class Product extends BaseValidate
         'page'              => 'require|number',
         'row'               => 'require|number',
         'product_id'        => 'require|isAdminUser',
-        'sort_action'       => 'require|in:inc,dec'
+        'sort_action'       => 'require|in:inc,dec',
+        'status'            => 'require|in:1,0',
     ];
 
 
@@ -88,6 +89,10 @@ class Product extends BaseValidate
         ],
         'info'  => [
             'product_id'    => 'require'
+        ],
+        'shelvesStatus' => [
+            'product_id',
+            'status',
         ],
     ];
 

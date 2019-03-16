@@ -198,6 +198,8 @@ Route::group('api/:version', function () {
         Route::put('changeClassify', 'api/:version.product/changeClassify');
         //更改产品排序
         Route::put('sort', 'api/:version.product/sort');
+        //更改产品上下架状态
+        Route::put('shelves', 'api/:version.product/shelvesStatus');
     });
 
 

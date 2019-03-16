@@ -63,6 +63,18 @@ class Product extends BaseController
     }
 
     /**
+     * 更改产品上下架状态
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     */
+    public function shelvesStatus()
+    {
+        $this->currentValidate->goCheck('shelvesStatus');
+        $this->currentModel->where('id', $this->data['product_id'])->update(['is_on_shelves' => $this->data['status']]);
+        return json($this->result, 200);
+    }
+
+    /**
      * 产品详情
      * @return \think\response\Json
      * @throws \app\lib\exception\BaseException
