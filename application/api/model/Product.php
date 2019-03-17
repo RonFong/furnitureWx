@@ -167,9 +167,8 @@ class Product extends CoreProduct
     {
         Db::startTrans();
         try {
-            $this->where('id', $id)->update(['delete_time' => time()]);
+            self::destroy($id);
             $colorIds = (new ProductColor())->where(['product_id' => $id])->column('id');
-
             ProductColor::destroy(['product_id' => $id]);
             ProductPrice::destroy(function ($query) use ($colorIds) {
                $query->where('color_id', 'in', $colorIds);
