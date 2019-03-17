@@ -81,7 +81,7 @@ class Product extends BaseValidate
             'row'
         ],
         'delProduct'        => [
-            'product_id'
+            'product_id'    => 'require|noRepetitionDel'
         ],
         'changeClassify'    => [
             'classify_id'   => 'require|classifyExist',
@@ -177,6 +177,20 @@ class Product extends BaseValidate
         $classify = (new FactoryProductClassify())->where('factory_id', user_info('group_id'))->where('id', $value)->find();
         if (!$classify) {
             return '此分类不存在';
+        }
+        return true;
+    }
+
+    /**
+     * @param $value
+     * @return bool|string
+     * @throws \think\exception\DbException
+     */
+    protected function noRepetitionDel($value)
+    {
+        $product = (new \app\common\model\Product())->get($value);
+        if (!$product) {
+            return '请勿重复删除';
         }
         return true;
     }
