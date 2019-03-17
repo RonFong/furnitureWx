@@ -123,6 +123,6 @@ class Factory extends CoreFactory
             ->where('id', $factoryId)
             ->find();
         $user = Db::table('user')->where('id', $data['user_id'])->field('user_name, avatar')->find();
-        return array_merge($data, $user);
+        return array_merge($data->toArray(), $user);
     }
 }
