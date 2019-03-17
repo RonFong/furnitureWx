@@ -119,8 +119,10 @@ class Factory extends CoreFactory
      */
     public function contactInfo($factoryId)
     {
-        return $this->field('admin_user as user_id, sales_contact, sales_wx, sales_phone, qr_code_img, lat, lng, sales_province, sales_city, sales_district, address, factory_province, factory_city, factory_district')
+        $data = $this->field('admin_user as user_id, sales_contact, sales_wx, sales_phone, qr_code_img, lat, lng, sales_province, sales_city, sales_district, address, factory_province, factory_city, factory_district')
             ->where('id', $factoryId)
             ->find();
+        $user = Db::table('user')->where('id', $data['user_id'])->field('user_name, avatar')->find();
+        return array_merge($data, $user);
     }
 }
