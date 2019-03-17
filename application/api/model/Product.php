@@ -128,11 +128,18 @@ class Product extends CoreProduct
     public function info($id)
     {
         $info = $this->where('id', $id)
-            ->field('id, factory_id, name, number, model, texture, style, function, size, discounts, details')
+            ->field('id, factory_id, name, brand, number, model, texture, style, function, size, discounts, details')
             ->find()
             ->toArray();
-        $info['details'] = json_decode($info['details']);
 
+        $otherInfo = Db::table('factory')
+            ->where('id', $info['factory_id'])
+            ->field('factory_province, factory_city, factory_district, deliver_province, deliver_city, deliver_district')
+            ->find();
+        $info['deliver_address'] = $otherInfo['deliver_province'] . ' ' . $otherInfo['deliver_city'] . ' ' . $otherInfo['deliver_district'];
+        $info['factory_address'] = $otherInfo['factory_province'] . ' ' . $otherInfo['factory_city'] . ' ' . $otherInfo['factory_district'];
+
+        $info['details'] = json_decode($info['details']);
         $info['colors'] = (new ProductColor())->where('product_id', $id)->field('id, color, img')->order('sort')->select();
         $isShowPrice = $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {

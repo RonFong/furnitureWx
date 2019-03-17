@@ -13,6 +13,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\common\model\ProductReviewStatus;
+use think\Db;
 use think\Request;
 use app\api\model\Product as ProductModel;
 use app\common\validate\Product as ProductValidate;
@@ -165,5 +166,24 @@ class Product extends BaseController
             $this->currentValidate->error($e);
         }
         return json($this->result, 201);
+    }
+
+    /**
+     * 产品编辑页参数
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function attr()
+    {
+        $this->result['data']['brand'] = Db::table('product')->where('factory_id', user_info('group_id'))->order('id desc')->value('brand');
+        $this->result['data']['ratio'] = config('system.price_ratio');
+        $this->result['data']['classifyList'] = Db::table('factory_product_classify')
+            ->where('factory_id', user_info('group_id'))
+            ->field('id, classify_name, sort')
+            ->order('sort')
+            ->select();
+        return json($this->result, 200);
     }
 }

@@ -188,6 +188,8 @@ Route::group('api/:version', function () {
         Route::get('getListByClassify', 'api/:version.product/getListByClassify');
         //产品零售价计算比例
         Route::get('retailPriceRatio', 'api/:version.product/retailPriceRatio');
+        //产品编辑页所需数据   默认品牌、分类、零售价计算比例
+        Route::get('attr', 'api/:version.product/attr');
         //删除产品分类
         Route::delete('classify', 'api/:version.FactoryProductClassify/delClassify');
         //删除产品

@@ -19,6 +19,7 @@ class Product extends BaseValidate
     protected $rule = [
         'id'                => 'require',
         'classify_id'       => 'require',
+        'brand'             => 'require',
         'name'              => 'require',
         'model'             => 'require',
         'texture'           => 'require',
@@ -37,6 +38,7 @@ class Product extends BaseValidate
 
     protected $message = [
         'classify_id.require'       => '请选择产品分类',
+        'brand.require'             => '请填写品牌',
         'name.require'              => '请填写产品名',
         'model.require'             => '请填写产品型号',
         'texture.require'           => '请填写产品材质',
@@ -58,6 +60,7 @@ class Product extends BaseValidate
             'size',
             'colors',
             'details',
+            'brand',
         ],
         'update'    => [
             'id',
@@ -70,6 +73,7 @@ class Product extends BaseValidate
             'size',
             'colors',
             'details',
+            'brand',
         ],
         'getListByClassify'     => [
             'classify_id',
