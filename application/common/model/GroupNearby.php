@@ -38,7 +38,7 @@ class GroupNearby extends Model
                 ->toArray();
         }
         $info['group_type'] = $type;
-        $id = $this->where(['group_id' => $id, 'type' => $type])->find();
+        $id = $this->where(['group_id' => $id, 'group_type' => $type])->value('id');
         if ($id) {
             $info['id'] = $id;
         }
