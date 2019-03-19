@@ -14,7 +14,34 @@ namespace app\common\model;
 
 use traits\model\SoftDelete;
 
+
 class GroupNearby extends Model
 {
     use SoftDelete;
+
+    public function store($id, $type)
+    {
+        if ($type == 1) {
+            $model = new Factory();
+            $info = $model
+                ->where('id', $id)
+                ->field('id as group_id, factory_name as group_name, lng, lat, state, create_time, delete_time')
+                ->find()
+                ->toArray();
+        }
+        if ($type == 2) {
+            $model = new Shop();
+            $info = $model
+                ->where('id', $id)
+                ->field('id as group_id, shop_name as group_name, lng, lat, state, create_time, delete_time')
+                ->find()
+                ->toArray();
+        }
+        $info['group_type'] = $type;
+        $id = $this->where(['group_id' => $id, 'type' => $type])->find();
+        if ($id) {
+            $info['id'] = $id;
+        }
+        $this->save($info);
+    }
 }
