@@ -19,9 +19,9 @@ class Shop extends CoreShop
     {
         parent::__construct($data);
         //客服账号不限制距离
-        if (user_info('is_service_account')) {
+//        if (user_info('is_service_account')) {
             $this->distance = 10000;
-        }
+//        }
     }
 
     /**
@@ -32,34 +32,51 @@ class Shop extends CoreShop
      */
     public function nearby($param)
     {
-        $shopName = $param['shopName'] ?? '';
+        $groupName = $param['group_name'] ?? '';
 
         $pageData = format_page($param['page'] ?? 0, $param['row'] ?? 10);
 
-//        $currentShopId = user_info('type') == 2 ? user_info('group_id') : 0;   //如果当前用户为商家，则结果中不包含自己
-        $currentShopId = 0;
-
         $location = (new UserLocation())->where(['user_id' => user_info('id')])->order('id desc')->find();
 
-        $field = "s.id, s.shop_name, s.address, s.img_thumb_small, s.distance";
-        $where = "`state` = 1 and `delete_time` is null and `id` <> $currentShopId";
-        if ($shopName) {
-            $where .= " and shop_name like '%$shopName%'";
+        $field = "s.group_id, s.group_type, s.group_name, s.distance";
+        $where = "`state` = 1 and `delete_time` is null";
+        if ($groupName) {
+            $where .= " and group_name like '%$groupName%'";
         }
 
         $sql = "select {$field} from (
                 select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$location['lng']}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$location['lat']}-lat)/360),2)))) as distance 
-                from `shop` 
+                from `group_nearby` 
                 where {$where}) as s 
                 where s.distance <= {$this->distance}
                 order by s.distance asc limit {$pageData['page']}, {$pageData['row']}";
 
         $list = Db::query($sql);
         foreach ($list as $k => $v) {
-            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => 2, 'object_id' => $v['id']])->value('SUM(value)') ?? 0;
+            $list[$k]['popularity_num'] = Db::table('popularity')->where(['object_type' => $v['group_type'], 'object_id' => $v['group_id']])->value('SUM(value)') ?? 0;
             $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
+            $info = $this->getGroupInfo($v['group_id'], $v['group_type']);
+            $list[$k]['address'] = $info['address'];
+            $list[$k]['img_thumb_small'] = $info['img_thumb_small'];
         }
         return $list;
+    }
+
+    /**
+     * 获取门店信息
+     * @param $id
+     * @param $type
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
+    private function getGroupInfo($id, $type)
+    {
+        if ($type == 1) {
+            $table = 'shop';
+        }
+        if ($type == 2) {
+            $table = 'factory';
+        }
+        return Db::table($table)->where('id', $id)->field('address, img_thumb_small')->find();
     }
 
     /**
