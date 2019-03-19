@@ -86,8 +86,6 @@ Route::group('api/:version', function () {
     Route::group('shop', function () {
         // 入驻商家
         Route::post('create', 'api/:version.Shop/create');
-        //获取附近的店
-        Route::get('nearby', 'api/:version.Shop/nearby');
         // 获取门店首页信息
         Route::get('homePage', 'api/:version.Shop/homePage');
         // 获取门店信息 & 首页图文
@@ -103,6 +101,9 @@ Route::group('api/:version', function () {
         // 删除商品
         Route::delete('delCommodity','api/:version.Shop/delCommodity');
     });
+
+    //获取附近的店
+    Route::get('group/nearby', 'api/:version.Shop/nearby');
 
     Route::group('category', function () {
         Route::get('storeList', 'api/:version.StoreClassify/getStoreClassifyList');
