@@ -12,6 +12,7 @@ namespace app\api\model;
 
 use app\api\service\WXACodeUnlimit;
 use app\common\model\Factory as CoreFactory;
+use app\common\model\GroupNearby;
 use app\common\validate\BaseValidate;
 use think\Db;
 use think\Request;
@@ -39,6 +40,7 @@ class Factory extends CoreFactory
                 $this->createQrCodeImg($this->id);
             }
             Db::commit();
+            (new GroupNearby())->store($this->id, 1);
             return $this->id;
         } catch (\Exception $e) {
             Db::rollback();
@@ -78,6 +80,7 @@ class Factory extends CoreFactory
     public function supplementInfo($saveData)
     {
         $result = $this->where('id', user_info('group_id'))->save($saveData);
+        (new GroupNearby())->store(user_info('group_id'), user_info('group_type'));
         return $result;
     }
 
