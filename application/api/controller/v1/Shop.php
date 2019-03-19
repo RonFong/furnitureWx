@@ -16,6 +16,7 @@ use app\api\model\ShopCommodity;
 use app\api\model\ShopCommodityItem;
 use app\api\service\Popularity;
 use app\api\service\WXACodeUnlimit;
+use app\common\model\GroupNearby;
 use app\common\validate\Shop as shopValidate;
 use app\lib\enum\Response;
 use app\api\model\User;
@@ -62,6 +63,7 @@ class Shop extends BaseController
             ];
             (new User())->save($userInfo);
             Db::commit();
+            (new GroupNearby())->store($this->currentModel->id, 2);
         } catch (\Exception $e) {
             Db::rollback();
             $this->result['state'] = 0;
@@ -132,6 +134,7 @@ class Shop extends BaseController
             if (!$result) {
                 $this->response->error(Response::UNKNOWN_ERROR);
             }
+            (new GroupNearby())->store($this->data['id'], 2);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
