@@ -19,9 +19,9 @@ class Shop extends CoreShop
     {
         parent::__construct($data);
         //客服账号不限制距离
-//        if (user_info('is_service_account')) {
+        if (user_info('is_service_account')) {
             $this->distance = 10000;
-//        }
+        }
     }
 
     /**
