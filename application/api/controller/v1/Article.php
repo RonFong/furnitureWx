@@ -167,6 +167,20 @@ class Article extends BaseController
     }
 
     /**
+     * 获取推荐文章列表
+     * @return \think\response\Json
+     */
+    public function recommend()
+    {
+        try {
+            $this->result['data'] = $this->currentModel->recommend();
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
+        return json($this->result, 200);
+    }
+
+    /**
      * 获取文章列表
      * @param order_by string  read_num,create_time,distance     排序： 人气、时间、距离
      * @param classify_id number    分类id
