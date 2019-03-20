@@ -57,6 +57,8 @@ Route::group('api/:version', function () {
         Route::put('update', 'api/:version.Article/update');
         //同城圈首页文章列表
         Route::get('list', 'api/:version.Article/list');
+        //推荐文章列表
+        Route::get('recommend', 'api/:version.Article/recommend');
         //按用户获取文章列表
         Route::get('listGroupByUser', 'api/:version.Article/listGroupByUser');
         //增加文章的一个分享数
