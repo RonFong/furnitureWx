@@ -13,6 +13,7 @@ namespace app\api\controller\v1;
 use app\api\controller\BaseController;
 use app\api\model\User as userModel;
 use app\api\service\Wechat;
+use app\common\model\UserLocation;
 use think\Request;
 use app\api\validate\User as userValidate;
 
@@ -114,6 +115,24 @@ class User extends BaseController
         } catch (\Exception $e) {
             $this->response->error($e);
         }
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * 保存用户位置
+     * @return \think\response\Json
+     * @throws \think\exception\DbException
+     */
+    public function location()
+    {
+        $data = [
+            'user_id'       => user_info('id'),
+            'lng'           => sprintf("%.6f", $this->data['lng']),
+            'lat'           => sprintf("%.6f", $this->data['lat']),
+            'create_time'   => time()
+        ];
+        (new UserLocation())->save($data);
         return json($this->result, 200);
     }
 
