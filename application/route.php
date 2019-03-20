@@ -21,6 +21,8 @@ Route::group('api/:version', function () {
     Route::put('user/changeAvatar', 'api/:version.User/changeAvatar');
     //用户名片信息
     Route::get('user/info', 'api/:version.User/info');
+    //保存用户位置信息
+    Route::post('user/location', 'api/:version.User/location');
     //获取openid
     Route::get('getOpenid', 'api/:version.User/getOpenid');
     //获取token
