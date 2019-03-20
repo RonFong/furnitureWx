@@ -175,19 +175,29 @@ class Article extends CoreArticle
     }
 
     /**
+     * 获取推荐文章列表
+     * @return mixed
+     */
+    public function recommend()
+    {
+        return $this->list([], true);
+    }
+
+    /**
      * 文章列表
      * @param $param
+     * @param $recommend bool  获取推荐文章
      * @return mixed
      * @throws \think\exception\DbException
      */
-    public function list($param)
+    public function list($param, $recommend = false)
     {
         //TODO 是否显示已拉黑用户的文章动态？ 暂不处理!!!
 
         $pageData = format_page($param['page'] ?? 0, $param['row'] ?? 10);
 
 
-        $field = "s.id, s.user_id, s.title, s.classify_id, s.read_num , s.share_num, s.create_time, s.distance ";
+        $field = "s.id, s.user_id, s.title, s.classify_id, s.read_num , s.share_num, s.create_time";
         $where = " `state` = 1 and `delete_time` is null ";
         if (!empty($param['classify_id'])) {
             $where .= "and classify_id = {$param['classify_id']} ";
@@ -219,18 +229,26 @@ class Article extends CoreArticle
                 $order = "s.{$param['order_by']} DESC";
             }
         }
-        $sql = "select {$field} from (
+
+        if ($recommend) {
+            $list = Db::table('article')->alias('s')->where(['is_recommend' => 1, 'state' => 1])->where('delete_time is null')->field($field)->order('id desc')->select();
+        } else {
+            $field .= ', s.distance ';
+            $sql = "select {$field} from (
                 select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$this->getLocation('lng')}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$this->getLocation('lat')}-lat)/360),2)))) as distance 
                 from `article` 
                 where {$where}) as s 
                 where s.distance <= {$this->distance}
                 order by {$order} limit {$pageData['page']}, {$pageData['row']}";
-        $list = Db::query($sql);
+            $list = Db::query($sql);
+        }
 
         foreach ($list as $k => $v) {
             $list[$k]['classify_name'] = Db::table('article_classify')->where('id', $v['classify_id'])->value('classify_name');
             unset($list[$k]['classify_id']);
-            $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
+            if (array_key_exists('distance', $v)) {
+                $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
+            }
             $user = Db::table('user')->where('id', $v['user_id'])->find();
             $list[$k]['user_name'] = $this->emojiDecode($user['user_name']);
             $list[$k]['avatar'] = $user['avatar'];
