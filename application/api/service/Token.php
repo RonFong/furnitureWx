@@ -56,11 +56,13 @@ class Token
     private static function getUserInfo($wxUserInfo)
     {
         $userInfo = User::get(['wx_openid' => self::$openid]);
-        $locationData = [
-            'lng'           => sprintf("%.6f", $wxUserInfo['lng']),
-            'lat'           => sprintf("%.6f", $wxUserInfo['lat']),
-            'create_time'   => time()
-        ];
+        if (!empty($wxUserInfo['lng'])) {
+            $locationData = [
+                'lng'           => sprintf("%.6f", $wxUserInfo['lng']),
+                'lat'           => sprintf("%.6f", $wxUserInfo['lat']),
+                'create_time'   => time()
+            ];
+        }
         if (!$userInfo) {
             $saveData = [
                 'wx_openid'     => self::$openid,
