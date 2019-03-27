@@ -79,6 +79,9 @@
                     return data.music != '' ? '<a href="'+data.music+'" target="_blank">'+data.music_name+'</a>' : "";
                 }}
                 ,{field:'read_num', title:'阅读数'}
+                ,{title:'推荐', align:'center', templet: function (data) {
+                        return data.is_recommend === 1 ? '<span class="layui-badge layui-bg-blue">是</span>' : '<span class="layui-badge layui-bg-gray">否</span>';
+                }}
                 ,{title:'状态', align:'center', templet: function (data) {
                     return data.state === 1 ? '<span class="layui-badge layui-bg-blue">启用</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
                 }}
