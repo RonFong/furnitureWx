@@ -62,7 +62,7 @@ class User extends Base
             ->field('id,user_name,type,gender,state,phone,group_id,create_time')
             ->field('id as last_login_time, id as all_login_times, id as all_login_times_month')
             ->order($orderBy)
-            ->select(fasle);
+            ->select(false);
         echo $list;
 //            ->layTable();
         return $list;
