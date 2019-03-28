@@ -34,19 +34,6 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">排序</label>
-                <div class="layui-input-inline">
-                    <select name="orderby">
-                        <option value="">请选择</option>
-                        <option value="last_login_time">登录时间降序</option>
-                        <option value="all_login_times_desc">登录总次数降序</option>
-                        <option value="all_login_times_asc">登录总次数升序</option>
-                        <option value="all_login_times_month_desc">月登录次数降序</option>
-                        <option value="all_login_times_month_asc">月登录次数升序</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
                 <div class="layui-btn-group">
                     <a class="layui-btn layui-btn-normal" onclick="reloadTable('#searchForm');">搜索</a>
                     <a class="layui-btn" href="{:url('edit')}" target="_blank">新增</a>

@@ -49,21 +49,11 @@ class User extends Base
      */
     public function getDataList()
     {
-        $param = $this->request->param();
-        $orderBy = 'last_login_time desc';
-        $param['orderby'] == 'last_login_time' ? $orderBy = 'last_login_time desc' : '';
-        $param['orderby'] == 'all_login_times_desc' ? $orderBy = 'all_login_times desc' : '';
-        $param['orderby'] == 'all_login_times_asc' ? $orderBy = 'all_login_times asc' : '';
-        $param['orderby'] == 'all_login_times_month_desc' ? $orderBy = 'all_login_times_month_desc desc' : '';
-        $param['orderby'] == 'all_login_times_month_asc' ? $orderBy = 'all_login_times_month_desc asc' : '';
-
         $map = $this->getDataListMap();
         $list = $this->currentModel->where($map)
+            ->order('id desc')
             ->field('id,user_name,type,gender,state,phone,group_id,create_time')
-            ->field('id as last_login_time, id as all_login_times, id as all_login_times_month')
-            ->order($orderBy)
-            ->select();
-        $list = $list->layTable();
+            ->layTable(['last_login_time', 'all_login_times', 'all_login_times_month']);
         return $list;
     }
 
