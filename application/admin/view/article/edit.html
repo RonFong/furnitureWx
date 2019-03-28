@@ -71,6 +71,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">推荐：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="is_recommend" value="0" title="否" {eq name="$data.is_recommend|default=''" value="0"}checked{/eq}>
+                        <input type="radio" name="is_recommend" value="1" title="是" {eq name="$data.is_recommend|default=''" value="1"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">状态：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="state" value="0" title="待审核" {eq name="$data.state|default=''" value="0"}checked{/eq}>
