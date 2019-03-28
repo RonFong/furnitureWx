@@ -61,7 +61,8 @@ class User extends Base
         $list = $this->currentModel->where($map)
             ->order($orderBy)
             ->field('id,user_name,type,gender,state,phone,group_id,create_time')
-            ->layTable(['last_login_time', 'all_login_times', 'all_login_times_month']);
+            ->field('id as last_login_time, id as all_login_times, id as all_login_times_month')
+            ->layTable();
         return $list;
     }
 
