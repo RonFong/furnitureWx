@@ -58,6 +58,9 @@ class Shop extends CoreShop
             $info = $this->getGroupInfo($v['group_id'], $v['group_type']);
             $list[$k]['address'] = $info['address'];
             $list[$k]['img_thumb_small'] = $info['img_thumb_small'];
+            $list[$k]['shop_id'] = $info['group_id'];
+            $list[$k]['shop_name'] = $info['group_name'];
+            $list[$k]['shop_img'] = $info['img_thumb_small'];
         }
         return $list;
     }
