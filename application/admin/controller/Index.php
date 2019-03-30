@@ -37,8 +37,8 @@ class Index extends Base
 
         //产品数
         $goods = [];
-        $goods['count'] = Db::name('goods')->where($map)->count();
-        $goods['count_month'] = Db::name('goods')->where('create_time', '>=', strtotime(date('Y-m-01')))->where($map)->count();
+        $goods['count'] = Db::name('product')->where($map)->count();
+        $goods['count_month'] = Db::name('product')->where('create_time', '>=', strtotime(date('Y-m-01')))->where($map)->count();
         $this->assign('goods', $goods);
         return $this->fetch();
     }
