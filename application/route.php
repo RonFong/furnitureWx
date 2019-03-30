@@ -108,6 +108,7 @@ Route::group('api/:version', function () {
 
     //获取附近的店
     Route::get('group/nearby', 'api/:version.Shop/nearby');
+    Route::get('shop/nearby', 'api/:version.Shop/nearby');
 
     Route::group('category', function () {
         Route::get('storeList', 'api/:version.StoreClassify/getStoreClassifyList');
