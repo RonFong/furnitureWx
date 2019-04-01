@@ -202,7 +202,7 @@ class Relate
             ->join('factory b', 'a.factory_id = b.id')
             ->where(['a.user_id' => user_info('id'), 'b.state' => 1])
             ->where('b.delete_time is null')
-            ->field('b.id, b.factory_name as name, b.factory_img_thumb as img_thumb, factory_img as img')
+            ->field('b.id, b.factory_name as name, b.img_thumb_small as img_thumb, factory_img as img')
             ->page($page, $row)
             ->order('a.create_time desc')
             ->select();
@@ -243,10 +243,10 @@ class Relate
     {
         return Db::name('relation_goods_collect')
             ->alias('a')
-            ->join('goods b', 'a.goods_id = b.id')
-            ->join('goods_color c', 'a.goods_id = c.goods_id')
+            ->join('product b', 'a.goods_id = b.id')
+            ->join('product_color c', 'a.goods_id = c.product_id')
             ->where(['a.user_id' => user_info('id')])
-            ->field('b.id, b.goods_name as name, c.img_thumb, img')
+            ->field('b.id, b.name as name, c.img as img_thumb, img')
             ->group('b.id')
             ->page($page, $row)
             ->order('a.create_time desc')
