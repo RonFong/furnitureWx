@@ -90,7 +90,7 @@ class User extends CoreUser
             //厂家用户
             $group = Db::table('factory')
                 ->where('id', $user['main_user']['group_id'])
-                ->field('factory_name, factory_phone, factory_wx, qr_code_img, qr_code_img_thumb, sales_wx')
+                ->field('sales_phone, factory_name, factory_phone, factory_wx, qr_code_img, qr_code_img_thumb, sales_wx')
                 ->find();
             $main = [
                 'group_type' => 1,
