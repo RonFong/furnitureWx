@@ -90,13 +90,13 @@ class User extends CoreUser
             //厂家用户
             $group = Db::table('factory')
                 ->where('id', $user['main_user']['group_id'])
-                ->field('factory_name, factory_phone, factory_wx, qr_code_img, qr_code_img_thumb, wx_account, license_code')
+                ->field('factory_name, factory_phone, factory_wx, qr_code_img, qr_code_img_thumb, sales_wx')
                 ->find();
             $main = [
                 'group_type' => 1,
                 'factory_name' => $group['factory_name'],
                 'phone' => $group['sales_phone'],
-                'wx_account' => $group['factory_wx'],
+                'wx_account' => $group['sales_wx'],
                 'qr_code_img' => $group['qr_code_img'],
                 'qr_code_img_thumb' => $group['qr_code_img_thumb']
             ];
@@ -109,8 +109,8 @@ class User extends CoreUser
                 'factory_name' => $group['factory_name'],
                 'phone' => $group['factory_phone'],
                 'wx_account' => $group['wx_account'],
-                'qr_code_img' => $group['license_code'],
-                'qr_code_img_thumb' => $group['license_code']
+                'qr_code_img' => $group['qr_code_img'],
+                'qr_code_img_thumb' => $group['qr_code_img']
             ];
         }
         return $user;
