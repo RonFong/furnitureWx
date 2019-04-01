@@ -95,7 +95,7 @@ class User extends CoreUser
             $main = [
                 'group_type' => 1,
                 'factory_name' => $group['factory_name'],
-                'phone' => $group['factory_phone'],
+                'phone' => $group['sales_phone'],
                 'wx_account' => $group['factory_wx'],
                 'qr_code_img' => $group['qr_code_img'],
                 'qr_code_img_thumb' => $group['qr_code_img_thumb']
@@ -107,7 +107,7 @@ class User extends CoreUser
             $user['secondary_user'] = [
                 'group_type' => 1,
                 'factory_name' => $group['factory_name'],
-                'phone' => $group['phone'],
+                'phone' => $group['factory_phone'],
                 'wx_account' => $group['wx_account'],
                 'qr_code_img' => $group['license_code'],
                 'qr_code_img_thumb' => $group['license_code']
