@@ -189,14 +189,14 @@ class Events
             if (strpos($userId, 'service') === false) {
                 self::log($userId, 0);
                 // 向客服组发送用户登出消息
-                $data = [
-                    'type' => 'userLogout',
-                    'data' => ['user_id' => $userId]
-                ];
-                Gateway::sendToGroup('service', self::result($data));
+//                $data = [
+//                    'type' => 'userLogout',
+//                    'data' => ['user_id' => $userId]
+//                ];
+//                Gateway::sendToGroup('service', self::result($data));
             }
         } catch (\Exception $e) {
-            self::errorLog($e->getMessage());
+            self::errorLog('user_id: ' . $userId . ' type: 0 ' . $e->getMessage());
         }
     }
 
@@ -239,7 +239,7 @@ class Events
             }
             return ['unread_count' => 0, 'list' => []];
         } catch (\Exception $e) {
-            self::errorLog($e->getMessage());
+            self::errorLog('user_id: ' . $userId . ' type: 1 ' . $e->getMessage());
         }
     }
 
