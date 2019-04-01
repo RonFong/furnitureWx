@@ -107,14 +107,14 @@ class User extends BaseController
      */
     public function info()
     {
-//        try {
+        try {
             if (empty($this->data['user_id'])) {
                 exception('user_id 不能为空');
             }
             $this->result['data'] = $this->currentModel->info($this->data['user_id']);
-//        } catch (\Exception $e) {
-//            $this->response->error($e);
-//        }
+        } catch (\Exception $e) {
+            $this->response->error($e);
+        }
         return json($this->result, 200);
     }
 
