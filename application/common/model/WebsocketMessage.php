@@ -35,7 +35,7 @@ class WebsocketMessage extends Model
             ->join('user t_u', "t_u.id = w.to_id")
             ->where(['w.state' => 1])
             ->where(function ($query) use ($fromId, $toId){
-                $query->whereOr(['w.from_id|w.to_id' => $fromId, 'w.from_id|w.to_id' => $toId]);
+                $query->where("((`to_id` = $fromId  and from_id = $toId AND `to_clear` = 0) OR (`from_id` = $fromId AND  to_id = $toId and `from_clear` = 0))");
             })
             ->order('w.id desc')
             ->field('f_u.id as from_id, f_u.user_name as from_user_name, f_u.avatar as from_avatar, t_u.id as to_id, t_u.user_name as to_user_name, t_u.avatar as to_avatar, w.message, w.read as is_read, send_time as time')
