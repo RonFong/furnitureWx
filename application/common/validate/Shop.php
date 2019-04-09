@@ -24,6 +24,7 @@ class Shop extends BaseValidate
     protected $message = [
         'admin_user.require'    => '请先授权',
         'admin_user.number'     => '请先授权',
+        'shop_name.length'      => '门店名过长',
         'shop_name.require'     => '请填写门店名称',
         'shop_contact.require'  => '请填写联系人',
         'shop_phone.require'    => '请填写电话',
