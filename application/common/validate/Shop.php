@@ -58,7 +58,8 @@ class Shop extends BaseValidate
         ],
         //修改商家门店信息
         'info' => [
-            'id' => 'require|canNotUpdateFields|canNotEmpty'
+            'id'        => 'require|canNotUpdateFields|canNotEmpty',
+            'shop_name' => 'length:1,8'
         ]
     ];
 
