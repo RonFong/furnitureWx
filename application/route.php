@@ -266,13 +266,11 @@ Route::group('api/:version', function () {
     //获取当前用户与某用户的聊天消息
     Route::get('message/logWithUser', 'api/:version.Message/logWithUser');
 
+    //商城
+    Route::group('store', function () {
+        //首页获取商品列表
+        Route::get('goods/list', 'api/:version.goods/getList');
+    });
+
 });
 
-// log
-Route::get('api/log', function () {
-    $logs = \think\Db::table('api_log')->order('id desc')->limit(0, 30)->select();
-    foreach ($logs as $k => $v) {
-        $logs[$k]['params'] = json_decode($v['params']);
-    }
-    return json_encode($logs);
-});

@@ -222,6 +222,67 @@ class Product extends CoreProduct
     }
 
 
+    /**
+     * 获取商城商品列表
+     * @param $shopId
+     * @param $page
+     * @param $row
+     */
+    public function getList($shopId, $page, $row)
+    {
+        $model = Db::table('product')
+            ->alias('a')
+            ->join('product_review_status b', 'a.id = b.product_id')
+            ->where([
+                'a.state'   => 1,
+                'a.is_on_shelves'   => 1,
+                'b.status'  => 1
+            ])
+        ->where('a.delete_time is null');
+        //被拉黑的厂家
+        $excludeFactoryIds = Db::table('relation_shop_blacklist')->where('shop_id', $shopId)->column('factory_id');
+        if ($excludeFactoryIds) {
+            $factoryIds = implode(',', $excludeFactoryIds);
+            $model->where("a.factory_id not in $factoryIds");
+        }
+        //被拉黑的商品
+        $excludeGoodsIds = Db::table('relation_goods_blacklist')->where('shop_id', $shopId)->column('goods_id');
+        if ($excludeGoodsIds) {
+            $goodsIds = implode(',', $excludeGoodsIds);
+            $model->where("a.factory_id not in $goodsIds");
+        }
+        $list = $model->field('a.id, b.id as bid, a.goods_classify_id, a.name, a.factory_id, a.number, a.model, a.popularity')
+            ->page($page, $row)
+            ->order('b.update_time desc')
+            ->group('a.id')
+            ->select();
+        print_r($list);
+        die;
+        //零售价
+        $retailPrices = Db::table('product_retail_price')->where('shop_id', $shopId)->column('price', 'product_id');
+        foreach ($list as $k => $v) {
+            //首个颜色的首个配置价格
+            $price = Db::table('product_color')
+                ->alias('a')
+                ->join('product_price as b', 'b.color_id = a.id')
+                ->where('a.product_id', $v['id'])
+                ->where('b.delete_time is null')
+                ->value('b.trade_price');
+            if (array_key_exists($v['id'], $retailPrices)) {
+                $list[$k]['retail_price'] = $retailPrices[$v['id']];
+            } else {
+                $list[$k]['retail_price'] = round($price * config('system.price_ratio'));
+            }
+            //判断当前用户身份，非商家，不显示出厂价
+            $list[$k]['trade_price'] = user_info('type') == 2 ? $price : 0;
+        }
+        print_r($list);
+        die;
+
+
+    }
+
+
 
     /**
      * 软删除产品图片及其价格配置
