@@ -253,13 +253,13 @@ class Product extends CoreProduct
             $model->where('name', 'like', "%{$param['search_key']}%");
         }
         if (array_key_exists('style', $param) && $param['style']) {
-            $model->where("style_id in ('{$param['style']}')");
+            $model->where("style_id in ({$param['style']})");
         }
         if (array_key_exists('function', $param) && $param['function']) {
-            $model->where("function_id in ('{$param['function']}')");
+            $model->where("function_id in ({$param['function']})");
         }
         if (array_key_exists('texture', $param) && $param['texture']) {
-            $model->where("texture_id in ('{$param['texture']}')");
+            $model->where("texture_id in ({$param['texture']})");
         }
         $list = $model->field('id, goods_classify_id, name, factory_id, number, model, popularity')
             ->page($param['page'], $param['row'])
