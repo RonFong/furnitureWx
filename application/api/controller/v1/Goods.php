@@ -39,7 +39,7 @@ class Goods extends BaseController
         $this->currentValidate->goCheck('getList');
         try {
             $this->result['data'] = $this->currentModel
-                ->getList($this->data['shop_id'], $this->data['page'] ?? 1, $this->data['row'] ?? 10);
+                ->getList($this->data);
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
         }

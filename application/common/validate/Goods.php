@@ -20,6 +20,8 @@ class Goods extends BaseValidate
 {
     protected $rule = [
         'shop_id'   => 'require|number',
+        'page'      => 'require|number',
+        'row'       => 'require|number',
     ];
 
     protected $message = [
@@ -28,7 +30,9 @@ class Goods extends BaseValidate
 
     protected $scene = [
         'getList'   => [
-            'shop_id'
+            'shop_id',
+            'page',
+            'row'
         ],
     ];
 }
