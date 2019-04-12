@@ -119,13 +119,10 @@ class Product extends CoreProduct
     /**
      * 产品详情
      * @param $id
+     * @param int $shopId    shopId store 商城访问
      * @return array
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
-    public function info($id)
+    public function info($id, $shopId = 0)
     {
         $info = $this->where('id', $id)
             ->field('id, factory_id, name, brand, number, model, texture, style, function, size, discounts, details')
@@ -141,14 +138,19 @@ class Product extends CoreProduct
 
         $info['details'] = json_decode($info['details']);
         $info['colors'] = (new ProductColor())->where('product_id', $id)->field('id, color, img')->order('sort')->select();
+        if ($shopId) {
+            $shopRetailPrice = Db::table('product_retail_price')->where(['shop_id' => $shopId, 'product_id' => $id])->column('price', 'configure_id');
+        }
         $isShowPrice = $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
-            $prices = (new ProductPrice())->where('color_id', $v->id)->field("configure, trade_price")->select();
+            $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, trade_price")->select();
             foreach ($prices as $kk => $vv) {
-                $prices[$kk]->retail_price = round($vv->trade_price * config('system.price_ratio'));
-                if (!$isShowPrice) {
-                    $prices[$kk]->retail_price = 0;
+                $retailPrice = 0;
+                if ($isShowPrice) {
+                    $retailPrice = round($vv->trade_price * config('system.price_ratio'));
                 }
+                $prices[$kk]->retail_price = $retailPrice;
+                $prices[$kk]->shop_retail_price = isset($shopRetailPrice) ? $shopRetailPrice[$vv['id']] ?? 0 : 0;
             }
             $info['colors'][$k]->prices = $prices;
             unset($info['colors'][$k]->id);
@@ -237,7 +239,10 @@ class Product extends CoreProduct
             ])
         ->where('delete_time is null');
         //被拉黑的厂家
-        $excludeFactoryIds = Db::table('relation_shop_blacklist')->where('shop_id', $param['shop_id'])->column('factory_id');
+        $factoryBlacklistInitiative = Db::table('relation_shop_blacklist')->where('shop_id', $param['shop_id'])->column('factory_id');
+        //拉黑当前商家的厂家
+        $factoryBlacklistPassivity = Db::table('relation_factory_blacklist')->where('shop_id', $param['shop_id'])->column('factory_id');
+        $excludeFactoryIds = array_merge($factoryBlacklistInitiative, $factoryBlacklistPassivity);
         if ($excludeFactoryIds) {
             $factoryIds = implode(',', $excludeFactoryIds);
             $model->where("factory_id not in ('$factoryIds')");
@@ -252,6 +257,9 @@ class Product extends CoreProduct
         if (array_key_exists('search_key', $param) && $param['search_key']) {
             $model->where('name', 'like', "%{$param['search_key']}%");
         }
+        if (array_key_exists('goods_classify_id', $param) && $param['goods_classify_id']) {
+            $model->where("goods_classify_id", $param['goods_classify_id']);
+        }
         if (array_key_exists('style', $param) && $param['style']) {
             $model->where("style_id in ({$param['style']})");
         }
@@ -265,8 +273,6 @@ class Product extends CoreProduct
             ->page($param['page'], $param['row'])
             ->order('sort_store desc, sort_store_set_time desc')
             ->select();
-        //零售价
-        $retailPrices = Db::table('product_retail_price')->where('shop_id', $param['shop_id'])->column('price', 'product_id');
         foreach ($list as $k => $v) {
             //首个颜色的首个配置价格
             $colorInfo = Db::table('product_color')
@@ -278,13 +284,19 @@ class Product extends CoreProduct
                 ->field('b.trade_price, img')
                 ->find();
             $list[$k]['img'] = $colorInfo['img'];
-            if (array_key_exists($v['id'], $retailPrices)) {
-                $list[$k]['retail_price'] = $retailPrices[$v['id']];
+
+            //零售价
+            $retailPrices = Db::table('product_retail_price')->where([
+                'shop_id'   => $param['shop_id'],
+                'product_id'    => $v['id']
+            ])->order('price')->value('price');
+            if ($retailPrices) {
+                $list[$k]['retail_price'] = $retailPrices;
             } else {
-                $list[$k]['retail_price'] = round($colorInfo['trade_price'] * config('system.price_ratio'));
+                $list[$k]['retail_price'] = number_format($colorInfo['trade_price'] * config('system.price_ratio'), 2);
             }
-            //判断当前用户身份，非商家，不显示出厂价
-            $list[$k]['trade_price'] = user_info('type') == 2 ? $colorInfo['trade_price'] : 0;
+            //非当前商家，不显示出厂价
+            $list[$k]['trade_price'] = (user_info('type') == 2 && user_info('group_id') == $param['shop_id']) ? $colorInfo['trade_price'] : 0;
         }
         return $list;
     }

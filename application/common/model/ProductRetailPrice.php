@@ -9,10 +9,10 @@
 // | Author: 黎小龙 <shalinglom@gmail.com>
 // +----------------------------------------------------------------------
 
-namespace app\common\validate;
+namespace app\common\model;
 
 
-class StoreClassify extends BaseValidate
+class ProductRetailPrice extends Model
 {
 
 }

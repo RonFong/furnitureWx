@@ -270,6 +270,10 @@ Route::group('api/:version', function () {
     Route::group('store', function () {
         //首页获取商品列表
         Route::get('goods/list', 'api/:version.goods/getList');
+        //商品详情
+        Route::get('goods/info', 'api/:version.goods/info');
+        //自定义商品零售价
+        Route::put('goods/retailPrice', 'api/:version.goods/setRetailPrice');
     });
 
 });
