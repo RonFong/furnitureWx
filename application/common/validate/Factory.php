@@ -19,6 +19,7 @@ class Factory extends BaseValidate
         'id'                => 'require|number',
         'admin_user'        => 'require|number',
         'factory_name'      => 'require|length:2,20',
+        'factory_img'       => 'require',
         'sales_contact'     => 'require|length:2,5',
         'sales_wx'          => 'require',
         'sales_phone'       => 'require|length:11|isPhoneNo',
@@ -45,6 +46,7 @@ class Factory extends BaseValidate
     ];
 
     protected $message = [
+        'factory_img.require'       => '请上传门头照',
         'factory_name.require'      => '请填写厂家名称',
         'factory_name.length'       => '厂家名称需在2~20个字内',
         'sales_contact.require'     => '请填写门店联系人姓名',
@@ -85,7 +87,8 @@ class Factory extends BaseValidate
             'address',
             'lat',
             'lng',
-            'factory_phone'
+            'factory_phone',
+            'factory_img'
         ],
         'supplementInfo' => [
             'factory_wx',

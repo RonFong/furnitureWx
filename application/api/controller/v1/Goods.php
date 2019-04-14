@@ -14,6 +14,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\common\model\ProductRetailPrice;
+use think\Db;
 use think\Request;
 use app\api\model\Product as ProductModel;
 use app\common\validate\Goods as GoodsValidate;
@@ -84,5 +85,49 @@ class Goods extends BaseController
             $this->currentValidate->error($e);
         }
         return json($this->result, 201);
+    }
+
+
+    /**
+     * 获取商品筛选选项
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getOptions()
+    {
+        $this->currentValidate->goCheck('getOptions');
+        //分类
+        $data['classify'] = Db::table('goods_classify')->where('pid', 1)->where('delete_time is null')->field('id, classify_name')->select();
+        foreach ($data['classify'] as $k => $v) {
+            $data['classify'][$k]['child'] = Db::table('goods_classify')->where('pid', $v['id'])->where('delete_time is null')->field('id, classify_name')->select();
+        }
+        //风格
+        $data['style'] = Db::table('goods_style')->where('is_search_option', 1)->field('id, style_name')->order('sort')->select();
+        //材质
+        $data['texture'] = Db::table('goods_texture')->where('is_search_option', 1)->field('id, texture_name')->order('sort')->select();
+        $this->result['data'] = $data;
+        return json($this->result, 200);
+    }
+
+
+    /**
+     * 根据分类id 获取 功能 和 尺寸 （规格） 选项
+     * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getSizeAndFunctionByClassify()
+    {
+        $this->currentValidate->goCheck('getSizeAndFunctionByClassify');
+        //功能
+        $data['function'] = Db::table('goods_function')->where('goods_classify_id', $this->data['classify_id'])->where('is_search_option', 1)->field('id, function_name')->order('sort')->select();
+        //尺寸
+        $data['size'] = Db::table('goods_size')->where('goods_classify_id', $this->data['classify_id'])->where('is_search_option', 1)->field('id, size_describe')->order('sort')->select();
+        $this->result['data'] = $data;
+        return json($this->result, 200);
     }
 }

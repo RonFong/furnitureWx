@@ -35,6 +35,7 @@ class Product extends CoreProduct
             $saveData['factory_id'] = user_info('group_id');
             $saveData['number'] = $this->createGoodsNumber();
             $saveData['details'] = json_encode($saveData['details']);
+            $saveData['min_price'] = $this->getMinPrice($colors);
             //获取排序号
             if (Request::instance()->method() == 'POST') {
                 $sort = $this->where(['factory_id' => user_info('group_id'), 'classify_id' => $saveData['classify_id']])
@@ -59,6 +60,7 @@ class Product extends CoreProduct
                 foreach ($color['prices'] as $price) {
                     Db::table('product_price')->insert([
                         'color_id'      => $colorId,
+                        'product_id'    => $this->id,
                         'configure'     => $price['configure'],
                         'trade_price'   => $price['trade_price']
                     ]);
@@ -70,6 +72,23 @@ class Product extends CoreProduct
             (new BaseValidate())->error($e);
         }
         return $this->id;
+    }
+
+    /**
+     * 获取最低价
+     * @param $colors
+     * @return mixed
+     */
+    protected function getMinPrice($colors)
+    {
+        $prices = [];
+        foreach ($colors as $v) {
+            foreach ($v['prices'] as $vv) {
+                array_push($prices, $vv['trade_price']);
+            }
+        }
+        asort($prices);
+        return $prices[0];
     }
 
 
@@ -228,16 +247,20 @@ class Product extends CoreProduct
      * 获取商城商品列表
      * @param $param
      * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getList($param)
     {
-        $model = Db::table('product')
+        $model = (new Product())
             ->where([
                 'state'   => 1,
                 'is_on_shelves'   => 1,
                 'review_status'   => 1
             ])
-        ->where('delete_time is null');
+        ->field('id as retail_price, id as img, min_price as trade_price');
+
         //被拉黑的厂家
         $factoryBlacklistInitiative = Db::table('relation_shop_blacklist')->where('shop_id', $param['shop_id'])->column('factory_id');
         //拉黑当前商家的厂家
@@ -247,12 +270,38 @@ class Product extends CoreProduct
             $factoryIds = implode(',', $excludeFactoryIds);
             $model->where("factory_id not in ('$factoryIds')");
         }
+
         //被拉黑的商品
         $excludeGoodsIds = Db::table('relation_goods_blacklist')->where('shop_id', $param['shop_id'])->column('goods_id');
         if ($excludeGoodsIds) {
             $goodsIds = implode(',', $excludeGoodsIds);
             $model->where("factory_id not in ('$goodsIds')");
         }
+
+        $model = $this->bindWhere($model, $param);
+        $model = $this->bindOrderBy($model, $param);
+
+        $list = $model->field('id, goods_classify_id, name, factory_id, number, model, popularity')
+            ->page($param['page'], $param['row'])
+            ->order('sort_store desc, sort_store_set_time desc')
+            ->select();
+        foreach ($list as $k => $v) {
+            //非当前商家，不显示出厂价
+            if (user_info('type') != 2 || user_info('group_id') != $param['shop_id']) {
+                $list[$k]['trade_price'] = 0;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * 构建 where
+     * @param $model
+     * @param $param
+     * @return mixed
+     */
+    protected function bindWhere($model, $param)
+    {
         //搜索关键字
         if (array_key_exists('search_key', $param) && $param['search_key']) {
             $model->where('name', 'like', "%{$param['search_key']}%");
@@ -264,41 +313,35 @@ class Product extends CoreProduct
             $model->where("style_id in ({$param['style']})");
         }
         if (array_key_exists('function', $param) && $param['function']) {
-            $model->where("function_id in ({$param['function']})");
+            $model->where("function_ids like '%{$param['function']}%'");
+        }
+        if (array_key_exists('size', $param) && $param['size']) {
+            $model->where("size_ids like '%{$param['size']}%'");
         }
         if (array_key_exists('texture', $param) && $param['texture']) {
             $model->where("texture_id in ({$param['texture']})");
         }
-        $list = $model->field('id, goods_classify_id, name, factory_id, number, model, popularity')
-            ->page($param['page'], $param['row'])
-            ->order('sort_store desc, sort_store_set_time desc')
-            ->select();
-        foreach ($list as $k => $v) {
-            //首个颜色的首个配置价格
-            $colorInfo = Db::table('product_color')
-                ->alias('a')
-                ->join('product_price b', 'b.color_id = a.id')
-                ->where('a.product_id', $v['id'])
-                ->where('b.delete_time is null')
-                ->order('a.sort')
-                ->field('b.trade_price, img')
-                ->find();
-            $list[$k]['img'] = $colorInfo['img'];
+        return $model;
+    }
 
-            //零售价
-            $retailPrices = Db::table('product_retail_price')->where([
-                'shop_id'   => $param['shop_id'],
-                'product_id'    => $v['id']
-            ])->order('price')->value('price');
-            if ($retailPrices) {
-                $list[$k]['retail_price'] = $retailPrices;
-            } else {
-                $list[$k]['retail_price'] = number_format($colorInfo['trade_price'] * config('system.price_ratio'), 2);
-            }
-            //非当前商家，不显示出厂价
-            $list[$k]['trade_price'] = (user_info('type') == 2 && user_info('group_id') == $param['shop_id']) ? $colorInfo['trade_price'] : 0;
+    /**
+     * 构建 order by
+     * @param $model
+     * @param $param
+     * @return mixed
+     */
+    protected function bindOrderBy($model, $param)
+    {
+        if (array_key_exists('order_by_time', $param) && $param['order_by_time']) {
+            $model->order('create_time ' . $param['order_by_time']);
         }
-        return $list;
+        if (array_key_exists('order_by_popularity', $param) && $param['order_by_popularity']) {
+            $model->order('popularity ' . $param['order_by_popularity']);
+        }
+        if (array_key_exists('order_by_price', $param) && $param['order_by_price']) {
+            $model->order('trade_price ' . $param['order_by_price']);
+        }
+        return $model;
     }
 
 

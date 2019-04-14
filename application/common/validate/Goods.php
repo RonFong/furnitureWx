@@ -48,6 +48,12 @@ class Goods extends BaseValidate
             'configure_id',
             'retail_price',
         ],
+        'getSizeAndFunctionByClassify'  => [
+            'classify_id',
+        ],
+        'getOptions'    => [
+            'shop_id',
+        ],
     ];
 
     /**
