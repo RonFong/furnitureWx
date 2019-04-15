@@ -11,7 +11,6 @@ class Factory extends Model
 
     protected $hidden = [
         "create_by",
-        "create_time",
         "update_by",
         "update_time",
         "delete_time",
