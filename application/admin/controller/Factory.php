@@ -45,14 +45,16 @@ class Factory extends Base
     {
         $param = $this->request->param();
         $map = [];
+
+
         if (!empty($param['factory_name'])) {
             $map['factory_name'] = ['like', '%' . $param['factory_name'] . '%'];//厂家名
         }
-        if (!empty($param['factory_phone'])) {
-            $map['factory_phone'] = ['like', '%' . $param['factory_phone'] . '%'];//手机号
+        if (!empty($param['sales_phone'])) {
+            $map['sales_phone'] = ['like', '%' . $param['sales_phone'] . '%'];// 门店联系人手机号
         }
-        if (!empty($param['factory_contact'])) {
-            $map['factory_contact'] = ['like', '%' . $param['factory_contact'] . '%'];//联系人
+        if (!empty($param['sales_contact'])) {
+            $map['sales_contact'] = ['like', '%' . $param['sales_contact'] . '%'];//门店联系人
         }
         return $map;
     }
@@ -80,11 +82,11 @@ class Factory extends Base
             $this->assign('data', $data);
 
             /*获取下拉列表：市*/
-            $city = $this->getRegion($data['province']);
+            $city = $this->getRegion(str_replace('省', '', $data['sales_province']));
             $this->assign('cityList', $city);
 
             /*获取下拉列表：区/镇*/
-            $district = $this->getRegion($data['city']);
+            $district = $this->getRegion(str_replace('市', '', $data['sales_city']));
             $this->assign('districtList', $district);
         }
 
@@ -135,13 +137,18 @@ class Factory extends Base
 
     /**
      * 根据pid 获取下拉列表，省市区三级联动
-     * @param $pid
+     * @param $val
      * @return false|\PDOStatement|string|\think\Collection
      * @throws \think\exception\DbException
      */
-    public function getRegion($pid)
+    public function getRegion($val = 0)
     {
-        $pid = !empty($pid) ? $pid : 0;
+        if (is_numeric($val)) {
+            $pid = !empty($val) ? $val : 0;
+        }
+        if (is_string($val)) {
+            $pid = Db::name('district')->where('name', $val)->value('id');
+        }
         return Db::name('district')->where('parent_id', $pid)->field('id,name,code')->select();
     }
 
