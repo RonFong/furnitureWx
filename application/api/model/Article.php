@@ -217,10 +217,10 @@ class Article extends CoreArticle
         }
 
         if (!empty($param['ids'])) {
+            $this->distance = 100000;
             $ids = implode(',', $param['ids']);
             $where .= " and id in ($ids) ";
         }
-
         $order = 's.create_time DESC';
         if (!empty($param['order_by'])) {
             if ($param['order_by'] == 'distance') {
