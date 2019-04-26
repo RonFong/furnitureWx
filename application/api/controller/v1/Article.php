@@ -379,6 +379,9 @@ class Article extends BaseController
             if (!array_key_exists('id', $this->data) || !array_key_exists('is_draft', $this->data)) {
                 exception('id或is_draft不能为空');
             }
+            if (user_info('id') != $this->currentModel->where('id', $this->data['id'])->value('user_id')) {
+                exception('非作者不能发布');
+            }
             $this->result['data'] = $this->currentModel->save([
                 'id' => $this->data['id'],
                 'is_draft' => $this->data['is_draft']
