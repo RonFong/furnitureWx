@@ -11,7 +11,7 @@ return [
     //管理员用户密码盐值
     'default_salt'          => '99jia',
     //零售价比例
-    'price_ratio'           => 1.3,
+    'price_ratio'           => 2,
     //厂家质量保证金，额度与星级
     'margin_star'           => [
         1000    => 1,
