@@ -214,7 +214,7 @@ class Article extends BaseController
             if (empty($this->data['user_id'])) {
                 $this->data['user_id'] = user_info('id');
             }
-            $this->result['data'] = $this->currentModel->list($this->data);
+            $this->result['data'] = $this->currentModel->list($this->data, false, true);
         } catch (\Exception $e) {
             $this->response->error($e);
         }
