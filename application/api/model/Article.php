@@ -187,10 +187,11 @@ class Article extends CoreArticle
      * 文章列表
      * @param $param
      * @param $recommend bool  获取推荐文章
+     * @param $attention bool  是否已关注
      * @return mixed
      * @throws \think\exception\DbException
      */
-    public function list($param, $recommend = false)
+    public function list($param, $recommend = false, $attention = false)
     {
         //TODO 是否显示已拉黑用户的文章动态？ 暂不处理!!!
 
@@ -215,7 +216,9 @@ class Article extends CoreArticle
         } else {
             $where .= " and is_draft = 0";
         }
-
+        if ($attention) {
+            $this->distance = 100000;
+        }
         if (!empty($param['ids'])) {
             $this->distance = 100000;
             $ids = implode(',', $param['ids']);
