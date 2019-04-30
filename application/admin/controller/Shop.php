@@ -29,6 +29,7 @@ class Shop extends Base
      */
     public function index()
     {
+        $this->assign('id', $this->request->param('id') ?? 0);
         return $this->fetch();
     }
 
@@ -54,6 +55,9 @@ class Shop extends Base
     {
         $param = $this->request->param();
         $map = [];
+        if (!empty($param['id'])) {
+            $map['shop.id'] = $param['id'];
+        }
         if (!empty($param['shop_name'])) {
             $map['shop_name'] = ['like', '%' . $param['shop_name'] . '%'];//商户名
         }

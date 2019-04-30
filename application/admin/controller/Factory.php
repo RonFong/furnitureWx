@@ -28,6 +28,7 @@ class Factory extends Base
      */
     public function index()
     {
+        $this->assign('id', $this->request->param('id') ?? 0);
         return $this->fetch();
     }
 
@@ -46,7 +47,9 @@ class Factory extends Base
         $param = $this->request->param();
         $map = [];
 
-
+        if (!empty($param['id'])) {
+            $map['id'] = $param['id'];
+        }
         if (!empty($param['factory_name'])) {
             $map['factory_name'] = ['like', '%' . $param['factory_name'] . '%'];//厂家名
         }

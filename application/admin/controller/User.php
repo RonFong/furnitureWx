@@ -29,6 +29,7 @@ class User extends Base
      */
     public function index()
     {
+        $this->assign('id', $this->request->param('id') ?? 0);
         return $this->fetch();
     }
 
@@ -54,7 +55,7 @@ class User extends Base
             ->order($this->request->param('sort'))
             ->order('id asc')
             ->field('id,user_name,type,gender,state,phone,group_id,last_login_time,login_num, create_time')
-            ->layTable(['all_login_times_month']);
+            ->layTable(['all_login_times_month', 'group_name']);
         return $list;
     }
 
@@ -62,6 +63,9 @@ class User extends Base
     {
         $param = $this->request->param();
         $map = [];
+        if (!empty($param['id'])) {
+            $map['id'] = $param['id'];
+        }
         if (!empty($param['wx_account'])) {
             $map['wx_account'] = ['like', '%' . $param['wx_account'] . '%'];//帐号
         }

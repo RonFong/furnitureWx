@@ -72,7 +72,7 @@
         //表格数据渲染
         tableIns = table.render({
             elem: '#listTable'
-            , url: '{:url("getDataList")}'
+            , url: '{:url("getDataList", ["id" => $id])}'
             , page: true
             , limit: table_limit
             , limits: table_limits
@@ -85,7 +85,7 @@
             , autoSort: false
             , cols: [[
                 {field: 'id', title: 'ID'}
-                , {field: 'user_name', title: '帐号'}
+                , {field: 'user_name', title: '昵称'}
                 , {
                     title: '用户类型', align: 'center', templet: function (data) {
                         var _html = '';
@@ -97,6 +97,17 @@
                             _html = '<span class="layui-badge layui-bg-gray">普通用户</span>';
                         }
                         return _html;
+                    }
+                }
+                , {field: 'group_name', title: '门店名', align: 'center', templet: function (data) {
+                    if (data.type === 1) {
+                        _html = '<a class="a-link" href="/admin/factory/index?id='+data.group_id+'" target="_blank">厂家用户</a>';
+                    } else if (data.type === 2) {
+                        _html = '<a class="a-link" href="/admin/shop/index?id='+data.group_id+'" target="_blank">商家用户</a>';
+                    } else {
+                        _html = '无';
+                    }
+                    return _html;
                     }
                 }
                 , {

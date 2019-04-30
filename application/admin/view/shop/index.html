@@ -87,7 +87,7 @@
         //表格数据渲染
         tableIns = table.render({
             elem: '#listTable'
-            ,url: '{:url("getDataList")}'
+            ,url: '{:url("getDataList", ["id" => $id])}'
             ,page: true
             ,limit: table_limit
             ,limits: table_limits
@@ -97,6 +97,9 @@
                     return data.shop_name != '' ? '<a href="/admin/shop_commodity/index?shop_id='+data.id+'" target="_blank">'+data.shop_name+'</a>' : "";
                 }}
                 ,{field:'user_name', title:'创建人', minWidth:110}
+                ,{field:'user_name', title:'创建人', minWidth:90, templet: function (data) {
+                    return '<a class="a-link" href="/admin/user/index?id='+data.admin_user+'" target="_blank">'+data.user_name+'</a>';
+                }}
                 ,{field:'shop_contact', title:'门店联系人', minWidth:90}
                 ,{field:'shop_phone', title:'门店电话', minWidth:110}
                 ,{field:'shop_wx', title:'门店微信号', minWidth:90}

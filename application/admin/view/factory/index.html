@@ -58,7 +58,7 @@
         //表格数据渲染
         tableIns = table.render({
             elem: '#listTable'
-            ,url: '{:url("getDataList")}'
+            ,url: '{:url("getDataList", ["id" => $id])}'
             ,page: true
             ,limit: table_limit
             ,limits: table_limits

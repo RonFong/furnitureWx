@@ -64,6 +64,23 @@ class User extends CoreUser
         return $value ? date('Y-m-d H:i:s', $value) : '/';
     }
 
+    /**
+     * 获取用户所属门店名
+     * @param $value
+     * @param $data
+     * @return mixed|string
+     */
+    public function getGroupNameAttr($value, $data)
+    {
+        switch ($data['type']) {
+            case 1:
+                return Db::table('factory')->where('id', $data['group_id'])->value('factory_name');
+            case 2:
+                return Db::table('shop')->where('id', $data['group_id'])->value('shop_name');
+            case 3:
+                return '无';
+        }
+    }
 
     /**
      * 本月登录次数
