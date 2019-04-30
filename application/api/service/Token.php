@@ -77,6 +77,7 @@ class Token
                 'type'          => 3,
                 'state'         => 1,
                 'login_num'     => 1,
+                'last_login_time'   => time(),
                 'create_time'   => time()
             ];
             $id = Db::table('user')->insertGetId($saveData);
@@ -88,8 +89,12 @@ class Token
             $result = $saveData;
         } else {
             $locationData['user_id'] = $userInfo->id;
-            //累加登录次数
-            (new User())->where('id', $userInfo->id)->setInc('login_num');
+            //累加登录次数,记录最后登录时间
+            if (time() - $userInfo->last_login_time > 60) {
+                $user = new User();
+                $user->where('id', $userInfo->id)->setInc('login_num', 1);
+                $user->where('id', $userInfo->id)->update(['last_login_time' => time()]);
+            }
             $result = $userInfo->toArray();
         }
         if (!empty($locationData['lat']) && !empty($locationData['lng'])) {
