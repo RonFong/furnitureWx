@@ -61,22 +61,9 @@ class User extends CoreUser
      */
     public function getLastLoginTimeAttr($value, $data)
     {
-        $value = $data['id'] ?? $value;
-        $res = !empty($value) ? Db::name('user_location')->where('user_id', $value)->order('id desc')->value('create_time') : '';
-        return !empty($res) ? date('Y-m-d H:i:s', $res) : '';
+        return $value ? date('Y-m-d H:i:s', $value) : '/';
     }
 
-    /**
-     * 总登录次数
-     * @param $value
-     * @param $data
-     * @return mixed
-     */
-    public function getAllLoginTimesAttr($value, $data)
-    {
-        $value = $data['id'] ?? $value;
-        return Db::name('user_location')->whereIn('user_id', $value)->count();
-    }
 
     /**
      * 本月登录次数

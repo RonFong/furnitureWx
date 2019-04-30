@@ -1,17 +1,24 @@
 {extend name="common/index"}
 {block name="css"}
 <style>
-    .layui-table-cell{
+    .layui-table-cell {
         padding: 0 8px;
     }
 </style>
 {/block}
 {block name="content"}
 <div class="layui-row">
-    <form id="searchForm" class="layui-form layui-form-pane tpl-form-search" onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
+    <form id="searchForm" class="layui-form layui-form-pane tpl-form-search"
+          onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">帐号</label>
+                <label class="layui-form-label">微信号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="wx_account" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">昵称</label>
                 <div class="layui-input-inline">
                     <input type="text" name="user_name" class="layui-input">
                 </div>
@@ -33,6 +40,7 @@
                     </select>
                 </div>
             </div>
+            <input type="hidden" name="sort" value="">
             <div class="layui-inline">
                 <div class="layui-btn-group">
                     <a class="layui-btn layui-btn-normal" onclick="reloadTable('#searchForm');">搜索</a>
@@ -50,7 +58,8 @@
 <script type="text/html" id="operating">
     <div class="layui-btn-group">
         <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                class="layui-icon layui-icon-delete">删除</i></a>
     </div>
 </script>
 {/block}
@@ -63,58 +72,77 @@
         //表格数据渲染
         tableIns = table.render({
             elem: '#listTable'
-            ,url: '{:url("getDataList")}'
-            ,page: true
-            ,limit: table_limit
-            ,limits: table_limits
-            ,cols: [[
-                {type:'numbers', title:'序号', width:45}
-                ,{field:'user_name', title:'帐号'}
-                ,{title:'用户类型', align:'center', templet: function (data) {
-                    var _html = '';
-                    if (data.type === 1) {
-                        _html = '<span class="layui-badge layui-bg-blue">厂家用户</span>';
-                    } else if (data.type === 2) {
-                        _html = '<span class="layui-badge layui-bg-orange">商家用户</span>';
-                    } else {
-                        _html = '<span class="layui-badge layui-bg-gray">普通用户</span>';
+            , url: '{:url("getDataList")}'
+            , page: true
+            , limit: table_limit
+            , limits: table_limits
+            , initSort: {
+                field: 'id' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+            , id:'field-sort'
+            , sort: true
+            , autoSort: false
+            , cols: [[
+                {field: 'id', title: 'ID'}
+                , {field: 'user_name', title: '帐号'}
+                , {
+                    title: '用户类型', align: 'center', templet: function (data) {
+                        var _html = '';
+                        if (data.type === 1) {
+                            _html = '<span class="layui-badge layui-bg-blue">厂家用户</span>';
+                        } else if (data.type === 2) {
+                            _html = '<span class="layui-badge layui-bg-orange">商家用户</span>';
+                        } else {
+                            _html = '<span class="layui-badge layui-bg-gray">普通用户</span>';
+                        }
+                        return _html;
                     }
-                    return _html;
-                }}
-                ,{title:'性别', align:'center', templet: function (data) {
-                    return data.gender === 1 ? '<span class="layui-badge layui-bg-orange">男</span>' : '<span class="layui-badge">女</span>';
-                }}
-                ,{title:'状态', align:'center', templet: function (data) {
-                    return data.state === 1 ? '<span class="layui-badge layui-bg-blue">启用</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
-                }}
-                ,{field:'last_login_time', title:'最后登录时间', minWidth:130}
-                ,{field:'create_time', title:'注册时间', minWidth:105}
-                ,{field:'all_login_times', title:'总登录次数', minWidth:120}
-                ,{field:'all_login_times_month', title:'本月登录次数', minWidth:130}
+                }
+                , {
+                    title: '性别', align: 'center', templet: function (data) {
+                        return data.gender === 1 ? '<span class="layui-badge layui-bg-orange">男</span>' : '<span class="layui-badge">女</span>';
+                    }
+                }
+                , {
+                    title: '状态', align: 'center', templet: function (data) {
+                        return data.state === 1 ? '<span class="layui-badge layui-bg-blue">启用</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
+                    }
+                }
+                , {field: 'last_login_time', title: '最后登录时间', minWidth: 130, sort: true}
+                , {field: 'create_time', title: '注册时间', minWidth: 105, sort: true}
+                , {field: 'login_num', title: '登录次数', minWidth: 120, sort: true}
+                , {field: 'all_login_times_month', title: '本月登录次数', minWidth: 130}
 
-                ,{fixed:'right', title:'操作', toolbar: '#operating', align:'center'}
+                , {fixed: 'right', title: '操作', toolbar: '#operating', align: 'center'}
             ]]
-            ,where: getFormJson('#searchForm')
+            , where: getFormJson('#searchForm')
         });
 
         //监听工具条
-        table.on('tool(listTable)', function(obj){
+        table.on('tool(listTable)', function (obj) {
             var data = obj.data;
             if (obj.event === 'del') {
-                layer.confirm('确定继续吗？', function(index){
-                    $.post('{:url("delete")}',{id:data.id}, function (result) {
+                layer.confirm('确定继续吗？', function (index) {
+                    $.post('{:url("delete")}', {id: data.id}, function (result) {
                         layer.close(index);
                         if (result.code) {
                             reloadTable('#searchForm');
                         } else {
-                            layer.alert(result.msg, {icon:2});
+                            layer.alert(result.msg, {icon: 2});
                         }
                     }, 'json');
                 });
             } else if (obj.event === 'edit') {
-                window.open('edit?id='+data.id);
+                window.open('edit?id=' + data.id);
             }
         });
+        table.on('sort(listTable)', function (obj) {
+                $('input[name="sort"]').val(obj.field + ' ' + obj.type);
+                reloadTable('#searchForm');
+            }
+        );
+
     });
 
 
