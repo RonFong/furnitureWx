@@ -89,7 +89,7 @@ class Token
         } else {
             $locationData['user_id'] = $userInfo->id;
             //累加登录次数
-            (new User())->where('id', $userInfo->id)->setInc('login_num', 1, 10);
+            (new User())->where('id', $userInfo->id)->setInc('login_num');
             $result = $userInfo->toArray();
         }
         if (!empty($locationData['lat']) && !empty($locationData['lng'])) {
