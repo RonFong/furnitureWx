@@ -106,13 +106,6 @@ class Shop extends Base
         $provinceList = $this->getRegion(0);
         $this->assign('provinceList', $provinceList);
 
-        //经营类别
-        $categoryList = StoreClassify::all(function ($query) {
-            $query->where(['state' => 1, 'parent_id' => 0])->field('id, name');
-        });
-
-        $this->assign('categoryList', $categoryList);
-
         return $this->fetch();
     }
 

@@ -47,16 +47,6 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">经营类别：</label>
-                    <div class="layui-input-block">
-                        <select name="category">
-                            {volist name="categoryList" id="category"}
-                                <option value="{$category.id}"  {eq name="$category.id" value="$data.category_id|default='0'"}selected{/eq}>{$category.name}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label class="layui-form-label">法人姓名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="user_name" value="{$data.user_name|default=''}" placeholder="请输入" class="layui-input">
