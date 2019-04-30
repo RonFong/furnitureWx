@@ -2,6 +2,9 @@
 html {
     color: #666;
 }
+.a-link {
+    color: #1E9FFF;
+}
 
 [lay-href], [lay-tips], [layadmin-event] {
     cursor: pointer
