@@ -101,9 +101,9 @@
                 }
                 , {field: 'group_name', title: '门店名', align: 'center', templet: function (data) {
                     if (data.type === 1) {
-                        _html = '<a class="a-link" href="/admin/factory/index?id='+data.group_id+'" target="_blank">厂家用户</a>';
+                        _html = '<a class="a-link" href="/admin/factory/index?id='+data.group_id+'" target="_blank">'+data.group_name+'</a>';
                     } else if (data.type === 2) {
-                        _html = '<a class="a-link" href="/admin/shop/index?id='+data.group_id+'" target="_blank">商家用户</a>';
+                        _html = '<a class="a-link" href="/admin/shop/index?id='+data.group_id+'" target="_blank">'+data.group_name+'</a>';
                     } else {
                         _html = '无';
                     }

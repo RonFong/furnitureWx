@@ -65,7 +65,9 @@
             ,cols: [[
                 {type:'numbers', title:'序号', width:45}
                 ,{field:'factory_name', title:'厂家名'}
-                ,{field:'admin_user_name', title:'创建人'}
+                ,{field:'admin_user_name', title:'创建人', minWidth:90, templet: function (data) {
+                    return '<a class="a-link" href="/admin/user/index?id='+data.admin_user+'" target="_blank">'+data.admin_user_name+'</a>';
+                }}
                 ,{field:'sales_contact', title:'门市联系人'}
                 ,{field:'sales_phone', title:'门市电话'}
                 ,{field:'sales_wx', title:'门店微信号'}
