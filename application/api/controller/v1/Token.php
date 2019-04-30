@@ -81,8 +81,6 @@ class Token
                     'user_info' => $data
                 ]
             ];
-            //累加登录次数
-            (new User())->where('id', $data['id'])->inc('login_num');
         } catch (\Exception $e) {
             (new BaseValidate())->error($e);
             return json(['state' => 0, 'msg' => $e->getMessage()], 400);

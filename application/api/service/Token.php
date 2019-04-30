@@ -76,6 +76,7 @@ class Token
                 'wx_account'    => '',
                 'type'          => 3,
                 'state'         => 1,
+                'login_num'     => 1,
                 'create_time'   => time()
             ];
             $id = Db::table('user')->insertGetId($saveData);
@@ -87,6 +88,8 @@ class Token
             $result = $saveData;
         } else {
             $locationData['user_id'] = $userInfo->id;
+            //累加登录次数
+            (new User())->where('id', $userInfo->id)->inc('login_num');
             $result = $userInfo->toArray();
         }
         if (!empty($locationData['lat']) && !empty($locationData['lng'])) {
