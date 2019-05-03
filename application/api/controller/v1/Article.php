@@ -228,6 +228,14 @@ class Article extends BaseController
      */
     public function details()
     {
+        $article = $this->currentModel->where('id', $this->data['id'])->find();
+        if (!$article) {
+            return json([
+                'state'     => 0,
+                'errorCode' => 10007,
+                'msg'       => '文章不存在或已被删除'
+            ], 404);
+        }
         $this->currentValidate->goCheck('details');
         try {
             $this->result['data'] = $this->currentModel->details($this->data['id']);
