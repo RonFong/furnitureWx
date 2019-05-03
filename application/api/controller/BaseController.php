@@ -34,6 +34,7 @@ abstract class BaseController extends Controller {
      */
     protected $result = [
         'state' => 1,
+        'errorCode' => 0,
         'msg'   => 'success',
         'data'  => [],
     ];
