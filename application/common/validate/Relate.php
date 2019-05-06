@@ -55,7 +55,7 @@ class Relate extends BaseValidate
         ],
         'factoryBlacklist' => [
             'shop_id',
-            'type'       => 'require|in:inc,dec|goodsCollect',
+            'type'       => 'require|in:inc,dec',
 
         ],
         'goodsBlacklist' => [
@@ -65,7 +65,7 @@ class Relate extends BaseValidate
         ],
         'shopBlacklist' => [
             'factory_id',
-            'type'       => 'require|in:inc,dec|goodsCollect',
+            'type'       => 'require|in:inc,dec',
         ],
         'shopCollect'   => [
             'shop_id',
