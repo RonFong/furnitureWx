@@ -12,37 +12,49 @@ namespace app\admin\controller;
 
 
 use think\Request;
-use app\common\model\StoreClassify as StoreClassifyModel;
+use \app\admin\model\GoodsClassify as GoodsClassifyModel;
 
-class StoreClassify extends Base
+class GoodsClassify extends Base
 {
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->currentModel = new StoreClassifyModel();
+        $this->currentModel = new GoodsClassifyModel();
     }
 
     public function index()
     {
+        $classifyListOption = $this->currentModel->getClassifyListOption();
+        $this->assign('classifyListOption', $classifyListOption);
         return $this->fetch();
     }
 
+    /**
+     * 菜单列表页面 获取数据
+     * @throws \think\exception\DbException
+     * @return array
+     */
     public function getDataList()
     {
         $param = $this->request->param();
         $map = [];
-        if (!empty($param['name'])) {
-            $map['name'] = ['like', "%{$param['name']}%"];
+        if (!empty($param['pid'])) {
+            $map['pid'] = $param['pid'];
         }
-        if (!empty($param['parent_id'])) {
-            $map['parent_id'] = $param['parent_id'];
+        if (!empty($param['classify_name'])) {
+            $map['classify_name'] = ['like', '%'.$param['classify_name'].'%'];
         }
-        if (!empty($param['parent_name'])) {
-            $parentName = trim($param['parent_name']);
-            $ids = $this->currentModel->where('name', 'like', "%$parentName%")->column('id');
-            $map['parent_id'] = ['in', $ids];
+        $count = $this->currentModel->where($map)->count();
+        $list = $this->currentModel->where($map)
+            ->field(true)
+            ->field('pid as pid_name, id as goods_num')
+            ->select();
+        $list = \Tree::get_Table_tree($list, 'classify_name', 'id');
+        foreach ($list as $key=>$val) {
+            unset($list[$key]['child']);
         }
-        return $this->currentModel->where($map)->order('parent_id, sort')->layTable(['parent_name', 'state_text']);
+        $data = array_slice($list, ($param['page'] - 1) * $param['limit'], $param['limit']);
+        return ['code'=>0, 'msg'=>'', 'count'=>$count, 'data'=>$data];
     }
 
     /**
@@ -59,14 +71,13 @@ class StoreClassify extends Base
             if (empty($data)) {
                 $this->error('信息不存在');
             }
+            $data = $data->toArray();
             $this->assign('data', $data);
         }
+        $pid = !empty($data['pid']) ? $data['pid'] : 0;
+        $menuListOption = $this->currentModel->getMenuListOption($pid);
+        $this->assign('menuListOption', $menuListOption);
 
-        //分类名称列表
-        $value_id = !empty($data['parent_id']) ? $data['parent_id'] : 0;
-        $classifyList = $this->currentModel->select();
-        $classifyList = \Tree::get_option_tree($classifyList, $value_id, 'name', 'id', 'parent_id');
-        $this->assign('classifyList', $classifyList);
         return $this->fetch();
     }
 
@@ -78,28 +89,17 @@ class StoreClassify extends Base
             $this->error('没有需要保存的数据！');
         }
 
+        if (empty($param['sort_num'])) {
+            $count = $this->currentModel->where('pid', $param['pid'])->count();
+            $param['sort_num'] = $count+1;
+        }
         //验证数据
-        $result = $this->validate($param, 'ArticleClassify');
+        $result = $this->validate($param, 'Menu');
         if ($result !== true) {
             $this->error($result);
         }
 
         try {
-            //图片不为空，开始处理图片
-            if (!empty($param['classify_img'])) {
-                $old = !empty($param['id']) ? Db::name('article_classify')->where('id', $param['id'])->value('classify_img') : '';
-                if (empty($old) || $param['classify_img'] != $old) {
-                    $param['classify_img'] = current(imgTempFileMove([$param['classify_img']], 'img/article/'));//从临时文件夹移动图片
-                    if (!empty($param['id'])) {
-                        $count = Db::name('article_classify')->where('classify_img', $old)->count();//编辑且换图，则删除旧图片
-                        //若其他地方没使用该旧图片，则删除
-                        if ($count == 1){
-                            delete_file($old);
-                        }
-                    }
-                }
-            }
-
             //保存数据
             $this->currentModel->save($param);
         } catch (\Exception $e) {
@@ -108,4 +108,5 @@ class StoreClassify extends Base
         }
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
+
 }

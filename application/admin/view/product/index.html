@@ -1,0 +1,132 @@
+{extend name="common/index"}
+{block name="css"}
+<style>
+    .layui-table-cell{
+        padding: 0 8px;
+        height: 40px;
+    }
+    .laytable-cell-1-0-2 {
+        width: 120px !important;
+    }
+    th div {
+        height: 28px !important;
+    }
+</style>
+{/block}
+{block name="content"}
+<div class="layui-row">
+    <form id="searchForm" class="layui-form layui-form-pane tpl-form-search" onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">产品名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">商城分类</label>
+                <div class="layui-input-inline">
+                    <select name="classify_id">
+                        <option value="">请选择</option>
+                        {$classifyOptions}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <select name="state">
+                        <option value="">请选择</option>
+                        <option value="1">启用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-normal" onclick="reloadTable('#searchForm');">搜索</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="layui-col-xs12">
+    <table id="listTable" lay-filter="listTable"></table>
+</div>
+
+<script type="text/html" id="operating">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
+    </div>
+</script>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    layui.use(['table'], function () {
+        var table = layui.table;
+
+        //表格数据渲染
+        tableIns = table.render({
+            elem: '#listTable'
+            ,url: '{:url("getDataList")}'
+            ,page: true
+            ,limit: table_limit
+            ,limits: table_limits
+            ,cols: [[
+                {field:'id', title:'ID', width:45}
+                ,{field:'name', title:'产品名'}
+                ,{field:'image',title:'首图', templet: function (data) {
+                    return '<a href="'+data.image+'" target="_blank"><img src="'+data.image+'" height="40" width="auto"/></a>';
+                }}
+                ,{field:'factory_id', width: 80, title:'所属厂家', templet: function (data) {
+                    return '<a class="a-link" href="/admin/factory/index?id='+data.factory_id+'" target="_blank">'+data.factory_name+'</a>';
+                }}
+                ,{field:'brand', title:'品牌', templet: function (data) {
+                    return data.brand ? data.brand : '/';
+                    }
+                }
+                ,{field:'classify_name', title:'厂家分类'}
+                ,{field:'goods_classify_name', title:'商城分类'}
+                ,{field:'number', title:'编号'}
+                ,{field:'model', title:'型号'}
+                ,{field:'texture', title:'材质'}
+                ,{field:'style', title:'风格'}
+                ,{field:'function', title:'功能'}
+                ,{field:'texture', title:'材质'}
+                ,{title:'状态', align:'center', templet: function (data) {
+            return data.state === 1 ? '<span class="layui-badge layui-bg-blue">正常</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
+        }}
+                ,{title:'上架状态', align:'center', templet: function (data) {
+                    return data.is_on_shelves === 1 ? '<span class="layui-badge layui-bg-blue">已上架</span>' : '<span class="layui-badge layui-bg-gray">未上架</span>';
+                }}
+                ,{title:'操作', toolbar: '#operating', align:'center'}
+            ]]
+            ,where: getFormJson('#searchForm')
+        });
+
+        //监听工具条
+        table.on('tool(listTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('确定继续吗？', function(index){
+                    $.post('{:url("delete")}',{id:data.id}, function (result) {
+                        layer.close(index);
+                        if (result.code) {
+                            reloadTable('#searchForm');
+                        } else {
+                            layer.alert(result.msg, {icon:2});
+                        }
+                    }, 'json');
+                });
+            } else if (obj.event === 'edit') {
+                window.open('edit?id='+data.id);
+            }
+        });
+    });
+
+
+</script>
+{/block}
