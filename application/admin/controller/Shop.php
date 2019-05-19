@@ -132,6 +132,12 @@ class Shop extends Base
         try {
             //保存数据
             $this->currentModel->save($param);
+            if (!empty($param['id'])) {
+                $groupNearbyData['state'] = $param['state'];
+                $groupNearbyData['audit_state'] = $param['audit_state'];
+                $groupNearbyData['group_name'] = $param['shop_name'];
+                Db::table('group_nearby')->where(['group_type' => 2, 'group_id' => $param['id']])->update($groupNearbyData);
+            }
         } catch (\Exception $e) {
             $msg = !empty($this->currentModel->getError()) ? $this->currentModel->getError() : $e->getMessage();
             $this->error($msg);
