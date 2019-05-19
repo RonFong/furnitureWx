@@ -253,6 +253,10 @@ class Article extends CoreArticle
                 $list[$k]['distance'] = $v['distance'] >= 1 ? round($v['distance'], 1) . '公里' : ($v['distance'] * 1000 <= 100 ? '100米内' : round($v['distance'] * 1000) . '米');
             }
             $user = Db::table('user')->where('id', $v['user_id'])->find();
+            if ($user['delete_time'] || $user['state'] != 1) {
+                unset($list[$k]);
+                continue;
+            }
             $list[$k]['user_name'] = $this->emojiDecode($user['user_name']);
             $list[$k]['avatar'] = $user['avatar'];
             //2019-01-16 去除标题，改为第一段内容文字
