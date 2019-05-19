@@ -24,14 +24,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>
-                    <img src="{$data.wx_code|default=''}" width="100" alt="微信二维码">
-                </div>
+                <!--<div class="layui-form-item">-->
+                    <!--<label class="layui-form-label"><span style="color: red;">*&nbsp;</span>微信二维码：</label>-->
+                    <!--<img src="{$data.wx_code|default=''}" width="100" alt="微信二维码">-->
+                <!--</div>-->
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">*&nbsp;</span>商户名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="shop_name" value="{$data.shop_name|default=''}" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">经营类别：</label>
+                        <div class="layui-input-block">
+                            <select name="classify_id" id="classify_id" lay-filter="region">
+                                <option value="">未选择</option>
+                                {notempty name="classifyList"}
+                                {volist name="classifyList" id="vo"}
+                                <option value="{$vo.id}" {eq name="$data.classify_id" value="$vo.id"} selected {/eq} >{$vo.classify_name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="layui-form-item">

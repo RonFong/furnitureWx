@@ -40,6 +40,20 @@ class Shop extends CoreShop
     }
 
     /**
+     * 经营类别
+     * @param $value
+     * @param $data
+     * @return mixed|string
+     */
+    public function getClassifyNameAttr($value, $data)
+    {
+        if ($data['classify_id'] == 0) {
+             return '/';
+        }
+        return Db::table('shop_classify')->where('id', $data['classify_id'])->value('classify_name');
+    }
+
+    /**
      * 获取审核状态名称
      * @param $value
      * @param $data

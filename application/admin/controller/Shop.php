@@ -46,8 +46,8 @@ class Shop extends Base
             ->where($map)
             ->order('shop.id desc')
             ->field('shop.id,shop.admin_user,shop.shop_name,user.user_name,user.create_time,user.create_time,
-            shop.shop_contact,shop.shop_phone,shop.shop_wx,shop.address,shop.audit_state,shop.state,shop.lat,shop.lng,shop.store_status')
-            ->layTable(['audit_state_des', 'home_content_has', 'shop_commodity_count', 'last_login_time', 'all_login_times', 'all_login_times_month']);
+            shop.shop_contact,shop.shop_phone,shop.shop_wx,shop.address,shop.audit_state,shop.state,shop.lat,shop.lng,shop.store_status,classify_id')
+            ->layTable(['classify_name', 'audit_state_des', 'home_content_has', 'shop_commodity_count', 'last_login_time', 'all_login_times', 'all_login_times_month']);
         return $list;
     }
 
@@ -108,6 +108,9 @@ class Shop extends Base
         /*获取下拉列表：省份*/
         $provinceList = $this->getRegion(0);
         $this->assign('provinceList', $provinceList);
+        //经营类别
+        $classifyList = Db::table('shop_classify')->select();
+        $this->assign('classifyList', $classifyList);
 
         return $this->fetch();
     }
