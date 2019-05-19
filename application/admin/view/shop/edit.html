@@ -116,6 +116,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">启用状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="state" value="0" title="禁用" {eq name="$data.state|default='0'" value="0"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">审核状态：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="audit_state" value="0" title="未审核" {eq name="$data.audit_state|default='0'" value="0"}checked{/eq}>
@@ -123,6 +130,15 @@
                         <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default='0'" value="2"}checked{/eq}>
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商城开通状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="store_status" value="0" title="未处理" {eq name="$data.store_status|default='0'" value="0"}checked{/eq}>
+                        <input type="radio" name="store_status" value="1" title="开通" {eq name="$data.store_status|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="store_status" value="2" title="禁用" {eq name="$data.store_status|default='0'" value="2"}checked{/eq}>
+                    </div>
+                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">审核结果说明：</label>
                     <div class="layui-input-block">
