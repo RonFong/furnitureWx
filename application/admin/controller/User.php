@@ -181,9 +181,9 @@ class User extends Base
     {
         try {
             Db::startTrans();
-            $this->currentModel->where('id', $id)->delete();
-            (new \app\admin\model\Article())->where('user_id', $id)->delete();
-            (new \app\admin\model\Shop())->where('admin_user', $id)->delete();
+            $this->currentModel->where('id', $id)->update(['delete_time' => time()]);
+            (new \app\admin\model\Article())->where('user_id', $id)->update(['delete_time' => time()]);
+            (new \app\admin\model\Shop())->where('admin_user', $id)->update(['delete_time' => time()]);
         } catch (\Exception $e) {
             Db::rollback();
             $this->error($e->getMessage());
