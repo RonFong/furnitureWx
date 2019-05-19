@@ -164,12 +164,12 @@ class Product extends CoreProduct
         foreach ($info['colors'] as $k => $v) {
             $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, trade_price")->select();
             foreach ($prices as $kk => $vv) {
-                $retailPrice = 0;
-                if ($isShowPrice) {
-                    $retailPrice = round($vv->trade_price * config('system.price_ratio'));
-                }
+                $retailPrice = round($vv->trade_price * config('system.price_ratio'));
                 $prices[$kk]->retail_price = $retailPrice;
                 $prices[$kk]->shop_retail_price = isset($shopRetailPrice) ? $shopRetailPrice[$vv['id']] ?? 0 : 0;
+                if (!$isShowPrice) {
+                    $prices[$kk]->trade_price = 0;
+                }
             }
             $info['colors'][$k]->prices = $prices;
             unset($info['colors'][$k]->id);
