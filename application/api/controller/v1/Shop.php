@@ -245,4 +245,17 @@ class Shop extends BaseController
         return json($this->result, 200);
 
     }
+
+    /**
+     * 商家经营类别
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function classify()
+    {
+        $this->result['data'] = Db::table('shop_classify')->select();
+        return json($this->result, 200);
+    }
 }
