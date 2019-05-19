@@ -88,6 +88,8 @@ Route::group('api/:version', function () {
 
     // 商家门店
     Route::group('shop', function () {
+        // 商家经营类别
+        Route::get('classify', 'api/:version.Shop/classify');
         // 入驻商家
         Route::post('create', 'api/:version.Shop/create');
         // 获取门店首页信息
