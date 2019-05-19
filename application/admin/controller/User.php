@@ -177,5 +177,21 @@ class User extends Base
         $this->success('保存成功!');
     }
 
+    public function delete($id)
+    {
+        try {
+            Db::startTrans();
+            $this->currentModel->where('id', $id)->delete();
+            (new \app\admin\model\Article())->where('user_id', $id)->delete();
+            (new \app\admin\model\Shop())->where('admin_user', $id)->delete();
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error($e->getMessage());
+        }
+        Db::commit();
+        $this->success('删除成功！');
+
+    }
+
 }
 

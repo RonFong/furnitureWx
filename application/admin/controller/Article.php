@@ -54,8 +54,9 @@ class Article extends Base
         if (!empty($param['classify_id'])) {
             $map['classify_id'] = $param['classify_id'];//分类名称
         }
-        if (!empty($param['title'])) {
-            $map['title'] = ['like', '%' . $param['title'] . '%'];//标题
+        if (!empty($param['user_name'])) {
+            $users = Db::table('user')->where('user_name', $param['user_name'])->column('id');
+            $map['user_id'] = ['in', implode(',', $users)];
         }
         if (isset($param['state']) && $param['state'] !== '') {
             $map['state'] = $param['state'];//状态
