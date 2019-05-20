@@ -77,7 +77,8 @@ class Shop extends BaseValidate
 
     protected function checkUserType($value)
     {
-        if (Db::table('user')->where('id', user_info('id')->value('group_id')) != 0) {
+        $groupId = Db::table('user')->where('id', user_info('id'))->value('group_id');
+        if ($groupId != 0) {
             return '您已创建 厂/商 门店';
         }
         return true;
