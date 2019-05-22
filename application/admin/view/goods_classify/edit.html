@@ -20,9 +20,81 @@
                         <input type="text" name="classify_name" value="{$data.classify_name|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
-            </div>
-            <div class="tpl-form-action">
-                <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">风格：</label>
+                    <div class="layui-input-block" style="top:6px;">
+                        <span class="add-attr" data-attr="style" data-method="offset" data-type="auto" style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
+                        {volist name="data.styles" id="vo"}
+                        <div style="display: inline;margin-right: 30px;">
+                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;width:40px;font-size: 12px;line-height: 20px;cursor:default;">
+                                {$vo.name}
+                            </span>
+                            <div class="action-btn" style="display: none;">
+                               <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="style" data-value="{$vo.id}" style="width:10px;border:0px;">
+                                    <i class="layui-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">材质：</label>
+                    <div class="layui-input-block" style="top:6px;">
+                        <span class="add-attr" data-attr="texture" style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
+                        {volist name="data.textures" id="vo"}
+                        <div style="display: inline;margin-right: 30px;">
+                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
+                                {$vo.name}
+                            </span>
+                            <div class="action-btn" style="display: none;">
+                                <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="texture" data-value="{$vo.id}" style="width:10px;border:0px;">
+                                    <i class="layui-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">功能：</label>
+                    <div class="layui-input-block" style="top:6px;">
+                        <span class="add-attr" data-attr="function" style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
+                        {volist name="data.functions" id="vo"}
+                        <div style="display: inline;margin-right: 30px;">
+                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
+                                {$vo.name}
+                            </span>
+                            <div class="action-btn" style="display: none;">
+                                <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="function" data-value="{$vo.id}" style="width:10px;border:0px;">
+                                    <i class="layui-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">尺寸：</label>
+                    <div class="layui-input-block" style="top:6px;">
+                        <span class="add-attr" data-attr="size"  style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
+                        {volist name="data.sizes" id="vo"}
+                        <div style="display: inline;margin-right: 30px;">
+                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
+                                {$vo.name}
+                            </span>
+                            <div class="action-btn" style="display: none;">
+                                <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="size" data-value="{$vo.id}" style="width:10px;border:0px;">
+                                    <i class="layui-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="tpl-form-action">
+                    <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
+                </div>
             </div>
         </div>
     </form>
@@ -32,6 +104,11 @@
 
 {block name="script"}
 <script type="text/javascript">
+    $('.style-btn').click(function () {
+        $('.action-btn').css('display', 'none');
+        $(this).next('.action-btn').css('display', 'inline');
+    });
+
     layui.use(['form'], function () {
         var form = layui.form;
 
@@ -52,7 +129,77 @@
         });
     });
 
+    var id = {$data.id|default=0};
 
+    $('.attr-del').click(function () {
+        var attr = $(this).data('attr');
+        var attrId = $(this).data('value');
+        var obj = this;
+        layer.confirm('此属性将从当前分类中移除，确定继续吗？', function(index) {
+            $.post('{:url("delAttr")}',{id:id,attr:attr,attrId:attrId}, function (result) {
+                layer.close(index);
+                if (result.code) {
+                    $(obj).parent().parent().remove();
+                } else {
+                    layer.alert(result.msg, {icon:2});
+                }
+            }, 'json');
+        });
+    });
+
+    $('.add-attr').click(function () {
+        if (id == 0) {
+            layer.alert('请先添加保存当前分类', {icon:2});
+        } else {
+            var attrs;
+            var attr = $(this).data('attr');
+            $.get('{:url("getAttrs")}',{id:id,attr:attr,}, function (result) {
+                if (result.code) {
+                    attrs = result.data;
+                    var attr_input = '';
+                    for (var i in attrs) {
+                        var selectd = attrs[i].selected == 0 ? '' : 'checked=""';
+                        attr_input += '<input type="checkbox" name="'+i+'" lay-skin="primary" value="'+attrs[i].id+' "title="'+attrs[i].name+' " '+selectd+'>';
+                    }
+                    var html = '<form id="attrForm" class="layui-form" action="{:url("saveAttr")}">' +
+                        '<div class="layui-form-item" pane="" style="padding: 30px 30px 0 0;">' +
+                        '<div class="layui-input-block">'
+                        + '<input type="hidden" name="id" value="'+ id +'">'
+                        + '<input type="hidden" name="attr" value="'+ attr +'">'
+                        + attr_input
+                        + '</div></div></form>';
+
+                    layer.open({
+                        type: 1
+                        ,offset: 'auto'
+                        ,area: ['800px', '500px']
+                        ,content: html
+                        ,btn: ['保存', '取消']
+                        ,btnAlign: 'c'
+                        ,shade: 0
+                        ,yes: function(){
+                            console.log($('#attrForm').serialize());
+                            $.post('{:url("saveAttr")}', $('#attrForm').serialize(), function (result) {
+                                layer.closeAll();
+                                if (result.code) {
+                                    layer.msg(result.msg, {shade:[0.5,'#000'],time:1000}, function () {
+                                        window.location.href = result.url;
+                                    });
+                                } else {
+                                    layer.alert(result.msg, {icon:2, title:'保存失败！'});
+                                }
+                            }, 'json');
+                        }
+                    });
+                    layui.use('form', function(){
+                        layui.form.render();
+                    });
+                } else {
+                    layer.alert(result.msg, {icon:2});
+                }
+            }, 'json');
+        }
+    });
 </script>
 
 {/block}
