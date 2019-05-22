@@ -1,0 +1,88 @@
+{extend name="common/index"}
+{block name="css"}
+<style>
+    .layui-table-cell{
+        padding: 0 8px;
+    }
+</style>
+{/block}
+{block name="content"}
+<div class="layui-row">
+    <form id="searchForm" class="layui-form layui-form-pane tpl-form-search" onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">功能名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-normal" onclick="reloadTable('#searchForm');">搜索</a>
+                    <a class="layui-btn" href="{:url('edit')}" target="_blank">新增</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="layui-col-xs12">
+    <table id="functionTable" lay-filter="functionTable"></table>
+</div>
+
+<script type="text/html" id="operating">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
+    </div>
+</script>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    layui.use(['table'], function () {
+        var table = layui.table;
+
+        //表格数据渲染
+        tableIns = table.render({
+            elem: '#functionTable'
+            ,url: '{:url("getDataList")}'
+            ,page: true
+            ,limit: table_limit
+            ,limits: table_limits
+            ,cols: [[
+                {type:'numbers', title:'序号', width:45}
+                ,{field:'name', title:'功能名称', align:"center"}
+                ,{title:'商品数', templet:function (data) {
+                        return '<span class="layui-badge layui-bg-blue">' + data.goods_num + '</span>';
+                    }
+                }
+                ,{field:'create_time', title:'添加时间'}
+                ,{title:'操作', toolbar: '#operating', align:'center'}
+            ]]
+            ,where: getFormJson('#searchForm')
+        });
+
+        //监听工具条
+        table.on('tool(functionTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('此功能属性将被删除，确定继续吗？', function(index){
+                    $.post('{:url("delete")}',{id:data.id}, function (result) {
+                        layer.close(index);
+                        if (result.code) {
+                            reloadTable('#searchForm');
+                        } else {
+                            layer.alert(result.msg, {icon:2});
+                        }
+                    }, 'json');
+                });
+            } else if (obj.event === 'edit') {
+                window.open('edit?id='+data.id);
+            }
+        });
+    });
+
+
+</script>
+{/block}
