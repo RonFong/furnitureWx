@@ -74,9 +74,10 @@ class GoodsClassify extends Base
             $data = $data->toArray();
             $this->assign('data', $data);
         }
-        $pid = !empty($data['pid']) ? $data['pid'] : 0;
-        $menuListOption = $this->currentModel->getMenuListOption($pid);
-        $this->assign('menuListOption', $menuListOption);
+        $pid = $data['pid'] ?? 0;
+        $list = $this->currentModel->field(true)->select();
+        $classifyListOption = \Tree::get_option_tree($list, $pid, 'classify_name', 'id');
+        $this->assign('classifyListOption', $classifyListOption);
 
         return $this->fetch();
     }
@@ -88,17 +89,11 @@ class GoodsClassify extends Base
         if (empty($param)) {
             $this->error('没有需要保存的数据！');
         }
-
-        if (empty($param['sort_num'])) {
-            $count = $this->currentModel->where('pid', $param['pid'])->count();
-            $param['sort_num'] = $count+1;
-        }
         //验证数据
-        $result = $this->validate($param, 'Menu');
+        $result = $this->validate($param, 'GoodsClassify');
         if ($result !== true) {
             $this->error($result);
         }
-
         try {
             //保存数据
             $this->currentModel->save($param);
@@ -109,4 +104,19 @@ class GoodsClassify extends Base
         $this->success('保存成功！', 'edit?id='.$this->currentModel->id);
     }
 
+    /**
+     * @param $id
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function delete($id)
+    {
+        $goods = (new \app\admin\model\Product())->where('goods_classify_id', $id)->select();
+        if ($goods) {
+            $this->error('此分类下有商品，不能删除');
+        }
+        $this->currentModel->where('id', $id)->delete();
+        $this->success('删除成功');
+    }
 }

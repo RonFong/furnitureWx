@@ -115,11 +115,13 @@ class Product extends BaseValidate
                 return 'colors数据中子元素格式不正确';
             }
             if (empty($v['color']) || empty($v['img']) || empty($v['prices'])) {
-                return '参数错误， color|img|prices 为空值';
+//                return '参数错误， color|img|prices 为空值';
+                return '请提供产品完整信息';
             }
             foreach ($v['prices'] as $vv) {
                 if (empty($vv['configure']) || empty($vv['trade_price'])) {
-                    return '参数错误， configure|trade_price 为空值';
+//                    return '参数错误， configure|trade_price 为空值';
+                    return '请提供产品完整信息';
                 }
             }
         }

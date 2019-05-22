@@ -29,13 +29,13 @@ class GoodsClassify extends CoreGoodsClassify
     }
 
     /**
-     * 获取分类列表
+     * 获取父级分类
      * @param $value
      * @return false|\PDOStatement|string|\think\Collection
      */
     public function getClassifyListOption($value = 0)
     {
-        $list = $this->field(true)->select();
+        $list = $this->where('pid', 1)->field(true)->select();
         $list = \Tree::get_option_tree($list, $value, 'classify_name', 'id');
         return $list;
     }
