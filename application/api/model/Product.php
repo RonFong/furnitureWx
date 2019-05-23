@@ -144,7 +144,7 @@ class Product extends CoreProduct
     public function info($id, $shopId = 0)
     {
         $info = $this->where('id', $id)
-            ->field('id, factory_id, name, brand, number, model, texture, style, function, size, discounts, details')
+            ->field('id, factory_id, classify_id, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details')
             ->find()
             ->toArray();
 
