@@ -1,0 +1,204 @@
+{extend name="common/index"}
+{block name="css"}
+<style>
+    .layui-form-select dl dd.layui-this {
+        background-color: #F5F5F5 !important;
+    }
+    .layui-form-select dl dd.layui-this {
+        color: #666 !important;
+    }
+</style>
+{/block}
+{block name="content"}
+<div class="layui-row">
+    <form id="editForm" class="layui-form tpl-form-label-long" action="">
+        <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
+        <div class="layui-field-box">
+            <div class="layui-main">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品名：</label>
+                    <div class="layui-input-block">
+                        <input disabled type="text" name="name" value="{$data.name|default=''}" placeholder="审核不通过，则必须填写" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">启用状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="state" value="0" title="禁用" {eq name="$data.state|default='0'" value="0"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">商城分类：</label>
+                        <div class="layui-input-block">
+                            <select name="classify_parent_id" id="classify_parent" lay-filter="region">
+                                {notempty name="$classifyParentList"}
+                                {volist name="$classifyParentList" id="vo"}
+                                <option value="{$vo.id}" {eq name="$classifyParent.id" value="$vo.id"}selected{/eq} >{$vo.classify_name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md3 layui-col-lg3">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: auto;"></label>
+                        <div class="layui-input-block" style="margin-left: 10px;">
+                            <select name="goods_classify_id" id="classify_current" lay-filter="region">
+                                {notempty name="classifyCurrentList"}
+                                {volist name="classifyCurrentList" id="vo"}
+                                <option value="{$vo.id}" {eq name="$data.goods_classify_id" value="$vo.id"}selected{/eq}>{$vo.classify_name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">风格：</label>
+                            <div class="layui-input-block">
+                                <select name="style_id" id="style_id">
+                                    {notempty name="$styleList"}
+                                    {volist name="$styleList" id="vo"}
+                                    <option value="{$vo.id}" {eq name="$data.style_id" value="$vo.id"}selected{/eq} >{$vo.name}</option>
+                                    {/volist}
+                                    {/notempty}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">材质：</label>
+                            <div class="layui-input-block">
+                                <select name="texture_id" id="texture_id">
+                                    {notempty name="$textureList"}
+                                    {volist name="$textureList" id="vo"}
+                                    <option value="{$vo.id}" {eq name="$data.texture_id" value="$vo.id"}selected{/eq} >{$vo.name}</option>
+                                    {/volist}
+                                    {/notempty}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">功能：</label>
+                            <div class="layui-input-block">
+                                <input type="hidden" name="function_ids" value="{$data.function_ids}">
+                                <select class="multiple" multiple="multiple" id="function_ids">
+                                    {notempty name="$functionList"}
+                                    {volist name="$functionList" id="vo"}
+                                    <option value="{$vo.id}" {php} if (strpos($data['function_ids'], (string)$vo['id']) !== false) {echo 'selected';};{/php} >{$vo.name}</option>
+                                    {/volist}
+                                    {/notempty}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">尺寸：</label>
+                            <div class="layui-input-block">
+                                <input type="hidden" name="size_ids" value="{$data.size_ids}">
+                                <select class="multiple" multiple="multiple" id="size_ids">
+                                    {notempty name="$sizeList"}
+                                    {volist name="$sizeList" id="vo"}
+                                    <option value="{$vo.id}" {php} if (strpos($data['size_ids'], (string)$vo['id']) !== false) {echo 'selected';};{/php} >{$vo.name}</option>
+                                    {/volist}
+                                    {/notempty}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">审核状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status" value="0" title="未审核" {eq name="$review.status|default='0'" value="0"}checked{/eq}>
+                        <input type="radio" name="status" value="1" title="审核通过" {eq name="$review.status|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="status" value="2" title="审核不通过" {eq name="$review.status|default='0'" value="2"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">审核结果说明：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="remark" value="{$review.remark|default=''}" placeholder="审核不通过，则必须填写" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tpl-form-action">
+            <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存审核结果</button>
+        </div>
+    </form>
+</div>
+</form>
+</div>
+
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var form = layui.form;
+        //分类联动
+        form.on('select(region)', function (data) {
+            var id = data.value;
+            if ($(data.elem).attr('id') == 'classify_parent') {
+                ajaxClassify(id, '#classify_current');
+            }
+        });
+        function ajaxClassify(id, position) {
+            $.post('{:url("ajaxClassify")}', {pid:id}, function (result) {
+                var _html = "<option value=''>请选择</option>";
+                $.each(result, function (key, val) {
+                    _html += "<option value='"+val.id+"'>"+val.classify_name+"</option>";
+                });
+                $(position).html(_html);
+                form.render('select');
+            });
+        }
+        //监听提交
+        form.on('submit(formSubmit)', function(data){
+            var index = layer.load(2, {shade:[0.5,'#000'],time: 10*1000});
+            var sizeIds = '';   //尺寸多选
+            $('#size_ids option:selected').each(function(k, v) {
+                var prefix = k === 0 ? '' : ',';
+                sizeIds += (prefix + $(v).val());
+            });
+            $('input[name="size_ids"]').val(sizeIds);
+            var functionIds = '';    //功能多选
+            $('#function_ids option:selected').each(function(k, v) {
+                var prefix = k === 0 ? '' : ',';
+                functionIds += (prefix + $(v).val());
+            });
+            $('input[name="function_ids"]').val(functionIds);
+            $.post('{:url("reviewSave")}', $('#editForm').serialize(), function (result) {
+                layer.close(index);
+                if (result.code) {
+                    layer.msg(result.msg, {shade:[0.5,'#000'],time:1000}, function () {
+                        window.location.href = result.url;
+                    });
+                } else {
+                    layer.alert(result.msg, {icon:2, title:'保存失败！'});
+                }
+            }, 'json');
+            return false;
+        });
+    });
+
+
+</script>
+
+{/block}

@@ -60,10 +60,16 @@
             ,limit: table_limit
             ,limits: table_limits
             ,cols: [[
-                ,{field:'id', title:'ID'}
+                {type:'numbers', title:'序号', width:45}
                 ,{field:'classify_name', title:'分类名'}
                 ,{field:'pid_name', title:'上级分类'}
                 ,{field:'goods_num', title:'商品数量'}
+                ,{title:'更改排序', align:'center', width: 75, templet: function (data) {
+                        return '<div class="layui-btn-group">' +
+                            '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeSort('+data.id+',\'asc\', \'{:url("changeSort")}\');"><i class="layui-icon layui-icon-up"></i></a>' +
+                            '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeSort('+data.id+',\'desc\', \'{:url("changeSort")}\');"><i class="layui-icon layui-icon-down"></i></a>' +
+                            '</div>';
+                    }}
                 ,{field:'create_time', title:'添加时间'}
                 ,{title:'操作', toolbar: '#operating', align:'center'}
             ]]
@@ -89,7 +95,5 @@
             }
         });
     });
-
-
 </script>
 {/block}

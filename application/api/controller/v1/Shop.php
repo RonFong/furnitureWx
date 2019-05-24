@@ -122,7 +122,7 @@ class Shop extends BaseController
             if (!empty($this->data['lat']) && !empty($this->data['lng']) || !empty($this->data['district'])) {
                 $shopInfo = $this->currentModel->get($this->data['id']);
                 if ($this->data['lat'] != $shopInfo->lat || $this->data['lng'] != $shopInfo->lng || $this->data['district'] != $shopInfo->district) {
-                    exception('需修改店址，请联系客服');
+//                    exception('需修改店址，请联系客服');
                 }
             }
 

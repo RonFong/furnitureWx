@@ -30,14 +30,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">分类：</label>
+                    <label class="layui-form-label">分类名：</label>
                     <div class="layui-input-inline">
-                        <select name="classify_id">
-                            <option value="">请选择</option>
-                            {volist name="$classifyList" id="vo"}
-                            <option value="{$vo.id}" {eq name="vo.id" value="$data.classify_id|default=''"}selected{/eq}>{$vo.classify_name}</option>
-                            {/volist}
-                        </select>
+                        <input type="text" name="classify_name" value="{$data.classify_name|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">

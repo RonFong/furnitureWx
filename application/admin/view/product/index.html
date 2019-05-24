@@ -17,28 +17,40 @@
 <div class="layui-row">
     <form id="searchForm" class="layui-form layui-form-pane tpl-form-search" onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
         <div class="layui-form-item">
+
             <div class="layui-inline">
                 <label class="layui-form-label">产品名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="title" class="layui-input">
+                    <input type="text" name="name" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">商城分类</label>
                 <div class="layui-input-inline">
-                    <select name="classify_id">
+                    <select name="goods_classify_id" lay-verify="required">
                         <option value="">请选择</option>
-                        {$classifyOptions}
+                        {$classifyListOption|default=''}
                     </select>
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">状态</label>
+                <label class="layui-form-label">启用状态</label>
                 <div class="layui-input-inline">
                     <select name="state">
                         <option value="">请选择</option>
                         <option value="1">启用</option>
                         <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审核状态</label>
+                <div class="layui-input-inline">
+                    <select name="review_status">
+                        <option value="">请选择</option>
+                        <option value="0">未审核</option>
+                        <option value="1">通过</option>
+                        <option value="2">未通过</option>
                     </select>
                 </div>
             </div>
@@ -57,6 +69,7 @@
 
 <script type="text/html" id="operating">
     <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="review"><i class="layui-icon layui-icon-vercode">审核</i></a>
         <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
     </div>
@@ -77,30 +90,38 @@
             ,limits: table_limits
             ,cols: [[
                 {field:'id', title:'ID', width:45}
-                ,{field:'name', title:'产品名'}
+                ,{field:'name', title:'产品名',width:150}
                 ,{field:'image',title:'首图', templet: function (data) {
                     return '<a href="'+data.image+'" target="_blank"><img src="'+data.image+'" height="40" width="auto"/></a>';
                 }}
                 ,{field:'factory_id', width: 80, title:'所属厂家', templet: function (data) {
                     return '<a class="a-link" href="/admin/factory/index?id='+data.factory_id+'" target="_blank">'+data.factory_name+'</a>';
                 }}
-                ,{field:'brand', title:'品牌', templet: function (data) {
+                ,{field:'brand', title:'品牌',width:100,templet: function (data) {
                     return data.brand ? data.brand : '/';
                     }
                 }
-                ,{field:'classify_name', title:'厂家分类'}
-                ,{field:'goods_classify_name', title:'商城分类'}
-                ,{field:'number', title:'编号'}
-                ,{field:'model', title:'型号'}
-                ,{field:'texture', title:'材质'}
-                ,{field:'style', title:'风格'}
-                ,{field:'function', title:'功能'}
-                ,{field:'texture', title:'材质'}
-                ,{title:'状态', align:'center', templet: function (data) {
-            return data.state === 1 ? '<span class="layui-badge layui-bg-blue">正常</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';
+                ,{field:'classify_name', title:'厂家分类',width:100}
+                ,{field:'goods_classify_name', title:'商城分类',width:100}
+                ,{field:'number', title:'编号',width:100}
+                ,{field:'model', title:'型号',width:100}
+                // ,{field:'texture', title:'材质'}
+                // ,{field:'style', title:'风格'}
+                // ,{field:'function', title:'功能'}
+                ,{title:'启用状态', align:'center',width:80, templet: function (data) {
+            return data.state === 1 ? '<span class="layui-badge layui-bg-blue">正常</span>' : '<span class="layui-badge layui-bg-red">禁用</span>';
         }}
-                ,{title:'上架状态', align:'center', templet: function (data) {
+                ,{title:'上架状态', align:'center',width:80, templet: function (data) {
                     return data.is_on_shelves === 1 ? '<span class="layui-badge layui-bg-blue">已上架</span>' : '<span class="layui-badge layui-bg-gray">未上架</span>';
+                }}
+                ,{title:'审核状态', align:'center', width:80, templet: function (data) {
+                    if (data.review_status == 0) {
+                        return '<span class="layui-badge layui-bg-orange">未审核</span>';
+                    } else if (data.review_status == 1) {
+                        return '<span class="layui-badge layui-bg-blue">已通过</span>';
+                    } else if (data.review_status == 2) {
+                        return '<span class="layui-badge layui-bg-red">未通过</span>';
+                    }
                 }}
                 ,{title:'操作', toolbar: '#operating', align:'center'}
             ]]
@@ -123,6 +144,8 @@
                 });
             } else if (obj.event === 'edit') {
                 window.open('edit?id='+data.id);
+            } else if (obj.event === 'review') {
+                window.open('reviewEdit?id='+data.id);
             }
         });
     });

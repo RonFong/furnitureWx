@@ -316,6 +316,7 @@ if (!function_exists('reset_sort')) {
      */
     function reset_sort($id, $table_name, $type = 'asc', $field_sort = 'sort_num')
     {
+        $table_name = strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '_', $table_name));
         $pk = Db::name($table_name)->getPk();//获取当前表主键字段名
         //判断是否存在'pid'，若存在，则只取同级别数据
         if (has_field($table_name, 'pid')) {

@@ -109,6 +109,7 @@ class Product extends CoreProduct
             ->order('sort')
             ->page($page, $row)
             ->select();
+        $list = collection($list)->toArray();
         foreach ($list as $k => $v) {
             $colorInfo = (new ProductColor())
                 ->field('id, img')
@@ -117,7 +118,6 @@ class Product extends CoreProduct
                 ->limit(1)
                 ->find();
             $list[$k]['img'] = $colorInfo['img'];
-
              $tradePrice = (new ProductPrice())
                 ->where('color_id', $colorInfo['id'])
                 ->order('id')
@@ -130,6 +130,7 @@ class Product extends CoreProduct
             $reviewInfo = Db::table('product_review_status')->where('product_id', $v['id'])->order('id desc')->find();
             $list[$k]['review_status'] = $reviewInfo['status'] ?? 0;
             $list[$k]['review_remark'] = $reviewInfo['remark'] ?? '99家服务人员将尽快处理，请稍等~';
+
         }
         return $list;
     }
@@ -141,7 +142,7 @@ class Product extends CoreProduct
      * @param int $shopId    shopId store 商城访问
      * @return array
      */
-    public function info($id, $shopId = 0)
+    public function info($id, $shopId = 0, $isAdmin = false)
     {
         $info = $this->where('id', $id)
             ->field('id, factory_id, classify_id, goods_classify_id, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details')
@@ -160,7 +161,7 @@ class Product extends CoreProduct
         if ($shopId) {
             $shopRetailPrice = Db::table('product_retail_price')->where(['shop_id' => $shopId, 'product_id' => $id])->column('price', 'configure_id');
         }
-        $isShowPrice = $this->isShowPrice($info['factory_id']);
+        $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
             $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, trade_price")->select();
             foreach ($prices as $kk => $vv) {
@@ -366,8 +367,7 @@ class Product extends CoreProduct
     protected function createGoodsNumber()
     {
         $count = $this->where('factory_id', user_info('group_id'))->whereTime('create_time', 'today')->count();
-        $id = user_info('group_id') >= 10 ? user_info('group_id') : '0' . user_info('group_id');
-        return $id . date('ymd', time()) . sprintf("%02d",$count);
+        return dechex(user_info('id') . $count);
     }
 
     /**

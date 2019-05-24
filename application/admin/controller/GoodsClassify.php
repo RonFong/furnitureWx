@@ -49,6 +49,7 @@ class GoodsClassify extends Base
         $list = $this->currentModel->where($map)
             ->field(true)
             ->field('pid as pid_name, id as goods_num')
+            ->order('sort_num asc')
             ->select();
         $list = \Tree::get_Table_tree($list, 'classify_name', 'id');
         foreach ($list as $key=>$val) {
@@ -86,6 +87,7 @@ class GoodsClassify extends Base
 
         return $this->fetch();
     }
+
 
     /**
      * 获取属性

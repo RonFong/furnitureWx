@@ -82,8 +82,8 @@ class ShopCommodity extends Base
         $this->assign('shopList', $shopList);
 
         //分类列表
-        $classifyList = Db::name('factory_classify')->field('id,classify_name')->select();
-        $this->assign('classifyList', $classifyList);
+//        $classifyList = Db::name('factory_classify')->field('id,classify_name')->select();
+//        $this->assign('classifyList', $classifyList);
 
         //音乐列表
         $musicList = Db::name('music')->field('id,name')->select();

@@ -19,7 +19,7 @@ class Product extends Validate
     ];
 
     public $message = [
-        
+
     ];
 
     public $scene = [
@@ -32,8 +32,9 @@ class Product extends Validate
      * @param $data
      * @return bool|string
      */
-    protected function hasRemark($value, $data)
+    protected function hasRemark($value, $rule, $data)
     {
+
         if ($value == 2 && $data['remark'] == '') {
             return '审核不通过时，必须填写说明';
         }
@@ -45,7 +46,7 @@ class Product extends Validate
      * @param $data
      * @return bool|string
      */
-    protected function isReview($value, $data)
+    protected function isReview($value, $rule, $data)
     {
         if (empty($value) && $data['status'] == 1) {
             return '审核通过状态，必须为产品选择商城分类';
