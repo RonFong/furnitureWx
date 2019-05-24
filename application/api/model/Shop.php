@@ -39,7 +39,7 @@ class Shop extends CoreShop
         $location = (new UserLocation())->where(['user_id' => user_info('id')])->order('id desc')->find();
 
         $field = "s.group_id, s.group_type, s.group_name, s.distance";
-        $where = "group_type = 2 and `state` = 1 and `audit_state` = 1 and `delete_time` is null";
+        $where = "`state` = 1 and `audit_state` = 1 and `delete_time` is null";
         if ($groupName) {
             $where .= " and group_name like '%$groupName%'";
         }
