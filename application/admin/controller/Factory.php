@@ -54,8 +54,8 @@ class Factory extends Base
         if ($this->request->has('state', 'param', true)) {
             $map['state'] = $param['state'];
         }
-        if ($this->request->has('review_status', 'param', true)) {
-            $map['review_status'] = $param['review_status'];
+        if ($this->request->has('audit_state', 'param', true)) {
+            $map['audit_state'] = $param['audit_state'];
         }
         if (!empty($param['factory_name'])) {
             $map['factory_name'] = ['like', '%' . $param['factory_name'] . '%'];//厂家名
