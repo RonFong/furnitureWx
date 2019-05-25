@@ -29,6 +29,27 @@
                 </div>
             </div>
             <div class="layui-inline">
+                <label class="layui-form-label">启用状态</label>
+                <div class="layui-input-inline">
+                    <select name="state">
+                        <option value="">请选择</option>
+                        <option value="1">启用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审核状态</label>
+                <div class="layui-input-inline">
+                    <select name="review_status">
+                        <option value="">请选择</option>
+                        <option value="0">未审核</option>
+                        <option value="1">通过</option>
+                        <option value="2">未通过</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
                 <div class="layui-btn-group">
                     <a class="layui-btn layui-btn-normal" onclick="reloadTable('#searchForm');">搜索</a>
                     <a class="layui-btn" href="{:url('edit')}" target="_blank">新增</a>
