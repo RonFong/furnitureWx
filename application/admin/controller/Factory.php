@@ -128,7 +128,7 @@ class Factory extends Base
                 'audit_state'   => $param['audit_state'],
                 'group_name'    => $param['factory_name']
             ];
-            (new GroupNearby())->where(['group_type' => 1, 'group_id' => $this->currentModel->id])->save($groupNearbyData);
+            (new GroupNearby())->where(['group_type' => 1, 'group_id' => $this->currentModel->id])->update($groupNearbyData);
             if (!empty($param['margin'])) {
                 if (!array_key_exists($param['margin'], config('system.margin_star'))) {
                     exception('保证金额度不合法');
