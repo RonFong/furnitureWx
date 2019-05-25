@@ -71,6 +71,15 @@
                 ,{field:'sales_contact', title:'门市联系人'}
                 ,{field:'sales_phone', title:'门市电话'}
                 ,{field:'sales_wx', title:'门店微信号'}
+                ,{title:'启用状态', align:'center', templet: function (data) {
+                        var _html = '';
+                        if (data.state === 1) {
+                            _html = '<span class="layui-badge layui-bg-blue">启用</span>';
+                        } else if (data.state === 0) {
+                            _html = '<span class="layui-badge layui-bg-gray">禁用</span>';
+                        }
+                        return _html;
+                    }}
                 ,{title:'审核状态', align:'center', templet: function (data) {
                     var _html = '';
                     if (data.audit_state === 1) {
