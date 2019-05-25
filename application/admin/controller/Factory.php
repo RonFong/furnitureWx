@@ -51,6 +51,12 @@ class Factory extends Base
         if (!empty($param['id'])) {
             $map['id'] = $param['id'];
         }
+        if (!empty($param['state'])) {
+            $map['state'] = $param['state'];
+        }
+        if (!empty($param['review_status'])) {
+            $map['review_status'] = $param['review_status'];
+        }
         if (!empty($param['factory_name'])) {
             $map['factory_name'] = ['like', '%' . $param['factory_name'] . '%'];//厂家名
         }
