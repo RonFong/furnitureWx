@@ -11,6 +11,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Factory as CoreFactory;
 use app\common\model\FactoryMargin;
+use app\common\model\GroupNearby;
 use think\Db;
 use think\Request;
 
@@ -121,6 +122,13 @@ class Factory extends Base
         try {
             //保存数据
             $this->currentModel->save($param);
+            //更新附近门店表
+            $groupNearbyData = [
+                'state'     => $param['state'],
+                'audit_state'   => $param['audit_state'],
+                'group_name'    => $param['factory_name']
+            ];
+            (new GroupNearby())->where(['group_type' => 1, 'group_id' => $this->currentModel->id])->save($groupNearbyData);
             if (!empty($param['margin'])) {
                 if (!array_key_exists($param['margin'], config('system.margin_star'))) {
                     exception('保证金额度不合法');
