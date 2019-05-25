@@ -57,7 +57,13 @@ class Product extends BaseController
     public function update()
     {
         $this->currentValidate->goCheck('update');
-        $this->result['data']['id'] = $this->currentModel->saveData($this->data);
+        $id = $this->currentModel->saveData($this->data);
+        //更新审核状态
+        $reviewStatus = Db::table('product_review_status')->where('product_id', $id)->order('id desc')->limit(0, 1)->value('status');
+        if ($reviewStatus !== 0) {
+            (new ProductReviewStatus())->save(['product' => $id, 'status' => 0]);
+        }
+        $this->result['data']['id'] = $id;
         //写入审核进度
         (new ProductReviewStatus())->write($this->result['data']['id'], 0);
         return json($this->result, 200);
