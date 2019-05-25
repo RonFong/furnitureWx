@@ -51,10 +51,10 @@ class Factory extends Base
         if (!empty($param['id'])) {
             $map['id'] = $param['id'];
         }
-        if (!empty($param['state'])) {
+        if ($this->request->has('state', 'param', true)) {
             $map['state'] = $param['state'];
         }
-        if (!empty($param['review_status'])) {
+        if ($this->request->has('review_status', 'param', true)) {
             $map['review_status'] = $param['review_status'];
         }
         if (!empty($param['factory_name'])) {
