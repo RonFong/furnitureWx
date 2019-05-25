@@ -36,6 +36,7 @@ class Product extends CoreProduct
             $saveData['number'] = $this->createGoodsNumber();
             $saveData['details'] = json_encode($saveData['details']);
             $saveData['min_price'] = $this->getMinPrice($colors);
+            $saveData['review_status'] = 0;
             //获取排序号
             if (Request::instance()->method() == 'POST') {
                 $sort = $this->where(['factory_id' => user_info('group_id'), 'classify_id' => $saveData['classify_id']])
