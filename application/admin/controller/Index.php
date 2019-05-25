@@ -40,6 +40,15 @@ class Index extends Base
         $goods['count'] = Db::name('product')->where($map)->count();
         $goods['count_month'] = Db::name('product')->where('create_time', '>=', strtotime(date('Y-m-01')))->where($map)->count();
         $this->assign('goods', $goods);
+
+        //待审核的商家
+        $reviewData['shop'] = Db::table('shop')->where(['state' => 1, 'audit_state' => 0])->count();
+        //待审核的厂家
+        $reviewData['factory'] = Db::table('factory')->where(['state' => 1, 'audit_state' => 0])->count();
+        //待审核的产品
+        $reviewData['product'] = Db::table('product')->where(['state' => 1, 'review_status' => 0])->count();
+        $this->assign('reviewData', $reviewData);
+
         return $this->fetch();
     }
 
