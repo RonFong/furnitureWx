@@ -285,7 +285,8 @@ class Product extends CoreProduct
 
         $list = $model->field('id, goods_classify_id, name, factory_id, number, model, popularity')
             ->page($param['page'], $param['row'])
-            ->order('sort_store desc, sort_store_set_time desc')
+//            ->order('sort_store desc, sort_store_set_time desc')
+            ->order('update_time desc')
             ->select();
         foreach ($list as $k => $v) {
             //非当前商家，不显示出厂价
