@@ -32,6 +32,16 @@
                 </div>
             </div>
             <div class="layui-inline">
+                <label class="layui-form-label">会员</label>
+                <div class="layui-input-inline">
+                    <select name="vip_grade">
+                        <option value="">请选择</option>
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
                 <label class="layui-form-label">审核状态</label>
                 <div class="layui-input-inline">
                     <select name="audit_state">
@@ -119,6 +129,9 @@
                 ,{field:'classify_name', title:'经营类别', minWidth:90}
                 ,{field:'home_content_has', title:'首页图文', minWidth:80}
                 ,{field:'shop_commodity_count', title:'商品数', minWidth:60}
+                ,{title:'会员', align:'center', templet: function (data) {
+                        return data.vip_grade === 1 ? '<span class="layui-badge layui-bg-blue">是</span>' : '<span class="layui-badge layui-bg-gray">否</span>';
+                    }}
                 ,{field:'audit_state_des', title:'审核状态', minWidth:80}
                 ,{title:'状态', align:'center', templet: function (data) {
                     return data.state === 1 ? '<span class="layui-badge layui-bg-blue">启用</span>' : '<span class="layui-badge layui-bg-gray">禁用</span>';

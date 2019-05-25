@@ -131,6 +131,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">会员：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="vip_grade" value="1" title="是" {eq name="$data.vip_grade|default='0'" value="1"}checked{/eq}>
+                        <input type="radio" name="vip_grade" value="0" title="否" {eq name="$data.vip_grade|default='0'" value="0"}checked{/eq}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">启用状态：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="state" value="1" title="启用" {eq name="$data.state|default='0'" value="1"}checked{/eq}>

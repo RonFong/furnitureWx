@@ -73,6 +73,9 @@ class Shop extends Base
         if ($param['audit_state'] !== '') {
             $map['audit_state'] = $param['audit_state'];
         }
+        if ($param['vip_grade'] !== '') {
+            $map['vip_grade'] = $param['vip_grade'];
+        }
         if ($param['store_status'] !== '') {
             $map['store_status'] = $param['store_status'];
         }
