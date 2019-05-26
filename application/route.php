@@ -270,8 +270,8 @@ Route::group('api/:version', function () {
 
     //商城
     Route::group('store', function () {
-        //首页获取商品筛选选项
-        Route::get('goods/options', 'api/:version.goods/getOptions');
+        //首页获取商品分类
+        Route::get('goods/classifyList', 'api/:version.goods/getClassifyList');
         //根据分类id 获取 功能 和 尺寸 （规格） 选项
         Route::get('goods/functionAndSize', 'api/:version.goods/getSizeAndFunctionByClassify');
         //首页获取商品列表
