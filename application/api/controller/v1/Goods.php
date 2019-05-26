@@ -95,6 +95,48 @@ class Goods extends BaseController
         return json($this->result, 201);
     }
 
+    /**
+     * 获取分类
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getClassifyList()
+    {
+        //分类
+        $data['classify'] = Db::table('goods_classify')->where('pid', 1)->where('delete_time is null')->field('id, classify_name')->select();
+        foreach ($data['classify'] as $k => $v) {
+            $data['classify'][$k]['child'] = Db::table('goods_classify')->where('pid', $v['id'])->where('delete_time is null')->field('id, classify_name')->select();
+        }
+        $this->result['data'] = $data;
+        return json($this->result, 200);
+    }
+
+    /**
+     * 按分类获取属性
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getAttrByClassify()
+    {
+        $classifyId = $this->data['classify_id'];
+        $attrName = ['style', 'texture', 'function', 'size'];
+        $data = [];
+        foreach ($attrName as $v) {
+            $data[$v] = Db::table('goods_'.$v)
+                ->alias('a')
+                ->join("container_{$v} b", "a.{$v}_id = b.id")
+                ->where('a.goods_classify_id', $classifyId)
+                ->field('b.id, b.name')
+                ->select();
+        }
+        $this->result['data'] = $data;
+        return json($this->result, 200);
+    }
+
 
     /**
      * 获取商品筛选选项
@@ -112,9 +154,7 @@ class Goods extends BaseController
             $data['classify'][$k]['child'] = Db::table('goods_classify')->where('pid', $v['id'])->where('delete_time is null')->field('id, classify_name')->select();
         }
         //风格
-        $data['style'] = Db::table('goods_style')->where('is_search_option', 1)->field('id, style_name')->order('sort')->select();
-        //材质
-        $data['texture'] = Db::table('goods_texture')->where('is_search_option', 1)->field('id, texture_name')->order('sort')->select();
+        $data['style'] = Db::table('goods_style')->where('is_search_option', 1)->field('id, name as style_name')->order('sort')->select();
         $this->result['data'] = $data;
         return json($this->result, 200);
     }
