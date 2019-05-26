@@ -105,9 +105,19 @@ class Goods extends BaseController
     public function getClassifyList()
     {
         //分类
-        $data['classify'] = Db::table('goods_classify')->where('pid', 1)->where('delete_time is null')->field('id, classify_name')->select();
+        $data['classify'] = Db::table('goods_classify')
+            ->where('pid', 1)
+            ->where('delete_time is null')
+            ->field('id, classify_name')
+            ->order('sort_num asc')
+            ->select();
         foreach ($data['classify'] as $k => $v) {
-            $data['classify'][$k]['child'] = Db::table('goods_classify')->where('pid', $v['id'])->where('delete_time is null')->field('id, classify_name')->select();
+            $data['classify'][$k]['child'] = Db::table('goods_classify')
+                ->where('pid', $v['id'])
+                ->where('delete_time is null')
+                ->field('id, classify_name')
+                ->order('sort_num asc')
+                ->select();
         }
         $this->result['data'] = $data;
         return json($this->result, 200);
@@ -136,29 +146,6 @@ class Goods extends BaseController
         $this->result['data'] = $data;
         return json($this->result, 200);
     }
-
-
-    /**
-     * 获取商品筛选选项
-     * @return \think\response\Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public function getOptions()
-    {
-        $this->currentValidate->goCheck('getOptions');
-        //分类
-        $data['classify'] = Db::table('goods_classify')->where('pid', 1)->where('delete_time is null')->field('id, classify_name')->select();
-        foreach ($data['classify'] as $k => $v) {
-            $data['classify'][$k]['child'] = Db::table('goods_classify')->where('pid', $v['id'])->where('delete_time is null')->field('id, classify_name')->select();
-        }
-        //风格
-        $data['style'] = Db::table('goods_style')->where('is_search_option', 1)->field('id, name as style_name')->order('sort')->select();
-        $this->result['data'] = $data;
-        return json($this->result, 200);
-    }
-
 
     /**
      * 根据分类id 获取 功能 和 尺寸 （规格） 选项
