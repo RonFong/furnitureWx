@@ -140,8 +140,13 @@ class Product extends CoreProduct
     /**
      * 产品详情
      * @param $id
-     * @param int $shopId    shopId store 商城访问
+     * @param int $shopId
+     * @param bool $isAdmin
      * @return array
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function info($id, $shopId = 0, $isAdmin = false)
     {
@@ -149,6 +154,12 @@ class Product extends CoreProduct
             ->field('id, factory_id, classify_id, goods_classify_id, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details')
             ->find()
             ->toArray();
+
+        $info['is_collect'] = Db::table('relation_goods_collect')->where(['user_id' => user_info('id'), 'goods_id' => $id])->find() ? 1 : 0;
+        $info['is_in_blacklist'] = 0;
+        if (user_info('type') == 2) {
+            $info['is_in_blacklist'] = Db::table('relation_goods_blacklist')->where(['user_id' => user_info('group_id'), 'goods_id' => $id])->find() ? 1 : 0;
+        }
 
         $otherInfo = Db::table('factory')
             ->where('id', $info['factory_id'])

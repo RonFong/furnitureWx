@@ -196,13 +196,8 @@ class Product extends Base
                 'remark'        => $param['remark']
             ];
             (new ProductReviewStatus())->save($reviewData);
-            $productData = [
-                'id'                => $param['id'],
-                'goods_classify_id' => $param['goods_classify_id'],
-                'state'             => $param['state'],
-                'review_status'     => $param['status']
-            ];
-            $this->currentModel->save($productData);
+            $param['review_status'] = $param['status'];
+            $this->currentModel->save($param);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }

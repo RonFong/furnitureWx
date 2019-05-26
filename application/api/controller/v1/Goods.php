@@ -56,8 +56,18 @@ class Goods extends BaseController
     {
         $this->currentValidate->goCheck('info');
         try {
-            $this->result['data'] = $this->currentModel
-                ->info($this->data['product_id'], $this->data['shop_id']);
+            $data = $this->currentModel
+                ->info($this->data['product_id'], $this->data['shop_id'], true);
+            $data['style'] = Db::table('container_style')->where('id', $data['style_id'])->value('name');
+            $data['texture'] = Db::table('container_texture')->where('id', $data['texture_id'])->value('name');
+            $size = Db::table('container_size')->where('id', 'in', $data['size_ids'])->column('name');
+            $data['size'] = implode(',', $size);
+            $function = Db::table('container_function')->where('id', 'in', $data['function_ids'])->column('name');
+            $data['size'] = implode(',', $size);
+            $data['function'] = implode(',', $function);
+            print_r($data);
+            die;
+            $this->result['data'] = $data;
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
         }
