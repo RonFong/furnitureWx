@@ -65,8 +65,6 @@ class Goods extends BaseController
             $function = Db::table('container_function')->where('id', 'in', $data['function_ids'])->column('name');
             $data['size'] = implode(',', $size);
             $data['function'] = implode(',', $function);
-            print_r($data);
-            die;
             $this->result['data'] = $data;
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
