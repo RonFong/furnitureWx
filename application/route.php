@@ -280,6 +280,8 @@ Route::group('api/:version', function () {
         Route::get('goods/info', 'api/:version.goods/info');
         //自定义商品零售价
         Route::put('goods/retailPrice', 'api/:version.goods/setRetailPrice');
+        //根据分类id 获取 属性
+        Route::get('goods/attr', 'api/:version.goods/getAttrByClassify');
     });
 
 });
