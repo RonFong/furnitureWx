@@ -158,7 +158,7 @@ class Product extends CoreProduct
         $info['is_collect'] = Db::table('relation_goods_collect')->where(['user_id' => user_info('id'), 'goods_id' => $id])->find() ? 1 : 0;
         $info['is_in_blacklist'] = 0;
         if (user_info('type') == 2) {
-            $info['is_in_blacklist'] = Db::table('relation_goods_blacklist')->where(['user_id' => user_info('group_id'), 'goods_id' => $id])->find() ? 1 : 0;
+            $info['is_in_blacklist'] = Db::table('relation_goods_blacklist')->where(['shop_id' => user_info('group_id'), 'goods_id' => $id])->find() ? 1 : 0;
         }
 
         $otherInfo = Db::table('factory')
