@@ -14,8 +14,9 @@ use think\Validate;
 class Product extends Validate
 {
     public $rule = [
+        'id'     => 'isReview',
         'status' => 'number|hasRemark',      //审核结果
-        'goods_classify_id' => 'number|isReview',  // 商城分类
+        'goods_classify_id' => 'number',  // 商城分类
     ];
 
     public $message = [
@@ -48,8 +49,22 @@ class Product extends Validate
      */
     protected function isReview($value, $rule, $data)
     {
-        if (empty($value) && $data['status'] == 1) {
-            return '审核通过状态，必须为产品选择商城分类';
+        if ($data['status'] == 1) {
+            if (empty($data['goods_classify_id'])) {
+                return '审核通过状态，必须为产品选择商城分类';
+            }
+            if (empty($data['style_id'])) {
+                return '审核通过状态，必须为产品选择风格';
+            }
+            if (empty($data['function_ids'])) {
+                return '审核通过状态，必须为产品选择功能';
+            }
+            if (empty($data['size_ids'])) {
+                return '审核通过状态，必须为产品选择尺寸';
+            }
+            if (empty($data['texture_id'])) {
+                return '审核通过状态，必须为产品选择材质';
+            }
         }
         return true;
     }
