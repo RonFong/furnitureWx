@@ -53,18 +53,18 @@ class Product extends Validate
             if (empty($data['goods_classify_id'])) {
                 return '审核通过状态，必须为产品选择商城分类';
             }
-            if (empty($data['style_id'])) {
-                return '审核通过状态，必须为产品选择风格';
-            }
-            if (empty($data['function_ids'])) {
-                return '审核通过状态，必须为产品选择功能';
-            }
-            if (empty($data['size_ids'])) {
-                return '审核通过状态，必须为产品选择尺寸';
-            }
-            if (empty($data['texture_id'])) {
-                return '审核通过状态，必须为产品选择材质';
-            }
+//            if (empty($data['style_id'])) {
+//                return '审核通过状态，必须为产品选择风格';
+//            }
+//            if (empty($data['function_ids'])) {
+//                return '审核通过状态，必须为产品选择功能';
+//            }
+//            if (empty($data['size_ids'])) {
+//                return '审核通过状态，必须为产品选择尺寸';
+//            }
+//            if (empty($data['texture_id'])) {
+//                return '审核通过状态，必须为产品选择材质';
+//            }
         }
         return true;
     }
