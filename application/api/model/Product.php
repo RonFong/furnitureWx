@@ -52,6 +52,9 @@ class Product extends CoreProduct
             }
 
             foreach ($colors as $k => $color) {
+                if (empty($color) && empty($color['img'])) {
+                    continue;
+                }
                 $colorId = Db::table('product_color')->insertGetId([
                     'product_id'    => $this->id,
                     'color'         => $color['color'],
@@ -390,6 +393,8 @@ class Product extends CoreProduct
      */
     protected function isShowPrice($factoryId)
     {
+//        var_dump(user_info('group_id'), $factoryId);
+//        die;
         //非本店用户或商家，不显示批发价
         if ((user_info('type') == 1 && user_info('group_id') == $factoryId) || user_info('type') == 2) {
             return true;
