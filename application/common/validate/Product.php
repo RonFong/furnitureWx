@@ -114,6 +114,12 @@ class Product extends BaseValidate
             if (!is_array($v)) {
                 return 'colors数据中子元素格式不正确';
             }
+            if (empty($v['color']) && empty($v['img'])) {
+                continue;
+            }
+            if (empty($v['img'])) {
+                return '请上传产品颜色图';
+            }
             if (empty($v['color'])) {
                 return '颜色信息不能为空';
             }
