@@ -391,7 +391,7 @@ class Product extends CoreProduct
     protected function isShowPrice($factoryId)
     {
         //非本店用户或商家，不显示批发价
-        if (user_info('group_id') == $factoryId || user_info('type') == 2) {
+        if ((user_info('type') == 1 && user_info('group_id') == $factoryId) || user_info('type') == 2) {
             return true;
         }
         return false;
