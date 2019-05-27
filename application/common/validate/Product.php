@@ -114,14 +114,20 @@ class Product extends BaseValidate
             if (!is_array($v)) {
                 return 'colors数据中子元素格式不正确';
             }
-            if (empty($v['color']) || empty($v['img']) || empty($v['prices'])) {
-//                return '参数错误， color|img|prices 为空值';
-                return '请提供产品完整信息';
+            if (empty($v['color'])) {
+                return '颜色信息不能为空';
             }
-            foreach ($v['prices'] as $vv) {
-                if (empty($vv['configure']) || empty($vv['trade_price'])) {
-//                    return '参数错误， configure|trade_price 为空值';
-                    return '请提供产品完整信息';
+            if (empty($v['img'])) {
+                return '请上传产品颜色图';
+            }
+            if (!empty($v['prices'])) {
+                foreach ($v['prices'] as $vv) {
+                    if (empty($vv['configure'])) {
+                        return '请填写产品组合信息';
+                    }
+                    if (empty($vv['trade_price'])) {
+                        return '请填写出厂价';
+                    }
                 }
             }
         }
