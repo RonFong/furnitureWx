@@ -126,6 +126,7 @@ class Factory extends CoreFactory
             ->where('id', $factoryId)
             ->find();
         $user = Db::table('user')->where('id', $data['user_id'])->field('user_name, avatar')->find();
+        $user['user_name'] = $this->emojiDecode($user['user_name']);
         return array_merge($data->toArray(), $user);
     }
 }
