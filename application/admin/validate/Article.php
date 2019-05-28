@@ -14,11 +14,9 @@ use think\Validate;
 class Article extends Validate
 {
     public $rule = [
-        'title' => 'require'
     ];
 
     public $message = [
-        'title.require' => '标题不能为空！'
     ];
 
     public $scene = [
