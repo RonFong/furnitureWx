@@ -10,6 +10,8 @@
 namespace app\admin\controller;
 
 use app\admin\model\Shop as CoreShop;
+use app\admin\model\ShopCommodityItem;
+use app\common\model\GroupNearby;
 use app\common\model\StoreClassify;
 use app\lib\oss\Oss;
 use think\Db;
@@ -173,6 +175,25 @@ class Shop extends Base
         $data['lng'] = $lng;
         $this->assign('data', json_encode($data));
         return $this->fetch('show_map');
+    }
+
+    public function delete($id)
+    {
+        Db::startTrans();
+        try {
+            $this->currentModel->where('id', $id)->delete();
+            (new \app\admin\model\User())->where(['type' => 2, 'group_id' => $id])->update(['type' => 3, 'group_id' => 0]);
+            (new GroupNearby())->where(['group_id' => $id, 'group_type' => 2])->delete();
+            $commodityModel = (new \app\admin\model\ShopCommodity());
+            $commodityItem = $commodityModel->where('shop_id', $id)->column('id');
+            $commodityModel->where('shop_id', $id)->delete();
+            (new ShopCommodityItem())->where('commodity_id', 'in', implode(',', $commodityItem))->delete();
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error($e->getMessage());
+        }
+        $this->success('删除成功');
     }
 }
 
