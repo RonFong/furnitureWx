@@ -66,7 +66,7 @@ class Token
         if (!$userInfo) {
             $saveData = [
                 'wx_openid'     => self::$openid,
-                'avatar'        => $wxUserInfo['avatarUrl'] ?? self::$defaultAvatar,
+                'avatar'        => empty($wxUserInfo['avatarUrl']) ? self::$defaultAvatar : $wxUserInfo['avatarUrl'],
                 'user_name'     => self::emojiEncode($wxUserInfo['nickName']),
                 'group_id'      => 0,
                 'gender'        => $wxUserInfo['gender'],
