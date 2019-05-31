@@ -18,11 +18,6 @@
         <input type="hidden" name="id" id="id" value="{$data.id|default=''}">
         <div class="layui-field-box">
             <div class="layui-main">
-                <div class="layui-input-inline content">
-                    {notempty name="data.music"}
-                    <audio src="{$vo.record}" controls="controls"></audio>
-                    {/notempty}
-                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">音乐：</label>
                     <div class="layui-input-inline content">
@@ -34,15 +29,16 @@
                     <label class="layui-form-label">内容详情：</label>
                     <div class="layui-input-inline content">
                         {volist name="$data.item" id="vo"}
-                        {if condition="$vo.type == 1"}
-                        <div class="content-text">{$vo.text}</div>
-                        {elseif condition="$vo.type == 2"}
-                        <a href="{$vo.img}" target="_blank">
-                            <img src="{$vo.img}" alt="图片">
-                        </a>
-                        {else}
-                        <audio src="{$vo.record}" controls="controls"></audio>
-                        {/if}
+                            {if condition="$vo.type == 1"}
+                                <div class="content-text" style="font-size: 16px;letter-spacing:3px;width:100%;">{$vo.text}</div>
+                            {else}
+                                <a href="{$vo.img}" target="_blank">
+                                    <img src="{$vo.img}" alt="图片">
+                                </a>
+                                {if condition="$vo.record != ''"}
+                                    <audio src="{$vo.record|default=''}" controls="controls"></audio>
+                                {/if}
+                            {/if}
                         {/volist}
                     </div>
                 </div>
