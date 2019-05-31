@@ -12,6 +12,8 @@ namespace app\admin\controller;
 use app\admin\model\Factory as CoreFactory;
 use app\common\model\FactoryMargin;
 use app\common\model\GroupNearby;
+use app\common\model\ProductColor;
+use app\common\model\ProductPrice;
 use think\Db;
 use think\Request;
 
@@ -169,6 +171,25 @@ class Factory extends Base
         return Db::name('district')->where('parent_id', $pid)->field('id,name,code')->select();
     }
 
+
+    public function delete($id)
+    {
+        Db::startTrans();
+        try {
+            $this->currentModel->where('id', $id)->delete();
+            (new \app\admin\model\User())->where(['type' => 1, 'group_id' => $id])->update(['type' => 3, 'group_id' => 0]);
+            (new GroupNearby())->where(['group_id' => $id, 'group_type' => 1])->delete();
+            $productModel = (new \app\admin\model\Product());
+            $productIds = $productModel->where('factory_id', $id)->column('id');
+            (new ProductColor())->where('product_id', 'in', implode(',', $productIds))->delete();
+            (new ProductPrice())->where('product_id', 'in', implode(',', $productIds))->delete();
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error($e->getMessage());
+        }
+        $this->success('删除成功');
+    }
 
 
 }
