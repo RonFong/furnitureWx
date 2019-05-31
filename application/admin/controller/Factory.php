@@ -181,6 +181,7 @@ class Factory extends Base
             (new GroupNearby())->where(['group_id' => $id, 'group_type' => 1])->delete();
             $productModel = (new \app\admin\model\Product());
             $productIds = $productModel->where('factory_id', $id)->column('id');
+            $productModel->where('factory_id', $id)->delete();
             (new ProductColor())->where('product_id', 'in', implode(',', $productIds))->delete();
             (new ProductPrice())->where('product_id', 'in', implode(',', $productIds))->delete();
             Db::commit();
