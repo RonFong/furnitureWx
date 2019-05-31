@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Factory as CoreFactory;
+use app\admin\model\HomeContentItem;
 use app\common\model\FactoryMargin;
 use app\common\model\GroupNearby;
 use app\common\model\ProductColor;
@@ -42,7 +43,7 @@ class Factory extends Base
     public function getDataList()
     {
         $map = $this->getDataListMap();
-        return $this->currentModel->where($map)->order('id desc')->layTable(['admin_user_name', 'audit_state_text']);
+        return $this->currentModel->where($map)->order('id desc')->layTable(['home_view', 'admin_user_name', 'audit_state_text']);
     }
 
     private function getDataListMap()
@@ -192,6 +193,21 @@ class Factory extends Base
         $this->success('删除成功');
     }
 
+    /**
+     * 获取首页图文
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function homeview()
+    {
+        $id = $this->request->param('id');
+        $data = (new \app\admin\model\HomeContent())->where(['group_type' => 1, 'group_id' => $id])->find();
+        $data['item'] = (new HomeContentItem())->where('content_id', $data['id'])->order('sort asc')->select();
+        $this->assign('data', $data);
+        return $this->fetch();
+    }
 
 }
 

@@ -92,6 +92,13 @@
                 ,{field:'sales_contact', title:'门市联系人'}
                 ,{field:'sales_phone', title:'门市电话'}
                 ,{field:'sales_wx', title:'门店微信号'}
+                ,{title:'首页图文', align:'center', templet: function (data) {
+                        if (data.home_view === 1) {
+                            return '<a href="homeview?id='+data.id+'" target="_blank"><span class="layui-badge layui-bg-blue">点击查看</span></a>';
+                        } else {
+                            return '<span class="layui-badge layui-bg-gray">无</span>';
+                        }
+                    }}
                 ,{title:'启用状态', align:'center', templet: function (data) {
                         var _html = '';
                         if (data.state === 1) {
