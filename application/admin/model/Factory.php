@@ -24,4 +24,17 @@ class Factory extends CoreFactory
         $array = ['未审核', '通过', '未通过'];
         return $array[$data['audit_state']];
     }
+
+    /**
+     * @param $value
+     * @param $data
+     * @return int
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getHomeViewAttr($value, $data)
+    {
+        return (new HomeContent())->where(['group_type' => 1, 'group_id' => $data['id']])->find() ? 1 : 0;
+    }
 }
