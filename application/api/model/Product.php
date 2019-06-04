@@ -160,7 +160,7 @@ class Product extends CoreProduct
      */
     public function info($id, $shopId = 0, $isAdmin = false)
     {
-        $this->setInc('popularity');
+        $this->where('id', $id)->setInc('popularity');
         $info = $this->where('id', $id)
             ->field('id, factory_id, classify_id, goods_classify_id, is_on_shelves, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details')
             ->find()
