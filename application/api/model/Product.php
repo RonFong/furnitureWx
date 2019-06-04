@@ -175,6 +175,7 @@ class Product extends CoreProduct
             ->where('id', $info['factory_id'])
             ->field('factory_province, factory_city, factory_district, sales_province, sales_city, sales_district')
             ->find();
+        $info['factory_name'] = $otherInfo['factory_name'];
         $info['deliver_address'] = $otherInfo['sales_province'] . ' ' . $otherInfo['sales_city'] . ' ' . $otherInfo['sales_district'];
         $info['factory_address'] = $otherInfo['factory_province'] . ' ' . $otherInfo['factory_city'] . ' ' . $otherInfo['factory_district'];
 
