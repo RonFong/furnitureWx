@@ -183,7 +183,9 @@ class Product extends CoreProduct
         $info['colors'] = (new ProductColor())->where('product_id', $id)->field('id, color, img')->order('sort')->select();
         if ($shopId) {
             $shopRetailPrice = Db::table('product_retail_price')->where(['shop_id' => $shopId, 'product_id' => $id])->column('price', 'configure_id');
-            $info['shop_user_id'] = (new Shop())->where('id', $shopId)->value('admin_user');
+            $shopInfo = (new Shop())->where('id', $shopId)->field('admin_user, shop_name')->find();
+            $info['shop_user_id'] = $shopInfo['admin_user'];
+            $info['shop_name'] = $shopInfo['shop_name'];
         }
         $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
