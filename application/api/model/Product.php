@@ -36,7 +36,7 @@ class Product extends CoreProduct
             $saveData['number'] = $this->createGoodsNumber();
             //产品详情，去除空值
             foreach ($saveData['details'] as $k => $v) {
-                if (empty(trim($v))) {
+                if (empty(trim($v['content']))) {
                     unset($saveData['details'][$k]);
                 }
             }
