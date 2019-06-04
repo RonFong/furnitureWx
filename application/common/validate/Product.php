@@ -27,7 +27,7 @@ class Product extends BaseValidate
         'function'          => 'require',
         'size'              => 'require',
         'colors'            => 'require|checkColor',
-        'details'           => 'require|checkDetails',
+        'details'           => 'require',
         'page'              => 'require|number',
         'row'               => 'require|number',
         'product_id'        => 'require|isAdminUser',
