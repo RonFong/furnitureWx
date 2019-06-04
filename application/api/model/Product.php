@@ -34,6 +34,13 @@ class Product extends CoreProduct
             unset($saveData['colors']);
             $saveData['factory_id'] = user_info('group_id');
             $saveData['number'] = $this->createGoodsNumber();
+            //产品详情，去除空值
+            foreach ($saveData['details'] as $k => $v) {
+                if (empty(trim($v))) {
+                    unset($saveData['details'][$k]);
+                }
+            }
+
             $saveData['details'] = json_encode($saveData['details']);
             $saveData['min_price'] = $this->getMinPrice($colors);
             $saveData['review_status'] = 0;
