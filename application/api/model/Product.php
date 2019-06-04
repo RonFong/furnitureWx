@@ -162,11 +162,11 @@ class Product extends CoreProduct
     public function info($id, $shopId = 0, $isAdmin = false)
     {
         //人气值
-        $cacheTag = user_info('id') . '_product_popularity';
-        if (!Cache::get($cacheTag)) {
+//        $cacheTag = user_info('id') . '_product_popularity';
+//        if (!Cache::get($cacheTag)) {
             $this->where('id', $id)->setInc('popularity');
-            Cache::set(user_info('id') . '_product_popularity', $id, 10);
-        }
+//            Cache::set(user_info('id') . '_product_popularity', $id, 10);
+//        }
 
         $info = $this->where('id', $id)
             ->field('id, factory_id, classify_id, goods_classify_id, is_on_shelves, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details')
