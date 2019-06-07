@@ -139,7 +139,7 @@ class Product extends CoreProduct
             $list[$k]['retail_price'] = round($tradePrice * config('system.price_ratio'));
 
             //非本店用户或商家，不显示批发价
-            $list[$k]['trade_price'] = $this->isShowPrice($v['factory_id']) ? $tradePrice : 0;
+            $list[$k]['trade_price'] = $this->isShowPrice($v['factory_id']) ? round($tradePrice) : 0;
 
             $reviewInfo = Db::table('product_review_status')->where('product_id', $v['id'])->order('id desc')->find();
             $list[$k]['review_status'] = $reviewInfo['status'] ?? 0;
@@ -153,7 +153,7 @@ class Product extends CoreProduct
     /**
      * 产品详情
      * @param $id
-     * @param int $shopId
+     * @param int $shopId  商家门店 id 等于 0 为 厂家产品详情页，非 0 为商城商品详情页
      * @param bool $isAdmin
      * @return array
      * @throws \think\Exception
@@ -161,7 +161,7 @@ class Product extends CoreProduct
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function info($id, $shopId = 0, $isAdmin = false)
+    public function info($id, $shopId = 1, $isAdmin = false)
     {
         //人气值
 //        $cacheTag = user_info('id') . '_product_popularity';
@@ -171,7 +171,7 @@ class Product extends CoreProduct
 //        }
 
         $info = $this->where('id', $id)
-            ->field('id, factory_id, classify_id, goods_classify_id, is_on_shelves, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details')
+            ->field('id, factory_id, classify_id, goods_classify_id, is_on_shelves, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details,form,specification')
             ->find()
             ->toArray();
 
@@ -192,20 +192,21 @@ class Product extends CoreProduct
         $info['details'] = json_decode($info['details']);
         $info['colors'] = (new ProductColor())->where('product_id', $id)->field('id, color, img')->order('sort')->select();
         if ($shopId) {
-            $shopRetailPrice = Db::table('product_retail_price')->where(['shop_id' => $shopId, 'product_id' => $id])->column('price', 'configure_id');
+            $priceRate = $this->getProductPriceRate($id, $shopId);    // 零售价商家自定义倍率
             $shopInfo = (new Shop())->where('id', $shopId)->field('admin_user, shop_name')->find();
             $info['shop_user_id'] = $shopInfo['admin_user'];
             $info['shop_name'] = $shopInfo['shop_name'];
         }
         $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
-            $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, trade_price")->select();
+            $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, round(trade_price) as trade_price")->select();
             foreach ($prices as $kk => $vv) {
-                $retailPrice = round($vv->trade_price * config('system.price_ratio'));
+                $retailPrice = format_price($vv->trade_price * config('system.price_ratio'));
                 $prices[$kk]->retail_price = $retailPrice;
-                $prices[$kk]->shop_retail_price = isset($shopRetailPrice) ? $shopRetailPrice[$vv['id']] ?? 0 : 0;
+                $prices[$kk]->shop_retail_price = isset($priceRate) ? format_price($priceRate * $vv['trade_price']) ?? 0 : 0;
+
                 if (!$isShowPrice) {
-                    $prices[$kk]->trade_price = 0;
+                    $prices[$kk]->trade_price = 0;   // 批发价， 非 后台 admin 及当前商家时，设置为0 （隐藏）
                 }
             }
             $info['colors'][$k]->prices = $prices;
