@@ -41,7 +41,6 @@ class Product extends CoreProduct
                     unset($saveData['details'][$k]);
                 }
             }
-
             $saveData['details'] = json_encode($saveData['details']);
             $saveData['min_price'] = $this->getMinPrice($colors);
             $saveData['review_status'] = 0;
@@ -58,7 +57,6 @@ class Product extends CoreProduct
             if (!empty($saveData['id'])) {
                 $this->delColor($saveData['id']);
             }
-
             foreach ($colors as $k => $color) {
                 if (empty($color) && empty($color['img'])) {
                     continue;
@@ -90,11 +88,15 @@ class Product extends CoreProduct
      * 获取最低价
      * @param $colors
      * @return mixed
+     * @throws \Exception
      */
     protected function getMinPrice($colors)
     {
         $prices = [];
         foreach ($colors as $v) {
+            if (empty($v['prices'])) {
+                exception('请至少填写一个产品组合及价格');
+            }
             foreach ($v['prices'] as $vv) {
                 array_push($prices, $vv['trade_price']);
             }
