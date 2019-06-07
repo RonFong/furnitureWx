@@ -27,12 +27,9 @@ class Product extends Model
     protected function getRetailPriceAttr($value)
     {
         $shopId = Request::instance()->param('shop_id');
-        $retailPrice = Db::table('product_retail_price')->where([
-            'shop_id'   => $shopId,
-            'product_id'    => $value
-        ])->order('price')->value('price');
-        $retailPrice = $retailPrice ?? Db::table('product_price')->where('product_id', $value)->min('trade_price') * config('system.price_ratio');
-        return sprintf("%01.2f", $retailPrice);
+        $rate = $this->getProductPriceRate($value, $shopId);
+        $retailPrice = Db::table('product_price')->where('product_id', $value)->min('trade_price') * $rate;
+        return format_price($retailPrice);
     }
 
     /**
@@ -46,6 +43,24 @@ class Product extends Model
         return Db::table('product_color')
             ->where('id', $colorId)
             ->value('img');
+    }
+
+    /**
+     * 获取产品零售价倍率
+     * @param $productId
+     * @param $shopId
+     * @return mixed
+     */
+    public function getProductPriceRate($productId, $shopId)
+    {
+        $rate = Db::table('product_retail_price')->where([
+            'shop_id'   => $shopId,
+            'product_id'    => $productId
+        ])->value('rate');
+        if (!$rate) {
+            $rate = Db::table('product_retail_rate')->where('shop_id', $shopId)->value('rate');
+        }
+        return $rate ?? config('system.price_ratio');
     }
 
 }
