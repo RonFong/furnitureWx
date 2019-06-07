@@ -113,8 +113,8 @@ class Shop extends Base
         /*获取下拉列表：省份*/
         $provinceList = $this->getRegion(0);
         $this->assign('provinceList', $provinceList);
-        //经营类别
-        $classifyList = Db::table('shop_classify')->select();
+        //经营类别 为 商城商品顶级分类
+        $classifyList = Db::table('goods_classify')->where('pid', 0)->select();
         $this->assign('classifyList', $classifyList);
 
         return $this->fetch();
@@ -133,7 +133,9 @@ class Shop extends Base
         if ($result !== true) {
             $this->error($result);
         }
-
+        if ($param['store_status'] == 1 && empty($param['classify_id'])) {
+            $this->error('开通商城，必须指定该商家的经营类别');
+        }
         try {
             //保存数据
             $this->currentModel->save($param);

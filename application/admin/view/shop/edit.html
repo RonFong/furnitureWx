@@ -34,21 +34,6 @@
                         <input type="text" name="shop_name" value="{$data.shop_name|default=''}" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">经营类别：</label>
-                        <div class="layui-input-block">
-                            <select name="classify_id" id="classify_id" lay-filter="region">
-                                <option value="">未选择</option>
-                                {notempty name="classifyList"}
-                                {volist name="classifyList" id="vo"}
-                                <option value="{$vo.id}" {eq name="$data.classify_id" value="$vo.id"} selected {/eq} >{$vo.classify_name}</option>
-                                {/volist}
-                                {/notempty}
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商户联系人：</label>
                     <div class="layui-input-block">
@@ -152,6 +137,21 @@
                         <input type="radio" name="audit_state" value="2" title="审核不通过" {eq name="$data.audit_state|default='0'" value="2"}checked{/eq}>
                     </div>
                 </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">商城经营类别：</label>
+                        <div class="layui-input-block">
+                            <select name="classify_id" id="classify_id" lay-filter="region">
+                                <option value="">未选择</option>
+                                {notempty name="classifyList"}
+                                {volist name="classifyList" id="vo"}
+                                <option value="{$vo.id}" {eq name="$data.classify_id" value="$vo.id"} selected {/eq} >{$vo.classify_name}</option>
+                                {/volist}
+                                {/notempty}
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商城开通状态：</label>
                     <div class="layui-input-block">
@@ -160,7 +160,6 @@
                         <input type="radio" name="store_status" value="2" title="禁用" {eq name="$data.store_status|default='0'" value="2"}checked{/eq}>
                     </div>
                 </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">审核结果说明：</label>
                     <div class="layui-input-block">

@@ -50,7 +50,7 @@ class Shop extends CoreShop
         if ($data['classify_id'] == 0) {
              return '/';
         }
-        return Db::table('shop_classify')->where('id', $data['classify_id'])->value('classify_name');
+        return Db::table('goods_classify')->where('id', $data['classify_id'])->value('classify_name');
     }
 
     /**
