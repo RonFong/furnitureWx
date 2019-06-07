@@ -51,6 +51,7 @@ class Goods extends BaseController
     /**
      * 商品详情
      * @return \think\response\Json
+     * @throws \app\lib\exception\BaseException
      */
     public function info()
     {
@@ -58,13 +59,13 @@ class Goods extends BaseController
         try {
             $data = $this->currentModel
                 ->info($this->data['product_id'], $this->data['shop_id'], true);
-            $data['style'] = Db::table('container_style')->where('id', $data['style_id'])->value('name');
-            $data['texture'] = Db::table('container_texture')->where('id', $data['texture_id'])->value('name');
-            $size = Db::table('container_size')->where('id', 'in', $data['size_ids'])->column('name');
-            $data['size'] = implode(',', $size);
-            $function = Db::table('container_function')->where('id', 'in', $data['function_ids'])->column('name');
-            $data['size'] = implode(',', $size);
-            $data['function'] = implode(',', $function);
+            //当前商家设置的零售价倍率
+            $data['local_rate'] = Db::table('product_retail_price')
+                ->where(['shop_id' => $this->data['shop_id'], 'product_id' => $this->data['product_id']])
+                ->value('rate') ?? '';
+            $data['global_rate'] = Db::table('product_retail_rate')
+                    ->where(['shop_id' => $this->data['shop_id']])
+                    ->value('rate') ?? '';
             $this->result['data'] = $data;
         } catch (\Exception $e) {
             $this->currentValidate->error($e);

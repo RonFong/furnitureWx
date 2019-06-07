@@ -218,7 +218,17 @@ class Product extends Base
             ->select();
         $attrIds = Db::table('product')->where('id', $id)->value('attr_ids');
         foreach ($attrList as $k => $v) {
-            $attrList[$k]['checked'] = strpos($attrIds, (string) $v['id']) === false ? 0 : 1;
+            $isChecked = 0;
+            if ($attrIds) {
+                $tmpArr = json_decode($attrIds, true);
+                foreach ($tmpArr as $kk => $vv) {
+                    if (in_array($v['id'], explode(',', $vv)) !== false) {
+                        $isChecked = 1;
+                        continue;
+                    }
+                }
+            }
+            $attrList[$k]['checked'] = $isChecked;
         }
 
         $data = [];
