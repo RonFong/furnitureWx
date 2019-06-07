@@ -329,7 +329,7 @@ class Events
     private static function log($userId, $type)
     {
         self::$db->insert('websocket_chained')
-            ->cols(['user_id' => $userId, 'type' => $type, 'create_time' => time()])
+            ->cols(['user_id' => (int) $userId, 'type' => $type, 'create_time' => time()])
             ->query();
     }
 
