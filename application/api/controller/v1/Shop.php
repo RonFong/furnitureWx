@@ -255,7 +255,7 @@ class Shop extends BaseController
      */
     public function classify()
     {
-        $this->result['data'] = Db::table('shop_classify')->select();
+        $this->result['data'] = Db::table('goods_classify')->where('pid', 0)->select();
         return json($this->result, 200);
     }
 }
