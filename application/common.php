@@ -494,3 +494,17 @@ if (!function_exists('format_page')) {
         return $pageData;
     }
 }
+
+if (!function_exists('format_price')) {
+    /**
+     * 格式化零售价 >= 100 的，个位数四舍五入为0； < 100 的，个位数保持计算结果
+     * @param float $price
+     * @return mixed
+     */
+    function format_price($price) {
+        if ($price >= 100) {
+            return round ($price / 10) * 10;
+        }
+        return round($price);
+    }
+}
