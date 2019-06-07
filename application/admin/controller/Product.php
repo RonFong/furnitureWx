@@ -158,8 +158,9 @@ class Product extends Base
         $this->assign('data', $data);
         $classifyParentList = (new GoodsClassify())->where('pid', 1)->select();    // 二级分类
         $this->assign('classifyParentList', $classifyParentList);
+
         //当前产品的商城属性， json 转  , 拼接的字符串
-        $attrIds = json_decode($data['attr_ids'], true);
+        $attrIds = json_decode($data['attr_ids'], true) ?? [];
         $attrIdsStr = '';
         foreach ($attrIds as $k => $v) {
             $attrIdsStr .= $v . ',';
