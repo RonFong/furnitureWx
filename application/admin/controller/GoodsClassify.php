@@ -11,6 +11,7 @@
 namespace app\admin\controller;
 
 
+use app\common\model\GoodsClassifyAttr;
 use think\Db;
 use think\Request;
 use \app\admin\model\GoodsClassify as GoodsClassifyModel;
@@ -68,16 +69,28 @@ class GoodsClassify extends Base
     {
         $param = $this->request->param();
         $data = ['styles' =>[], 'functions'=>[], 'textures'=>[], 'sizes'=>[]];
+        $data['attrList'] = [];
         if (!empty($param['id'])) {
-            $data = $this->currentModel->where('id', $param['id'])->find();
+            $data = $this->currentModel->where('id', $param['id'])->find()->toArray();
             if (empty($data)) {
                 $this->error('信息不存在');
             }
-            $data = $data->toArray();
-            $data['styles'] = $this->getAttr('goods_style', 'container_style', 'style_id', $data['id']);
-            $data['functions'] = $this->getAttr('goods_function', 'container_function', 'function_id', $data['id']);
-            $data['textures'] = $this->getAttr('goods_texture', 'container_texture', 'texture_id', $data['id']);
-            $data['sizes'] = $this->getAttr('goods_size', 'container_size', 'size_id', $data['id']);
+            $attrList = (new GoodsClassifyAttr())
+                ->alias('a')
+                ->join('goods_attr_val b', 'a.attr_val_id = b.id')
+                ->field('b.id, b.enum_name, b.attr_id')
+                ->where('a.goods_classify_id', $param['id'])
+                ->select();
+            $attrs = Db::table('goods_attr')->field('id, attr_name')->select();
+            foreach ($attrs as $k => $v) {
+                $v['enum_list'] = [];
+                foreach ($attrList as $kk => $vv) {
+                    if ($vv['attr_id'] == $v['id']) {
+                        array_push($v['enum_list'], $vv->toArray());
+                    }
+                }
+                $data['attrList'][$v['id']] = $v;
+            }
         }
         $this->assign('data', $data);
         $pid = $data['pid'] ?? 0;
@@ -156,29 +169,9 @@ class GoodsClassify extends Base
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function delAttr($id, $attr, $attrId)
+    public function delAttr($id, $attr_val_id)
     {
-        $model = '';
-        $field = '';
-        switch ($attr) {
-            case 'size':
-                $model = Db::table('goods_size');
-                $field = 'size_id';
-                break;
-            case 'style':
-                $model = Db::table('goods_style');
-                $field = 'style_id';
-                break;
-            case 'function':
-                $model = Db::table('goods_function');
-                $field = 'function_id';
-                break;
-            case 'texture':
-                $model = Db::table('goods_texture');
-                $field = 'texture_id';
-                break;
-        }
-        $model->where([$field => $attrId, 'goods_classify_id' => $id])->delete();
+        Db::table('goods_classify_attr')->where(['goods_classify_id' => $id, 'attr_val_id' => $attr_val_id])->delete();
         $this->success('删除成功');
     }
 
@@ -191,13 +184,29 @@ class GoodsClassify extends Base
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getAttrs($id, $attr)
+    public function getAttrs($id, $attr_id)
     {
-        $data = Db::table('container_' . $attr)
+        $attrList = Db::table('goods_attr_val')
             ->alias('a')
-            ->join("goods_{$attr} b", "b.{$attr}_id = a.id and goods_classify_id = {$id}", 'LEFT')
-            ->field('a.id, a.name, ifnull(b.id, 0) as selected')
+            ->join('goods_classify_attr b', "a.id = b.attr_val_id and goods_classify_id = $id", 'LEFT')
+            ->field('a.id, a.enum_name, a.tag, ifnull(b.id, 0) as checked')
+            ->where('a.attr_id', $attr_id)
             ->select();
+        $data = [];
+        if ($attrList) {
+            $data = ['无标签' => []];
+            foreach ($attrList as $k => $v) {
+                if (empty($v['tag'])) {
+                    array_push($data['无标签'], $v);
+                } else {
+                    if (isset($data[$v['tag']])) {
+                        array_push($data[$v['tag']], $v);
+                    } else {
+                        $data[$v['tag']] = [$v];
+                    }
+                }
+            }
+        }
         $this->success('success', '', $data);
     }
 
@@ -206,19 +215,30 @@ class GoodsClassify extends Base
      */
     public function saveAttr()
     {
-        $data = $this->request->param();
-        $id = $data['id'];
-        $attrName = $data['attr'];
-        unset($data['id'], $data['attr']);
+        $param = $this->request->param();
+        $id = $param['id'];
+        $attrId = $param['attr_id'];
+        unset($param['id'], $param['attr_id']);
         Db::startTrans();
         try {
-            Db::table('goods_' . $attrName)->where('goods_classify_id', $id)->delete();
+            $existAttrIds = Db::table('goods_classify_attr')
+                ->alias('a')
+                ->join('goods_attr_val b', 'a.attr_val_id = b.id')
+                ->join('goods_attr c', 'b.attr_id = c.id')
+                ->where('c.id', $attrId)
+                ->column('a.id');
+            $deledAttr = Db::table('goods_classify_attr')
+                ->alias('a')
+                ->join('goods_attr_val b', 'a.attr_val_id = b.id', 'LEFT')
+                ->where('b.id is null')
+                ->column('a.id');
+            Db::table('goods_classify_attr')->where('id', 'in', implode(',', array_merge($existAttrIds, $deledAttr)))->delete();
             $saveData = [];
-            foreach ($data as $k => $v) {
-                $saveData[$k][$attrName.'_id'] = $v;
+            foreach ($param as $k => $v) {
+                $saveData[$k]['attr_val_id'] = $v;
                 $saveData[$k]['goods_classify_id'] = $id;
             }
-            Db::table('goods_' . $attrName)->insertAll($saveData);
+            Db::table('goods_classify_attr')->insertAll($saveData);
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();

@@ -58,77 +58,28 @@
                         </div>
                     </div>
                 </div>
+                {volist name="attrList" id="vo" item="key"}
                 <div class="layui-form-item">
-                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">风格：</label>
-                            <div class="layui-input-block">
-                                <select name="style_id" id="style_id">
-                                    <option value="">请选择</option>
-                                    {notempty name="$styleList"}
-                                    {volist name="$styleList" id="vo"}
-                                    <option value="{$vo.id}" {eq name="$data.style_id" value="$vo.id"}selected{/eq} >{$vo.name}</option>
-                                    {/volist}
-                                    {/notempty}
-                                </select>
+                    <label class="layui-form-label">{$vo.attr_name}：</label>
+                    <div class="layui-input-block" style="top:6px;">
+                        <span class="add-attr" data-attr-id="{$vo.id}" data-method="offset" data-type="auto" style="background-color: #FFF;border: 1px #E5E5E5 solid;">
+                            &emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;
+                        </span>&emsp;
+                        {volist name="$vo['enum_list']" id="vv"}
+                        <div style="display: inline;margin-right: 30px;">
+                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vv.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
+                                {$vv.enum_name}
+                            </span>
+                            <div class="action-btn" style="display: none;">
+                               <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-value="{$vv.id}" style="width:10px;border:0px;">
+                                    <i class="layui-icon"></i>
+                                </span>
                             </div>
                         </div>
+                        {/volist}
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">材质：</label>
-                            <div class="layui-input-block">
-                                <select name="texture_id" id="texture_id">
-                                    <option value="">请选择</option>
-                                    {notempty name="$textureList"}
-                                    {volist name="$textureList" id="vo"}
-                                    <option value="{$vo.id}" {eq name="$data.texture_id" value="$vo.id"}selected{/eq} >{$vo.name}</option>
-                                    {/volist}
-                                    {/notempty}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">功能：</label>
-                            <div class="layui-input-block">
-                                <input type="hidden" name="function_ids" value="{$data.function_ids}">
-                                <select class="multiple" multiple="multiple" id="function_ids">
-                                    <option value="">请选择</option>
-                                    {notempty name="$functionList"}
-                                    {volist name="$functionList" id="vo"}
-                                    <option value="{$vo.id}" {php} if (strpos($data['function_ids'], (string)$vo['id']) !== false) {echo 'selected';};{/php} >{$vo.name}</option>
-                                    {/volist}
-                                    {/notempty}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg12">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">尺寸：</label>
-                            <div class="layui-input-block">
-                                <input type="hidden" name="size_ids" value="{$data.size_ids}">
-                                <select class="multiple" multiple="multiple" id="size_ids">
-                                    <option value="">请选择</option>
-
-                                    {notempty name="$sizeList"}
-                                    {volist name="$sizeList" id="vo"}
-                                    <option value="{$vo.id}" {php} if (strpos($data['size_ids'], (string)$vo['id']) !== false) {echo 'selected';};{/php} >{$vo.name}</option>
-                                    {/volist}
-                                    {/notempty}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/volist}
                 <div class="layui-form-item">
                     <label class="layui-form-label">审核状态：</label>
                     <div class="layui-input-block">
@@ -157,6 +108,11 @@
 
 {block name="script"}
 <script type="text/javascript">
+    $('.style-btn').click(function () {
+        $('.action-btn').css('display', 'none');
+        $(this).next('.action-btn').css('display', 'inline');
+    });
+
     layui.use(['form'], function () {
         var form = layui.form;
         //分类联动
@@ -179,18 +135,6 @@
         //监听提交
         form.on('submit(formSubmit)', function(data){
             var index = layer.load(2, {shade:[0.5,'#000'],time: 10*1000});
-            var sizeIds = '';   //尺寸多选
-            $('#size_ids option:selected').each(function(k, v) {
-                var prefix = k === 0 ? '' : ',';
-                sizeIds += (prefix + $(v).val());
-            });
-            $('input[name="size_ids"]').val(sizeIds);
-            var functionIds = '';    //功能多选
-            $('#function_ids option:selected').each(function(k, v) {
-                var prefix = k === 0 ? '' : ',';
-                functionIds += (prefix + $(v).val());
-            });
-            $('input[name="function_ids"]').val(functionIds);
             $.post('{:url("reviewSave")}', $('#editForm').serialize(), function (result) {
                 layer.close(index);
                 if (result.code) {
@@ -202,6 +146,85 @@
                 }
             }, 'json');
             return false;
+        });
+
+        var id = {$data.id|default=0};
+
+        $('.attr-del').click(function () {
+            var attr_val_id = $(this).data('value');
+            var obj = this;
+            layer.confirm('此属性将从当前产品中移除，确定继续吗？', function(index) {
+                $.post('{:url("delAttr")}',{id:id,attr_val_id:attr_val_id}, function (result) {
+                    layer.close(index);
+                    if (result.code) {
+                        $(obj).parent().parent().remove();
+                    } else {
+                        layer.alert(result.msg, {icon:2});
+                    }
+                }, 'json');
+            });
+        });
+
+        $('.add-attr').click(function () {
+            if (id == 0) {
+                layer.alert('请先添加并保存当前分类', {icon:2});
+            } else {
+                var attrs;
+                var attr_id = $(this).data('attr-id');
+                $.get('{:url("getAttrs")}',{id:id,attr_id:attr_id,}, function (result) {
+                    if (result.code) {
+                        attrs = result.data;
+                        console.log(attrs);
+                        if (attrs == "") {
+                            layer.alert('此属性类别下没有可选的枚举值');
+                            return true;
+                        }
+                        var attr_input = '';
+                        for (var i in attrs) {
+                            attr_input += '<p style="color:#1E9FFF;">'+i+'</p>'
+                            for (var j in attrs[i]) {
+                                var checked = attrs[i][j].checked == 0 ? '' : 'checked=""';
+                                attr_input += '<input type="checkbox" name="'+i+'_'+j+'" lay-skin="primary" value="'+attrs[i][j].id+' "title="'+attrs[i][j].enum_name+' " '+checked+'>';
+                            }
+                            attr_input += '<hr/>';
+                        }
+                        var html = '<form id="attrForm" class="layui-form" action="{:url("saveAttr")}">' +
+                            '<div class="layui-form-item" pane="" style="padding: 30px 30px 0 0;">' +
+                            '<div class="layui-input-block">'
+                            + '<input type="hidden" name="id" value="'+ id +'">'
+                            + '<input type="hidden" name="attr_id" value="'+ attr_id +'">'
+                            + attr_input
+                            + '</div></div></form>';
+
+                        layer.open({
+                            type: 1
+                            ,offset: 'auto'
+                            ,area: ['800px', '500px']
+                            ,content: html
+                            ,btn: ['保存', '取消']
+                            ,btnAlign: 'c'
+                            ,shade: 0
+                            ,yes: function(){
+                                $.post('{:url("saveAttr")}', $('#attrForm').serialize(), function (result) {
+                                    layer.closeAll();
+                                    if (result.code) {
+                                        layer.msg(result.msg, {shade:[0.5,'#000'],time:1000}, function () {
+                                            window.location.href = result.url;
+                                        });
+                                    } else {
+                                        layer.alert(result.msg, {icon:2, title:'保存失败！'});
+                                    }
+                                }, 'json');
+                            }
+                        });
+                        layui.use('form', function(){
+                            layui.form.render();
+                        });
+                    } else {
+                        layer.alert(result.msg, {icon:2});
+                    }
+                }, 'json');
+            }
         });
     });
 

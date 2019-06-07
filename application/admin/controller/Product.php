@@ -158,21 +158,102 @@ class Product extends Base
         $this->assign('data', $data);
         $classifyParentList = (new GoodsClassify())->where('pid', 1)->select();    // 二级分类
         $this->assign('classifyParentList', $classifyParentList);
+        //当前产品的商城属性， json 转  , 拼接的字符串
+        $attrIds = json_decode($data['attr_ids'], true);
+        $attrIdsStr = '';
+        foreach ($attrIds as $k => $v) {
+            $attrIdsStr .= $v . ',';
+        }
+        $attrEnum = Db::table('goods_attr_val')
+            ->field('id, enum_name, attr_id')
+            ->where('id', 'in', $attrIdsStr)
+            ->select();
 
-        //风格
-        $styleList = Db::table('container_style')->select();
-        $this->assign('styleList', $styleList);
-        //材质
-        $textureList = Db::table('container_texture')->select();
-        $this->assign('textureList', $textureList);
-        //功能
-        $functionList = Db::table('container_function')->select();
-        $this->assign('functionList', $functionList);
-        //尺寸
-        $sizeList = Db::table('container_size')->select();
-        $this->assign('sizeList', $sizeList);
+        $attrs = Db::table('goods_attr')->field('id, attr_name')->select();
+        $attrList = [];
+        foreach ($attrs as $k => $v) {
+            $v['enum_list'] = [];
+            foreach ($attrEnum as $kk => $vv) {
+                if ($vv['attr_id'] == $v['id']) {
+                    array_push($v['enum_list'], $vv);
+                }
+            }
+            $attrList[$v['id']] = $v;
+        }
+        $this->assign('attrList', $attrList);
 
         return $this->fetch();
+    }
+
+    /**
+     * 删除分类的属性
+     * @param $id   分类id
+     * @param $attr  属性名
+     * @param $attrId   属性id
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function delAttr($id, $attr_val_id)
+    {
+        Db::table('product_attr')->where(['product_id' => $id, 'attr_val_id' => $attr_val_id])->delete();
+        $this->success('删除成功');
+    }
+
+    /**
+     * 获取属性
+     * @param $id
+     * @param $attr
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getAttrs($id, $attr_id)
+    {
+        $attrList = Db::table('goods_attr_val')
+            ->alias('a')
+            ->field('a.id, a.enum_name, a.tag')
+            ->where('a.attr_id', $attr_id)
+            ->select();
+        $attrIds = Db::table('product')->where('id', $id)->value('attr_ids');
+        foreach ($attrList as $k => $v) {
+            $attrList[$k]['checked'] = strpos($attrIds, (string) $v['id']) === false ? 0 : 1;
+        }
+
+        $data = [];
+        if ($attrList) {
+            $data = ['无标签' =>[]];
+            foreach ($attrList as $k => $v) {
+                if (empty($v['tag'])) {
+                    array_push($data['无标签'], $v);
+                } else {
+                    if (isset($data[$v['tag']])) {
+                        array_push($data[$v['tag']], $v);
+                    } else {
+                        $data[$v['tag']] = [$v];
+                    }
+                }
+            }
+        }
+        $this->success('success', '', $data);
+    }
+
+    /**
+     * 更新分类的属性
+     */
+    public function saveAttr()
+    {
+        $param = $this->request->param();
+        $id = $param['id'];
+        $attrCode = Db::table('goods_attr')->where('id', $param['attr_id'])->value('attr_code');
+        unset($param['id'], $param['attr_id']);
+
+        $data = Db::table('product')->where('id', $id)->value('attr_ids') ?? '{}';
+        $data = json_decode($data, true);
+        $data[$attrCode] = str_replace(' ', '', implode(',', $param));
+        Db::table('product')->where('id', $id)->update(['attr_ids' => json_encode($data)]);
+
+        $this->success('保存成功');
     }
 
     /**

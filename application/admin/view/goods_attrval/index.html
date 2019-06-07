@@ -1,0 +1,112 @@
+{extend name="common/index"}
+{block name="css"}
+<style>
+    .layui-table-cell{
+        padding: 0 8px;
+    }
+</style>
+{/block}
+{block name="content"}
+<div class="layui-row">
+    <form id="searchForm" class="layui-form layui-form-pane tpl-form-search" onkeydown="if(event.keyCode=='13'){reloadTable('#searchForm');return false;}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属分类</label>
+                    <div class="layui-input-inline">
+                        <select name="attr_id">
+                            <option value="">请选择</option>
+                            {volist name="$attrList" id="vo"}
+                            <option value="{$vo.id}">{$vo.attr_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">枚举值</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="enum_name" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="tag" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-normal" onclick="reloadTable('#searchForm');">搜索</a>
+                    <a class="layui-btn" href="{:url('edit')}" target="_blank">新增</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="layui-col-xs12">
+    <table id="classifyTable" lay-filter="classifyTable"></table>
+</div>
+
+<script type="text/html" id="operating">
+    <div class="layui-btn-group">
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete">删除</i></a>
+    </div>
+</script>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    layui.use(['table'], function () {
+        var table = layui.table;
+
+        //表格数据渲染
+        tableIns = table.render({
+            elem: '#classifyTable'
+            ,url: '{:url("getDataList")}'
+            ,page: true
+            ,limit: table_limit
+            ,limits: table_limits
+            ,cols: [[
+                {type:'numbers', title:'序号', width:45}
+                ,{field:'enum_name', title:'属性枚举值'}
+                ,{field:'tag', title:'标签', templet:function (data) {
+                        return data.tag ? data.tag : '/';
+                    }}
+                ,{field:'product_num', title:'产品数', templet:function (data) {
+                        return '<button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-normal">'+data.product_num+'&nbsp;查看</button>'
+                    }}
+                // ,{title:'更改排序', align:'center', width: 100, templet: function (data) {
+                //         return '<div class="layui-btn-group">' +
+                //             '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeSort('+data.id+',\'asc\', \'{:url("changeSort")}\');"><i class="layui-icon layui-icon-up"></i></a>' +
+                //             '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeSort('+data.id+',\'desc\', \'{:url("changeSort")}\');"><i class="layui-icon layui-icon-down"></i></a>' +
+                //             '</div>';
+                //     }}
+                ,{title:'操作', toolbar: '#operating', align:'center'}
+            ]]
+            ,where: getFormJson('#searchForm')
+        });
+
+        //监听工具条
+        table.on('tool(classifyTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('此枚举值被删除后，相关产品也将不再拥有该属性值，确定继续吗？', function(index){
+                    $.post('{:url("delete")}',{id:data.id}, function (result) {
+                        layer.close(index);
+                        if (result.code) {
+                            reloadTable('#searchForm');
+                        } else {
+                            layer.alert(result.msg, {icon:2});
+                        }
+                    }, 'json');
+                });
+            } else if (obj.event === 'edit') {
+                window.open('edit?id='+data.id);
+            }
+        });
+    });
+</script>
+{/block}

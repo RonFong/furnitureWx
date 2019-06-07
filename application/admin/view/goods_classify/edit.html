@@ -20,17 +20,20 @@
                         <input type="text" name="classify_name" value="{$data.classify_name|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
                     </div>
                 </div>
+                {volist name="data.attrList" id="vo" item="key"}
                 <div class="layui-form-item">
-                    <label class="layui-form-label">风格：</label>
+                    <label class="layui-form-label">{$vo.attr_name}：</label>
                     <div class="layui-input-block" style="top:6px;">
-                        <span class="add-attr" data-attr="style" data-method="offset" data-type="auto" style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
-                        {volist name="data.styles" id="vo"}
+                        <span class="add-attr" data-attr-id="{$vo.id}" data-method="offset" data-type="auto" style="background-color: #FFF;border: 1px #E5E5E5 solid;">
+                            &emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;
+                        </span>&emsp;
+                        {volist name="$vo['enum_list']" id="vv"}
                         <div style="display: inline;margin-right: 30px;">
-                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;width:40px;font-size: 12px;line-height: 20px;cursor:default;">
-                                {$vo.name}
+                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vv.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
+                                {$vv.enum_name}
                             </span>
                             <div class="action-btn" style="display: none;">
-                               <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="style" data-value="{$vo.id}" style="width:10px;border:0px;">
+                               <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-value="{$vv.id}" style="width:10px;border:0px;">
                                     <i class="layui-icon"></i>
                                 </span>
                             </div>
@@ -38,59 +41,7 @@
                         {/volist}
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">材质：</label>
-                    <div class="layui-input-block" style="top:6px;">
-                        <span class="add-attr" data-attr="texture" style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
-                        {volist name="data.textures" id="vo"}
-                        <div style="display: inline;margin-right: 30px;">
-                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
-                                {$vo.name}
-                            </span>
-                            <div class="action-btn" style="display: none;">
-                                <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="texture" data-value="{$vo.id}" style="width:10px;border:0px;">
-                                    <i class="layui-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        {/volist}
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">功能：</label>
-                    <div class="layui-input-block" style="top:6px;">
-                        <span class="add-attr" data-attr="function" style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
-                        {volist name="data.functions" id="vo"}
-                        <div style="display: inline;margin-right: 30px;">
-                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
-                                {$vo.name}
-                            </span>
-                            <div class="action-btn" style="display: none;">
-                                <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="function" data-value="{$vo.id}" style="width:10px;border:0px;">
-                                    <i class="layui-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        {/volist}
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">尺寸：</label>
-                    <div class="layui-input-block" style="top:6px;">
-                        <span class="add-attr" data-attr="size"  style="background-color: #FFF;border: 1px #E5E5E5 solid;">&emsp;<i class="layui-icon layui-icon-add-1"></i>&emsp;</span>&emsp;
-                        {volist name="data.sizes" id="vo"}
-                        <div style="display: inline;margin-right: 30px;">
-                            <span class="layui-badge layui-bg-blue style-btn" data-value="{$vo.id}" style="height: 20px;font-size: 12px;line-height: 20px;cursor:default;">
-                                {$vo.name}
-                            </span>
-                            <div class="action-btn" style="display: none;">
-                                <span class="attr-del layui-btn layui-btn-primary layui-btn-sm" data-attr="size" data-value="{$vo.id}" style="width:10px;border:0px;">
-                                    <i class="layui-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        {/volist}
-                    </div>
+                {/volist}
                 </div>
                 <div class="tpl-form-action">
                     <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="formSubmit">保存</button>
@@ -132,11 +83,10 @@
     var id = {$data.id|default=0};
 
     $('.attr-del').click(function () {
-        var attr = $(this).data('attr');
-        var attrId = $(this).data('value');
+        var attr_val_id = $(this).data('value');
         var obj = this;
         layer.confirm('此属性将从当前分类中移除，确定继续吗？', function(index) {
-            $.post('{:url("delAttr")}',{id:id,attr:attr,attrId:attrId}, function (result) {
+            $.post('{:url("delAttr")}',{id:id,attr_val_id:attr_val_id}, function (result) {
                 layer.close(index);
                 if (result.code) {
                     $(obj).parent().parent().remove();
@@ -149,23 +99,31 @@
 
     $('.add-attr').click(function () {
         if (id == 0) {
-            layer.alert('请先添加保存当前分类', {icon:2});
+            layer.alert('请先添加并保存当前分类', {icon:2});
         } else {
             var attrs;
-            var attr = $(this).data('attr');
-            $.get('{:url("getAttrs")}',{id:id,attr:attr,}, function (result) {
+            var attr_id = $(this).data('attr-id');
+            $.get('{:url("getAttrs")}',{id:id,attr_id:attr_id,}, function (result) {
                 if (result.code) {
                     attrs = result.data;
+                    if (attrs == "") {
+                        layer.alert('此属性类别下没有可选的枚举值');
+                        return true;
+                    }
                     var attr_input = '';
                     for (var i in attrs) {
-                        var selectd = attrs[i].selected == 0 ? '' : 'checked=""';
-                        attr_input += '<input type="checkbox" name="'+i+'" lay-skin="primary" value="'+attrs[i].id+' "title="'+attrs[i].name+' " '+selectd+'>';
+                        attr_input += '<p style="color:#1E9FFF;">'+i+'</p>'
+                        for (var j in attrs[i]) {
+                            var checked = attrs[i][j].checked == 0 ? '' : 'checked=""';
+                            attr_input += '<input type="checkbox" name="'+i+'_'+j+'" lay-skin="primary" value="'+attrs[i][j].id+' "title="'+attrs[i][j].enum_name+' " '+checked+'>';
+                        }
+                        attr_input += '<hr/>';
                     }
                     var html = '<form id="attrForm" class="layui-form" action="{:url("saveAttr")}">' +
                         '<div class="layui-form-item" pane="" style="padding: 30px 30px 0 0;">' +
                         '<div class="layui-input-block">'
                         + '<input type="hidden" name="id" value="'+ id +'">'
-                        + '<input type="hidden" name="attr" value="'+ attr +'">'
+                        + '<input type="hidden" name="attr_id" value="'+ attr_id +'">'
                         + attr_input
                         + '</div></div></form>';
 
@@ -178,7 +136,6 @@
                         ,btnAlign: 'c'
                         ,shade: 0
                         ,yes: function(){
-                            console.log($('#attrForm').serialize());
                             $.post('{:url("saveAttr")}', $('#attrForm').serialize(), function (result) {
                                 layer.closeAll();
                                 if (result.code) {

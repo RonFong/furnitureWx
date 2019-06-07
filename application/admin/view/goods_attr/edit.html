@@ -1,0 +1,53 @@
+{extend name="common/index"}
+{block name="content"}
+<div class="layui-row">
+    <form id="attrForm" class="layui-form tpl-form-label-long" action="">
+        <input type="hidden" name="id" id="id" value="{$attrData.id|default=''}">
+        <div class="layui-field-box">
+            <div class="layui-main">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性类别名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="attr_name" value="{$attrData.attr_name|default=''}" lay-verify="required" placeholder="请输入" class="layui-input">
+                    </div>
+                </div>
+                <div class="tpl-form-action">
+                    <button class="layui-btn layui-btn-radius layui-btn-lg" lay-submit lay-filter="attrSubmit">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    $('.style-btn').click(function () {
+        $('.action-btn').css('display', 'none');
+        $(this).next('.action-btn').css('display', 'inline');
+    });
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(attrSubmit)', function(data){
+            var index = layer.load(2, {shade:[0.5,'#000'],time: 10*1000});
+            $.post('{:url("saveAttr")}', $('#attrForm').serialize(), function (result) {
+                layer.close(index);
+                if (result.code) {
+                    layer.msg(result.msg, {shade:[0.5,'#000'],time:1000}, function () {
+                        window.location.href = result.url;
+                    });
+                } else {
+                    layer.alert(result.msg, {icon:2, title:'保存失败！'});
+                }
+            }, 'json');
+            return false;
+        });
+    });
+
+</script>
+
+{/block}
