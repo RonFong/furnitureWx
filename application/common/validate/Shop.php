@@ -17,7 +17,7 @@ class Shop extends BaseValidate
         'address'           => 'require|chsDash',           // 详细地址
         'shop_img'          => 'require',                   // 门头照片
         'category_id'       => 'require|number',                    // 经营类别(大类)
-        'category_child_id' => 'require',                   // 经营类别(子类)
+        'product_id' => 'require',                   // 经营类别(子类)
         'shop_wx'           => 'require',               //微信号
         'lat'               => 'require',               //经纬度
         'lng'               => 'require'
@@ -36,7 +36,7 @@ class Shop extends BaseValidate
         'address'               => '请填写详细地址',
         'shop_img.require'      => '门头照片不能为空',
         'category_id'           => '请选择经营类型',
-        'category_child_id.require'      => '请选择经营类型',
+        'product_id.require'      => '请选择经营类型',
         'lat.require'           => 'lat 经纬度不能为空',
         'lng.require'           => 'lng 经纬度不能为空',
     ];
