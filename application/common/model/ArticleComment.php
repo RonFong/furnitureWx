@@ -31,6 +31,14 @@ class ArticleComment extends Model
         return $this->hasOne('User', 'id', 'user_id')->bind('user_name');
     }
 
+    protected function getUserNameAttr($value, $data)
+    {
+        return (new User())->where('id', $data['user_id'])->value('user_name') ?? '此用户已被删除';
+    }
 
+    protected function getContentDecodeAttr($value, $data)
+    {
+        return $this->emojiDecode($data['content']);
+    }
 
 }
