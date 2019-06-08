@@ -42,7 +42,12 @@ class Factory extends BaseController
     {
         $this->currentValidate->goCheck('create');
         try {
-            $this->result['data']['id'] = $this->currentModel->saveInfo($this->data);
+            $id = $this->currentModel->saveInfo($this->data);
+            if (array_key_exists('referrer_id', $this->data) && !empty($this->data['referrer_id'])) {
+                //保存推荐关系
+                (new \app\api\model\UserProposed())->saveData($this->data);
+            }
+            $this->result['data']['id'] = $id;
             return json($this->result, 201);
         } catch (\Exception $e) {
             $this->currentValidate->error($e);

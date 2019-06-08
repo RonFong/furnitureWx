@@ -64,6 +64,10 @@ class Shop extends BaseController
             (new User())->save($userInfo);
             Db::commit();
             (new GroupNearby())->store($this->currentModel->id, 2);
+            if (array_key_exists('referrer_id', $this->data) && !empty($this->data['referrer_id'])) {
+                //保存推荐关系
+                (new \app\api\model\UserProposed())->saveData($this->data);
+            }
         } catch (\Exception $e) {
             Db::rollback();
             $this->result['state'] = 0;
