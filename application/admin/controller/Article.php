@@ -61,6 +61,12 @@ class Article extends Base
         if (isset($param['state']) && $param['state'] !== '') {
             $map['state'] = $param['state'];//状态
         }
+        if (isset($param['is_recommend']) && $param['is_recommend'] !== '') {
+            $map['is_recommend'] = $param['is_recommend'];//推荐
+        }
+        if (isset($param['is_draft']) && $param['is_draft'] !== '') {
+            $map['is_draft'] = $param['is_draft'];//草稿
+        }
         return $map;
     }
 
