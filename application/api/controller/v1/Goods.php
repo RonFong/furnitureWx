@@ -65,7 +65,7 @@ class Goods extends BaseController
                 ->value('rate') ?? '';
             $data['global_rate'] = Db::table('product_retail_rate')
                     ->where(['shop_id' => $this->data['shop_id']])
-                    ->value('rate') ?? '';
+                    ->value('rate') ?? config('system.price_ratio');
             $this->result['data'] = $data;
         } catch (\Exception $e) {
             $this->currentValidate->error($e);
