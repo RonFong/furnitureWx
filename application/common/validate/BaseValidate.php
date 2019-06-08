@@ -59,7 +59,7 @@ class BaseValidate extends Validate {
     protected function isPhoneNo($value)
     {
 
-        $rule   = '^1([2-8])[0-9]\d{8}$^';
+        $rule   = '^1([2-9])[0-9]\d{8}$^';
         $result = preg_match($rule, $value);
         if ($result) {
             return true;
