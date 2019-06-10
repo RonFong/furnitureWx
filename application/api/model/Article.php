@@ -229,11 +229,8 @@ class Article extends CoreArticle
         }
         $order = 's.create_time DESC';
 
-
-
         if (!empty($param['is_recommend']) && $param['is_recommend'] == 1) {
-            $sql = "select {$field} from `article` as s
-            where {$where}
+            $sql = "select * from  `article` where is_recommend = 1 and 
             order by {$order} limit {$pageData['page']}, {$pageData['row']}";
         } else {
             if (!empty($param['order_by'])) {
@@ -243,6 +240,7 @@ class Article extends CoreArticle
                     $order = "s.{$param['order_by']} DESC";
                 }
             }
+
             $field .= ', s.distance ';
             $sql = "select {$field} from (
             select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$this->getLocation('lng')}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$this->getLocation('lat')}-lat)/360),2)))) as distance 
@@ -391,7 +389,7 @@ class Article extends CoreArticle
         //记录阅读历史 和 阅读数
         ArticleReadHistory::record($id);
 
-        return $data;
+       return $data;
     }
 
 
