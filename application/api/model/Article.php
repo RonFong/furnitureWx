@@ -239,7 +239,7 @@ class Article extends CoreArticle
         $field .= ', s.distance ';
 
         if (!empty($param['is_recommend']) && $param['is_recommend'] == 1) {
-            $sql = "select {$field} from `article` 
+            $sql = "select {$field} from `article` as s
             where {$where}
             order by {$order} limit {$pageData['page']}, {$pageData['row']}";
         } else {
@@ -390,7 +390,7 @@ class Article extends CoreArticle
         //记录阅读历史 和 阅读数
         ArticleReadHistory::record($id);
 
-       return $data;
+        return $data;
     }
 
 
