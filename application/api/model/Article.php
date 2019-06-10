@@ -230,7 +230,11 @@ class Article extends CoreArticle
         $order = 's.create_time DESC';
 
         if (!empty($param['is_recommend']) && $param['is_recommend'] == 1) {
-            $sql = "select * from  `article` where is_recommend = 1 
+            $where = 'is_recommend = 1 ';
+            if (!empty($param['classify_id'])) {
+                $where .= "and classify_id = {$param['classify_id']} ";
+            }
+            $sql = "select * from  `article` where {$where} 
             order by create_time desc limit {$pageData['page']}, {$pageData['row']}";
         } else {
             if (!empty($param['order_by'])) {
