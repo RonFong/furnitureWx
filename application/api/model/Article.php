@@ -231,7 +231,7 @@ class Article extends CoreArticle
 
         if (!empty($param['is_recommend']) && $param['is_recommend'] == 1) {
             $sql = "select * from  `article` where is_recommend = 1 
-            order by {$order} limit {$pageData['page']}, {$pageData['row']}";
+            order by create_time desc limit {$pageData['page']}, {$pageData['row']}";
         } else {
             if (!empty($param['order_by'])) {
                 if ($param['order_by'] == 'distance') {
