@@ -171,7 +171,8 @@
             } else {
                 var attrs;
                 var attr_id = $(this).data('attr-id');
-                $.get('{:url("getAttrs")}',{id:id,attr_id:attr_id,}, function (result) {
+                var goods_classify_id = $('#classify_current').val();
+                $.get('{:url("getAttrs")}',{id:id,attr_id:attr_id,goods_classify_id:goods_classify_id}, function (result) {
                     if (result.code) {
                         attrs = result.data;
                         console.log(attrs);
