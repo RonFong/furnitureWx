@@ -214,7 +214,7 @@ class Product extends Base
         $attrList = Db::table('goods_classify_attr')
             ->alias('a')
             ->join('goods_attr_val b', 'a.id = b. goods_classify_id')
-            ->field('a.id, a.enum_name, a.tag')
+            ->field('b.id, b.enum_name, b.tag')
             ->where(['a.id' => $goods_classify_id, 'b.attr_id' => $attr_id])
             ->select();
         $attrIds = Db::table('product')->where('id', $id)->value('attr_ids');
