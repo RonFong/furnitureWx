@@ -209,12 +209,13 @@ class Product extends Base
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getAttrs($id, $attr_id)
+    public function getAttrs($id, $attr_id, $goods_classify_id)
     {
-        $attrList = Db::table('goods_attr_val')
+        $attrList = Db::table('goods_classify_attr')
             ->alias('a')
+            ->join('goods_attr_val b', 'a.id = b. goods_classify_id')
             ->field('a.id, a.enum_name, a.tag')
-            ->where('a.attr_id', $attr_id)
+            ->where(['a.id' => $goods_classify_id, 'b.attr_id' => $attr_id])
             ->select();
         $attrIds = Db::table('product')->where('id', $id)->value('attr_ids');
         foreach ($attrList as $k => $v) {
