@@ -172,6 +172,9 @@
                 var attrs;
                 var attr_id = $(this).data('attr-id');
                 var goods_classify_id = $('#classify_current').val();
+                if (goods_classify_id == '') {
+                    layer.alert('请先选择分类', {icon:2});
+                }
                 $.get('{:url("getAttrs")}',{id:id,attr_id:attr_id,goods_classify_id:goods_classify_id}, function (result) {
                     if (result.code) {
                         attrs = result.data;
