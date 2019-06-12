@@ -216,7 +216,9 @@ class Product extends Base
             ->join('goods_attr_val b', 'b.id = a. goods_classify_id')
             ->field('b.id, b.enum_name, b.tag')
             ->where(['a.id' => $goods_classify_id, 'b.attr_id' => $attr_id])
-            ->select();
+            ->select(false);
+        echo $attrList;
+        die;
         $attrIds = Db::table('product')->where('id', $id)->value('attr_ids');
         foreach ($attrList as $k => $v) {
             $isChecked = 0;
