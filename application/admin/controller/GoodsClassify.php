@@ -225,11 +225,13 @@ class GoodsClassify extends Base
                 ->alias('a')
                 ->join('goods_attr_val b', 'a.attr_val_id = b.id')
                 ->join('goods_attr c', 'b.attr_id = c.id')
+                ->where('a.goods_classify_id', $id)
                 ->where('c.id', $attrId)
                 ->column('a.id');
             $deledAttr = Db::table('goods_classify_attr')
                 ->alias('a')
                 ->join('goods_attr_val b', 'a.attr_val_id = b.id', 'LEFT')
+                ->where('a.goods_classify_id', $id)
                 ->where('b.id is null')
                 ->column('a.id');
             Db::table('goods_classify_attr')->where('id', 'in', implode(',', array_merge($existAttrIds, $deledAttr)))->delete();
