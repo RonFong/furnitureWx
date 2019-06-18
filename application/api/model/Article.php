@@ -230,7 +230,7 @@ class Article extends CoreArticle
         $order = 's.create_time DESC';
 
         if (!empty($param['is_recommend']) && $param['is_recommend'] == 1) {
-            $where = 'is_recommend = 1 ';
+            $where = 'is_recommend = 1 and `delete_time` is null ';
             if (!empty($param['classify_id'])) {
                 $where .= "and classify_id = {$param['classify_id']} ";
             }
