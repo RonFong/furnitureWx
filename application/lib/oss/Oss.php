@@ -119,7 +119,7 @@ class Oss
             //计算缩略图宽高
             $smallSize = $this->calculateImgThumbSize($imgInfo, $type, 'small');
             $largeSize = $this->calculateImgThumbSize($imgInfo, $type, 'large');
-
+            dump($largeSize);
             $file_info = $file->getInfo();
             $this->file_name = 'image/' .$type. '/'. date('Y-m-d') . '/' . time() . rand(100, 999) . strrchr($file_info['name'], '.');// 文件名称
             $this->file_path = $file_info['tmp_name'];//本地文件路径
@@ -128,7 +128,7 @@ class Oss
                 exception('图片上传失败');
             }
             return [
-                'img'               =>  $imgPath,
+                'img'               => $imgPath,
                 'img_thumb_small'   => $smallSize == false ? $imgPath :  $imgPath . $smallSize,
                 'img_thumb_large'   => $largeSize == false ? $imgPath : $imgPath . $largeSize
             ];
