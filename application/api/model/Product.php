@@ -161,7 +161,7 @@ class Product extends CoreProduct
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function info($id, $shopId = 1, $isAdmin = false)
+    public function info($id, $shopId = 0, $isAdmin = false)
     {
         //人气值
 //        $cacheTag = user_info('id') . '_product_popularity';
