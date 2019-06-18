@@ -58,6 +58,29 @@ return [
             ]
         ]
     ],
+    //产品
+    'product'   => [
+        'small'  => [
+            'w'     => [
+                'ratio' => 0,
+                'value' => 1920
+            ],
+            'h'     => [
+                'ratio' => 0,
+                'value' => 0
+            ]
+        ],
+        'large'   => [
+            'w'     => [
+                'ratio' => 0,       // 等比缩放
+                'value' => 1920
+            ],
+            'h'     => [
+                'ratio' => 0,
+                'value' => 0
+            ]
+        ]
+    ],
     //默认
     'default'   => [
         'small'  => [
