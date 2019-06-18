@@ -183,7 +183,7 @@ class Product extends CoreProduct
 
         $otherInfo = Db::table('factory')
             ->where('id', $info['factory_id'])
-            ->field('factory_name, factory_province, factory_city, factory_district, sales_province, sales_city, sales_district')
+            ->field('admin_user, factory_name, factory_province, factory_city, factory_district, sales_province, sales_city, sales_district')
             ->find();
         $info['factory_name'] = $otherInfo['factory_name'];
         $info['deliver_address'] = $otherInfo['sales_province'] . ' ' . $otherInfo['sales_city'] . ' ' . $otherInfo['sales_district'];
@@ -196,6 +196,10 @@ class Product extends CoreProduct
             $shopInfo = (new Shop())->where('id', $shopId)->field('admin_user, shop_name')->find();
             $info['shop_user_id'] = $shopInfo['admin_user'];
             $info['shop_name'] = $shopInfo['shop_name'];
+        } else {
+            // 在厂家门店打开产品详情页， 聊天对象为该厂家
+            $info['shop_user_id'] = $otherInfo['admin_user'];
+            $info['shop_name'] = $otherInfo['factory_name'];
         }
         $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
