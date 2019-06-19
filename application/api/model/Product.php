@@ -230,7 +230,7 @@ class Product extends CoreProduct
     {
         Db::startTrans();
         try {
-            self::destroy($id);
+            $this->where('id', $id)->delete();
             $colorIds = (new ProductColor())->where(['product_id' => $id])->column('id');
             ProductColor::destroy(['product_id' => $id]);
             ProductPrice::destroy(function ($query) use ($colorIds) {

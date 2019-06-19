@@ -32,8 +32,9 @@ class FactoryProductClassify extends CoreFactoryProductClassify
         if ($productCount > 0) {
             return $productCount;
         }
-        $classify = self::get($id);
-        $classify->delete();
+//        $classify = self::get($id);
+//        $classify->delete();
+        $this->where('id', $id)->delete();
         return true;
     }
 }
