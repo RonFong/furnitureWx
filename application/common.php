@@ -582,3 +582,19 @@ if (!function_exists('get_image_size')) {
         return $result;
     }
 }
+
+/**
+ * 匹配出中文字符
+ * @param $str
+ * @param string $charset
+ * @return bool|string
+ */
+function getChinese($str, $charset = 'utf8') {
+    if ($charset == 'utf8') {
+        if (!preg_match_all("/[\x{4e00}-\x{9fa5}]+/u", $str, $match)) {
+            return false;
+        }
+        return implode(',', $match[0]);
+    }
+    return false;
+}

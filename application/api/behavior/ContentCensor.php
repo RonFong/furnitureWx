@@ -37,9 +37,13 @@ class ContentCensor
                 $allStr = '';
                 $allStr = $joinStr($param, $allStr);
                 if (!empty($allStr)) {
-                    $result = \app\lib\baiduAI\ContentCensor::text($allStr);
-                    if ($result['state'] == 1) {
-                        exception('内容中含 ' . $result['msg'] . ' 信息，请修改');
+                    $tmpStr = getChinese($allStr);
+                    if (!$tmpStr) {
+                        $allStr = explode(',', $tmpStr);
+                        $result = \app\lib\baiduAI\ContentCensor::text($allStr);
+                        if ($result['state'] == 1) {
+                            exception('内容中含 ' . $result['msg'] . ' 信息，请修改');
+                        }
                     }
                 }
             }

@@ -156,6 +156,7 @@ class ContentCensor
     {
         $check = function ($text) {
             $response = $this->apiModel->antiSpam($text);
+//            print_r($response);
             if (array_key_exists('error_code', $response)) {
                 //AI调用失败
                 return false;
