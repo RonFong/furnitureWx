@@ -203,6 +203,9 @@ class Product extends CoreProduct
         }
         $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
+            //限定最大图片宽度为 1920
+            $info['colors'][$k]['img'] .= '?x-oss-process=image/resize,m_lfit,w_1920,g_center';
+
             $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, round(trade_price) as trade_price")->select();
             foreach ($prices as $kk => $vv) {
                 $retailPrice = format_price($vv->trade_price * config('system.price_ratio'));
@@ -232,7 +235,8 @@ class Product extends CoreProduct
         try {
             $this->where('id', $id)->update(['delete_time' => time()]);
             $colorIds = (new ProductColor())->where(['product_id' => $id])->column('id');
-            ProductColor::destroy(['product_id' => $id]);
+//            ProductColor::destroy(['product_id' => $id]);
+            (new ProductColor())->where(['product_id' => $id])->delete();
             ProductPrice::destroy(function ($query) use ($colorIds) {
                $query->where('color_id', 'in', $colorIds);
             });
