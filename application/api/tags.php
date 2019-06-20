@@ -19,7 +19,8 @@ return [
     'module_init'  => [],
     // 操作开始执行
     'action_init' => [
-        'app\\api\\behavior\\CheckToken'
+        'app\\api\\behavior\\CheckToken',
+        'app\\api\\behavior\\ContentCensor',
     ],
     // 视图内容过滤
     'view_filter'  => [],
