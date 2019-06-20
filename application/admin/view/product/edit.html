@@ -105,20 +105,13 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
+                            宽：{$vo.width}&emsp;高：{$vo.height}
                             <a href="{$vo.img}" target="_blank"><img src="{$vo.img}" height="150" alt="图片"></a>
                         </div>
                     </div>
                 </div>
                 {volist name="$vo.prices" id="vv"}
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">尺寸：</label>
-                        <div class="layui-input-block">
-                            宽：{$vo.width}&emsp;高：{$vo.height}
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
                     <div class="layui-form-item">
                         <label class="layui-form-label">组合：</label>
                         <div class="layui-input-block">
@@ -126,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
                     <div class="layui-form-item">
                         <label class="layui-form-label">批发价：</label>
                         <div class="layui-input-block">
