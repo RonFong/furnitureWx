@@ -38,7 +38,7 @@ class ContentCensor
                 $allStr = $joinStr($param, $allStr);
                 if (!empty($allStr)) {
                     $tmpStr = getChinese($allStr);
-                    if (!$tmpStr) {
+                    if ($tmpStr) {
                         $allStr = explode(',', $tmpStr);
                         $result = \app\lib\baiduAI\ContentCensor::text($allStr);
                         if ($result['state'] == 1) {
