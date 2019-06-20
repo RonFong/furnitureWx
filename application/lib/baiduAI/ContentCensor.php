@@ -160,7 +160,17 @@ class ContentCensor
                 //AI调用失败
                 return false;
             }
-            $state = $response['result']['spam'];
+            //允许 恶意推广 类通过审核
+            $tempArr = $response['result']['reject'];
+            if (!empty($tempArr)) {
+                foreach ($tempArr as $k => $v) {
+                    if ($v['label'] == 4) {
+                        unset($tempArr[$k]);
+                    }
+                }
+            }
+            $state = empty($tempArr) ? 0 : 1;
+            $response['result']['reject'] = array_values($tempArr);
             // spam: 0  审核通过   1 违禁  2 人工复审
             if ($state !== 0) {
                 //reject 违禁信息   review  复审信息
