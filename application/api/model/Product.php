@@ -226,9 +226,6 @@ class Product extends CoreProduct
             unset($info['colors'][$k]->id);
         }
         unset($info['colors'][$k]->id);
-        echo '<pre>';
-        print_r($info);
-        die;
         return $info;
     }
 

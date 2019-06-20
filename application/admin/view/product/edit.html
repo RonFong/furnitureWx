@@ -101,7 +101,7 @@
                 <div class="layui-input-block">
                     <input disabled type="text" style="margin-bottom: 10px;" name="color" value="{$vo.color}" class="layui-input"/>
                 </div>
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
@@ -110,7 +110,15 @@
                     </div>
                 </div>
                 {volist name="$vo.prices" id="vv"}
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">尺寸：</label>
+                        <div class="layui-input-block">
+                            宽：{$v.width}&emsp;高：{$v.height}
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
                     <div class="layui-form-item">
                         <label class="layui-form-label">组合：</label>
                         <div class="layui-input-block">
@@ -118,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg4">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-lg3">
                     <div class="layui-form-item">
                         <label class="layui-form-label">批发价：</label>
                         <div class="layui-input-block">
