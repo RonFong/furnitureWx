@@ -38,7 +38,7 @@ class ContentCensor
                 $allStr = $joinStr($param, $allStr);
                 $result = \app\lib\baiduAI\ContentCensor::text($allStr);
 
-                if ($result['state'] == 1 && $result['hitTag'] != 4) {
+                if ($result['state'] == 1 && $result['hitTag'] !== 4) {
                     exception('您提交的内容中包含' . $result['msg'] . '信息，请修改后提交');
                 }
             }
