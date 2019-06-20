@@ -39,7 +39,7 @@ class ContentCensor
                 if (!empty($allStr)) {
                     $result = \app\lib\baiduAI\ContentCensor::text($allStr);
                     if ($result['state'] == 1) {
-                        exception('内容中包含' . $result['msg'] . '信息，请修改');
+                        exception('内容中含 ' . $result['msg'] . ' 信息，请修改');
                     }
                 }
             }
