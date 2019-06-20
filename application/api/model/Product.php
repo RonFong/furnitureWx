@@ -203,6 +203,12 @@ class Product extends CoreProduct
         }
         $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
+            //显示图片宽高
+            if ($isAdmin) {
+                $imageSize = get_image_size($v['img']);
+                $info['colors'][$k]['width'] = $imageSize['width'];
+                $info['colors'][$k]['height'] = $imageSize['height'];
+            }
             //限定最大图片宽度为 1920
             $info['colors'][$k]['img'] .= '?x-oss-process=image/resize,m_lfit,w_1920,g_center';
 
