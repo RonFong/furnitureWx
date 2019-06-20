@@ -15,7 +15,7 @@ class ContentCensor
     public function run()
     {
         try {
-            $param = json_decode(Request::instance()->param(), true, JSON_UNESCAPED_UNICODE);
+            $param = Request::instance()->param();
             //img 信息无需审核
             $imgKey = ['img', 'img_thumb_small', 'img_thumb_large'];
 
