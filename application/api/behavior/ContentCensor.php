@@ -12,7 +12,7 @@ use think\Request;
 
 class ContentCensor
 {
-    public function run()
+    public function app_init()
     {
         try {
             $param = json_decode(Request::instance()->param(), true, JSON_UNESCAPED_UNICODE);
