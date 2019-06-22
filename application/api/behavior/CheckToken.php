@@ -23,8 +23,12 @@ class CheckToken
 {
     public function run()
     {
-        if (!Request::instance()->isGet()) {
-            try {
+        try {
+            $token = Request::instance()->header('userToken');
+            if (!Request::instance()->isGet() && empty($token)) {
+                exception('userToken不能为空');
+            }
+            if (!empty($token)) {
                 if ($token = Request::instance()->header('userToken')) {
                     if (!$userId = Cache::get($token))
                         //errorCode 值为  10000 时， 前端将重新请求 getToken 接口，此错误码不可更改和重用
@@ -36,24 +40,24 @@ class CheckToken
                     Session::set('user_info', $userInfo->toArray());
                     //刷新token缓存时间
                     Cache::set($token, $userInfo->id, config('api.token_valid_time'));
-
-                    $param = Request::instance()->param();
-                    $logData = [
-                        'user_id' => $userId,
-                        'ip' => Request::instance()->ip(1) ?? 0,
-                        'method' => Request::instance()->method(),
-                        'url' => Request::instance()->pathinfo(),
-                        'params' => json_encode($param) ?? $param,
-                        'time' => date('Y-m-d H:i:s', time())
-                    ];
-                    (new ApiLog())->save($logData);
-
+                    if (!Request::instance()->isGet()) {
+                        $param = Request::instance()->param();
+                        $logData = [
+                            'user_id' => $userId,
+                            'ip' => Request::instance()->ip(1) ?? 0,
+                            'method' => Request::instance()->method(),
+                            'url' => Request::instance()->pathinfo(),
+                            'params' => json_encode($param) ?? $param,
+                            'time' => date('Y-m-d H:i:s', time())
+                        ];
+                        (new ApiLog())->save($logData);
+                    }
                 } else {
                     exception('userToken不能为空');
                 }
-            } catch (\Exception $e) {
-                die(json_encode(['state' => 0, 'errorCode' => 1003, 'msg' => $e->getMessage()]));
             }
+        } catch (\Exception $e) {
+            die(json_encode(['state' => 0, 'errorCode' => 1003, 'msg' => $e->getMessage()]));
         }
     }
 }
