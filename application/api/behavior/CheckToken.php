@@ -23,6 +23,11 @@ class CheckToken
 {
     public function run()
     {
+        $method = Request::instance()->method();
+        if ($method == 'GET' || $method == 'get') {
+            return true;
+        }
+
         try {
             if ($token = Request::instance()->header('userToken')) {
                 if (!$userId = Cache::get($token))
