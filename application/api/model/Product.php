@@ -198,8 +198,8 @@ class Product extends CoreProduct
             $info['shop_name'] = $shopInfo['shop_name'];
         } else {
             // 在厂家门店打开产品详情页， 聊天对象为该厂家
-            $info['shop_user_id'] = $otherInfo['admin_user'];
-            $info['shop_name'] = $otherInfo['factory_name'];
+            $info['factory_user_id'] = $otherInfo['admin_user'];
+            $info['factory_name'] = $otherInfo['factory_name'];
         }
         $isShowPrice = $isAdmin || $this->isShowPrice($info['factory_id']);
         foreach ($info['colors'] as $k => $v) {
