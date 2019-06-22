@@ -418,8 +418,7 @@ class Product extends CoreProduct
      */
     protected function createGoodsNumber()
     {
-        $count = $this->where('factory_id', user_info('group_id'))->whereTime('create_time', 'today')->count();
-        return strtoupper(dechex(user_info('id') . $count));
+        return strtoupper(dechex(10000 + $this->count()));
     }
 
     /**
