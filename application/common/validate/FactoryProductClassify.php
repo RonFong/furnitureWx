@@ -73,9 +73,11 @@ class FactoryProductClassify extends BaseValidate
  */
     protected function isUnique($value, $rule, $data)
     {
-        $classify = Db::table('factory_product_classify')->where('factory_id', user_info('group_id'))->where('classify_name', $value)->find();
-        if (($classify && !array_key_exists('id', $data)) || ($classify && $data['id'] != $classify['id'])) {
-            return '此分类名已存在';
+        $classifyId = Db::table('factory_product_classify')->where('factory_id', user_info('group_id'))->where('classify_name', $value)->value('id');
+        if ($classifyId) {
+            if (empty($data['id']) || $classifyId != $data['id']) {
+                return '此分类名已存在';
+            }
         }
         return true;
     }
