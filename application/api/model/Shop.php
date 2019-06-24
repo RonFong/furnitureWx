@@ -38,7 +38,7 @@ class Shop extends CoreShop
 
         $location = (new UserLocation())->where(['user_id' => user_info('id')])->order('id desc')->find();
 
-        $field = "s.group_id, s.group_type, s.group_name, s.distance";
+        $field = "s.group_id, s.group_type, s.group_name, s.distance, s.sort_num";
         $where = "`state` = 1 and `audit_state` = 1 and `delete_time` is null";
         if ($groupName) {
             $where .= " and group_name like '%$groupName%'";
@@ -48,8 +48,8 @@ class Shop extends CoreShop
                 select *,(2 * 6378.137* ASIN(SQRT(POW(SIN(PI()*({$location['lng']}-lng)/360),2)+COS(PI()*33.07078170776367/180)* COS(lat * PI()/180)*POW(SIN(PI()*({$location['lat']}-lat)/360),2)))) as distance 
                 from `group_nearby` 
                 where {$where}) as s 
-                where s.distance <= {$this->distance}
-                order by s.distance asc limit {$pageData['page']}, {$pageData['row']}";
+                where (s.distance <= {$this->distance}) or (s.group_id = 6 and s.group_type = 2)
+                order by s.sort_num desc, s.distance asc limit {$pageData['page']}, {$pageData['row']}";
 
         $list = Db::query($sql);
         foreach ($list as $k => $v) {
