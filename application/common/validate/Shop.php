@@ -8,7 +8,7 @@ class Shop extends BaseValidate
 {
     protected $rule = [
         'id'                => 'require',                   // 用户ID
-        'shop_name'         => 'require|length:1,30|checkShopWx|checkUserType',       // 门店名称
+        'shop_name'         => 'require|length:1,15|checkShopWx|checkUserType',       // 门店名称
         'shop_contact'      => 'require',                   // 门店联系人
         'shop_phone'        => 'require|isPhoneNo',         // 门店电话
         'province'          => 'require',            // 省
@@ -61,7 +61,7 @@ class Shop extends BaseValidate
         //修改商家门店信息
         'info' => [
             'id'        => 'require|canNotUpdateFields|canNotEmpty',
-            'shop_name' => 'length:1,8'
+            'shop_name' => 'length:1,15'
         ]
     ];
 
