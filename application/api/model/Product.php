@@ -174,7 +174,16 @@ class Product extends CoreProduct
             ->field('id, factory_id, classify_id, goods_classify_id, is_on_shelves, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details,form,specification')
             ->find()
             ->toArray();
-
+        dump($info);
+        die;
+        $details = json_decode($info['details'], true);
+        $info['details'] = [];
+        foreach ($details as $k => $v) {
+            if ($v['type'] == 'img') {
+                $v['content'] .= '?x-oss-process=image/resize,m_lfit,w_1920,g_center';
+            }
+            $info['details'][] = $v;
+        }
         $info['is_collect'] = Db::table('relation_goods_collect')->where(['user_id' => user_info('id'), 'goods_id' => $id])->find() ? 1 : 0;
         $info['is_in_blacklist'] = 0;
         if (user_info('type') == 2) {
