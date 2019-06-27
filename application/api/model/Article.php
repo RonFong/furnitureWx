@@ -379,16 +379,17 @@ class Article extends CoreArticle
         $data['collect_count'] = Db::table('relation_article_collect')->where('article_id', $id)->count();
         $data['great_count'] = Db::table('relation_article_great')->where('article_id', $id)->count();
         //用户关注
-        if ($data['user_id'] == user_info('id')) {
-            //不能关注自己
-            $data['user_is_collect'] = -1;
-        } else {
-            $isCollect = Db::table('relation_user_collect')
-                ->where(['user_id' => user_info('id'), 'other_user_id' => $data['user_id']])
-                ->find();
-            $data['user_is_collect'] = $isCollect ? 1 : 0;
+        if (user_info('id')) {
+            if ($data['user_id'] == user_info('id')) {
+                //不能关注自己
+                $data['user_is_collect'] = -1;
+            } else {
+                $isCollect = Db::table('relation_user_collect')
+                    ->where(['user_id' => user_info('id'), 'other_user_id' => $data['user_id']])
+                    ->find();
+                $data['user_is_collect'] = $isCollect ? 1 : 0;
+            }
         }
-
         //记录阅读历史 和 阅读数
         ArticleReadHistory::record($id);
 
