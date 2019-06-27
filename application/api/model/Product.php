@@ -174,9 +174,9 @@ class Product extends CoreProduct
             ->field('id, factory_id, classify_id, goods_classify_id, is_on_shelves, name, brand, number, model, texture, texture_id, style, style_id, function, function_ids, size, size_ids, discounts, details,form,specification')
             ->find()
             ->toArray();
-        dump($info);
-        die;
         $details = json_decode($info['details'], true);
+        dump($details);
+        die;
         $info['details'] = [];
         foreach ($details as $k => $v) {
             if ($v['type'] == 'img') {
