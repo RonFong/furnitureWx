@@ -175,8 +175,6 @@ class Product extends CoreProduct
             ->find()
             ->toArray();
         $details = json_decode($info['details'], true);
-        dump($details);
-        die;
         $info['details'] = [];
         foreach ($details as $k => $v) {
             if ($v['type'] == 'img') {
@@ -184,6 +182,8 @@ class Product extends CoreProduct
             }
             $info['details'][] = $v;
         }
+        dump($info);
+        die;
         $info['is_collect'] = Db::table('relation_goods_collect')->where(['user_id' => user_info('id'), 'goods_id' => $id])->find() ? 1 : 0;
         $info['is_in_blacklist'] = 0;
         if (user_info('type') == 2) {
