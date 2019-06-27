@@ -182,8 +182,6 @@ class Product extends CoreProduct
             }
             $info['details'][] = $v;
         }
-        dump($info);
-        die;
         $info['is_collect'] = Db::table('relation_goods_collect')->where(['user_id' => user_info('id'), 'goods_id' => $id])->find() ? 1 : 0;
         $info['is_in_blacklist'] = 0;
         if (user_info('type') == 2) {
@@ -198,7 +196,6 @@ class Product extends CoreProduct
         $info['deliver_address'] = $otherInfo['sales_province'] . ' ' . $otherInfo['sales_city'] . ' ' . $otherInfo['sales_district'];
         $info['factory_address'] = $otherInfo['factory_province'] . ' ' . $otherInfo['factory_city'] . ' ' . $otherInfo['factory_district'];
 
-        $info['details'] = json_decode($info['details']);
         $info['colors'] = (new ProductColor())->where('product_id', $id)->field('id, color, img')->order('sort')->select();
         if ($shopId) {
             $priceRate = $this->getProductPriceRate($id, $shopId);    // 零售价商家自定义倍率
