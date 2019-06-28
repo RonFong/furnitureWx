@@ -212,6 +212,9 @@ class Article extends BaseController
     {
         try {
             if (empty($this->data['user_id'])) {
+                if (empty(user_info('id'))) {
+                    return json($this->result, 200);
+                }
                 $this->data['user_id'] = user_info('id');
             }
             $this->result['data'] = $this->currentModel->list($this->data, false, true);
