@@ -37,6 +37,9 @@ class CheckToken
                         exception('用户数据异常');
                     if ($userInfo->state === 0)
                         exception('账号被冻结');
+
+                    $this->repeat($userId);
+
                     Session::set('user_info', $userInfo->toArray());
                     //刷新token缓存时间
                     Cache::set($token, $userInfo->id, config('api.token_valid_time'));
@@ -59,5 +62,22 @@ class CheckToken
         } catch (\Exception $e) {
             die(json_encode(['state' => 0, 'errorCode' => 1003, 'msg' => $e->getMessage()]));
         }
+    }
+
+    /**
+     * 重复提交
+     * @param $userId
+     * @return bool
+     */
+    protected function repeat($userId)
+    {
+        if (Request::instance()->isGet()) {
+            return true;
+        }
+        $key = Request::instance()->pathinfo() .$userId . md5(json_encode(Request::instance()->param()));
+        if (Cache::get($key)) {
+            die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了，请稍后再试']));
+        }
+        return Cache::set($key, 'route', 3);
     }
 }
