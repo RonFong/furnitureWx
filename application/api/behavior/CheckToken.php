@@ -77,7 +77,8 @@ class CheckToken
         if (Request::instance()->file()) {
             return true;
         }
-        var_dump(Request::instance()->module(), Request::instance()->action());
+
+        var_dump(Request::instance()->path(), Request::instance()->action());
         die;
         $key = Request::instance()->pathinfo() . $userId . md5(json_encode(Request::instance()->param()));
         if (Cache::get($key)) {
