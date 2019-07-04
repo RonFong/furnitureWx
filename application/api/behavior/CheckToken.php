@@ -74,9 +74,14 @@ class CheckToken
         if (Request::instance()->isGet()) {
             return true;
         }
-        $key = Request::instance()->pathinfo() .$userId . md5(json_encode(Request::instance()->param()));
+        if (Request::instance()->file()) {
+            return true;
+        }
+        dump(Request::instance()->pathinfo());
+        die;
+        $key = Request::instance()->pathinfo() . $userId . md5(json_encode(Request::instance()->param()));
         if (Cache::get($key)) {
-            die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了，请稍后再试']));
+            die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了']));
         }
         return Cache::set($key, 'route', 3);
     }
