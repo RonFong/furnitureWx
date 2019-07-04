@@ -87,7 +87,7 @@ class CheckToken
         if (in_array(strtolower($path), $repeatRoute)) {
             $key = $path . $userId . md5(json_encode(Request::instance()->param()));
             if (Cache::get($key)) {
-                die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了']));
+                die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了，别急~']));
             }
             Cache::set($key, 'route', 3);
         }
