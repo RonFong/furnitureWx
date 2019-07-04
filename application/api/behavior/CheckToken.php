@@ -77,13 +77,20 @@ class CheckToken
         if (Request::instance()->file()) {
             return true;
         }
-
-        var_dump(Request::instance()->controller(), Request::instance()->action());
-        die;
-        $key = Request::instance()->pathinfo() . $userId . md5(json_encode(Request::instance()->param()));
-        if (Cache::get($key)) {
-            die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了']));
+        $repeatRoute = [
+            'v1.product/create',
+            'v1.product/update',
+            'v1.article/create',
+            'v1.article/update',
+        ];
+        $path = Request::instance()->controller() . '/' . Request::instance()->action();
+        if (in_array(strtolower($path), $repeatRoute)) {
+            $key = $path . $userId . md5(json_encode(Request::instance()->param()));
+            if (Cache::get($key)) {
+                die(json_encode(['state' => 0, 'errorCode' => 4000, 'msg' => '点太快了']));
+            }
+            Cache::set($key, 'route', 3);
         }
-        return Cache::set($key, 'route', 3);
+        return true;
     }
 }
