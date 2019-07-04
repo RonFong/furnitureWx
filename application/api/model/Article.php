@@ -367,6 +367,12 @@ class Article extends CoreArticle
             exception('文章不存在');
         }
         $data = $data->toArray();
+
+        if (user_info('id') != $data['user_id']) {
+            //已发布或别人打开是0
+            $data['is_draft'] = 0;
+        }
+
         $user = Db::table('user')->where('id', $data['user_id'])->find();
         $data['user_name'] = $this->emojiDecode($user['user_name']);
         $data['avatar'] = $user['avatar'];
