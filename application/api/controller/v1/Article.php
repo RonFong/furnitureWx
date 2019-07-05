@@ -394,8 +394,9 @@ class Article extends BaseController
                 exception('非作者不能发布');
             }
             $this->result['data'] = $this->currentModel->save([
-                'id' => $this->data['id'],
-                'is_draft' => $this->data['is_draft']
+                'id'            => $this->data['id'],
+                'is_draft'      => $this->data['is_draft'],
+                'create_time'   => time()
             ]);
             return json($this->result, 200);
         } catch (\Exception $e) {
