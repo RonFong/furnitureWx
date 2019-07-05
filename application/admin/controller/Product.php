@@ -79,7 +79,7 @@ class Product extends Base
     public function edit()
     {
         $id = $this->request->param('id');
-        $data = (new \app\api\model\Product())->info($id, 0 , true);
+        $data = (new \app\api\model\Product())->info($id, 0, true);
         $data = json_decode(json_encode($data), true, JSON_UNESCAPED_UNICODE);
         $data['factory_name'] = (new \app\admin\model\Factory())->where('id', $data['factory_id'])->value('factory_name');
         $this->assign('data', $data);
