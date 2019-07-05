@@ -90,25 +90,25 @@
             ,limits: table_limits
             ,cols: [[
                 {field:'id', title:'ID', width:45}
-                ,{field:'name', title:'产品名',width:150}
+                ,{field:'name', title:'产品名'}
                 ,{field:'image',title:'首图', templet: function (data) {
                     return '<a href="'+data.image+'" target="_blank"><img src="'+data.image+'" height="40" width="auto"/></a>';
                 }}
-                ,{field:'factory_id', width: 80, title:'所属厂家', templet: function (data) {
+                ,{field:'factory_id', title:'所属厂家', templet: function (data) {
                     return '<a class="a-link" href="/admin/factory/index?id='+data.factory_id+'" target="_blank">'+data.factory_name+'</a>';
                 }}
-                ,{field:'brand', title:'品牌',width:100,templet: function (data) {
+                ,{field:'brand', title:'品牌',templet: function (data) {
                     return data.brand ? data.brand : '/';
                     }
                 }
-                ,{field:'classify_name', title:'厂家分类',width:100}
-                ,{field:'goods_classify_name', title:'商城分类',width:100}
+                ,{field:'classify_name', title:'厂家分类'}
+                ,{field:'goods_classify_name', title:'商城分类'}
                 ,{field:'number', title:'编号',width:100}
                 ,{field:'model', title:'型号',width:100}
                 // ,{field:'texture', title:'材质'}
                 // ,{field:'style', title:'风格'}
                 // ,{field:'function', title:'功能'}
-                ,{title:'启用状态', align:'center',width:80, templet: function (data) {
+                ,{title:'启用状态', align:'center', templet: function (data) {
             return data.state === 1 ? '<span class="layui-badge layui-bg-blue">正常</span>' : '<span class="layui-badge layui-bg-red">禁用</span>';
         }}
                 ,{title:'上架状态', align:'center',width:80, templet: function (data) {
@@ -136,7 +136,7 @@
                     $.post('{:url("delete")}',{id:data.id}, function (result) {
                         layer.close(index);
                         if (result.code) {
-                            reloadTable('#searchForm');
+                            obj.del();
                         } else {
                             layer.alert(result.msg, {icon:2});
                         }
