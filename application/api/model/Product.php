@@ -129,7 +129,7 @@ class Product extends CoreProduct
                 ->field('id, img')
                 ->where('product_id', $v['id'])
                 ->order('sort')
-                ->limit(1)
+                ->limit(0,1)
                 ->find();
             $list[$k]['img'] = $colorInfo['img'];
              $tradePrice = (new ProductPrice())
@@ -177,7 +177,7 @@ class Product extends CoreProduct
         $details = json_decode($info['details'], true);
         $info['details'] = [];
         foreach ($details as $k => $v) {
-            if ($v['type'] == 'img') {
+            if ($v['type'] == 'img' && strpos($v['content'], 'x-oss-process') === false) {
                 $v['content'] .= '?x-oss-process=image/resize,m_lfit,w_1920,g_center';
             }
             $info['details'][] = $v;
@@ -216,7 +216,9 @@ class Product extends CoreProduct
                 $info['colors'][$k]['height'] = $imageSize['height'];
             }
             //限定最大图片宽度为 1920
-            $info['colors'][$k]['img'] .= '?x-oss-process=image/resize,m_lfit,w_1920,g_center';
+            if (strpos($info['colors'][$k]['img'], 'x-oss-process') === false) {
+                $info['colors'][$k]['img'] .= '?x-oss-process=image/resize,m_lfit,w_1920,g_center';
+            }
 
             $prices = (new ProductPrice())->where('color_id', $v->id)->field("id, configure, round(trade_price) as trade_price")->select();
             foreach ($prices as $kk => $vv) {
