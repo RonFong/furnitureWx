@@ -20,7 +20,7 @@ class Product extends Model
     use SoftDelete;
 
     /**
-     * 获取产品多个价格中的最低价
+     * 获取产品多个价格中的第一个价格
      * @param $value
      * @return mixed
      */
@@ -28,7 +28,9 @@ class Product extends Model
     {
         $shopId = Request::instance()->param('shop_id');
         $rate = $this->getProductPriceRate($value, $shopId);
-        $retailPrice = Db::table('product_price')->where('product_id', $value)->min('trade_price') * $rate;
+        $colorId = Db::table('product_color')->where('product_id', $value)->order('sort')->limit(0, 1)->value('id');
+//        $retailPrice = Db::table('product_price')->where('product_id', $value)->min('trade_price') * $rate;     //最低价
+        $retailPrice = Db::table('product_price')->where(['product_id' => $value, 'color_id' => $colorId])->value('trade_price') * $rate;     //最低价
         return format_price($retailPrice);
     }
 
