@@ -39,10 +39,7 @@ class Product extends Model
      */
     protected function getImgAttr($value)
     {
-        $colorId = Db::table('product_price')->where('product_id', $value)->order('trade_price')->value('color_id');
-        return Db::table('product_color')
-            ->where('id', $colorId)
-            ->value('img');
+        return Db::table('product_color')->where('product_id', $value)->order('sort asc')->limit(0, 1)->value('img');
     }
 
     /**
