@@ -17,7 +17,7 @@ return [
         'small'   => [           //缩略图中的小号图
             'w'     => [          //宽度尺寸
                 'ratio' => 4,     //宽高比例
-                'value' => 480    //值
+                'value' => 1920    //值
             ],
             'h'     => [
                 'ratio' => 3,
@@ -27,7 +27,7 @@ return [
         'large'  => [           //缩略图中的大号图
             'w'     => [
                 'ratio' => 16,
-                'value' => 1080
+                'value' => 1920
             ],
             'h'     => [
                 'ratio' => 9,
@@ -40,7 +40,7 @@ return [
         'small'  => [
             'w'     => [
                 'ratio' => 4,
-                'value' => 500
+                'value' => 1920
             ],
             'h'     => [
                 'ratio' => 3,
@@ -50,7 +50,7 @@ return [
         'large'   => [
             'w'     => [
                 'ratio' => 0,       // 等比缩放
-                'value' => 1000
+                'value' => 1920
             ],
             'h'     => [
                 'ratio' => 0,
